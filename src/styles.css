@@ -7,3 +7,17 @@
     @apply bg-slate-50 text-slate-900 antialiased;
   }
 }
+
+@keyframes careerGraphFlow {
+  from {
+    stroke-dashoffset: 0;
+  }
+
+  to {
+    stroke-dashoffset: -18;
+  }
+}
+
+.career-graph-flow {
+  animation: careerGraphFlow 3.8s linear infinite;
+}

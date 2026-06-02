@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import AIInsightCard from '../components/career/AIInsightCard'
-import CareerPathCard from '../components/career/CareerPathCard'
 import CareerPathDetail from '../components/career/CareerPathDetail'
+import CareerPathNetworkGraph from '../components/career/network/CareerPathNetworkGraph'
 import MarketDemandCard from '../components/career/MarketDemandCard'
 import MarketStanding from '../components/career/MarketStanding'
 import MissingSkillItem from '../components/career/MissingSkillItem'
@@ -13,7 +13,7 @@ import SkillProgressBar from '../components/career/SkillProgressBar'
 import TabNav from '../components/career/TabNav'
 import NextActionCard from '../components/career/NextActionCard'
 import Card from '../components/ui/Card'
-import { careerIntelligence, careerPaths, marketStanding } from '../data/mockData'
+import { careerIntelligence, careerPathNetwork, careerPaths, marketStanding } from '../data/mockData'
 
 const tabs = [
   { id: 'skill-summary', label: 'Skill Summary', icon: 'S' },
@@ -87,32 +87,11 @@ function CareerPathsTab() {
   return (
     <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_320px]">
       <main className="min-w-0 space-y-5">
-        <section>
-          <div className="flex flex-wrap items-center justify-between gap-3">
-            <div>
-              <h2 className="text-lg font-semibold text-slate-950">Possible Career Paths for You</h2>
-              <p className="mt-1 text-sm text-slate-500">Based on your skills, experience and goals.</p>
-            </div>
-            <button
-              type="button"
-              className="rounded-xl bg-indigo-50 px-4 py-2 text-sm font-semibold text-indigo-700 ring-1 ring-indigo-100 transition-all duration-200 hover:bg-indigo-100"
-            >
-              Retake Assessment
-            </button>
-          </div>
-
-          <div className="mt-4 grid gap-4 md:grid-cols-2 2xl:grid-cols-3">
-            {careerPaths.map((path, index) => (
-              <CareerPathCard
-                key={path.id}
-                path={path}
-                isBestMatch={index === 0}
-                isSelected={selectedPath.id === path.id}
-                onSelect={() => setSelectedPathId(path.id)}
-              />
-            ))}
-          </div>
-        </section>
+        <CareerPathNetworkGraph
+          network={careerPathNetwork}
+          selectedPathId={selectedPath.id}
+          onSelectPath={setSelectedPathId}
+        />
 
         <CareerPathDetail path={selectedPath} fallbackSteps={fallbackSteps} />
       </main>

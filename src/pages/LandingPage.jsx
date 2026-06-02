@@ -10,7 +10,7 @@ const roles = [
     title: 'Candidate',
     description: 'Build your Memory Profile, discover career paths, and grow your opportunities.',
     cta: 'Enter Candidate Workspace',
-    path: '/student',
+    path: '/student/overview',
     gradient: 'from-blue-600 to-indigo-500',
   },
   {

@@ -52,12 +52,18 @@ src/store/useCareerStore.js
 
 Student routes:
 
+- `/student/overview`
 - `/student/profile`
 - `/student/intelligence`
 - `/student/opportunities`
+- `/student/applications`
+- `/student/network`
+- `/student/learning`
+- `/student/ai-assistant`
 
 Main files:
 
+- `src/pages/CandidateOverviewPage.jsx`
 - `src/pages/MemoryProfilePage.jsx`
 - `src/pages/CareerIntelligencePage.jsx`
 - `src/pages/OpportunitiesPage.jsx`
@@ -65,9 +71,15 @@ Main files:
 Related component folders:
 
 - `src/components/student/`
+- `src/components/student/overview/`
 - `src/components/memory/`
 - `src/components/career/`
+- `src/components/career/network/`
 - `src/components/opportunities/`
+
+The Candidate Overview page is the default candidate landing page. `/student` redirects to `/student/overview`.
+
+The Career Intelligence page has three tabs. The Career Path tab uses a custom SVG/CSS network graph in `src/components/career/network/`. It does not use a graph library.
 
 ## Employer Workspace Structure
 
@@ -126,6 +138,8 @@ It controls:
 - Page outlet area
 
 The sidebar is static on the left for desktop. Main content uses the remaining width and scrolls independently.
+
+The candidate sidebar has a custom CareerOS visual treatment and an AI Career Companion card. Employer and university sidebars keep their own simpler workspace designs.
 
 ## Sidebar System
 
@@ -219,9 +233,11 @@ src/data/mockData.js
 Major exports include:
 
 - `mockUser`
+- `candidateOverview`
 - `initialExperiences`
 - `skillInventory`
 - `careerPaths`
+- `careerPathNetwork`
 - `careerIntelligence`
 - `marketStanding`
 - `opportunities`
@@ -233,4 +249,3 @@ Major exports include:
 - `universityStudentReadiness`
 - `universitySocietyMarketplace`
 - `universityPostEventCompletion`
-

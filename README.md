@@ -57,6 +57,7 @@ http://localhost:5173
 ## Main Routes
 
 - `/` - role selection page
+- `/student/overview` - candidate overview dashboard
 - `/student/profile` - candidate memory profile
 - `/student/intelligence` - candidate career intelligence
 - `/student/opportunities` - candidate opportunity marketplace
@@ -119,6 +120,8 @@ Important component folders:
 - `src/components/session/` - role cards, protected routes, sign out
 - `src/components/memory/` - candidate memory profile components
 - `src/components/career/` - career intelligence components
+- `src/components/career/network/` - career path network graph components
+- `src/components/student/overview/` - candidate overview dashboard components
 - `src/components/opportunities/` - opportunity marketplace components
 - `src/components/employer/` - employer workspace components
 - `src/components/university/` - university workspace components
@@ -160,7 +163,9 @@ src/data/mockData.js
 Find the exported object or array for the page you want to change. For example:
 
 - `initialExperiences` controls candidate memory profile examples.
+- `candidateOverview` controls the Candidate Overview dashboard.
 - `careerPaths` controls career path recommendations.
+- `careerPathNetwork` controls the Career Path tab network graph.
 - `opportunities` controls the candidate opportunity marketplace.
 - `employerCandidateInsights` controls employer analytics.
 - `universityCurriculumAlignment` controls curriculum alignment.
@@ -174,8 +179,9 @@ Find the exported object or array for the page you want to change. For example:
 3. Select Candidate, Employer, or University.
 4. Use the sidebar to move through the workspace.
 5. Try a few demo interactions:
+   - Candidate: review the Overview dashboard at `/student/overview`.
    - Candidate: add an experience in Memory Profile.
-   - Candidate: switch tabs in Career Intelligence.
+   - Candidate: switch to Career Intelligence, open Career Path, click graph role nodes, and try graph filters.
    - Candidate: filter/search opportunities.
    - Employer: search talent and switch Create Engagement tabs.
    - Employer: send interest to a club request.
@@ -183,4 +189,3 @@ Find the exported object or array for the page you want to change. For example:
    - University: confirm or reject skill suggestions after an event.
 
 Most actions are mock interactions. They update local UI state or show toast messages.
-

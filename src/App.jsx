@@ -2,6 +2,7 @@ import React from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
 import AppLayout from './components/layout/AppLayout'
 import CandidateInsightsPage from './pages/CandidateInsightsPage'
+import CandidateOverviewPage from './pages/CandidateOverviewPage'
 import CareerIntelligencePage from './pages/CareerIntelligencePage'
 import CurriculumMarketAlignmentPage from './pages/CurriculumMarketAlignmentPage'
 import EmployerCreateEngagementPage from './pages/EmployerCreateEngagementPage'
@@ -23,12 +24,17 @@ export default function App() {
       {/* Each workspace is protected by the role selected on the landing page. */}
       <Route element={<ProtectedRoute role="student" />}>
         <Route element={<AppLayout workspace="student" />}>
-          <Route path="/student" element={<Navigate to="/student/profile" replace />} />
+          <Route path="/student" element={<Navigate to="/student/overview" replace />} />
+          <Route path="/student/overview" element={<CandidateOverviewPage />} />
           <Route path="/student/profile" element={<MemoryProfilePage />} />
           <Route path="/student/memory-profile" element={<MemoryProfilePage />} />
           <Route path="/student/intelligence" element={<CareerIntelligencePage />} />
           <Route path="/student/career-intelligence" element={<CareerIntelligencePage />} />
           <Route path="/student/opportunities" element={<OpportunitiesPage />} />
+          <Route path="/student/applications" element={<PlaceholderPage title="Applications" />} />
+          <Route path="/student/network" element={<PlaceholderPage title="Network & Mentors" />} />
+          <Route path="/student/learning" element={<PlaceholderPage title="Learning & Skills" />} />
+          <Route path="/student/ai-assistant" element={<PlaceholderPage title="AI Assistant" />} />
           <Route path="/student/settings" element={<PlaceholderPage title="Settings" />} />
           <Route path="/student/help" element={<PlaceholderPage title="Help" />} />
         </Route>

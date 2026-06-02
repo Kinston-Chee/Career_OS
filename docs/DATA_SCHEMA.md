@@ -56,6 +56,39 @@ Example:
 }
 ```
 
+## Candidate Overview Data
+
+| Field | Type | Purpose |
+| --- | --- | --- |
+| `profile` | object | Candidate identity shown in overview/sidebar |
+| `careerSnapshot` | object | Readiness, strengths, in-demand skills, and evidence count |
+| `todayActions` | object[] | Career action checklist |
+| `careerSignalTimeline` | object[] | Timeline events for today |
+| `topCareerPaths` | object[] | Summary career matches |
+| `skillGaps` | object[] | Gaps for the target role |
+| `applicationTracker` | object | Application status counts |
+| `recentCareerMemories` | object[] | Recent evidence/memory cards |
+| `researchInterests` | string[] | Right panel interest chips |
+| `recommendations` | object[] | Recommended papers, courses, and events |
+| `aiCareerInsight` | string | AI insight message |
+
+Example:
+
+```js
+{
+  profile: {
+    name: 'Shirley Tan',
+    identity: 'Computer Science Student',
+    university: 'Taylor University',
+    careerFocus: 'Data Analyst',
+    targetRole: 'Data Analyst',
+  },
+  todayActions: [
+    { title: 'Upload new project: Sales Dashboard', badge: 'Recommended', tone: 'purple' },
+  ],
+}
+```
+
 ## Career Path Data
 
 | Field | Type | Purpose |
@@ -89,6 +122,62 @@ Example:
   missingSkills: ['Advanced SQL', 'Power BI'],
   roadmapSteps: [
     { title: 'Strengthen SQL Foundation', status: 'Completed', time: '2-3 weeks' },
+  ],
+}
+```
+
+## Career Path Network Data
+
+| Field | Type | Purpose |
+| --- | --- | --- |
+| `center` | object | The main YOU node |
+| `roles` | object[] | Career role nodes |
+| `skills` | object[] | Smaller skill/unlock nodes |
+| `edges` | object[] | SVG graph connections |
+
+Role node fields:
+
+| Field | Type | Purpose |
+| --- | --- | --- |
+| `id` | string | Must match a `careerPaths` item when clickable |
+| `label` | string | Node label |
+| `matchScore` | number | Displayed match score |
+| `category` | string | Used by graph filters |
+| `salaryRange` | string | Tooltip detail |
+| `position` | object | Fixed `{ x, y }` percentage position |
+| `skills` | string[] | Tooltip/top-skill detail |
+
+Edge fields:
+
+| Field | Type | Purpose |
+| --- | --- | --- |
+| `from` | string | Source node ID |
+| `to` | string | Target node ID |
+| `type` | string | `strong`, `gap`, or `unlock` |
+
+Example:
+
+```js
+{
+  center: {
+    id: 'you',
+    label: 'YOU',
+    currentRole: 'Data Analyst',
+    matchScore: 92,
+    position: { x: 50, y: 50 },
+  },
+  roles: [
+    {
+      id: 'data-analyst',
+      label: 'Data Analyst',
+      matchScore: 92,
+      category: 'Tech & Data',
+      position: { x: 50, y: 27 },
+      skills: ['SQL', 'Excel', 'Data Visualization'],
+    },
+  ],
+  edges: [
+    { from: 'you', to: 'data-analyst', type: 'strong' },
   ],
 }
 ```
@@ -306,4 +395,3 @@ Post-event completion uses:
 | `updateSummary` | object | Processing stats |
 | `workflowProgress` | object[] | Completion steps |
 | `recentProfileUpdates` | object[] | Recent memory profile updates |
-

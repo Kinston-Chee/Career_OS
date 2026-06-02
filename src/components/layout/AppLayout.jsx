@@ -14,9 +14,14 @@ const workspaceConfigs = {
     eyebrow: 'Student Workspace',
     subtitle: 'Your AI career memory',
     navItems: [
-      { label: 'Memory Profile', path: '/student/profile', aliases: ['/student', '/student/memory-profile'] },
+      { label: 'Overview', path: '/student/overview', aliases: ['/student'] },
+      { label: 'Career Memory', path: '/student/profile', aliases: ['/student/memory-profile'] },
       { label: 'Career Intelligence', path: '/student/intelligence', aliases: ['/student/career-intelligence'] },
       { label: 'Opportunities', path: '/student/opportunities', aliases: [] },
+      { label: 'Applications', path: '/student/applications', aliases: [] },
+      { label: 'Network & Mentors', path: '/student/network', aliases: [] },
+      { label: 'Learning & Skills', path: '/student/learning', aliases: [] },
+      { label: 'AI Assistant', path: '/student/ai-assistant', aliases: [] },
     ],
     supportItems: [
       { label: 'Settings', path: '/student/settings', aliases: [] },

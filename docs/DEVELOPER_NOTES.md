@@ -54,6 +54,47 @@ export default function ExampleCard({ title, description }) {
 }
 ```
 
+## How To Modify The Candidate Overview
+
+1. Edit the page shell in `src/pages/CandidateOverviewPage.jsx`.
+2. Edit section cards in `src/components/student/overview/`.
+3. Edit the sidebar AI card in `src/components/student/AICompanionCard.jsx`.
+4. Edit dashboard content in `candidateOverview` inside `src/data/mockData.js`.
+
+Keep the page career-focused. Avoid turning it into a personal habit or productivity dashboard.
+
+## How To Modify The Career Path Network Graph
+
+Graph code lives in:
+
+```text
+src/components/career/network/
+```
+
+Important files:
+
+- `CareerPathNetworkGraph.jsx` controls the graph card layout.
+- `CareerGraphNode.jsx` controls center, role, and skill nodes.
+- `GraphConnection.jsx` controls curved SVG lines, glow filters, and active line animation.
+- `CareerGraphFilter.jsx` controls filter chips.
+- `CareerGraphLegend.jsx` controls the graph legend.
+
+Graph data lives in `careerPathNetwork` inside `src/data/mockData.js`.
+
+To add a role node:
+
+1. Add a matching career object in `careerPaths`.
+2. Add a role node in `careerPathNetwork.roles` with the same `id`.
+3. Add edges in `careerPathNetwork.edges`.
+
+Connection types:
+
+- `strong` for strong match paths
+- `gap` for skill gap paths
+- `unlock` for future unlock paths
+
+The graph uses fixed percentage positions. Keep `x` and `y` between `0` and `100`.
+
 ## How To Update Mock Data
 
 Edit `src/data/mockData.js`.
@@ -81,9 +122,11 @@ The current mock exports can become examples for backend response shapes.
 
 Possible future API areas:
 
+- Candidate overview summary
 - Candidate profile and experiences
 - AI skill extraction
 - Career path recommendations
+- Career path network graph
 - Opportunity recommendations
 - Employer candidate search
 - Employer pipeline analytics
@@ -118,6 +161,8 @@ Layout rules to keep:
 - Avoid page-level wrappers like `mx-auto max-w-7xl`.
 - Use reasonable page padding like `px-4`, `sm:px-6`, or `lg:px-8`.
 - Use `min-w-0` on grid/flex children that may contain wide content.
+- Keep graph SVG lines behind nodes by preserving the SVG layer below node z-index.
+- Keep graph containers horizontally scrollable on small screens so labels remain readable.
 
 ## Known Limitations
 
@@ -129,4 +174,3 @@ Layout rules to keep:
 - Some dates and metrics are demo content.
 - Some pages have placeholder Settings and Help routes.
 - The app is built for demo flows, not production data security.
-
