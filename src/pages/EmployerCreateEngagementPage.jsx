@@ -1,23 +1,763 @@
 import React, { useMemo, useState } from 'react'
-import AISuggestionCard from '../components/employer/engagement/AISuggestionCard'
 import ClubRequestCard from '../components/employer/engagement/ClubRequestCard'
 import CTASection from '../components/employer/engagement/CTASection'
 import EngagementFilterChips from '../components/employer/engagement/EngagementFilterChips'
-import EngagementPreviewPanel from '../components/employer/engagement/EngagementPreviewPanel'
-import EngagementTypeCard from '../components/employer/engagement/EngagementTypeCard'
 import ExpressInterestPanel from '../components/employer/engagement/ExpressInterestPanel'
-import FormSectionCard from '../components/employer/engagement/FormSectionCard'
 import InternalTabNav from '../components/employer/engagement/InternalTabNav'
-import MockInput from '../components/employer/engagement/MockInput'
-import MockSelect from '../components/employer/engagement/MockSelect'
-import PillChip from '../components/employer/engagement/PillChip'
-import Card from '../components/ui/Card'
 import { employerEngagement, employerEngagementBuilder } from '../data/mockData'
 
 const tabs = [
   { id: 'club-collaboration', label: 'Club Collaboration' },
   { id: 'create-engagement', label: 'Create Engagement' },
 ]
+
+const creationSteps = [
+  { id: 1, title: 'Choose Type', helper: 'Define engagement type' },
+  { id: 2, title: 'Program Details', helper: 'Set goals and objectives' },
+  { id: 3, title: 'Audience & Skills', helper: 'Target the right talent' },
+  { id: 4, title: 'Timeline & Resources', helper: 'Plan and deliver' },
+  { id: 5, title: 'Review & Launch', helper: 'Preview and publish' },
+]
+
+const engagementTypeOptions = [
+  {
+    title: 'Micro-Project',
+    icon: 'doc',
+    description: 'Short-term, real-world project with tangible deliverables.',
+    bullets: ['2 - 4 weeks', 'Portfolio-ready work', 'High talent engagement'],
+  },
+  {
+    title: 'Workshop',
+    icon: 'board',
+    description: 'Skill-building session or hands-on training.',
+    bullets: ['Half-day to 2 days', 'Build practical skills', 'Brand visibility'],
+  },
+  {
+    title: 'Case Competition',
+    icon: 'trophy',
+    description: 'Challenge students to solve real business problems.',
+    bullets: ['1 - 4 weeks', 'Team-based', 'Innovative solutions'],
+  },
+  {
+    title: 'Mentorship Pod',
+    icon: 'users',
+    description: 'Longer-term mentorship and guidance program.',
+    bullets: ['4 - 12 weeks', '1:1 or group mentoring', 'Career development'],
+  },
+  {
+    title: 'Hackathon Sprint',
+    icon: 'bolt',
+    description: 'Intensive build sprint to create impactful solutions.',
+    bullets: ['24 - 72 hours', 'Fast-paced innovation', 'High energy and reach'],
+  },
+]
+
+const stepIntelligence = {
+  1: {
+    score: 82,
+    label: 'Strong',
+    explanation: 'This engagement is likely to attract high-quality student talent.',
+    scores: [
+      ['Student Attractiveness', 85],
+      ['Portfolio Value', 78],
+      ['Industry Relevance', 88],
+      ['Employer Branding', 80],
+      ['Completion Likelihood', 77],
+    ],
+    outcomes: [
+      ['~120', 'Applications'],
+      ['~35', 'Shortlisted'],
+      ['~18', 'High-Fit Profiles'],
+      ['~62%', 'Completion Rate'],
+    ],
+  },
+  2: {
+    score: 76,
+    label: 'Good',
+    explanation: 'Great start. Complete the remaining details to improve your score.',
+    scores: [
+      ['Student Attractiveness', 74],
+      ['Portfolio Value', 72],
+      ['Industry Relevance', 83],
+      ['Employer Branding', 74],
+      ['Completion Likelihood', 64],
+    ],
+    outcomes: [
+      ['~110', 'Applications'],
+      ['~28', 'Shortlisted'],
+      ['~14', 'High-Fit Profiles'],
+      ['~58%', 'Completion Rate'],
+    ],
+  },
+  3: {
+    score: 82,
+    label: 'Strong',
+    explanation: 'Great audience and skills alignment.',
+    scores: [
+      ['Student Attractiveness', 76],
+      ['Portfolio Value', 79],
+      ['Industry Relevance', 84],
+      ['Employer Branding', 81],
+      ['Completion Likelihood', 74],
+    ],
+    outcomes: [
+      ['~120', 'Applications'],
+      ['~32', 'Shortlisted'],
+      ['~16', 'High-Fit Profiles'],
+      ['~60%', 'Completion Rate'],
+    ],
+  },
+  4: {
+    score: 86,
+    label: 'Very Strong',
+    explanation: 'Excellent planning. You are ready for launch review.',
+    scores: [
+      ['Student Attractiveness', 84],
+      ['Portfolio Value', 84],
+      ['Industry Relevance', 86],
+      ['Employer Branding', 83],
+      ['Completion Likelihood', 82],
+    ],
+    outcomes: [
+      ['~132', 'Applications'],
+      ['~38', 'Shortlisted'],
+      ['~19', 'High-Fit Profiles'],
+      ['~63%', 'Completion Rate'],
+    ],
+  },
+  5: {
+    score: 88,
+    label: 'Excellent',
+    explanation: 'This engagement is highly likely to attract top student talent.',
+    scores: [
+      ['Student Attractiveness', 90],
+      ['Portfolio Value', 86],
+      ['Industry Relevance', 90],
+      ['Employer Branding', 82],
+      ['Completion Likelihood', 84],
+    ],
+    outcomes: [
+      ['~140', 'Applications'],
+      ['~42', 'Shortlisted'],
+      ['~21', 'High-Fit Profiles'],
+      ['~64%', 'Completion Rate'],
+    ],
+  },
+}
+
+const writingSuggestions = [
+  'Add specific tools to increase clarity, such as Power BI, SQL, and Excel.',
+  'Highlight real-world impact to attract high-quality students.',
+  'Mention deliverables so students understand expectations.',
+]
+
+const audienceRecommendations = [
+  'Students in 2nd - 4th year',
+  'Strong interest in analytics',
+  'Basic Excel or SQL knowledge',
+  'Active in data or tech clubs',
+]
+
+const resourceRecommendations = [
+  '1 mentor per 20 students',
+  '1 judge per 30 students',
+  'Budget range is in the optimal tier',
+]
+
+const launchChecklist = [
+  'Engagement type selected',
+  'Program details added',
+  'Target audience defined',
+  'Skills and roles selected',
+  'Timeline configured',
+  'Resources and deliverables added',
+  'Budget range set',
+  'All required fields completed',
+]
+
+function EngagementIcon({ name, tone = 'blue' }) {
+  const toneClasses = {
+    blue: 'bg-blue-50 text-blue-700 ring-blue-100',
+    violet: 'bg-violet-50 text-violet-700 ring-violet-100',
+    green: 'bg-emerald-50 text-emerald-700 ring-emerald-100',
+    amber: 'bg-amber-50 text-amber-700 ring-amber-100',
+    pink: 'bg-pink-50 text-pink-700 ring-pink-100',
+    slate: 'bg-slate-50 text-slate-600 ring-slate-100',
+  }
+  const paths = {
+    doc: <><path d="M8 4h6l4 4v12H8z" /><path d="M14 4v4h4" /><path d="M11 13h4" /><path d="M11 16h3" /></>,
+    board: <><path d="M6 5h12v10H6z" /><path d="M9 19h6" /><path d="M12 15v4" /><path d="M9 9h6" /><path d="M9 12h4" /></>,
+    trophy: <><path d="M8 5h8v4a4 4 0 0 1-8 0z" /><path d="M8 7H5a3 3 0 0 0 3 3" /><path d="M16 7h3a3 3 0 0 1-3 3" /><path d="M12 13v4" /><path d="M9 19h6" /></>,
+    users: <><circle cx="9" cy="9" r="3" /><circle cx="16" cy="10" r="2.5" /><path d="M4 18a5 5 0 0 1 10 0" /><path d="M13 17a4 4 0 0 1 7 0" /></>,
+    bolt: <path d="m13 3-7 11h6l-1 7 7-11h-6z" />,
+    ai: <><path d="M12 4v3" /><path d="M12 17v3" /><path d="M4 12h3" /><path d="M17 12h3" /><circle cx="12" cy="12" r="4" /></>,
+    trend: <><path d="M4 16 9 11l4 4 7-8" /><path d="M15 7h5v5" /></>,
+    star: <path d="m12 4 2.4 4.8 5.3.8-3.8 3.7.9 5.2-4.8-2.5-4.8 2.5.9-5.2-3.8-3.7 5.3-.8z" />,
+    check: <path d="m5 12 4 4 10-10" />,
+    calendar: <><path d="M7 4v3" /><path d="M17 4v3" /><path d="M5 8h14" /><path d="M6 6h12a1 1 0 0 1 1 1v13H5V7a1 1 0 0 1 1-1z" /></>,
+    lock: <><path d="M8 11V8a4 4 0 0 1 8 0v3" /><path d="M6 11h12v9H6z" /></>,
+  }
+
+  return (
+    <span className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-[8px] ring-1 ${toneClasses[tone]}`}>
+      <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+        {paths[name]}
+      </svg>
+    </span>
+  )
+}
+
+function ProgressTracker({ currentStep }) {
+  return (
+    <div className="overflow-hidden rounded-[8px] border border-slate-200 bg-white px-4 py-4">
+      <div className="grid gap-4 md:grid-cols-5">
+        {creationSteps.map((step, index) => (
+          <div key={step.id} className="relative flex items-start gap-3">
+            {index < creationSteps.length - 1 && <span className={`absolute left-8 top-4 hidden h-px w-[calc(100%+1rem)] md:block ${step.id < currentStep ? 'bg-blue-300' : 'bg-slate-200'}`} />}
+            <span className={`relative z-10 flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-sm font-semibold ${
+              step.id === currentStep ? 'bg-blue-600 text-white shadow-sm shadow-blue-200' : step.id < currentStep ? 'bg-blue-50 text-blue-700 ring-1 ring-blue-100' : 'bg-slate-100 text-slate-600'
+            }`}>
+              {step.id}
+            </span>
+            <div className="min-w-0">
+              <p className={`text-sm font-semibold ${step.id === currentStep ? 'text-slate-950' : 'text-slate-600'}`}>{step.title}</p>
+              <p className="mt-0.5 text-xs leading-5 text-slate-500">{step.helper}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+function EngagementTypeSelectionCard({ option, selected, onClick }) {
+  const tones = {
+    'Micro-Project': 'blue',
+    Workshop: 'violet',
+    'Case Competition': 'green',
+    'Mentorship Pod': 'amber',
+    'Hackathon Sprint': 'pink',
+  }
+
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className={`flex h-full min-h-[220px] flex-col rounded-[8px] border bg-white p-4 text-left transition-all duration-200 ${
+        selected ? 'border-blue-500 shadow-[0_0_0_1px_rgba(37,99,235,0.18)]' : 'border-slate-200 hover:border-blue-200 hover:bg-slate-50/50'
+      }`}
+    >
+      <div className="flex items-start justify-between gap-3">
+        <EngagementIcon name={option.icon} tone={tones[option.title]} />
+        <span className={`flex h-5 w-5 items-center justify-center rounded-full border ${selected ? 'border-blue-600 bg-blue-600 text-white' : 'border-slate-300 bg-white'}`}>
+          {selected ? (
+            <svg className="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <path d="m5 12 4 4 10-10" />
+            </svg>
+          ) : null}
+        </span>
+      </div>
+      <h3 className="mt-4 text-base font-semibold text-slate-950">{option.title}</h3>
+      <p className="mt-2 text-sm leading-6 text-slate-600">{option.description}</p>
+      <ul className="mt-4 space-y-2 text-sm leading-5 text-slate-600">
+        {option.bullets.map((bullet) => (
+          <li key={bullet} className="flex gap-2">
+            <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-slate-400" />
+            <span>{bullet}</span>
+          </li>
+        ))}
+      </ul>
+    </button>
+  )
+}
+
+function AIRecommendationBanner() {
+  return (
+    <section className="flex flex-col gap-4 rounded-[8px] border border-blue-100 bg-blue-50/55 px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
+      <div className="flex min-w-0 items-center gap-4">
+        <EngagementIcon name="ai" tone="blue" />
+        <div>
+          <h3 className="text-sm font-semibold text-blue-900">Not sure which to choose?</h3>
+          <p className="mt-1 text-sm leading-6 text-blue-800">Answer a few quick questions and CareerOS AI will recommend the best engagement type for your goals.</p>
+        </div>
+      </div>
+      <button className="h-10 shrink-0 rounded-[8px] border border-blue-200 bg-white px-4 text-sm font-semibold text-blue-700 hover:bg-blue-50" type="button">
+        Get AI Recommendation
+      </button>
+    </section>
+  )
+}
+
+function AIStrategistCard() {
+  const recommendations = [
+    {
+      icon: 'trend',
+      tone: 'green',
+      insight: 'Micro-Projects in Data Analytics have 62% higher completion rates.',
+      detail: 'Students value real datasets and portfolio-ready outcomes.',
+    },
+    {
+      icon: 'users',
+      tone: 'violet',
+      insight: 'Add Power BI or SQL to attract more qualified applicants.',
+      detail: 'These skills are in high demand this month.',
+    },
+    {
+      icon: 'star',
+      tone: 'amber',
+      insight: 'Include a final presentation to increase brand visibility.',
+      detail: 'Employers with presentations get 40% more engagement.',
+    },
+  ]
+
+  return (
+    <section className="rounded-[8px] border border-slate-200 bg-white p-5 shadow-[0_10px_24px_rgba(15,23,42,0.04)]">
+      <div className="flex flex-wrap items-center gap-2">
+        <h3 className="text-base font-semibold text-slate-950">AI Engagement Strategist</h3>
+        <span className="rounded-full bg-blue-50 px-2.5 py-1 text-xs font-medium text-blue-700 ring-1 ring-blue-100">Powered by CareerOS AI</span>
+      </div>
+      <div className="mt-4 space-y-3">
+        {recommendations.map((item) => (
+          <div key={item.insight} className="flex gap-3 rounded-[8px] border border-slate-100 bg-slate-50/55 p-4">
+            <EngagementIcon name={item.icon} tone={item.tone} />
+            <div>
+              <p className="text-sm font-semibold text-slate-950">{item.insight}</p>
+              <p className="mt-1 text-sm leading-6 text-slate-600">{item.detail}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+      <div className="mt-4 flex justify-end">
+        <button className="h-10 rounded-[8px] border border-blue-200 bg-white px-4 text-sm font-semibold text-blue-700 hover:bg-blue-50" type="button">
+          Refine with AI
+        </button>
+      </div>
+    </section>
+  )
+}
+
+function FieldDisplay({ label, value, required = false, multiline = false, count }) {
+  return (
+    <label className="block">
+      <span className="text-sm font-semibold text-slate-800">
+        {label}
+        {required ? <span className="text-red-500"> *</span> : null}
+      </span>
+      <span className={`mt-2 block rounded-[8px] border border-slate-200 bg-white px-4 py-3 text-sm leading-6 text-slate-700 ${multiline ? 'min-h-[104px]' : 'min-h-[48px]'}`}>
+        {value}
+      </span>
+      {count ? <span className="mt-1 block text-right text-xs text-slate-400">{count}</span> : null}
+    </label>
+  )
+}
+
+function SelectDisplay({ label, value, required = false }) {
+  return (
+    <label className="block">
+      <span className="text-sm font-semibold text-slate-800">
+        {label}
+        {required ? <span className="text-red-500"> *</span> : null}
+      </span>
+      <span className="mt-2 flex min-h-[48px] items-center justify-between rounded-[8px] border border-slate-200 bg-white px-4 text-sm text-slate-700">
+        {value}
+        <span className="text-slate-400">v</span>
+      </span>
+    </label>
+  )
+}
+
+function Chip({ children, removable = true }) {
+  return (
+    <span className="inline-flex items-center gap-1.5 rounded-full bg-blue-50 px-3 py-1.5 text-sm font-medium text-blue-700 ring-1 ring-blue-100">
+      {children}
+      {removable ? <span className="text-blue-500">x</span> : null}
+    </span>
+  )
+}
+
+function ChipGroup({ label, items, addLabel }) {
+  return (
+    <section>
+      <h4 className="text-sm font-semibold text-slate-800">{label}</h4>
+      <div className="mt-3 flex flex-wrap gap-2">
+        {items.map((item) => <Chip key={item}>{item}</Chip>)}
+        {addLabel ? (
+          <button className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-1.5 text-sm font-medium text-slate-600 hover:bg-slate-50" type="button">
+            <span className="flex h-5 w-5 items-center justify-center rounded-full bg-slate-50 text-blue-600">+</span>
+            {addLabel}
+          </button>
+        ) : null}
+      </div>
+    </section>
+  )
+}
+
+function AssistantPanel({ title, subtitle, items, ctaLabel = 'Apply Suggestions' }) {
+  return (
+    <aside className="rounded-[8px] border border-blue-100 bg-blue-50/45 p-5">
+      <div className="flex items-start gap-3">
+        <EngagementIcon name="ai" tone="violet" />
+        <div>
+          <h3 className="text-sm font-semibold text-slate-950">{title}</h3>
+          <p className="mt-1 text-sm leading-6 text-slate-600">{subtitle}</p>
+        </div>
+      </div>
+      <div className="mt-4 space-y-3">
+        {items.map((item) => (
+          <p key={item} className="flex gap-2 text-sm leading-6 text-slate-700">
+            <span className="mt-1 text-blue-600">✓</span>
+            <span>{item}</span>
+          </p>
+        ))}
+      </div>
+      <button className="mt-5 h-10 w-full rounded-[8px] border border-blue-200 bg-white px-4 text-sm font-semibold text-blue-700 hover:bg-blue-50" type="button">
+        {ctaLabel}
+      </button>
+    </aside>
+  )
+}
+
+function StepShell({ title, subtitle, children }) {
+  return (
+    <section className="rounded-[8px] border border-slate-200 bg-white p-5 shadow-[0_10px_24px_rgba(15,23,42,0.04)]">
+      <div>
+        <h3 className="text-lg font-semibold text-slate-950">{title}</h3>
+        <p className="mt-1 text-sm leading-6 text-slate-500">{subtitle}</p>
+      </div>
+      <div className="mt-6">{children}</div>
+    </section>
+  )
+}
+
+function ChooseTypeStep({ selectedType, setSelectedType }) {
+  return (
+    <>
+      <StepShell title="Choose Engagement Type" subtitle="Select the program format that best fits your talent goals.">
+        <div className="grid gap-4 md:grid-cols-2 2xl:grid-cols-5">
+          {engagementTypeOptions.map((option) => (
+            <EngagementTypeSelectionCard
+              key={option.title}
+              option={option}
+              selected={selectedType === option.title}
+              onClick={() => setSelectedType(option.title)}
+            />
+          ))}
+        </div>
+      </StepShell>
+
+      <AIRecommendationBanner />
+      <AIStrategistCard />
+    </>
+  )
+}
+
+function ProgramDetailsStep() {
+  const form = employerEngagementBuilder.form
+
+  return (
+    <StepShell title="Program Details" subtitle="Tell students what they will build, learn, and prove.">
+      <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_280px]">
+        <div className="space-y-5">
+          <FieldDisplay label="Engagement Title" value={form.title} required count="28/100" />
+          <FieldDisplay label="Goal / Objective" value={form.goal} required count="56/100" />
+          <FieldDisplay label="Description" value={form.description} required multiline count="153/700" />
+          <ChipGroup label="Student Outcomes (What students will gain)" items={form.outcomes} addLabel="Add more" />
+        </div>
+        <AssistantPanel
+          title="AI Writing Assistant"
+          subtitle="Here are suggestions to strengthen your program brief."
+          items={writingSuggestions}
+        />
+      </div>
+    </StepShell>
+  )
+}
+
+function AudienceSkillsStep() {
+  const form = employerEngagementBuilder.form
+
+  return (
+    <StepShell title="Audience & Skills" subtitle="Define who you want to engage and the key skills to develop.">
+      <div className="space-y-6">
+        <ChipGroup label="Target Roles (Students' Interest)" items={form.targetRoles} addLabel="Add role" />
+        <ChipGroup label="Preferred Universities" items={form.universities} addLabel="Add university" />
+        <ChipGroup label="Skill Focus" items={form.skillFocus} addLabel="Add skill" />
+        <ChipGroup label="Experience Level" items={form.experienceLevels} addLabel="Add level" />
+
+        <section className="rounded-[8px] border border-blue-100 bg-blue-50/55 p-5">
+          <div className="flex items-start gap-3">
+            <EngagementIcon name="ai" tone="violet" />
+            <div>
+              <h3 className="text-sm font-semibold text-slate-950">AI Recommended Audience</h3>
+              <p className="mt-1 text-sm leading-6 text-slate-600">Based on similar successful engagements.</p>
+            </div>
+          </div>
+          <div className="mt-4 flex flex-wrap gap-2">
+            {audienceRecommendations.map((item) => <Chip key={item} removable={false}>{item}</Chip>)}
+          </div>
+        </section>
+      </div>
+    </StepShell>
+  )
+}
+
+function TimelineResourcesStep() {
+  const form = employerEngagementBuilder.form
+
+  return (
+    <StepShell title="Timeline & Resources" subtitle="Plan the program schedule and required support.">
+      <div className="space-y-6">
+        <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
+          <FieldDisplay label="Start Date" value={form.startDate} required />
+          <SelectDisplay label="Duration" value={form.duration} required />
+          <SelectDisplay label="Mode" value={form.mode} required />
+          <FieldDisplay label="Capacity" value={form.capacity} required />
+          <FieldDisplay label="Application Deadline" value={form.applicationDeadline} required />
+          <SelectDisplay label="Need Mentors" value={form.mentorsNeeded} required />
+          <SelectDisplay label="Need Judges" value={form.judgesNeeded} required />
+          <SelectDisplay label="Budget Range" value={form.budgetRange} required />
+        </div>
+
+        <section>
+          <h4 className="text-sm font-semibold text-slate-800">Expected Deliverables</h4>
+          <div className="mt-3 grid gap-3 md:grid-cols-2 xl:grid-cols-4">
+            {form.deliverables.map((deliverable) => (
+              <div key={deliverable} className="rounded-[8px] border border-slate-200 bg-white p-4">
+                <p className="text-sm font-semibold text-slate-950">{deliverable}</p>
+                <p className="mt-2 text-sm leading-5 text-slate-500">
+                  {deliverable.includes('Dashboard') ? 'Interactive dashboard' : deliverable.includes('report') ? 'Analysis and findings' : 'Final insights and story'}
+                </p>
+              </div>
+            ))}
+            <button className="flex min-h-[92px] flex-col items-center justify-center rounded-[8px] border border-dashed border-blue-200 bg-blue-50/30 text-sm font-semibold text-blue-700 hover:bg-blue-50" type="button">
+              <span className="text-lg">+</span>
+              Add Deliverable
+            </button>
+          </div>
+        </section>
+
+        <section className="rounded-[8px] border border-blue-100 bg-blue-50/45 p-5">
+          <div className="flex items-start gap-3">
+            <EngagementIcon name="ai" tone="violet" />
+            <div>
+              <h3 className="text-sm font-semibold text-slate-950">AI Resource Assistant</h3>
+              <p className="mt-1 text-sm leading-6 text-slate-600">Based on similar programs, we recommend:</p>
+            </div>
+          </div>
+          <div className="mt-4 flex flex-wrap gap-2">
+            {resourceRecommendations.map((item) => <Chip key={item} removable={false}>{item}</Chip>)}
+          </div>
+        </section>
+      </div>
+    </StepShell>
+  )
+}
+
+function SummaryRow({ icon, label, value }) {
+  return (
+    <div className="grid grid-cols-[32px_120px_minmax(0,1fr)] items-start gap-3">
+      <EngagementIcon name={icon} tone="blue" />
+      <p className="text-sm font-medium text-slate-500">{label}</p>
+      <p className="text-sm leading-6 text-slate-800">{Array.isArray(value) ? value.join(', ') : value}</p>
+    </div>
+  )
+}
+
+function ReviewLaunchStep() {
+  const form = employerEngagementBuilder.form
+  const intelligence = stepIntelligence[5]
+
+  return (
+    <div className="grid gap-5 xl:grid-cols-[minmax(0,1.05fr)_minmax(320px,0.95fr)_280px]">
+      <section className="rounded-[8px] border border-slate-200 bg-white p-5 shadow-[0_10px_24px_rgba(15,23,42,0.04)]">
+        <div className="flex items-center justify-between gap-3">
+          <h3 className="text-base font-semibold text-slate-950">Engagement Summary</h3>
+          <button className="h-9 rounded-[8px] border border-blue-100 bg-blue-50 px-3 text-sm font-semibold text-blue-700" type="button">Edit</button>
+        </div>
+        <div className="mt-5 space-y-4">
+          <SummaryRow icon="doc" label="Type" value="Micro-Project" />
+          <SummaryRow icon="lock" label="Title" value={form.title} />
+          <SummaryRow icon="trend" label="Goal" value={form.goal} />
+          <SummaryRow icon="calendar" label="Duration" value={`${form.startDate} - 29 Jun 2025 (${form.duration})`} />
+          <SummaryRow icon="board" label="Mode" value={form.mode} />
+          <SummaryRow icon="users" label="Capacity" value={form.capacity} />
+          <SummaryRow icon="star" label="Target Roles" value={form.targetRoles} />
+          <SummaryRow icon="check" label="Key Skills" value={form.skillFocus} />
+          <SummaryRow icon="board" label="Universities" value={form.universities} />
+          <SummaryRow icon="doc" label="Deliverables" value={form.deliverables} />
+        </div>
+      </section>
+
+      <section className="space-y-5">
+        <div className="rounded-[8px] border border-slate-200 bg-white p-5 shadow-[0_10px_24px_rgba(15,23,42,0.04)]">
+          <h3 className="text-base font-semibold text-slate-950">Engagement Strength Score</h3>
+          <div className="mt-4 grid gap-4 sm:grid-cols-[96px_minmax(0,1fr)]">
+            <div className="flex h-24 w-24 items-center justify-center rounded-full border-[8px] border-emerald-400 bg-white">
+              <div className="text-center">
+                <p className="text-2xl font-semibold text-slate-950">{intelligence.score}</p>
+                <p className="text-xs text-slate-500">/100</p>
+              </div>
+            </div>
+            <div>
+              <p className="text-sm font-semibold text-emerald-700">{intelligence.label}</p>
+              <p className="mt-1 text-sm leading-6 text-slate-600">{intelligence.explanation}</p>
+            </div>
+          </div>
+          <div className="mt-4 space-y-3">
+            {intelligence.scores.map(([label, value]) => <ScoreBar key={label} label={label} value={value} />)}
+          </div>
+        </div>
+        <div className="rounded-[8px] border border-slate-200 bg-white p-5 shadow-[0_10px_24px_rgba(15,23,42,0.04)]">
+          <ProjectedOutcomes outcomes={intelligence.outcomes} />
+        </div>
+        <div className="rounded-[8px] border border-slate-200 bg-white p-5 shadow-[0_10px_24px_rgba(15,23,42,0.04)]">
+          <h3 className="text-base font-semibold text-slate-950">Candidate Attraction Reasons</h3>
+          <div className="mt-4 space-y-3">
+            {employerEngagementBuilder.preview.attractionReasons.map((reason) => (
+              <p key={reason} className="flex gap-3 text-sm leading-6 text-slate-700">
+                <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-blue-600 text-white">✓</span>
+                <span>{reason}</span>
+              </p>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="rounded-[8px] border border-slate-200 bg-white p-5 shadow-[0_10px_24px_rgba(15,23,42,0.04)]">
+        <h3 className="text-base font-semibold text-slate-950">Pre-Launch Checklist</h3>
+        <div className="mt-5 space-y-4">
+          {launchChecklist.map((item) => (
+            <p key={item} className="flex gap-3 text-sm leading-6 text-slate-700">
+              <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-emerald-500 text-white">✓</span>
+              <span>{item}</span>
+            </p>
+          ))}
+        </div>
+      </section>
+    </div>
+  )
+}
+
+function ScoreBar({ label, value }) {
+  return (
+    <div>
+      <div className="mb-1.5 flex items-center justify-between gap-3 text-xs">
+        <span className="font-medium text-slate-600">{label}</span>
+        <span className="text-slate-700">{value}/100</span>
+      </div>
+      <div className="h-1.5 overflow-hidden rounded-full bg-slate-100">
+        <div className="h-full rounded-full bg-blue-500" style={{ width: `${value}%` }} />
+      </div>
+    </div>
+  )
+}
+
+function EngagementStrengthPanel({ intelligence }) {
+  const ringColor = intelligence.score >= 86 ? 'border-emerald-400' : intelligence.score >= 80 ? 'border-teal-400' : 'border-blue-300'
+
+  return (
+    <section className="border-t border-slate-100 px-5 py-5">
+      <h3 className="text-sm font-semibold text-slate-950">Engagement Strength Score</h3>
+      <div className="mt-4 grid gap-4 sm:grid-cols-[96px_minmax(0,1fr)]">
+        <div className={`flex h-24 w-24 items-center justify-center rounded-full border-[8px] ${ringColor} bg-white`}>
+          <div className="text-center">
+            <p className="text-2xl font-semibold text-slate-950">{intelligence.score}</p>
+            <p className="text-xs text-slate-500">/100</p>
+          </div>
+        </div>
+        <div>
+          <p className="text-sm font-semibold text-emerald-700">{intelligence.label}</p>
+          <p className="mt-1 text-sm leading-6 text-slate-600">{intelligence.explanation}</p>
+        </div>
+      </div>
+      <div className="mt-4 space-y-3">
+        {intelligence.scores.map(([label, value]) => <ScoreBar key={label} label={label} value={value} />)}
+      </div>
+    </section>
+  )
+}
+
+function ProjectedOutcomes({ outcomes }) {
+  return (
+    <section className="border-t border-slate-100 px-5 py-5">
+      <h3 className="text-sm font-semibold text-slate-950">Projected Outcomes</h3>
+      <div className="mt-3 grid grid-cols-2 gap-3">
+        {outcomes.map(([value, label]) => (
+          <div key={label} className="rounded-[8px] border border-slate-200 bg-white px-3 py-3 text-center">
+            <p className="text-lg font-semibold text-blue-700">{value}</p>
+            <p className="mt-1 text-xs leading-4 text-slate-500">{label}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+  )
+}
+
+function MarketInsights() {
+  return (
+    <section className="border-t border-slate-100 px-5 py-5">
+      <h3 className="text-sm font-semibold text-slate-950">Market Insights</h3>
+      <p className="mt-1 text-sm text-slate-500">High demand skills this month</p>
+      <div className="mt-3 flex flex-wrap gap-2">
+        {['Power BI +18%', 'SQL +12%', 'GenAI +22%'].map((item) => (
+          <span key={item} className="rounded-full bg-emerald-50 px-2.5 py-1 text-xs font-medium text-emerald-700 ring-1 ring-emerald-100">{item}</span>
+        ))}
+      </div>
+      <div className="mt-4 rounded-[8px] bg-slate-50 px-3 py-3">
+        <p className="text-sm font-medium text-slate-950">Students interested in analytics</p>
+        <p className="mt-1 text-sm text-slate-600">2,340 active students</p>
+      </div>
+    </section>
+  )
+}
+
+function BuilderPreviewPanel({ selectedType, currentStep }) {
+  const form = employerEngagementBuilder.form
+  const preview = employerEngagementBuilder.preview
+  const intelligence = stepIntelligence[currentStep]
+
+  return (
+    <aside className="overflow-hidden rounded-[8px] border border-slate-200 bg-white shadow-[0_10px_28px_rgba(15,23,42,0.06)] xl:sticky xl:top-28 xl:self-start">
+      <section className="px-5 py-5">
+        <div className="flex items-center justify-between gap-3">
+          <h2 className="text-base font-semibold text-slate-950">Engagement Preview</h2>
+          <span className="rounded-full bg-emerald-50 px-2.5 py-1 text-xs font-medium text-emerald-700 ring-1 ring-emerald-100">Live preview</span>
+        </div>
+        <div className="mt-5 flex gap-4">
+          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-blue-50 text-sm font-semibold text-blue-700 ring-1 ring-blue-100">B</div>
+          <div className="min-w-0">
+            <h3 className="text-sm font-semibold leading-5 text-slate-950">{form.title}</h3>
+            <div className="mt-2 flex flex-wrap gap-2">
+              <span className="rounded-full bg-blue-50 px-2.5 py-1 text-xs font-medium text-blue-700 ring-1 ring-blue-100">{selectedType}</span>
+              <span className="rounded-full bg-slate-100 px-2.5 py-1 text-xs font-medium text-slate-600">{preview.status}</span>
+            </div>
+            <p className="mt-4 text-sm leading-6 text-slate-600">{form.description}</p>
+          </div>
+        </div>
+      </section>
+
+      <EngagementStrengthPanel intelligence={intelligence} />
+      <ProjectedOutcomes outcomes={intelligence.outcomes} />
+      <MarketInsights />
+
+      <section className="border-t border-slate-100 px-5 py-5">
+        <h3 className="text-sm font-semibold text-slate-950">Why this will attract candidates</h3>
+        <ul className="mt-3 space-y-3">
+          {preview.attractionReasons.map((reason) => (
+            <li key={reason} className="flex gap-2 text-sm leading-6 text-slate-600">
+              <span className="mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-blue-600 text-white">
+                <svg className="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <path d="m5 12 4 4 10-10" />
+                </svg>
+              </span>
+              <span>{reason}</span>
+            </li>
+          ))}
+        </ul>
+      </section>
+    </aside>
+  )
+}
 
 function matchesFilter(request, filter) {
   if (filter === 'All') return true
@@ -32,8 +772,9 @@ function matchesFilter(request, filter) {
 }
 
 export default function EmployerCreateEngagementPage() {
-  const [activeTab, setActiveTab] = useState('club-collaboration')
+  const [activeTab, setActiveTab] = useState('create-engagement')
   const [selectedType, setSelectedType] = useState(employerEngagementBuilder.selectedType)
+  const [currentStep, setCurrentStep] = useState(1)
   const [activeFilter, setActiveFilter] = useState('All')
   const [selectedRequestId, setSelectedRequestId] = useState(employerEngagement.selectedRequestId)
   const [sentIds, setSentIds] = useState(() => new Set(employerEngagement.clubRequests.filter((request) => request.status === 'Interest Sent').map((request) => request.id)))
@@ -54,95 +795,86 @@ export default function EmployerCreateEngagementPage() {
     window.setTimeout(() => setToast(''), 1800)
   }
 
+  function goNext() {
+    setCurrentStep((step) => Math.min(step + 1, creationSteps.length))
+  }
+
+  function goBack() {
+    setCurrentStep((step) => Math.max(step - 1, 1))
+  }
+
+  function publishEngagement() {
+    setToast('Engagement published for demo review.')
+    window.setTimeout(() => setToast(''), 1800)
+  }
+
+  function saveDraft() {
+    setToast('Draft saved.')
+    window.setTimeout(() => setToast(''), 1800)
+  }
+
+  const activeStep = creationSteps.find((step) => step.id === currentStep) || creationSteps[0]
+  const nextStep = creationSteps.find((step) => step.id === currentStep + 1)
+
+  let stepContent
+  if (currentStep === 1) {
+    stepContent = <ChooseTypeStep selectedType={selectedType} setSelectedType={setSelectedType} />
+  } else if (currentStep === 2) {
+    stepContent = <ProgramDetailsStep />
+  } else if (currentStep === 3) {
+    stepContent = <AudienceSkillsStep />
+  } else if (currentStep === 4) {
+    stepContent = <TimelineResourcesStep />
+  } else {
+    stepContent = <ReviewLaunchStep />
+  }
+
   return (
     <div className="space-y-6">
       <header>
         <h2 className="text-2xl font-semibold tracking-tight text-slate-950">Create Engagement</h2>
-        <p className="mt-2 text-sm text-slate-500">Build relationships with student talent through collaboration and early experiences.</p>
+        <p className="mt-2 text-sm text-slate-500">
+          {activeTab === 'create-engagement' ? `${activeStep.title}: ${activeStep.helper}.` : 'Build relationships with student talent through collaboration and early experiences.'}
+        </p>
       </header>
 
       <InternalTabNav tabs={tabs} activeTab={activeTab} onTabChange={setActiveTab} />
 
       {activeTab === 'create-engagement' ? (
-        <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_430px]">
+        <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_360px] 2xl:grid-cols-[minmax(0,1fr)_390px]">
           <main className="min-w-0 space-y-5">
-            <FormSectionCard step="1" title="Choose Engagement Type">
-              <div className="flex gap-4 overflow-x-auto pb-1">
-                {employerEngagementBuilder.engagementTypes.map((type) => (
-                  <EngagementTypeCard key={type} type={type} selected={selectedType === type} onClick={() => setSelectedType(type)} />
-                ))}
-              </div>
-            </FormSectionCard>
+            <ProgressTracker currentStep={currentStep} />
+            {stepContent}
 
-            <div className="grid gap-5 lg:grid-cols-2">
-              <FormSectionCard step="2" title="Engagement Brief">
-                <div className="grid gap-4 sm:grid-cols-2">
-                  <MockInput label="Engagement Title" value={employerEngagementBuilder.form.title} />
-                  <MockInput label="Goal / Objective" value={employerEngagementBuilder.form.goal} />
-                  <MockInput label="Description" value={employerEngagementBuilder.form.description} multiline />
-                </div>
-                <div className="mt-4">
-                  <p className="text-xs font-semibold text-slate-700">Student Outcomes</p>
-                  <div className="mt-2 flex flex-wrap gap-2">
-                    {employerEngagementBuilder.form.outcomes.map((item) => <PillChip key={item}>{item}</PillChip>)}
-                  </div>
-                </div>
-              </FormSectionCard>
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+              {currentStep === 1 ? (
+                <button className="h-12 rounded-[8px] border border-slate-200 bg-white px-8 text-sm font-semibold text-slate-600 hover:bg-slate-50" type="button">
+                  Cancel
+                </button>
+              ) : (
+                <button onClick={goBack} className="h-12 rounded-[8px] border border-slate-200 bg-white px-8 text-sm font-semibold text-slate-600 hover:bg-slate-50" type="button">
+                  &lt; Back
+                </button>
+              )}
 
-              <FormSectionCard step="3" title="Target Audience & Skills">
-                {[
-                  ['Target roles', employerEngagementBuilder.form.targetRoles],
-                  ['Preferred universities', employerEngagementBuilder.form.universities],
-                  ['Skill focus', employerEngagementBuilder.form.skillFocus],
-                  ['Experience level', employerEngagementBuilder.form.experienceLevels],
-                ].map(([label, values]) => (
-                  <div key={label} className="mb-4 last:mb-0">
-                    <p className="text-xs font-semibold text-slate-700">{label}</p>
-                    <div className="mt-2 flex flex-wrap gap-2">
-                      {values.map((item) => <PillChip key={item}>{item}</PillChip>)}
-                      <PillChip selected={false}>+</PillChip>
-                    </div>
-                  </div>
-                ))}
-              </FormSectionCard>
+              {currentStep < 5 ? (
+                <button onClick={goNext} className="h-12 rounded-[8px] bg-blue-600 px-8 text-sm font-semibold text-white shadow-sm shadow-blue-200 hover:bg-blue-700" type="button">
+                  Next: {nextStep.title} -&gt;
+                </button>
+              ) : (
+                <div className="flex flex-col gap-3 sm:flex-row">
+                  <button onClick={saveDraft} className="h-12 rounded-[8px] border border-blue-200 bg-white px-8 text-sm font-semibold text-blue-700 hover:bg-blue-50" type="button">
+                    Save Draft
+                  </button>
+                  <button onClick={publishEngagement} className="h-12 rounded-[8px] bg-blue-600 px-8 text-sm font-semibold text-white shadow-sm shadow-blue-200 hover:bg-blue-700" type="button">
+                    Publish Engagement
+                  </button>
+                </div>
+              )}
             </div>
-
-            <div className="grid gap-5 lg:grid-cols-2">
-              <FormSectionCard step="4" title="Format & Timeline">
-                <div className="grid gap-4 sm:grid-cols-3">
-                  <MockInput label="Start Date" value={employerEngagementBuilder.form.startDate} />
-                  <MockSelect label="Duration" value={employerEngagementBuilder.form.duration} />
-                  <MockSelect label="Mode" value={employerEngagementBuilder.form.mode} />
-                  <MockInput label="Capacity" value={employerEngagementBuilder.form.capacity} />
-                  <MockInput label="Application deadline" value={employerEngagementBuilder.form.applicationDeadline} />
-                </div>
-              </FormSectionCard>
-
-              <FormSectionCard step="5" title="Support & Resources">
-                <div className="grid gap-4 sm:grid-cols-3">
-                  <MockSelect label="Need mentors" value={employerEngagementBuilder.form.mentorsNeeded} />
-                  <MockSelect label="Need judges" value={employerEngagementBuilder.form.judgesNeeded} />
-                  <MockSelect label="Budget range" value={employerEngagementBuilder.form.budgetRange} />
-                </div>
-                <div className="mt-4">
-                  <p className="text-xs font-semibold text-slate-700">Deliverables</p>
-                  <div className="mt-2 flex flex-wrap gap-2">
-                    {employerEngagementBuilder.form.deliverables.map((item) => <PillChip key={item}>{item}</PillChip>)}
-                    <PillChip selected={false}>+</PillChip>
-                  </div>
-                </div>
-              </FormSectionCard>
-            </div>
-
-            <AISuggestionCard onToast={setToast} />
           </main>
 
-          <EngagementPreviewPanel
-            type={selectedType}
-            form={employerEngagementBuilder.form}
-            preview={employerEngagementBuilder.preview}
-            onToast={setToast}
-          />
+          <BuilderPreviewPanel selectedType={selectedType} currentStep={currentStep} />
         </div>
       ) : (
         <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_380px]">
