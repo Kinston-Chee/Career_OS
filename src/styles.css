@@ -52,3 +52,49 @@
 .radar-settle-left {
   animation: radarSettleLeft 360ms ease-out;
 }
+
+@keyframes eventModalBackdropIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.event-modal-backdrop {
+  animation: eventModalBackdropIn 200ms ease-out;
+}
+
+@keyframes eventModalPanelIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.event-modal-panel {
+  animation: eventModalPanelIn 200ms ease-out;
+}
+
+@keyframes eventCardStaggerIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.event-card-stagger {
+  animation: eventCardStaggerIn 220ms ease-out both;
+}

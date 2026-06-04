@@ -122,7 +122,7 @@ function SearchAndSectorBar({ search, onSearch, sectorId, onSectorChange, sector
 }
 
 // ─── small section header ───────────────────────────────────────────────
-function SectionHeader({ icon, title, count, link }) {
+function SectionHeader({ icon, title, count, link, onLinkClick }) {
   return (
     <div className="mb-4 flex items-center gap-2">
       <h3 className="flex items-center gap-2 text-base font-bold text-slate-900">
@@ -133,9 +133,13 @@ function SectionHeader({ icon, title, count, link }) {
         <span className="rounded-full bg-slate-100 px-2.5 py-0.5 text-xs font-medium text-slate-500">{count}</span>
       )}
       {link && (
-        <a href="#" className="ml-auto flex items-center gap-1 text-xs font-semibold text-violet-600 hover:underline">
+        <button
+          type="button"
+          onClick={onLinkClick}
+          className="ml-auto flex items-center gap-1 text-xs font-semibold text-violet-600 transition hover:text-violet-700 hover:underline"
+        >
           {link} <span aria-hidden>→</span>
-        </a>
+        </button>
       )}
     </div>
   )
@@ -660,6 +664,561 @@ function matchesSector(event, sectorId) {
   return event.sector === sectorId
 }
 
+const CATEGORY_FILTERS = [
+  { id: 'all', label: 'All Events' },
+  { id: 'hackathons', label: 'Hackathons' },
+  { id: 'case-competitions', label: 'Case Competitions' },
+  { id: 'workshops', label: 'Workshops' },
+  { id: 'talks', label: 'Talks' },
+  { id: 'webinars', label: 'Webinars' },
+  { id: 'networking', label: 'Networking' },
+]
+
+const FORMAT_OPTIONS = ['All', 'Online', 'Physical', 'Hybrid']
+const INDUSTRY_OPTIONS = ['All', 'Technology', 'Finance', 'Consulting', 'Design', 'Marketing', 'Healthcare']
+const MATCH_OPTIONS = ['All', '60%+', '70%+', '80%+', '90%+']
+const DATE_OPTIONS = ['All', 'This Week', 'This Month', 'Upcoming']
+const SORT_OPTIONS = ['Most Relevant', 'Most Popular', 'Highest Match', 'Newest', 'Ending Soon']
+
+/**
+ * @typedef {Object} TrendingEvent
+ * @property {string} id
+ * @property {string} type
+ * @property {string} org
+ * @property {string} title
+ * @property {string} date
+ * @property {string} location
+ * @property {number} goingCount
+ * @property {number} matchPercent
+ * @property {string[]} tags
+ * @property {string} category
+ * @property {'Online' | 'Physical' | 'Hybrid'} format
+ * @property {string} industry
+ * @property {number} daysLeft
+ * @property {string} ctaLabel
+ */
+
+const EXTRA_TRENDING_EVENTS = [
+  {
+    id: 'evt-trend-5',
+    type: 'Webinar',
+    typeColor: 'teal',
+    thumbGradient: 'from-cyan-100 to-teal-200',
+    iconBg: 'bg-cyan-500/20',
+    emoji: '🎥',
+    org: 'Harvard Business Review',
+    title: 'Future of Work: Skills That Matter',
+    date: '22 May 2025',
+    location: 'Online',
+    goingCount: 256,
+    goingLabel: 'going',
+    matchPercent: 74,
+    sector: 'business',
+    tags: ['Leadership', 'Future Work', 'Communication'],
+    category: 'webinars',
+    format: 'Online',
+    industry: 'Consulting',
+    daysLeft: 4,
+    createdOrder: 8,
+    ctaLabel: 'Join Waitlist',
+  },
+  {
+    id: 'evt-trend-6',
+    type: 'Talk',
+    typeColor: 'violet',
+    thumbGradient: 'from-violet-100 to-indigo-200',
+    iconBg: 'bg-violet-500/20',
+    emoji: '💬',
+    org: 'Dr. Sarah Chen (AI Researcher)',
+    title: 'The Ethics of AI in the Real World',
+    date: '23 May 2025',
+    location: 'Online',
+    goingCount: 189,
+    goingLabel: 'going',
+    matchPercent: 81,
+    sector: 'data',
+    tags: ['AI Ethics', 'Research', 'Policy'],
+    category: 'talks',
+    format: 'Online',
+    industry: 'Technology',
+    daysLeft: 5,
+    createdOrder: 7,
+    ctaLabel: 'Join Waitlist',
+  },
+  {
+    id: 'evt-trend-7',
+    type: 'Workshop',
+    typeColor: 'amber',
+    thumbGradient: 'from-amber-100 to-yellow-200',
+    iconBg: 'bg-amber-500/20',
+    emoji: '🚀',
+    org: 'Figma',
+    title: 'UI/UX Design Sprint with Figma',
+    date: '24 May 2025',
+    location: 'Kuala Lumpur',
+    goingCount: 178,
+    goingLabel: 'going',
+    matchPercent: 86,
+    sector: 'design',
+    tags: ['UX', 'Figma', 'Design Sprint'],
+    category: 'workshops',
+    format: 'Physical',
+    industry: 'Design',
+    daysLeft: 6,
+    createdOrder: 6,
+    ctaLabel: 'Register',
+  },
+  {
+    id: 'evt-trend-8',
+    type: 'Hackathon',
+    typeColor: 'blue',
+    thumbGradient: 'from-sky-100 to-blue-200',
+    iconBg: 'bg-blue-500/20',
+    emoji: '</>',
+    org: 'MLH (Major League Hacking)',
+    title: 'Build for Impact Hackathon',
+    date: '24-25 May 2025',
+    location: 'Online',
+    goingCount: 205,
+    goingLabel: 'joined',
+    matchPercent: 91,
+    sector: 'computer-science',
+    tags: ['Code', 'Social Impact', 'Cloud'],
+    category: 'hackathons',
+    format: 'Online',
+    industry: 'Technology',
+    daysLeft: 6,
+    createdOrder: 5,
+    ctaLabel: 'Register',
+    isNew: true,
+  },
+  {
+    id: 'evt-trend-9',
+    type: 'Case Comp',
+    typeColor: 'rose',
+    thumbGradient: 'from-rose-100 to-pink-200',
+    iconBg: 'bg-rose-500/15',
+    emoji: '📊',
+    org: 'BCG (Boston Consulting Group)',
+    title: 'BCG Strategy Case Challenge',
+    date: '25 May 2025',
+    location: 'Online',
+    goingCount: 156,
+    goingLabel: 'going',
+    matchPercent: 93,
+    sector: 'business',
+    tags: ['Strategy', 'Consulting', 'Cases'],
+    category: 'case-competitions',
+    format: 'Online',
+    industry: 'Consulting',
+    daysLeft: 7,
+    createdOrder: 4,
+    ctaLabel: 'Register',
+  },
+  {
+    id: 'evt-trend-10',
+    type: 'Networking',
+    typeColor: 'emerald',
+    thumbGradient: 'from-emerald-100 to-green-200',
+    iconBg: 'bg-emerald-500/20',
+    emoji: '🤝',
+    org: 'Women in Tech Malaysia',
+    title: 'Tech Careers Networking Night',
+    date: '26 May 2025',
+    location: 'Kuala Lumpur',
+    goingCount: 224,
+    goingLabel: 'going',
+    matchPercent: 78,
+    sector: 'computer-science',
+    tags: ['Mentorship', 'Community', 'Careers'],
+    category: 'networking',
+    format: 'Physical',
+    industry: 'Technology',
+    daysLeft: 8,
+    createdOrder: 3,
+    ctaLabel: 'Register',
+  },
+  {
+    id: 'evt-trend-11',
+    type: 'Webinar',
+    typeColor: 'teal',
+    thumbGradient: 'from-teal-100 to-emerald-200',
+    iconBg: 'bg-teal-500/20',
+    emoji: '🌐',
+    org: 'LinkedIn Learning',
+    title: 'Breaking into Product Management',
+    date: '26 May 2025',
+    location: 'Online',
+    goingCount: 312,
+    goingLabel: 'going',
+    matchPercent: 69,
+    sector: 'business',
+    tags: ['Product', 'Career', 'Roadmaps'],
+    category: 'webinars',
+    format: 'Online',
+    industry: 'Marketing',
+    daysLeft: 8,
+    createdOrder: 2,
+    ctaLabel: 'Join Waitlist',
+  },
+  {
+    id: 'evt-trend-12',
+    type: 'Workshop',
+    typeColor: 'amber',
+    thumbGradient: 'from-orange-100 to-amber-200',
+    iconBg: 'bg-orange-500/20',
+    emoji: '🔒',
+    org: 'Google Cloud',
+    title: 'Intro to Cloud Security Workshop',
+    date: '28 May 2025',
+    location: 'Online',
+    goingCount: 133,
+    goingLabel: 'going',
+    matchPercent: 84,
+    sector: 'computer-science',
+    tags: ['Cloud', 'Security', 'GCP'],
+    category: 'workshops',
+    format: 'Online',
+    industry: 'Technology',
+    daysLeft: 10,
+    createdOrder: 1,
+    ctaLabel: 'Join Waitlist',
+  },
+]
+
+function categoryForType(type) {
+  const normalized = type?.toLowerCase()
+  if (normalized?.includes('hack')) return 'hackathons'
+  if (normalized?.includes('case')) return 'case-competitions'
+  if (normalized?.includes('workshop')) return 'workshops'
+  if (normalized?.includes('talk')) return 'talks'
+  if (normalized?.includes('webinar')) return 'webinars'
+  if (normalized?.includes('network')) return 'networking'
+  return 'all'
+}
+
+function formatForLocation(location) {
+  if (location === 'Online') return 'Online'
+  if (location?.toLowerCase().includes('hybrid')) return 'Hybrid'
+  return 'Physical'
+}
+
+function industryForSector(sector, type) {
+  if (type === 'Case Comp') return 'Consulting'
+  if (sector === 'design') return 'Design'
+  if (sector === 'finance') return 'Finance'
+  if (sector === 'marketing') return 'Marketing'
+  if (sector === 'business') return 'Consulting'
+  return 'Technology'
+}
+
+function enrichTrendingEvent(event, index) {
+  return {
+    ...event,
+    category: event.category ?? categoryForType(event.type),
+    format: event.format ?? formatForLocation(event.location),
+    industry: event.industry ?? industryForSector(event.sector, event.type),
+    daysLeft: event.daysLeft ?? index + 2,
+    createdOrder: event.createdOrder ?? 20 - index,
+    ctaLabel: event.ctaLabel ?? (event.matchPercent >= 90 ? 'Register' : 'Join Waitlist'),
+  }
+}
+
+function FilterChip({ label, active, onClick }) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      aria-pressed={active}
+      className={`shrink-0 rounded-full border px-4 py-2 text-xs font-semibold transition-all duration-200 ${
+        active
+          ? 'border-violet-600 bg-violet-600 text-white shadow-[0_10px_22px_rgba(124,58,237,0.25)]'
+          : 'border-slate-200 bg-white text-slate-600 hover:border-violet-300 hover:text-violet-700'
+      }`}
+    >
+      {label}
+    </button>
+  )
+}
+
+function FilterSelect({ label, value, options, onChange }) {
+  return (
+    <label className="min-w-0 flex-1 text-xs font-semibold text-slate-500">
+      <span>{label}</span>
+      <select
+        value={value}
+        onChange={(event) => onChange(event.target.value)}
+        className="mt-1 h-10 w-full rounded-xl border border-slate-200 bg-white px-3 text-sm font-semibold text-slate-700 outline-none transition focus:border-violet-400 focus:ring-4 focus:ring-violet-50"
+      >
+        {options.map((option) => (
+          <option key={option} value={option}>
+            {option}
+          </option>
+        ))}
+      </select>
+    </label>
+  )
+}
+
+function ModalShell({ titleId, isOpen, onClose, children }) {
+  const modalRef = useRef(null)
+
+  useEffect(() => {
+    if (!isOpen) return undefined
+    const previousOverflow = document.body.style.overflow
+    const previousActive = document.activeElement
+    document.body.style.overflow = 'hidden'
+
+    window.requestAnimationFrame(() => {
+      const firstFocusable = modalRef.current?.querySelector(
+        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
+      )
+      firstFocusable?.focus()
+    })
+
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape') {
+        event.preventDefault()
+        onClose()
+        return
+      }
+
+      if (event.key !== 'Tab' || !modalRef.current) return
+      const focusable = Array.from(
+        modalRef.current.querySelectorAll(
+          'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])',
+        ),
+      )
+      if (focusable.length === 0) return
+
+      const first = focusable[0]
+      const last = focusable[focusable.length - 1]
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault()
+        last.focus()
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault()
+        first.focus()
+      }
+    }
+
+    document.addEventListener('keydown', handleKeyDown)
+    return () => {
+      document.body.style.overflow = previousOverflow
+      document.removeEventListener('keydown', handleKeyDown)
+      previousActive?.focus?.()
+    }
+  }, [isOpen, onClose])
+
+  if (!isOpen) return null
+
+  return (
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/55 px-3 py-4 backdrop-blur-[2px] event-modal-backdrop sm:px-6"
+      role="presentation"
+      onMouseDown={(event) => {
+        if (event.target === event.currentTarget) onClose()
+      }}
+    >
+      <section
+        ref={modalRef}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby={titleId}
+        className="event-modal-panel flex max-h-[92vh] w-full max-w-7xl flex-col overflow-hidden rounded-2xl border border-white/70 bg-white shadow-[0_30px_90px_rgba(15,23,42,0.35)]"
+      >
+        {children}
+      </section>
+    </div>
+  )
+}
+
+function TrendingModalCard({ event, index, onSelect }) {
+  return (
+    <article
+      className="event-card-stagger flex min-h-[230px] flex-col overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-sm transition duration-200 hover:-translate-y-1 hover:border-violet-200 hover:shadow-[0_18px_38px_rgba(15,23,42,0.12)]"
+      style={{ animationDelay: `${Math.min(index, 12) * 35}ms` }}
+    >
+      <div className={`relative flex h-28 items-end bg-gradient-to-br ${event.thumbGradient} p-3`}>
+        <span
+          className={`absolute left-3 top-3 inline-flex items-center rounded-full px-2.5 py-1 text-[11px] font-bold ${TYPE_BADGE_COLOR[event.typeColor] ?? 'bg-white/80 text-slate-700'}`}
+        >
+          {event.type}
+        </span>
+        {(event.isHot || event.isNew) && (
+          <span className="absolute right-3 top-3 rounded-full bg-white/90 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-violet-700">
+            {event.isHot ? 'Hot' : 'New'}
+          </span>
+        )}
+        <div className={`flex h-12 w-12 items-center justify-center rounded-xl text-xl ${event.iconBg}`}>
+          <span aria-hidden>{event.emoji}</span>
+        </div>
+      </div>
+      <div className="flex flex-1 flex-col p-4">
+        <p className="truncate text-[11px] font-semibold text-slate-400">{event.org}</p>
+        <h4 className="mt-1 line-clamp-2 min-h-[40px] text-sm font-bold leading-tight text-slate-950">{event.title}</h4>
+        <div className="mt-3 space-y-1 text-xs text-slate-600">
+          <p className="flex items-center gap-1.5">
+            <span aria-hidden className="text-blue-500">▣</span>
+            {event.date}
+          </p>
+          <p className="flex items-center gap-1.5">
+            <span aria-hidden className="text-blue-500">⌖</span>
+            {event.location}
+          </p>
+        </div>
+        <div className="mt-3 flex flex-wrap gap-1.5">
+          {(event.tags ?? []).slice(0, 3).map((tag) => (
+            <span key={tag} className="rounded-full bg-slate-100 px-2 py-0.5 text-[10px] font-semibold text-slate-500">
+              {tag}
+            </span>
+          ))}
+        </div>
+        <div className="mt-auto flex items-center gap-2 border-t border-slate-100 pt-3">
+          <span className="text-xs font-medium text-slate-600">{event.goingCount} {event.goingLabel}</span>
+          <span className="ml-auto rounded-full bg-emerald-50 px-2 py-0.5 text-[10px] font-bold text-emerald-600">
+            {event.matchPercent}% Match
+          </span>
+        </div>
+        <button
+          type="button"
+          onClick={() => onSelect?.(event)}
+          className="mt-3 h-9 rounded-xl bg-violet-600 px-3 text-sm font-bold text-white shadow-sm transition hover:bg-violet-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-400"
+        >
+          {event.ctaLabel}
+        </button>
+      </div>
+    </article>
+  )
+}
+
+function AllTrendingEventsModal({ isOpen, onClose, events, onSelect }) {
+  const [query, setQuery] = useState('')
+  const [category, setCategory] = useState('all')
+  const [format, setFormat] = useState('All')
+  const [industry, setIndustry] = useState('All')
+  const [matchScore, setMatchScore] = useState('All')
+  const [date, setDate] = useState('All')
+  const [sort, setSort] = useState('Most Relevant')
+
+  const resetFilters = () => {
+    setQuery('')
+    setCategory('all')
+    setFormat('All')
+    setIndustry('All')
+    setMatchScore('All')
+    setDate('All')
+    setSort('Most Relevant')
+  }
+
+  const filteredEvents = useMemo(() => {
+    const minMatch = matchScore === 'All' ? 0 : Number.parseInt(matchScore, 10)
+    const needle = query.trim().toLowerCase()
+
+    const filtered = events.filter((event) => {
+      const searchable = [event.title, event.org, event.type, event.category, event.industry, ...(event.tags ?? [])]
+        .join(' ')
+        .toLowerCase()
+
+      if (needle && !searchable.includes(needle)) return false
+      if (category !== 'all' && event.category !== category) return false
+      if (format !== 'All' && event.format !== format) return false
+      if (industry !== 'All' && event.industry !== industry) return false
+      if ((event.matchPercent ?? 0) < minMatch) return false
+      if (date === 'This Week' && event.daysLeft > 7) return false
+      if (date === 'This Month' && event.daysLeft > 30) return false
+      if (date === 'Upcoming' && event.daysLeft < 0) return false
+      return true
+    })
+
+    return [...filtered].sort((a, b) => {
+      if (sort === 'Most Popular') return b.goingCount - a.goingCount
+      if (sort === 'Highest Match') return b.matchPercent - a.matchPercent
+      if (sort === 'Newest') return b.createdOrder - a.createdOrder
+      if (sort === 'Ending Soon') return a.daysLeft - b.daysLeft
+      return (b.matchPercent * 2 + b.goingCount / 20) - (a.matchPercent * 2 + a.goingCount / 20)
+    })
+  }, [category, date, events, format, industry, matchScore, query, sort])
+
+  return (
+    <ModalShell isOpen={isOpen} onClose={onClose} titleId="all-trending-events-title">
+      <div className="shrink-0 border-b border-slate-100 bg-white px-5 py-5 sm:px-7">
+        <div className="flex items-start gap-4">
+          <div className="flex-1">
+            <h2 id="all-trending-events-title" className="flex items-center gap-2 text-xl font-extrabold text-slate-950 sm:text-2xl">
+              <span aria-hidden>🔥</span>
+              All Trending Events
+            </h2>
+            <p className="mt-2 text-sm text-slate-500">Explore what's trending in your community and beyond.</p>
+          </div>
+          <button
+            type="button"
+            onClick={onClose}
+            aria-label="Close all trending events"
+            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-slate-200 bg-white text-xl leading-none text-slate-500 transition hover:border-slate-300 hover:text-slate-900"
+          >
+            ×
+          </button>
+        </div>
+
+        <div className="mt-5 grid gap-3 lg:grid-cols-[minmax(0,1fr)_240px]">
+          <label className="relative">
+            <span className="sr-only">Search trending events</span>
+            <input
+              type="search"
+              value={query}
+              onChange={(event) => setQuery(event.target.value)}
+              placeholder="Search events, organizers, categories, skills..."
+              className="h-11 w-full rounded-xl border border-slate-200 bg-white pl-4 pr-10 text-sm outline-none transition placeholder:text-slate-400 focus:border-violet-400 focus:ring-4 focus:ring-violet-50"
+            />
+            <span aria-hidden className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400">⌕</span>
+          </label>
+          <FilterSelect label="Sort by" value={sort} options={SORT_OPTIONS} onChange={setSort} />
+        </div>
+
+        <div className="mt-4 flex gap-2 overflow-x-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden" aria-label="Event categories">
+          {CATEGORY_FILTERS.map((item) => (
+            <FilterChip
+              key={item.id}
+              label={item.label}
+              active={category === item.id}
+              onClick={() => setCategory(item.id)}
+            />
+          ))}
+        </div>
+
+        <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          <FilterSelect label="Event Format" value={format} options={FORMAT_OPTIONS} onChange={setFormat} />
+          <FilterSelect label="Industry" value={industry} options={INDUSTRY_OPTIONS} onChange={setIndustry} />
+          <FilterSelect label="Match Score" value={matchScore} options={MATCH_OPTIONS} onChange={setMatchScore} />
+          <FilterSelect label="Date" value={date} options={DATE_OPTIONS} onChange={setDate} />
+        </div>
+      </div>
+
+      <div className="min-h-0 flex-1 overflow-y-auto scroll-smooth bg-slate-50/60 px-5 py-5 sm:px-7">
+        {filteredEvents.length > 0 ? (
+          <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+            {filteredEvents.map((event, index) => (
+              <TrendingModalCard key={event.id} event={event} index={index} onSelect={onSelect} />
+            ))}
+          </div>
+        ) : (
+          <div className="flex min-h-[260px] flex-col items-center justify-center rounded-2xl border border-dashed border-slate-200 bg-white p-8 text-center">
+            <p className="text-base font-bold text-slate-900">No events match your current filters.</p>
+            <button
+              type="button"
+              onClick={resetFilters}
+              className="mt-4 rounded-xl bg-violet-600 px-4 py-2 text-sm font-bold text-white transition hover:bg-violet-700"
+            >
+              Clear Filters
+            </button>
+          </div>
+        )}
+      </div>
+    </ModalShell>
+  )
+}
+
 // Normalizes an "upcoming" item (date chip shape) into the event shape the
 // detail page expects, so a click on any list works the same way.
 function normalizeUpcomingForDetail(item) {
@@ -686,10 +1245,15 @@ export default function EventHub() {
 
   // When set, render the EventDetail view instead of the hub.
   const [selectedEvent, setSelectedEvent] = useState(null)
+  const [isTrendsModalOpen, setIsTrendsModalOpen] = useState(false)
 
   const matches = (event) => matchesQuery(event, search) && matchesSector(event, sectorId)
 
   const trending = useMemo(() => eventHub.trending.filter(matches), [search, sectorId])
+  const allTrendingEvents = useMemo(
+    () => [...eventHub.trending, ...EXTRA_TRENDING_EVENTS].map(enrichTrendingEvent),
+    [],
+  )
   const recommendedSmall = useMemo(() => eventHub.recommendedSmall.filter(matches), [search, sectorId])
   const upcoming = useMemo(() => eventHub.upcoming.filter(matches), [search, sectorId])
   const featuredMatches = matches(eventHub.recommendedFeatured)
@@ -697,6 +1261,7 @@ export default function EventHub() {
   const isFiltered = Boolean(search) || sectorId !== 'all'
 
   const openDetail = (event) => {
+    setIsTrendsModalOpen(false)
     setSelectedEvent(normalizeUpcomingForDetail(event))
     if (typeof window !== 'undefined') window.scrollTo({ top: 0, behavior: 'smooth' })
   }
@@ -729,6 +1294,7 @@ export default function EventHub() {
           title="Trending Now"
           count={`${trending.length} ${trending.length === 1 ? 'event' : 'events'}`}
           link="View all trends"
+          onLinkClick={() => setIsTrendsModalOpen(true)}
         />
         {trending.length > 0 ? (
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -796,6 +1362,13 @@ export default function EventHub() {
       </section>
 
       <BottomCTA cta={eventHub.bottomCta} />
+
+      <AllTrendingEventsModal
+        isOpen={isTrendsModalOpen}
+        onClose={() => setIsTrendsModalOpen(false)}
+        events={allTrendingEvents}
+        onSelect={openDetail}
+      />
     </div>
   )
 }
