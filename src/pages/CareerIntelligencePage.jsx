@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import AIInsightCard from '../components/career/AIInsightCard'
+import LearningRoadmapCard from '../components/career/LearningRoadmapCard'
 import CareerPathDetail from '../components/career/CareerPathDetail'
 import CareerPathNetworkGraph from '../components/career/network/CareerPathNetworkGraph'
 import MarketDemandCard from '../components/career/MarketDemandCard'
@@ -30,23 +31,78 @@ function PlaceholderTab({ children }) {
 }
 
 function SkillSummaryTab() {
+  // When a technical category (e.g. Technology, Domain Knowledge, Tools) is
+  // clicked on the main radar, we render a second radar to the right with its
+  // breakdown. Click the same category again, or hit Close, to dismiss.
+  const [selectedCategory, setSelectedCategory] = useState(null)
+
+  const handleCategoryClick = (category) => {
+    if (!category?.isTechnical || !category.breakdown) return
+    setSelectedCategory((prev) => (prev?.label === category.label ? null : category))
+  }
+
+  const mainRadarCard = (
+    <Card className="rounded-2xl border-slate-200/80 bg-white/95 p-5 shadow-[0_12px_30px_rgba(15,23,42,0.04)]">
+      <div className="flex items-start justify-between gap-3">
+        <h3 className="text-base font-semibold text-slate-950">Skill Readiness by Category</h3>
+        <span className="hidden text-[10px] font-medium uppercase tracking-wide text-slate-400 sm:block">
+          Click a technical skill
+        </span>
+      </div>
+      <RadarChartMock
+        data={careerIntelligence.skillCategories}
+        onCategoryClick={handleCategoryClick}
+        highlightedLabel={selectedCategory?.label}
+      />
+    </Card>
+  )
+
+  const overallReadinessCard = (
+    <Card className="rounded-2xl border-slate-200/80 bg-white/95 p-5 shadow-[0_12px_30px_rgba(15,23,42,0.04)]">
+      <h3 className="text-base font-semibold text-slate-950">Overall Readiness</h3>
+      <ReadinessGauge
+        value={careerIntelligence.readinessScore}
+        label={careerIntelligence.readinessLabel}
+        text={careerIntelligence.readinessText}
+      />
+    </Card>
+  )
+
   return (
     <div className="space-y-5">
-      <section className="grid gap-5 xl:grid-cols-[minmax(0,1.35fr)_minmax(280px,0.65fr)]">
-        <Card className="rounded-2xl border-slate-200/80 bg-white/95 p-5 shadow-[0_12px_30px_rgba(15,23,42,0.04)]">
-          <h3 className="text-base font-semibold text-slate-950">Skill Readiness by Category</h3>
-          <RadarChartMock data={careerIntelligence.skillCategories} />
-        </Card>
-
-        <Card className="rounded-2xl border-slate-200/80 bg-white/95 p-5 shadow-[0_12px_30px_rgba(15,23,42,0.04)]">
-          <h3 className="text-base font-semibold text-slate-950">Overall Readiness</h3>
-          <ReadinessGauge
-            value={careerIntelligence.readinessScore}
-            label={careerIntelligence.readinessLabel}
-            text={careerIntelligence.readinessText}
-          />
-        </Card>
-      </section>
+      {selectedCategory ? (
+        <>
+          <section className="grid gap-5 lg:grid-cols-2">
+            <div className="radar-settle-left">{mainRadarCard}</div>
+            {/* key on category label re-mounts the card so the slide-in animation re-fires when switching */}
+            <Card
+              key={selectedCategory.label}
+              className="radar-slide-in-right rounded-2xl border-slate-200/80 bg-white/95 p-5 shadow-[0_12px_30px_rgba(15,23,42,0.04)]"
+            >
+              <div className="flex items-start justify-between gap-3">
+                <h3 className="text-base font-semibold text-slate-950">
+                  {selectedCategory.label}
+                  <span className="ml-1 font-normal text-slate-400">— Detailed breakdown</span>
+                </h3>
+                <button
+                  type="button"
+                  onClick={() => setSelectedCategory(null)}
+                  className="rounded-full border border-slate-200 px-3 py-1 text-xs font-semibold text-slate-500 transition hover:border-slate-300 hover:text-slate-900"
+                >
+                  Close
+                </button>
+              </div>
+              <RadarChartMock data={selectedCategory.breakdown} accent="emerald" />
+            </Card>
+          </section>
+          {overallReadinessCard}
+        </>
+      ) : (
+        <section className="grid gap-5 xl:grid-cols-[minmax(0,1.35fr)_minmax(280px,0.65fr)]">
+          {mainRadarCard}
+          {overallReadinessCard}
+        </section>
+      )}
 
       <section className="grid gap-5 lg:grid-cols-2">
         <Card className="rounded-2xl border-slate-200/80 bg-white/95 p-5 shadow-[0_12px_30px_rgba(15,23,42,0.04)]">
@@ -75,6 +131,8 @@ function SkillSummaryTab() {
       </section>
 
       <AIInsightCard insight={careerIntelligence.aiInsight} />
+
+      <LearningRoadmapCard roadmap={careerIntelligence.learningRoadmap} />
     </div>
   )
 }

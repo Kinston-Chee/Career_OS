@@ -21,3 +21,34 @@
 .career-graph-flow {
   animation: careerGraphFlow 3.8s linear infinite;
 }
+
+/* Skill Summary radar drill-down animations */
+@keyframes radarSlideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(28px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.radar-slide-in-right {
+  animation: radarSlideInRight 360ms ease-out;
+}
+
+@keyframes radarSettleLeft {
+  from {
+    transform: translateX(40px);
+  }
+
+  to {
+    transform: translateX(0);
+  }
+}
+
+.radar-settle-left {
+  animation: radarSettleLeft 360ms ease-out;
+}
