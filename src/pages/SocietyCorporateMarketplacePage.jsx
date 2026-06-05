@@ -1,4 +1,7 @@
-﻿import React, { useMemo, useState } from 'react'
+import React, { useMemo, useState } from 'react'
+import AICollaborationOutreachPage from './AICollaborationOutreachPage'
+import AICreateEventPage from './AICreateEventPage'
+import AIPostEventCompletionPage from './AIPostEventCompletionPage'
 
 const filters = [
   'All Events',
@@ -9,7 +12,7 @@ const filters = [
   'Needs Technical Partner',
 ]
 
-const detailTabs = ['Overview', 'Current Collaborators', 'Interested', 'Expressed Interest', 'Event Details']
+const detailTabs = ['Overview', 'Current Collaborators', 'Interested', 'Event Details']
 
 const defaultTargetSkills = ['AI/ML', 'Data Analysis', 'Communication', 'Problem Solving']
 const defaultCollaborators = [
@@ -820,7 +823,380 @@ function InterestedWorkspace({ event }) {
   )
 }
 
-function EventDetailPage({ event, activeTab, onTabChange, onBack }) {
+// SVGs for Event Details Workspace
+function FileTextIcon() {
+  return (
+    <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+    </svg>
+  )
+}
+
+function BuildingIcon() {
+  return (
+    <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+    </svg>
+  )
+}
+
+function ClipboardIcon() {
+  return (
+    <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+    </svg>
+  )
+}
+
+function FlagIcon() {
+  return (
+    <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9" />
+    </svg>
+  )
+}
+
+function GlobeIcon() {
+  return (
+    <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9h18" />
+    </svg>
+  )
+}
+
+function MapPinIcon() {
+  return (
+    <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+    </svg>
+  )
+}
+
+function CalendarIcon() {
+  return (
+    <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+    </svg>
+  )
+}
+
+function ClockIcon() {
+  return (
+    <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+    </svg>
+  )
+}
+
+function UsersIcon() {
+  return (
+    <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+    </svg>
+  )
+}
+
+function MailIcon() {
+  return (
+    <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+    </svg>
+  )
+}
+
+function PhoneIcon() {
+  return (
+    <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.94.725l.548 2.2a1 1 0 01-.321.988l-1.305.98a10.582 10.582 0 004.872 4.872l.98-1.305a1 1 0 01.988-.321l2.2.548a1 1 0 01.725.94V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+    </svg>
+  )
+}
+
+function EventDetailsWorkspace({ event, shownSkills }) {
+  const eventFields = [
+    { label: 'Event Name', value: event.title, important: true, icon: <FileTextIcon /> },
+    { label: 'Organized By', value: `${event.club}, Sunway University`, important: true, icon: <BuildingIcon /> },
+    { label: 'Event Type', value: event.level === 'Workshop' ? 'Workshop' : event.level === 'Hackathon' ? 'Hackathon' : 'Case Competition', important: true, icon: <ClipboardIcon /> },
+    { label: 'Level', value: event.level, important: false, icon: <FlagIcon /> },
+    { label: 'Format', value: event.location === 'Online' ? 'Online' : 'Offline (On Campus)', important: false, icon: <GlobeIcon /> },
+    { label: 'Venue', value: event.location === 'Online' ? 'Zoom / Microsoft Teams' : 'Sunway University Campus', important: true, icon: <MapPinIcon /> },
+    { label: 'Date', value: `${event.date} (Preliminary - Grand Final)`, important: true, icon: <CalendarIcon /> },
+    { label: 'Registration Deadline', value: event.date.includes('July') ? '30 June 2026' : event.date.includes('August') ? '15 July 2026' : '1 August 2026', important: true, icon: <ClockIcon /> },
+    { label: 'Organizing Team', value: `${event.club} Committee`, important: false, icon: <UsersIcon /> },
+    { label: 'Contact Email', value: `${event.club.toLowerCase().replace(/\s+/g, '')}@sunway.edu.my`, important: false, icon: <MailIcon /> },
+    { label: 'Contact Phone', value: '+60 12-345 6789', important: false, icon: <PhoneIcon /> },
+  ]
+
+  const milestones = event.id === 'ai-finance-case' ? [
+    { title: 'Registration Opens', date: '15 May 2026', status: 'completed' },
+    { title: 'Registration Deadline', date: '30 June 2026', status: 'completed' },
+    { title: 'Preliminary Round', date: '15 - 20 July 2026', status: 'upcoming' },
+    { title: 'Semi-Final', date: '10 August 2026', status: 'scheduled' },
+    { title: 'Final Round & Award Ceremony', date: '28 September 2026', status: 'scheduled' }
+  ] : [
+    { title: 'Registration Opens', date: '1 June 2026', status: 'completed' },
+    { title: 'Registration Deadline', date: '30 June 2026', status: 'upcoming' },
+    { title: 'Event Kickoff', date: event.date, status: 'scheduled' },
+    { title: 'Evaluation Phase', date: '5 Days After Kickoff', status: 'scheduled' },
+    { title: 'Winner Announcement', date: '10 Days After Kickoff', status: 'scheduled' }
+  ]
+
+  const expectations = [
+    'Industry professionals to judge & evaluate teams',
+    'Sponsors to support prizes, certificates & event execution',
+    'Mentors to provide feedback and career guidance',
+    'Technical partners to provide tools or platforms'
+  ]
+
+  const metrics = [
+    { value: event.participants.replace(' students', ''), label: 'Expected Participants', icon: '👥', color: 'bg-indigo-50/60 text-indigo-600' },
+    { value: event.id === 'ai-finance-case' ? '20+' : '10+', label: 'Universities', icon: '🏢', color: 'bg-emerald-50/60 text-emerald-600' },
+    { value: event.id === 'ai-finance-case' ? '48+' : '30+', label: 'Skills Developed', icon: '⚡', color: 'bg-amber-50/60 text-amber-600' },
+    { value: 'High', label: 'Industry Relevance', icon: '📈', color: 'bg-rose-50/60 text-rose-600' }
+  ]
+
+  const categoryDetails = {
+    Judge: { desc: 'Expert evaluation for final round', icon: '⚖️', color: 'bg-blue-50 text-blue-700 font-medium' },
+    Sponsor: { desc: 'Cash prizes / funding support', icon: '💰', color: 'bg-emerald-50 text-emerald-700 font-medium' },
+    Mentor: { desc: 'Mentorship & industry guidance', icon: '🤝', color: 'bg-violet-50 text-violet-700 font-medium' },
+    Speaker: { desc: 'Industry expert talks & sharing', icon: '🎙️', color: 'bg-indigo-50 text-indigo-700 font-medium' },
+    'Technical Partner': { desc: 'Cloud credits & workshop tools', icon: '💻', color: 'bg-purple-50 text-purple-700 font-medium' },
+    Prizes: { desc: 'Merchandise or cash support', icon: '🎁', color: 'bg-amber-50 text-amber-700 font-medium' }
+  }
+
+  const categories = event.lookingFor.map(need => ({
+    name: need,
+    desc: categoryDetails[need]?.desc || 'Support and collaboration',
+    icon: categoryDetails[need]?.icon || '👥',
+    color: categoryDetails[need]?.color || 'bg-slate-50 text-slate-700'
+  }))
+
+  const documents = [
+    { name: 'Event Brief', type: 'PDF', size: '1.2 MB', color: 'text-red-650 bg-red-50/50 border-red-100/50 font-medium' },
+    { name: 'Sponsorship Deck', type: 'PPTX', size: '2.5 MB', color: 'text-amber-650 bg-amber-50/50 border-amber-100/50 font-medium' },
+    { name: 'Judging Criteria', type: 'PDF', size: '850 KB', color: 'text-red-655 bg-red-50/50 border-red-100/50 font-medium' },
+    { name: 'Marketing Kit', type: 'ZIP', size: '3.1 MB', color: 'text-violet-650 bg-violet-50/50 border-violet-100/50 font-medium' }
+  ]
+
+  return (
+    <div className="grid gap-6 grid-cols-1 lg:grid-cols-3 xl:grid-cols-12 items-start">
+      {/* Column 1: Left */}
+      <div className="space-y-6 lg:col-span-1 xl:col-span-5 min-w-0">
+        {/* About the Event */}
+        <section className="rounded-2xl border border-slate-200/60 bg-white p-6 shadow-[0_8px_30px_rgba(0,0,0,0.015)] space-y-4">
+          <h3 className="text-sm font-semibold tracking-tight text-slate-900">About the Event</h3>
+          <div className="space-y-3.5">
+            {eventFields.map((field) => (
+              <div key={field.label} className="flex items-center gap-3.5 text-xs py-0.5">
+                <span className="flex h-5.5 w-5.5 shrink-0 items-center justify-center rounded-lg bg-slate-50/80 text-slate-400">
+                  {field.icon}
+                </span>
+                <div className="min-w-0 flex-1 grid grid-cols-[140px_1fr] items-center gap-2">
+                  <span className="font-medium text-slate-400 truncate">{field.label}</span>
+                  <span className={`truncate text-slate-700 ${field.important ? 'font-medium text-slate-800' : 'font-normal'}`}>
+                    {field.value}
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Event Description */}
+        <section className="rounded-2xl border border-slate-200/60 bg-white p-6 shadow-[0_8px_30px_rgba(0,0,0,0.015)] space-y-3.5">
+          <h3 className="text-sm font-semibold tracking-tight text-slate-900">Event Description</h3>
+          <p className="text-xs font-normal text-slate-500 leading-relaxed max-w-prose">
+            {event.summary}
+          </p>
+          <p className="text-xs font-normal text-slate-500 leading-relaxed max-w-prose">
+            This event aims to nurture analytical thinking, teamwork, and innovation while connecting students with industry leaders. Participants will analyze case scenarios, build practical solutions, and present their recommendations to a panel of industry experts.
+          </p>
+        </section>
+
+        {/* Event Documents */}
+        <section className="rounded-2xl border border-slate-200/60 bg-white p-6 shadow-[0_8px_30px_rgba(0,0,0,0.015)] space-y-4">
+          <h3 className="text-sm font-semibold tracking-tight text-slate-900">Event Documents & Resources</h3>
+          <div className="grid gap-3 sm:grid-cols-2">
+            {documents.map((doc) => (
+              <div key={doc.name} className="group flex items-center justify-between gap-3 rounded-xl border border-slate-100 bg-slate-50/20 p-3 transition hover:border-blue-200 hover:bg-white hover:shadow-sm">
+                <div className="flex items-center gap-3 min-w-0">
+                  <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border text-[10px] uppercase tracking-wider ${doc.color}`}>
+                    {doc.type === 'ZIP' ? 'zip' : doc.type === 'PPTX' ? 'ppt' : 'pdf'}
+                  </div>
+                  <div className="min-w-0">
+                    <h4 className="truncate text-xs font-medium text-slate-700 group-hover:text-blue-600 transition">{doc.name}</h4>
+                    <p className="text-[10px] text-slate-400 mt-0.5">{doc.type} • {doc.size}</p>
+                  </div>
+                </div>
+                <button type="button" aria-label={`Download ${doc.name}`} className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-400 shadow-sm transition hover:border-blue-300 hover:text-blue-600">
+                  <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                  </svg>
+                </button>
+              </div>
+            ))}
+          </div>
+        </section>
+      </div>
+
+      {/* Column 2: Middle */}
+      <div className="space-y-6 lg:col-span-1 xl:col-span-4 min-w-0">
+        {/* Event Timeline */}
+        <section className="rounded-2xl border border-slate-200/60 bg-white p-6 shadow-[0_8px_30px_rgba(0,0,0,0.015)] space-y-5">
+          <h3 className="text-sm font-semibold tracking-tight text-slate-900">Event Timeline</h3>
+          <div className="relative pl-6 space-y-6">
+            <div className="absolute left-2.5 top-1.5 bottom-1.5 w-0.5 bg-slate-100" />
+            
+            {milestones.map((milestone) => {
+              const isCompleted = milestone.status === 'completed'
+              const isUpcoming = milestone.status === 'upcoming'
+              return (
+                <div key={milestone.title} className="relative flex items-center justify-between gap-4 text-xs">
+                  <div className="absolute -left-[25px] top-1/2 -translate-y-1/2">
+                    {isCompleted ? (
+                      <div className="flex h-5 w-5 items-center justify-center rounded-full bg-emerald-50 border border-emerald-200 text-[10px] text-emerald-600 font-bold">
+                        ✓
+                      </div>
+                    ) : isUpcoming ? (
+                      <div className="flex h-5 w-5 items-center justify-center rounded-full bg-blue-50 border border-blue-400 text-[10px] text-blue-600 ring-4 ring-blue-50 font-bold">
+                        ●
+                      </div>
+                    ) : (
+                      <div className="flex h-5 w-5 items-center justify-center rounded-full bg-white border border-slate-200 text-[10px] text-slate-300 font-bold">
+                        ○
+                      </div>
+                    )}
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <p className={`font-medium ${isUpcoming ? 'text-blue-700 font-semibold' : isCompleted ? 'text-slate-600' : 'text-slate-500'}`}>
+                      {milestone.title}
+                    </p>
+                  </div>
+                  <span className={`shrink-0 text-[11px] font-medium ${isUpcoming ? 'text-blue-600' : 'text-slate-400'}`}>
+                    {milestone.date}
+                  </span>
+                </div>
+              )
+            })}
+          </div>
+        </section>
+
+        {/* What We Are Looking For */}
+        <section className="rounded-2xl border border-slate-200/60 bg-white p-6 shadow-[0_8px_30px_rgba(0,0,0,0.015)] space-y-4">
+          <h3 className="text-sm font-semibold tracking-tight text-slate-900">What We Are Looking For</h3>
+          <ul className="space-y-3">
+            {expectations.map((item) => (
+              <li key={item} className="flex items-start gap-3 text-xs leading-relaxed text-slate-600">
+                <span className="flex h-[18px] w-[18px] shrink-0 items-center justify-center rounded-md bg-blue-50/50 text-[10px] font-bold text-blue-600 border border-blue-100/50">
+                  ✓
+                </span>
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+        </section>
+      </div>
+
+      {/* Column 3: Right */}
+      <div className="space-y-6 lg:col-span-1 xl:col-span-3 min-w-0">
+        {/* Participants & Impact */}
+        <section className="rounded-2xl border border-slate-200/60 bg-white p-6 shadow-[0_8px_30px_rgba(0,0,0,0.015)] space-y-4">
+          <h3 className="text-sm font-semibold tracking-tight text-slate-900">Participants & Impact</h3>
+          <div className="grid gap-3 grid-cols-2">
+            {metrics.map((metric) => (
+              <div key={metric.label} className="flex flex-col gap-2 rounded-xl border border-slate-100 bg-slate-50/10 p-3">
+                <span className={`flex h-7 w-7 items-center justify-center rounded-lg text-xs font-semibold ${metric.color}`}>
+                  {metric.icon}
+                </span>
+                <div>
+                  <p className="text-base font-semibold leading-none text-slate-800">{metric.value}</p>
+                  <p className="mt-1 text-[9px] font-medium leading-normal text-slate-400">{metric.label}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Categories Needed */}
+        <section className="rounded-2xl border border-slate-200/60 bg-white p-6 shadow-[0_8px_30px_rgba(0,0,0,0.015)] space-y-4">
+          <h3 className="text-sm font-semibold tracking-tight text-slate-900">Categories Needed</h3>
+          <div className="space-y-2">
+            {categories.map((cat) => (
+              <div key={cat.name} className="flex items-center gap-3 rounded-xl border border-slate-200/30 bg-slate-50/10 p-2.5 hover:bg-slate-50/30 transition">
+                <span className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-sm ${cat.color}`}>
+                  {cat.icon}
+                </span>
+                <div className="min-w-0">
+                  <h4 className="text-xs font-medium text-slate-800 leading-none">{cat.name}</h4>
+                  <p className="text-[10px] text-slate-400 mt-1.5 truncate">{cat.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Target Skills */}
+        <section className="rounded-2xl border border-slate-200/60 bg-white p-6 shadow-[0_8px_30px_rgba(0,0,0,0.015)] space-y-4">
+          <h3 className="text-sm font-semibold tracking-tight text-slate-900">Target Skills</h3>
+          <div className="flex flex-wrap gap-1.5">
+            {shownSkills.map((skill) => (
+              <span key={skill} className="inline-flex items-center rounded-lg bg-blue-50/40 px-2.5 py-1 text-[10px] font-medium text-blue-700 transition hover:bg-blue-100/60 cursor-default">
+                {skill}
+              </span>
+            ))}
+          </div>
+        </section>
+
+        {/* Contact Organizer */}
+        <div className="rounded-2xl border border-slate-200/60 bg-slate-50/30 p-5 shadow-[0_8px_30px_rgba(0,0,0,0.01)] space-y-3">
+          <h4 className="text-xs font-semibold text-slate-800">Need More Information?</h4>
+          <p className="text-[11px] font-medium text-slate-400 leading-normal">
+            Have questions about this event or collaboration opportunities?
+          </p>
+          <button type="button" className="w-full flex items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2 text-xs font-semibold text-slate-700 shadow-sm transition hover:border-blue-200 hover:text-blue-600">
+            <svg className="w-3.5 h-3.5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+            </svg>
+            Contact Organizer
+          </button>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+function ExpressedInterestWorkspace({ event }) {
+  return (
+    <section className="space-y-5">
+      <div>
+        <h2 className="text-xl font-semibold text-slate-900">Expressed Interest ({event.expressedInterest.length})</h2>
+        <p className="mt-1 text-xs text-slate-500">Organizations that have expressed initial interest in this event.</p>
+      </div>
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {event.expressedInterest.map((item) => (
+          <div key={item.name} className="rounded-xl border border-slate-200/60 bg-white p-4 shadow-sm flex items-center gap-3">
+            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-slate-900 to-blue-700 text-xs font-semibold text-white">
+              {item.logo}
+            </span>
+            <div className="min-w-0 flex-1">
+              <h3 className="truncate text-xs font-semibold text-slate-800">{item.name}</h3>
+              <div className="mt-1 flex flex-wrap gap-1">
+                {item.tags.map((tag) => (
+                  <span key={tag} className="inline-flex items-center rounded-lg bg-violet-50 px-1.5 py-0.5 text-[9px] font-medium text-violet-700">
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+  )
+}
+
+function EventDetailPage({ event, activeTab, onTabChange, onBack, onOutreach }) {
   const shownSkills = event.targetSkills || defaultTargetSkills
   const tabContentTitle = activeTab === 'Overview' ? 'Why Collaborate With Us?' : activeTab
 
@@ -871,7 +1247,11 @@ function EventDetailPage({ event, activeTab, onTabChange, onBack }) {
               <button type="button" className="rounded-xl border border-violet-200 bg-white px-4 py-2.5 text-sm font-semibold text-violet-700">
                 Share Event
               </button>
-              <button type="button" className="rounded-xl bg-violet-600 px-4 py-2.5 text-sm font-semibold text-white shadow-[0_8px_16px_rgba(124,58,237,0.18)]">
+              <button
+                type="button"
+                onClick={onOutreach}
+                className="rounded-xl bg-violet-600 px-4 py-2.5 text-sm font-semibold text-white shadow-[0_8px_16px_rgba(124,58,237,0.18)] hover:bg-violet-700 transition"
+              >
                 Express Interest
               </button>
             </div>
@@ -923,7 +1303,13 @@ function EventDetailPage({ event, activeTab, onTabChange, onBack }) {
               activeTab === tab ? 'border-blue-600 text-blue-700' : 'border-transparent text-slate-500'
             }`}
           >
-            {tab}
+            {tab === 'Current Collaborators'
+              ? `Current Collaborators (${event.collaborators.length})`
+              : tab === 'Interested'
+              ? `Interested (${event.interestedCompanies.length})`
+              : tab === 'Expressed Interest'
+              ? `Expressed Interest (${event.expressedInterest.length})`
+              : tab}
           </button>
         ))}
       </nav>
@@ -932,6 +1318,10 @@ function EventDetailPage({ event, activeTab, onTabChange, onBack }) {
         <CurrentCollaboratorsWorkspace event={event} />
       ) : activeTab === 'Interested' ? (
         <InterestedWorkspace event={event} />
+      ) : activeTab === 'Event Details' ? (
+        <EventDetailsWorkspace event={event} shownSkills={shownSkills} />
+      ) : activeTab === 'Expressed Interest' ? (
+        <ExpressedInterestWorkspace event={event} />
       ) : (
       <div className="grid gap-5 lg:grid-cols-12">
         <main className="min-w-0 space-y-5 lg:col-span-7">
@@ -1015,7 +1405,11 @@ function EventDetailPage({ event, activeTab, onTabChange, onBack }) {
                 <h3 className="text-base font-semibold text-slate-950">Ready to collaborate?</h3>
                 <p className="mt-1 text-sm font-semibold text-slate-600">Express your interest to start a conversation with the organizer.</p>
               </div>
-              <button type="button" className="shrink-0 rounded-xl bg-violet-600 px-4 py-2.5 text-sm font-semibold text-white shadow-[0_8px_16px_rgba(124,58,237,0.18)]">
+              <button
+                type="button"
+                onClick={onOutreach}
+                className="shrink-0 rounded-xl bg-violet-600 px-4 py-2.5 text-sm font-semibold text-white shadow-[0_8px_16px_rgba(124,58,237,0.18)] hover:bg-violet-700 transition"
+              >
                 Express Interest
               </button>
             </div>
@@ -1034,15 +1428,23 @@ function matchesFilter(event, activeFilter) {
 }
 
 export default function CollaborationMarketplace() {
+  const [eventList, setEventList] = useState(events)
   const [activeBoardTab, setActiveBoardTab] = useState('Find Collaborators')
   const [activeFilter, setActiveFilter] = useState('All Events')
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedEvent, setSelectedEvent] = useState(null)
   const [activeDetailTab, setActiveDetailTab] = useState('Overview')
+  const [showOutreach, setShowOutreach] = useState(false)
+  const [toast, setToast] = useState('')
+
+  function showToast(msg) {
+    setToast(msg)
+    window.setTimeout(() => setToast(''), 2000)
+  }
 
   const visibleEvents = useMemo(() => {
     const query = searchTerm.trim().toLowerCase()
-    return events.filter((event) => {
+    return eventList.filter((event) => {
       const searchable = [
         event.title,
         event.club,
@@ -1062,16 +1464,79 @@ export default function CollaborationMarketplace() {
   function openDetails(event) {
     setSelectedEvent(event)
     setActiveDetailTab('Overview')
+    setShowOutreach(false)
   }
 
   if (selectedEvent) {
+    if (showOutreach) {
+      return (
+        <div className="relative">
+          <AICollaborationOutreachPage
+            event={selectedEvent}
+            onBack={() => setShowOutreach(false)}
+            onToast={showToast}
+          />
+          {toast && (
+            <div className="fixed bottom-5 right-5 z-50 rounded-full bg-slate-900 px-4 py-2.5 text-xs font-semibold text-white shadow-lg transition">
+              {toast}
+            </div>
+          )}
+        </div>
+      )
+    }
+
     return (
-      <EventDetailPage
-        event={selectedEvent}
-        activeTab={activeDetailTab}
-        onTabChange={setActiveDetailTab}
-        onBack={() => setSelectedEvent(null)}
-      />
+      <div className="relative">
+        <EventDetailPage
+          event={selectedEvent}
+          activeTab={activeDetailTab}
+          onTabChange={setActiveDetailTab}
+          onBack={() => setSelectedEvent(null)}
+          onOutreach={() => setShowOutreach(true)}
+        />
+        {toast && (
+          <div className="fixed bottom-5 right-5 z-50 rounded-full bg-slate-900 px-4 py-2.5 text-xs font-semibold text-white shadow-lg transition">
+            {toast}
+          </div>
+        )}
+      </div>
+    )
+  }
+
+  if (activeBoardTab === 'Create Event') {
+    return (
+      <div className="relative">
+        <AICreateEventPage
+          onBack={() => setActiveBoardTab('Find Collaborators')}
+          onToast={showToast}
+          onPublish={(newEvent) => {
+            setEventList(prev => [newEvent, ...prev])
+            setActiveBoardTab('My Posted Events')
+            showToast('Event published successfully!')
+          }}
+        />
+        {toast && (
+          <div className="fixed bottom-5 right-5 z-50 rounded-full bg-slate-900 px-4 py-2.5 text-xs font-semibold text-white shadow-lg transition">
+            {toast}
+          </div>
+        )}
+      </div>
+    )
+  }
+
+  if (activeBoardTab === 'Post-Event Completion') {
+    return (
+      <div className="relative">
+        <AIPostEventCompletionPage
+          onBack={() => setActiveBoardTab('Find Collaborators')}
+          onToast={showToast}
+        />
+        {toast && (
+          <div className="fixed bottom-5 right-5 z-50 rounded-full bg-slate-900 px-4 py-2.5 text-xs font-semibold text-white shadow-lg transition">
+            {toast}
+          </div>
+        )}
+      </div>
     )
   }
 
@@ -1091,6 +1556,7 @@ export default function CollaborationMarketplace() {
         </label>
         <button
           type="button"
+          onClick={() => setActiveBoardTab('Create Event')}
           className="h-12 w-fit rounded-xl bg-blue-600 px-5 text-sm font-semibold text-white shadow-[0_14px_28px_rgba(37,99,235,0.22)]"
         >
           + Create Event
@@ -1108,7 +1574,7 @@ export default function CollaborationMarketplace() {
 
       <div className="border-b border-slate-200">
         <div className="flex flex-wrap gap-6">
-          {['Find Collaborators', 'My Posted Events'].map((tab) => (
+          {['Find Collaborators', 'My Posted Events', 'Create Event', 'Post-Event Completion'].map((tab) => (
             <button
               key={tab}
               type="button"
@@ -1142,7 +1608,7 @@ export default function CollaborationMarketplace() {
               <p className="text-sm font-semibold text-slate-950">Your posted events</p>
               <p className="mt-1 text-sm text-slate-600">Review open collaboration requests and follow up with interested partners.</p>
             </div>
-            <span className="w-fit rounded-full bg-white px-3 py-1 text-xs font-semibold text-blue-700">{events.length} active events</span>
+            <span className="w-fit rounded-full bg-white px-3 py-1 text-xs font-semibold text-blue-700">{eventList.length} active events</span>
           </div>
         </section>
       ) : null}
