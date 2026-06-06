@@ -157,7 +157,7 @@ export default function MyCareerCalendarModal({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/50 p-4 backdrop-blur-[1px]"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/50 p-4 backdrop-blur-[1px] event-modal-backdrop"
       role="presentation"
       onMouseDown={handleCloseBackdrop}
     >
@@ -167,7 +167,7 @@ export default function MyCareerCalendarModal({
         role="dialog"
         aria-modal="true"
         aria-labelledby="career-calendar-modal-title"
-        className="relative flex max-h-[94vh] w-full max-w-7xl flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xl"
+        className="relative flex max-h-[94vh] w-full max-w-7xl flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xl event-modal-panel"
       >
         {/* Header */}
         <div className="flex items-start justify-between border-b border-slate-100 bg-white px-6 py-5 shrink-0">

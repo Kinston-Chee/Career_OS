@@ -4,7 +4,8 @@ import CTASection from '../components/employer/engagement/CTASection'
 import EngagementFilterChips from '../components/employer/engagement/EngagementFilterChips'
 import ExpressInterestPanel from '../components/employer/engagement/ExpressInterestPanel'
 import InternalTabNav from '../components/employer/engagement/InternalTabNav'
-import { employerEngagement, employerEngagementBuilder } from '../data/mockData'
+import { employerEngagement, employerEngagementBuilder, employerTalentWorkspace } from '../data/mockData'
+import { useEmployerSearchStore } from '../store/useEmployerSearchStore'
 
 const tabs = [
   { id: 'club-collaboration', label: 'Club Collaboration' },
@@ -473,12 +474,107 @@ function ProgramDetailsStep() {
   )
 }
 
+function TargetAudienceCard({ activeChips }) {
+  const allCandidates = employerTalentWorkspace.candidates;
+
+  // Calculate estimated reach based on candidate matching
+  const matchingCandidates = React.useMemo(() => {
+    if (activeChips.length === 0) return allCandidates;
+    return allCandidates.filter(c => {
+      const candidateChips = activeChips.filter(ch => ch.type === 'candidate');
+      const skillChips = activeChips.filter(ch => ch.type === 'skill');
+      const roleChips = activeChips.filter(ch => ch.type === 'role');
+
+      if (candidateChips.length > 0) {
+        if (!candidateChips.some(ch => c.name.toLowerCase() === ch.value.toLowerCase())) return false;
+      }
+      if (skillChips.length > 0) {
+        if (!skillChips.every(ch =>
+          c.topSkills.some(s => s.toLowerCase() === ch.value.toLowerCase()) ||
+          c.evidenceTrace.some(e => e.skill.toLowerCase() === ch.value.toLowerCase())
+        )) return false;
+      }
+      if (roleChips.length > 0) {
+        if (!roleChips.some(ch => c.targetRole.toLowerCase() === ch.value.toLowerCase())) return false;
+      }
+      return true;
+    });
+  }, [allCandidates, activeChips]);
+
+  const roleChips = activeChips.filter(ch => ch.type === 'role');
+  const skillChips = activeChips.filter(ch => ch.type === 'skill');
+  const candidateChips = activeChips.filter(ch => ch.type === 'candidate');
+
+  const estimatedReach = activeChips.length > 0
+    ? matchingCandidates.length * 15 + 7
+    : 184;
+
+  return (
+    <div className="rounded-[8px] border border-blue-200 bg-blue-50/50 p-5 shadow-sm">
+      <div className="flex items-center justify-between border-b border-blue-100 pb-3">
+        <h4 className="text-sm font-semibold text-blue-900 flex items-center gap-1.5">
+          <span>🎯</span> Target Audience
+        </h4>
+        <span className="rounded-full bg-blue-100 px-2.5 py-0.5 text-xs font-bold text-blue-800">
+          Reach: {estimatedReach} candidates
+        </span>
+      </div>
+      <div className="mt-4 space-y-3 text-xs leading-normal">
+        <div>
+          <span className="font-bold text-slate-500 block uppercase tracking-wider text-[10px]">Selected Roles</span>
+          {roleChips.length > 0 ? (
+            <div className="mt-1 flex flex-wrap gap-1.5">
+              {roleChips.map(ch => (
+                <span key={ch.id} className="rounded bg-white border border-blue-100 px-2 py-1 font-semibold text-blue-700">
+                  {ch.value}
+                </span>
+              ))}
+            </div>
+          ) : (
+            <span className="text-slate-400 italic">None selected. Add a role via global search.</span>
+          )}
+        </div>
+        <div>
+          <span className="font-bold text-slate-500 block uppercase tracking-wider text-[10px]">Selected Skills</span>
+          {skillChips.length > 0 ? (
+            <div className="mt-1 flex flex-wrap gap-1.5">
+              {skillChips.map(ch => (
+                <span key={ch.id} className="rounded bg-white border border-blue-100 px-2 py-1 font-semibold text-blue-700">
+                  {ch.value}
+                </span>
+              ))}
+            </div>
+          ) : (
+            <span className="text-slate-400 italic">None selected. Add a skill via global search.</span>
+          )}
+        </div>
+        {candidateChips.length > 0 && (
+          <div>
+            <span className="font-bold text-slate-500 block uppercase tracking-wider text-[10px]">Selected Candidates</span>
+            <div className="mt-1 flex flex-wrap gap-1.5">
+              {candidateChips.map(ch => (
+                <span key={ch.id} className="rounded bg-white border border-blue-100 px-2 py-1 font-semibold text-blue-700">
+                  {ch.value}
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
 function AudienceSkillsStep() {
-  const form = employerEngagementBuilder.form
+  const form = employerEngagementBuilder.form;
+  const { chipsByPage } = useEmployerSearchStore();
+  const activeChips = chipsByPage.engagement;
 
   return (
     <StepShell title="Audience & Skills" subtitle="Define who you want to engage and the key skills to develop.">
       <div className="space-y-6">
+        <TargetAudienceCard activeChips={activeChips} />
+
         <ChipGroup label="Target Roles (Students' Interest)" items={form.targetRoles} addLabel="Add role" />
         <ChipGroup label="Preferred Universities" items={form.universities} addLabel="Add university" />
         <ChipGroup label="Skill Focus" items={form.skillFocus} addLabel="Add skill" />
@@ -498,7 +594,7 @@ function AudienceSkillsStep() {
         </section>
       </div>
     </StepShell>
-  )
+  );
 }
 
 function TimelineResourcesStep() {
