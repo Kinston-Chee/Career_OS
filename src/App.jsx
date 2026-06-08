@@ -8,6 +8,7 @@ import CareerIntelligencePage from './pages/CareerIntelligencePage'
 import CurriculumMarketAlignmentPage from './pages/CurriculumMarketAlignmentPage'
 import EmployerCreateEngagementPage from './pages/EmployerCreateEngagementPage'
 import EmployerWorkspacePage from './pages/EmployerWorkspacePage'
+import JobMarketplacePage from './pages/JobMarketplacePage'
 import LandingPage from './pages/LandingPage'
 import MemoryProfilePage from './pages/MemoryProfilePage'
 import OpportunitiesPage from './pages/OpportunitiesPage'
@@ -49,6 +50,7 @@ export default function App() {
           <Route path="/employer/talent-discovery" element={<EmployerWorkspacePage />} />
           <Route path="/employer/insights" element={<CandidateInsightsPage />} />
           <Route path="/employer/posting" element={<EmployerCreateEngagementPage />} />
+          <Route path="/employer/marketplace" element={<JobMarketplacePage />} />
           <Route path="/employer/settings" element={<PlaceholderPage title="Settings" />} />
           <Route path="/employer/help" element={<PlaceholderPage title="Help" />} />
         </Route>

@@ -35,6 +35,7 @@ const workspaceConfigs = {
       { label: 'Talent Discovery', path: '/employer/talent', aliases: ['/employer'] },
       { label: 'Candidate Insights', path: '/employer/insights', aliases: [] },
       { label: 'Create Engagement', path: '/employer/posting', aliases: [] },
+      { label: 'Job Marketplace', path: '/employer/marketplace', aliases: [] },
     ],
     supportItems: [
       { label: 'Settings', path: '/employer/settings', aliases: [] },
