@@ -66,7 +66,7 @@ export default function App() {
           <Route path="/university/curriculum-market-alignment" element={<CurriculumMarketAlignmentPage />} />
           <Route path="/university/signals" element={<AlumniSignalIntelligencePage />} />
           <Route
-            path="/university/collaboration"
+            path="/university/collaboration/*"
             element={<SocietyCorporateMarketplacePage />}
           />
           <Route

@@ -58,7 +58,9 @@ const workspaceConfigs = {
 }
 
 function itemMatchesPath(item, pathname) {
-  return item.path === pathname || item.aliases.includes(pathname)
+  if (item.path === pathname || item.aliases.includes(pathname)) return true
+  if (pathname.startsWith(item.path + '/')) return true
+  return false
 }
 
 export default function AppLayout({ workspace = 'student' }) {

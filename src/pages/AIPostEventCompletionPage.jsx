@@ -1,883 +1,832 @@
 import React, { useState, useMemo } from 'react'
 
-export default function AIPostEventCompletionPage({ onBack, onToast }) {
-  // --- WORKFLOW STEPS ---
-  const [activeStep, setActiveStep] = useState(1)
-  const steps = [
-    { stepNum: 1, title: 'Validate Participation' },
-    { stepNum: 2, title: 'Capture Learnings' },
-    { stepNum: 3, title: 'Review & Verify' },
-    { stepNum: 4, title: 'Update Student Profiles' },
-    { stepNum: 5, title: 'Completion Summary' }
-  ]
-
-  // --- MOCK STUDENTS DATA ---
-  const initialStudents = [
-    {
-      id: 'jason-raj',
-      name: 'Jason Raj',
-      team: 'Team Alpha',
-      initials: 'JR',
-      avatarBg: 'bg-indigo-100 text-indigo-700',
-      role: 'Team Leader',
-      verificationMethod: 'QR Check-in',
-      verificationDetails: '15 Sep 2026, 09:15 AM',
-      status: 'Verified',
-      activities: [
-        'Led team strategy and task delegation',
-        'Presented solution in final round',
-        'Mentored junior team members',
-        'Submitted final case report'
-      ],
-      skills: ['Leadership', 'Strategic Thinking', 'Problem Solving', 'Teamwork', 'Communication'],
-      evidence: ['Final Presentation.pdf', 'Team Report.pdf', 'Judge Feedback.pdf']
-    },
-    {
-      id: 'nurul-afiqah',
-      name: 'Nurul Afiqah',
-      team: 'Team Alpha',
-      initials: 'NL',
-      avatarBg: 'bg-emerald-100 text-emerald-700',
-      role: 'Presenter',
-      verificationMethod: 'QR Check-in',
-      verificationDetails: '15 Sep 2026, 09:15 AM',
-      status: 'Verified',
-      activities: [
-        'Delivered final pitch deck presentation',
-        'Fielded Q&A questions from industry judges',
-        'Coordinated presentation design flow'
-      ],
-      skills: ['Communication', 'Presentation', 'Strategic Thinking', 'Teamwork'],
-      evidence: ['Final Presentation.pdf', 'Pitch Video.mp4']
-    },
-    {
-      id: 'wei-chen',
-      name: 'Wei Chen',
-      team: 'Team Beta',
-      initials: 'WC',
-      avatarBg: 'bg-blue-100 text-blue-700',
-      role: 'Data Analyst',
-      verificationMethod: 'Manual Upload',
-      verificationDetails: 'Certificate.pdf',
-      status: 'Pending',
-      activities: [
-        'Conducted data cleaning and modeling',
-        'Created Power BI dashboards for presentation',
-        'Analyzed financial predictive features'
-      ],
-      skills: ['Data Analysis', 'Problem Solving', 'Technical Skills', 'Power BI'],
-      evidence: ['Certificate.pdf', 'Data Model Notebook.ipynb']
-    },
-    {
-      id: 'sarah-tan',
-      name: 'Sarah Tan',
-      team: 'Team Gamma',
-      initials: 'ST',
-      avatarBg: 'bg-violet-100 text-violet-700',
-      role: 'Research Lead',
-      verificationMethod: 'QR Check-in',
-      verificationDetails: '15 Sep 2026, 09:15 AM',
-      status: 'Verified',
-      activities: [
-        'Led user market research interviews',
-        'Compiled competitive landscaping analysis',
-        'Authored executive summary report'
-      ],
-      skills: ['Research', 'Communication', 'Teamwork', 'Problem Solving'],
-      evidence: ['Research Summary.docx', 'Team Report.pdf']
-    },
-    {
-      id: 'arjun-kumar',
-      name: 'Arjun Kumar',
-      team: 'Team Gamma',
-      initials: 'AK',
-      avatarBg: 'bg-rose-100 text-rose-700',
-      role: 'Developer',
-      verificationMethod: 'QR Check-in',
-      verificationDetails: '15 Sep 2026, 09:15 AM',
-      status: 'Verified',
-      activities: [
-        'Developed full stack prototype',
-        'Integrated API models into UI',
-        'Deployed application on cloud platform'
-      ],
-      skills: ['Software Engineering', 'Technical Skills', 'Problem Solving', 'Cloud Deployment'],
-      evidence: ['GitHub Repo Link', 'System Design.pdf']
-    }
-  ]
-
-  const [students, setStudents] = useState(initialStudents)
-  const [selectedStudents, setSelectedStudents] = useState({
-    'jason-raj': true,
-    'nurul-afiqah': true,
-    'wei-chen': false,
-    'sarah-tan': false,
-    'arjun-kumar': false
-  })
-
-  // --- ACTIVE REVIEW TARGET ---
-  const [focusedStudentId, setFocusedStudentId] = useState('jason-raj')
-  const focusedStudent = useMemo(() => {
-    return students.find(s => s.id === focusedStudentId) || students[0]
-  }, [students, focusedStudentId])
-
-  // --- FILTERS & SEARCH ---
+export default function AIPostEventCompletionPage({ onBack, onToast, onViewImpactReport }) {
+  // --- STATE FOR FILTERS AND SELECTIONS ---
+  const [selectedDate, setSelectedDate] = useState(null) // Date filtered from calendar, e.g. "23 May 2025"
   const [searchQuery, setSearchQuery] = useState('')
-  const [statusFilter, setStatusFilter] = useState('All')
+  const [semesterFilter, setSemesterFilter] = useState('All')
+  const [programFilter, setProgramFilter] = useState('All')
+  const [typeFilter, setTypeFilter] = useState('All')
+  
+  // 5-working-days simulation toggle state
+  const [simulateExpired, setSimulateExpired] = useState(false)
 
-  // Filter students based on search and status tabs
-  const filteredStudents = useMemo(() => {
-    return students.filter(s => {
-      const matchesSearch = s.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                            s.team.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                            s.role.toLowerCase().includes(searchQuery.toLowerCase())
-      const matchesStatus = statusFilter === 'All' ? true : s.status === statusFilter
-      return matchesSearch && matchesStatus
-    })
-  }, [students, searchQuery, statusFilter])
+  // Current calendar month view state
+  const [calendarMonth, setCalendarMonth] = useState('May 2025')
 
-  // --- EDITABLE SKILLS STATE ---
-  const [skillsMap, setSkillsMap] = useState(
-    initialStudents.reduce((acc, curr) => {
-      acc[curr.id] = curr.skills
-      return acc;
-    }, {})
-  )
-  const [newSkillInput, setNewSkillInput] = useState('')
+  // Pagination page state
+  const [currentPage, setCurrentPage] = useState(1)
 
-  // --- REVIEW STATS (E.G. APPROVAL SELECTS) ---
-  const [reviewStates, setReviewStates] = useState(
-    initialStudents.reduce((acc, curr) => {
-      acc[curr.id] = 'Approve All'
-      return acc;
-    }, {})
-  )
-
-  // --- FOLDERS DATA ---
-  const initialFolders = [
-    { name: 'Certificates', count: 102, icon: '📜' },
-    { name: 'Presentations', count: 48, icon: '📊' },
-    { name: 'Reports', count: 36, icon: '📁' },
-    { name: 'Photos', count: 120, icon: '🖼️' },
-    { name: 'Videos', count: 18, icon: '🎥' }
+  // --- MOCK COMPLETED EVENTS DATABASE ---
+  const COMPLETED_EVENTS = [
+    {
+      id: 'fintech-case-23',
+      title: 'AI in Finance Case Competition',
+      organizer: 'FinTech Society x Grab, Maybank, Pwc',
+      date: '23 May 2025',
+      skills: ['Financial Modeling', 'Presentation', 'Data Analytics'],
+      uplift: 14,
+      companies: 14,
+      students: 64,
+      reportReady: true,
+      category: 'Case Competition',
+      semester: 'Semester 1',
+      program: 'Computing'
+    },
+    {
+      id: 'product-sprint-23',
+      title: 'Campus Product Sprint',
+      organizer: 'Innovation Hub x Industry.io',
+      date: '23 May 2025',
+      skills: ['Product Design', 'Rapid Prototyping', 'Collaboration'],
+      uplift: 11,
+      companies: 13,
+      students: 88,
+      reportReady: true,
+      category: 'Sprint',
+      semester: 'Semester 1',
+      program: 'Business'
+    },
+    {
+      id: 'data-storytelling-15',
+      title: 'Data Storytelling Workshop',
+      organizer: 'Analytics Club x Deloitte',
+      date: '15 May 2025',
+      skills: ['Data Visualization', 'Communication'],
+      uplift: 9,
+      companies: 9,
+      students: 80,
+      reportReady: true,
+      category: 'Workshop',
+      semester: 'Semester 1',
+      program: 'Computing'
+    },
+    {
+      id: 'ai-ethics-15',
+      title: 'AI Ethics Seminar',
+      organizer: 'Philosophy Club x Microsoft',
+      date: '15 May 2025',
+      skills: ['AI Ethics', 'Critical Thinking'],
+      uplift: 5,
+      companies: 1,
+      students: 110,
+      reportReady: true,
+      category: 'Seminar',
+      semester: 'Semester 1',
+      program: 'Humanities'
+    },
+    {
+      id: 'cloud-summit-9',
+      title: 'Cloud Technology Summit',
+      organizer: 'Cloud Society x AWS',
+      date: '09 May 2025',
+      skills: ['Cloud Computing', 'AWS Systems'],
+      uplift: 15,
+      companies: 8,
+      students: 150,
+      reportReady: true,
+      category: 'Seminar',
+      semester: 'Semester 1',
+      program: 'Computing'
+    },
+    {
+      id: 'cybersecurity-9',
+      title: 'Cybersecurity Capture the Flag',
+      organizer: 'InfoSec Society x Cisco',
+      date: '09 May 2025',
+      skills: ['Network Security', 'Penetration Testing'],
+      uplift: 13,
+      companies: 4,
+      students: 95,
+      reportReady: true,
+      category: 'Hackathon',
+      semester: 'Semester 1',
+      program: 'Computing'
+    },
+    {
+      id: 'brand-strategy',
+      title: 'Brand Strategy Workshop',
+      organizer: 'Marketing Club x Ogilvy',
+      date: '18 Apr 2025',
+      skills: ['Market Research', 'Brand Positioning'],
+      uplift: 9,
+      companies: 2,
+      students: 64,
+      reportReady: true,
+      category: 'Workshop',
+      semester: 'Semester 1',
+      program: 'Business'
+    },
+    {
+      id: 'ml-hackathon',
+      title: 'Machine Learning Hackathon',
+      organizer: 'CS Society x Google',
+      date: '19 Apr 2025',
+      skills: ['Python', 'ML Models', 'Problem Solving'],
+      uplift: 16,
+      companies: 3,
+      students: 120,
+      reportReady: true,
+      category: 'Hackathon',
+      semester: 'Semester 1',
+      program: 'Computing'
+    },
+    {
+      id: 'women-tech',
+      title: 'Women in Tech Mentorship Series',
+      organizer: 'WomenTech x Grab',
+      date: '02 Apr 2025',
+      skills: ['Career Planning', 'Communication'],
+      uplift: 7,
+      companies: 2,
+      students: 75,
+      reportReady: true,
+      category: 'Mentorship',
+      semester: 'Semester 1',
+      program: 'Business'
+    },
+    {
+      id: 'sustainability-case',
+      title: 'Sustainability Case Challenge',
+      organizer: 'Sustainability Club x ESG',
+      date: '27 Mar 2025',
+      skills: ['Sustainability Strategy', 'Systems Thinking'],
+      uplift: 10,
+      companies: 3,
+      students: 58,
+      reportReady: true,
+      category: 'Case Competition',
+      semester: 'Semester 2',
+      program: 'Science'
+    },
+    {
+      id: 'data-analytics-bootcamp',
+      title: 'Data Analytics Bootcamp',
+      organizer: 'Analytics Club x Deloitte',
+      date: '27 Mar 2025',
+      skills: ['SQL', 'Data Visualization', 'Storytelling'],
+      uplift: 12,
+      companies: 2,
+      students: 54,
+      reportReady: true,
+      category: 'Bootcamp',
+      semester: 'Semester 2',
+      program: 'Computing'
+    }
   ]
-  const [folders, setFolders] = useState(initialFolders)
 
-  // Handlers
-  const handleSelectAll = (e) => {
-    const checked = e.target.checked
-    const updated = {}
-    filteredStudents.forEach(s => {
-      updated[s.id] = checked
+  // --- CALENDAR GRID DATA (FOR MAY 2025) ---
+  const calendarDays = [
+    { day: 28, isCurrentMonth: false },
+    { day: 29, isCurrentMonth: false },
+    { day: 30, isCurrentMonth: false },
+    { day: 1, isCurrentMonth: true, dots: ['bg-red-500'] },
+    { day: 2, isCurrentMonth: true, dots: ['bg-blue-500'] },
+    { day: 3, isCurrentMonth: true },
+    { day: 4, isCurrentMonth: true },
+    { day: 5, isCurrentMonth: true },
+    { day: 6, isCurrentMonth: true },
+    { day: 7, isCurrentMonth: true, dots: ['bg-emerald-500'] },
+    { day: 8, isCurrentMonth: true },
+    { day: 9, isCurrentMonth: true, dots: ['bg-emerald-500', 'bg-blue-500'], badge: '+2' },
+    { day: 10, isCurrentMonth: true },
+    { day: 11, isCurrentMonth: true },
+    { day: 12, isCurrentMonth: true },
+    { day: 13, isCurrentMonth: true, dots: ['bg-blue-500'], badge: '2' },
+    { day: 14, isCurrentMonth: true },
+    { day: 15, isCurrentMonth: true, dots: ['bg-blue-500', 'bg-emerald-500'], badge: '+3' },
+    { day: 16, isCurrentMonth: true, dots: ['bg-blue-500'], badge: '+2' },
+    { day: 17, isCurrentMonth: true },
+    { day: 18, isCurrentMonth: true },
+    { day: 19, isCurrentMonth: true },
+    { day: 20, isCurrentMonth: true, dots: ['bg-blue-500'], badge: '+4' },
+    { day: 21, isCurrentMonth: true },
+    { day: 22, isCurrentMonth: true },
+    { day: 23, isCurrentMonth: true, dots: ['bg-blue-500', 'bg-emerald-500'], badge: '+3' },
+    { day: 24, isCurrentMonth: true },
+    { day: 25, isCurrentMonth: true },
+    { day: 26, isCurrentMonth: true },
+    { day: 27, isCurrentMonth: true },
+    { day: 28, isCurrentMonth: true },
+    { day: 29, isCurrentMonth: true },
+    { day: 30, isCurrentMonth: true, dots: ['bg-blue-500'], badge: '2' },
+    { day: 31, isCurrentMonth: true },
+    { day: 1, isCurrentMonth: false }
+  ]
+
+  // --- RECENT COMPLETED EVENTS (Visibility limit: 5 working days) ---
+  const recentOutcomes = [
+    {
+      id: 'fintech-case-23',
+      title: 'AI in Finance Case Competition',
+      organizer: 'FinTech Society x Grab, Maybank, Pwc',
+      daysAgo: '2 days ago',
+      uplift: '+14%',
+      gaps: '8',
+      students: '64',
+      companies: '14',
+      aiStatement: 'Strong growth in financial modeling readiness and presentation skills.',
+      icon: '📈',
+      color: 'from-blue-500 to-indigo-600'
+    },
+    {
+      id: 'data-storytelling-15',
+      title: 'Data Storytelling Workshop',
+      organizer: 'Analytics Club Club x Deloitte',
+      daysAgo: '4 days ago',
+      uplift: '+9%',
+      gaps: '6',
+      students: '80',
+      companies: '9',
+      aiStatement: 'Improved data visualization and insight communication.',
+      icon: '🖥️',
+      color: 'from-violet-500 to-purple-600'
+    },
+    {
+      id: 'product-sprint-23',
+      title: 'Campus Product Sprint',
+      organizer: 'Innovation Hub x Industry.io',
+      daysAgo: '5 days ago',
+      uplift: '+11%',
+      gaps: '7',
+      students: '88',
+      companies: '13',
+      aiStatement: 'High collaboration and rapid prototyping demonstrated.',
+      icon: '🚀',
+      color: 'from-orange-500 to-red-500'
+    }
+  ]
+
+  // --- CALENDAR SELECTION FILTER HANDLERS ---
+  const handleDateClick = (day) => {
+    if (!day.isCurrentMonth) return
+    const formattedDate = `${day.day.toString().padStart(2, '0')} May 2025`
+    // Convert 09 May 2025 -> 9 May 2025 to align with database
+    const sanitizedDate = formattedDate.replace(/^0/, '')
+    setSelectedDate(sanitizedDate)
+    setCurrentPage(1)
+    onToast(`Filtered history to ${sanitizedDate}`)
+  }
+
+  const handleClearDateFilter = () => {
+    setSelectedDate(null)
+    onToast('Cleared date filter')
+  }
+
+  // --- FILTERED HISTORICAL RECORDS ---
+  const filteredHistory = useMemo(() => {
+    return COMPLETED_EVENTS.filter(event => {
+      const query = searchQuery.toLowerCase().trim()
+      const matchesSearch = !query || 
+        event.title.toLowerCase().includes(query) ||
+        event.organizer.toLowerCase().includes(query) ||
+        event.skills.some(s => s.toLowerCase().includes(query))
+
+      const matchesDate = !selectedDate || event.date === selectedDate
+      const matchesSemester = semesterFilter === 'All' || event.semester === semesterFilter
+      const matchesProgram = programFilter === 'All' || event.program === programFilter
+      const matchesType = typeFilter === 'All' || event.category === typeFilter
+
+      return matchesSearch && matchesDate && matchesSemester && matchesProgram && matchesType
     })
-    setSelectedStudents(prev => ({ ...prev, ...updated }))
-  }
+  }, [searchQuery, selectedDate, semesterFilter, programFilter, typeFilter])
 
-  const handleSelectRow = (id) => {
-    setSelectedStudents(prev => ({ ...prev, [id]: !prev[id] }))
-  }
+  // Paginated elements
+  const itemsPerPage = 5
+  const paginatedHistory = useMemo(() => {
+    const startIdx = (currentPage - 1) * itemsPerPage
+    return filteredHistory.slice(startIdx, startIdx + itemsPerPage)
+  }, [filteredHistory, currentPage])
 
-  const handleUpdateStatus = (id, newStatus) => {
-    setStudents(prev => prev.map(s => {
-      if (s.id === id) {
-        return { ...s, status: newStatus }
-      }
-      return s
-    }))
-    onToast(`Status for ${students.find(s => s.id === id).name} updated to ${newStatus}`)
-  }
+  const totalPages = Math.ceil(filteredHistory.length / itemsPerPage) || 1
 
-  const handleAddSkill = (e) => {
-    e.preventDefault()
-    const text = newSkillInput.trim()
-    if (text) {
-      const activeSkills = skillsMap[focusedStudentId] || []
-      if (!activeSkills.includes(text)) {
-        setSkillsMap(prev => ({
-          ...prev,
-          [focusedStudentId]: [...activeSkills, text]
-        }))
-        setNewSkillInput('')
-        onToast(`Added skill "${text}" to ${focusedStudent.name}`)
-      }
-    }
-  }
-
-  const handleRemoveSkill = (skillToRemove) => {
-    const activeSkills = skillsMap[focusedStudentId] || []
-    setSkillsMap(prev => ({
-      ...prev,
-      [focusedStudentId]: activeSkills.filter(s => s !== skillToRemove)
-    }))
-  }
-
-  const handleReviewActionChange = (action) => {
-    setReviewStates(prev => ({ ...prev, [focusedStudentId]: action }))
-  }
-
-  const handleApproveDetails = () => {
-    const action = reviewStates[focusedStudentId]
-    if (action === 'Approve All') {
-      handleUpdateStatus(focusedStudentId, 'Verified')
-    } else if (action === 'Reject All') {
-      handleUpdateStatus(focusedStudentId, 'Review Needed')
-    } else {
-      onToast(`Edited skills saved for ${focusedStudent.name}`)
-    }
-  }
-
-  const handleExportReport = () => {
-    onToast('Preparing impact report export for AI in Finance Case Competition...')
-    // Mock file download trigger
-    setTimeout(() => {
-      onToast('Download started: sunway-fintech-ai-finance-impact-report.pdf')
-    }, 1000)
-  }
+  const eventCountByDate = useMemo(() => {
+    return COMPLETED_EVENTS.reduce((acc, event) => {
+      acc[event.date] = (acc[event.date] || 0) + 1
+      return acc
+    }, {})
+  }, [])
 
   return (
-    <div className="mx-auto w-full max-w-[1400px] space-y-6 px-6 pb-12">
+    <div className="mx-auto min-w-0 w-full max-w-[1400px] space-y-6 px-6 pb-12">
       
-      {/* ================= TOP HEADER ================= */}
-      <header className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between border-b border-slate-100 pb-4">
+      {/* ================= HEADER AND MAIN TABS ================= */}
+      <header className="flex flex-col md:flex-row md:items-start md:justify-between gap-6 border-b border-slate-100 pb-5">
         <div className="space-y-1.5">
-          <button
-            type="button"
-            onClick={onBack}
-            className="inline-flex w-fit items-center gap-1 text-xs font-semibold text-slate-500 hover:text-blue-600 transition"
-          >
-            &lt; Back to Marketplace
-          </button>
-          <div className="flex items-center gap-2">
-            <h1 className="text-2xl font-semibold tracking-tight text-slate-900">Post-Event Completion</h1>
-            <span className="rounded bg-blue-50 px-1.5 py-0.5 text-[10px] font-semibold text-blue-700 border border-blue-100/50">Beta</span>
-          </div>
-          <p className="text-xs font-medium text-slate-450">Validate participation, capture learnings, and turn experiences into career evidence.</p>
-        </div>
-        <div>
-          <button
-            type="button"
-            onClick={handleExportReport}
-            className="rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-xs font-semibold text-slate-650 hover:bg-slate-50 hover:text-slate-800 transition inline-flex items-center gap-1.5"
-          >
-            📥 Export Impact Report
-          </button>
+          <h1 className="text-3xl font-semibold tracking-tight text-slate-950">Collaboration Marketplace</h1>
+          <p className="text-sm text-slate-500 max-w-2xl font-medium leading-relaxed">
+            Connect university clubs with external collaborators and convert event participation into trusted career evidence.
+          </p>
         </div>
       </header>
 
-      {/* ================= MULTI-STEP PROGRESS BAR ================= */}
-      <section className="rounded-2xl border border-slate-100 bg-white p-3 shadow-[0_4px_20px_rgba(0,0,0,0.01)] animate-fade-in">
-        <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-around px-4">
-          {steps.map(s => {
-            const isActive = activeStep === s.stepNum
-            return (
-              <button
-                key={s.stepNum}
-                type="button"
-                onClick={() => {
-                  setActiveStep(s.stepNum)
-                  onToast(`Switched workspace views to step: ${s.title}`)
-                }}
-                className="flex items-center gap-2.5 py-2 text-left group"
-              >
-                <span className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-xs font-bold transition-all ${
-                  isActive
-                    ? 'bg-blue-600 text-white shadow-sm ring-4 ring-blue-50'
-                    : 'bg-slate-100 text-slate-500 group-hover:bg-slate-200'
-                }`}>
-                  {s.stepNum}
-                </span>
-                <span className={`text-xs font-medium transition-colors ${
-                  isActive ? 'text-slate-900 font-semibold' : 'text-slate-450 group-hover:text-slate-600'
-                }`}>
-                  {s.title}
-                </span>
-              </button>
-            )
-          })}
+      {/* Main Lifecycle Navigation */}
+      <nav className="border-b border-slate-200">
+        <div className="flex gap-6">
+          <button
+            type="button"
+            onClick={onBack}
+            className="pb-3 text-sm font-semibold border-b-2 transition border-transparent text-slate-500 hover:text-slate-700"
+          >
+            Pre-Event
+          </button>
+          <button
+            type="button"
+            className="pb-3 text-sm font-semibold border-b-2 transition border-blue-600 text-blue-700"
+          >
+            Post-Event
+          </button>
         </div>
-      </section>
+      </nav>
 
-      {/* ================= EVENT HERO SUMMARY CARD ================= */}
-      <section className="rounded-2xl border border-slate-200/80 bg-white p-5 shadow-[0_8px_30px_rgba(0,0,0,0.015)]">
-        <div className="grid gap-6 lg:grid-cols-12 items-center">
-          
-          {/* Left Thumbnail Info */}
-          <div className="flex gap-4 lg:col-span-5 min-w-0">
-            <div className="h-16 w-20 shrink-0 overflow-hidden rounded-xl bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 p-2 text-white flex flex-col justify-between shadow-sm">
-              <span className="text-lg">🏆</span>
-              <span className="text-[9px] font-bold tracking-wider uppercase">Fintech</span>
-            </div>
-            <div className="min-w-0 space-y-1">
-              <h2 className="text-base font-semibold text-slate-900 truncate">AI in Finance Case Competition</h2>
-              <div className="flex flex-wrap items-center gap-2 text-[10px] text-slate-450 font-medium">
-                <span className="rounded bg-slate-550/10 px-1.5 py-0.5 text-slate-600 font-semibold">Case Competition</span>
-                <span>•</span>
-                <span>15 Jul - 28 Sep 2026</span>
-                <span>•</span>
-                <span className="truncate">Organized by FinTech Society</span>
-              </div>
-            </div>
-          </div>
-
-          {/* Center Stats Grid */}
-          <div className="grid grid-cols-4 gap-2 lg:col-span-5 border-slate-100 lg:border-x lg:px-6">
-            <div className="text-center">
-              <p className="text-base font-bold text-slate-800">120+</p>
-              <p className="text-[9px] text-slate-400 font-medium mt-0.5">Participants</p>
-            </div>
-            <div className="text-center">
-              <p className="text-base font-bold text-slate-800">20+</p>
-              <p className="text-[9px] text-slate-400 font-medium mt-0.5">Teams</p>
-            </div>
-            <div className="text-center">
-              <p className="text-base font-bold text-slate-800">48+</p>
-              <p className="text-[9px] text-slate-400 font-medium mt-0.5">Skills Identified</p>
-            </div>
-            <div className="text-center">
-              <p className="text-base font-bold text-slate-800">5</p>
-              <p className="text-[9px] text-slate-400 font-medium mt-0.5">Partners</p>
-            </div>
-          </div>
-
-          {/* Right Status */}
-          <div className="lg:col-span-2 text-right">
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 border border-emerald-100/50 px-3 py-1 text-xs font-semibold text-emerald-700">
-              <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-              Completion Active
-            </span>
-            <p className="text-[9px] text-slate-400 font-medium mt-1">Verified: 82 / 120</p>
-          </div>
-        </div>
-      </section>
-
-      {/* ================= 3-COLUMN WORKSPACE ================= */}
+      {/* ================= TOP 2-COLUMN LAYOUT ================= */}
       <div className="grid gap-6 lg:grid-cols-12 items-start">
         
-        {/* LEFT + CENTER (8 columns): Main verification sections */}
-        <main className="space-y-6 lg:col-span-8 min-w-0">
-          
-          {/* SECTION A — VALIDATE PARTICIPATION */}
-          <section className="rounded-2xl border border-slate-200/80 bg-white p-6 shadow-[0_8px_30px_rgba(0,0,0,0.015)] space-y-4">
-            
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 border-b border-slate-50 pb-3">
-              <div className="space-y-0.5">
-                <h3 className="text-sm font-semibold text-slate-850">A. Validate Participation</h3>
-                <p className="text-[10px] font-medium text-slate-450">Confirm attendance and roles for students who took part in the event.</p>
-              </div>
-
-              {/* Toolbar Actions */}
-              <div className="flex flex-wrap items-center gap-2">
-                <button
-                  type="button"
-                  onClick={() => onToast('Bulk Import: XLS list template parsed successfully.')}
-                  className="rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-[10px] font-semibold text-slate-600 hover:bg-slate-50 transition"
-                >
-                  Bulk Import
-                </button>
-                <div className="relative">
-                  <select
-                    value={statusFilter}
-                    onChange={(e) => setStatusFilter(e.target.value)}
-                    className="rounded-lg border border-slate-200 bg-white pl-2 pr-6 py-1.5 text-[10px] font-semibold text-slate-650 outline-none cursor-pointer"
-                  >
-                    <option value="All">Filter: All Statuses</option>
-                    <option value="Verified">Verified</option>
-                    <option value="Pending">Pending</option>
-                    <option value="Review Needed">Review Needed</option>
-                  </select>
-                </div>
-                <input
-                  type="text"
-                  placeholder="Search student or team..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-[10px] outline-none w-44 placeholder:text-slate-400 focus:border-blue-300 transition"
-                />
-              </div>
-            </div>
-
-            {/* Table layout */}
-            <div className="overflow-x-auto min-w-0">
-              <table className="w-full text-left text-xs border-collapse">
-                <thead>
-                  <tr className="border-b border-slate-100 text-slate-400 font-semibold uppercase tracking-wider text-[9px]">
-                    <th className="py-2.5 px-2 w-8">
-                      <input
-                        type="checkbox"
-                        onChange={handleSelectAll}
-                        checked={filteredStudents.length > 0 && filteredStudents.every(s => selectedStudents[s.id])}
-                        className="rounded cursor-pointer"
-                      />
-                    </th>
-                    <th className="py-2.5 px-3">Student / Team</th>
-                    <th className="py-2.5 px-3">Role in Event</th>
-                    <th className="py-2.5 px-3">Verification Method</th>
-                    <th className="py-2.5 px-3">Status</th>
-                    <th className="py-2.5 px-3 text-center">Action</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-slate-100">
-                  {filteredStudents.map(student => {
-                    const isRowSelected = !!selectedStudents[student.id]
-                    const isFocused = student.id === focusedStudentId
-                    return (
-                      <tr
-                        key={student.id}
-                        onClick={() => setFocusedStudentId(student.id)}
-                        className={`hover:bg-slate-50/50 cursor-pointer transition ${
-                          isFocused ? 'bg-blue-50/20' : ''
-                        }`}
-                      >
-                        <td className="py-3 px-2" onClick={(e) => e.stopPropagation()}>
-                          <input
-                            type="checkbox"
-                            checked={isRowSelected}
-                            onChange={() => handleSelectRow(student.id)}
-                            className="rounded cursor-pointer text-blue-600 focus:ring-blue-100"
-                          />
-                        </td>
-                        <td className="py-3 px-3">
-                          <div className="flex items-center gap-2.5">
-                            <span className={`flex h-7 w-7 items-center justify-center rounded-full text-[10px] font-bold shrink-0 ${student.avatarBg}`}>
-                              {student.initials}
-                            </span>
-                            <div className="min-w-0">
-                              <p className="font-semibold text-slate-800 line-clamp-1 text-xs">{student.name}</p>
-                              <p className="text-[9px] text-slate-400 font-semibold">{student.team}</p>
-                            </div>
-                          </div>
-                        </td>
-                        <td className="py-3 px-3">
-                          <span className="text-[10px] font-semibold text-slate-650">{student.role}</span>
-                        </td>
-                        <td className="py-3 px-3">
-                          <div className="space-y-0.5">
-                            <span className="text-[10px] text-slate-600 font-medium inline-flex items-center gap-1">
-                              {student.verificationMethod === 'QR Check-in' ? '📱' : '📄'} {student.verificationMethod}
-                            </span>
-                            <p className="text-[8px] text-slate-400 font-semibold leading-none">{student.verificationDetails}</p>
-                          </div>
-                        </td>
-                        <td className="py-3 px-3">
-                          <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-[9px] font-semibold ${
-                            student.status === 'Verified'
-                              ? 'bg-emerald-50 text-emerald-700 border border-emerald-100/50'
-                              : student.status === 'Pending'
-                              ? 'bg-amber-50 text-amber-700 border border-amber-100/50'
-                              : 'bg-rose-50 text-rose-700 border border-rose-100/50'
-                          }`}>
-                            {student.status}
-                          </span>
-                        </td>
-                        <td className="py-3 px-3 text-center" onClick={(e) => e.stopPropagation()}>
-                          <button
-                            type="button"
-                            onClick={() => {
-                              setFocusedStudentId(student.id)
-                              // Scroll into Section B
-                              document.getElementById('ai-extraction')?.scrollIntoView({ behavior: 'smooth', block: 'center' })
-                            }}
-                            className="rounded-lg border border-slate-200 bg-white px-2.5 py-1 text-[10px] font-semibold text-slate-600 hover:border-slate-350 hover:bg-slate-50 transition"
-                          >
-                            {student.status === 'Verified' ? 'View' : 'Review'}
-                          </button>
-                        </td>
-                      </tr>
-                    )
-                  })}
-                  {filteredStudents.length === 0 && (
-                    <tr>
-                      <td colSpan="6" className="py-6 text-center text-xs text-slate-400 italic">
-                        No students found matching filters.
-                      </td>
-                    </tr>
-                  )}
-                </tbody>
-              </table>
-            </div>
-
-            {/* Pagination / Footer */}
-            <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between pt-2 border-t border-slate-50 text-[10px] font-semibold text-slate-450">
-              <span>Showing 1-{filteredStudents.length} of 124 participants</span>
-              <div className="flex items-center gap-1">
-                {['<', '1', '2', '3', '...', '25', '>'].map((pg, idx) => (
-                  <button
-                    key={idx}
-                    type="button"
-                    onClick={() => onToast(`Navigate to page ${pg}`)}
-                    className={`flex h-5 w-5 items-center justify-center rounded-md border text-[9px] font-bold ${
-                      pg === '1' ? 'border-blue-600 bg-blue-600 text-white' : 'border-slate-200 bg-white text-slate-500 hover:bg-slate-50'
-                    }`}
-                  >
-                    {pg}
-                  </button>
-                ))}
-              </div>
-            </div>
-          </section>
-
-          {/* SECTION B — AI SKILL EXTRACTION */}
-          <section
-            id="ai-extraction"
-            className="rounded-2xl border border-slate-200/80 bg-white p-6 shadow-[0_8px_30px_rgba(0,0,0,0.015)] space-y-4"
-          >
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 border-b border-slate-50 pb-3">
-              <div className="space-y-0.5">
-                <h3 className="text-sm font-semibold text-slate-850">B. AI Skill Extraction (Preview)</h3>
-                <p className="text-[10px] font-medium text-slate-450">Review AI-suggested skills for each participant based on their role and event activities.</p>
-              </div>
-
+        {/* LEFT COLUMN: LATEST EVENT OUTCOMES (col-span-7) */}
+        <section className="lg:col-span-7 space-y-4 min-w-0">
+          <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-3">
+            <div>
               <div className="flex items-center gap-2">
-                <span className="rounded bg-emerald-50 px-2 py-0.5 text-[9px] font-semibold text-emerald-700 border border-emerald-100/50">
-                  AI Confidence: High
+                <h2 className="text-base font-semibold text-slate-900">Latest Event Outcomes</h2>
+                <span className="inline-flex items-center rounded-md bg-emerald-50 px-2 py-0.5 text-[10px] font-semibold text-emerald-700 border border-emerald-100/50">
+                  Live Insights
                 </span>
-                <button
-                  type="button"
-                  onClick={() => onToast('Customize Skills: Standard taxonomy settings loaded.')}
-                  className="rounded-lg border border-slate-200 bg-white px-2.5 py-1 text-[10px] font-semibold text-slate-600 hover:bg-slate-50 transition inline-flex items-center gap-1"
-                >
-                  ⚙️ Customize Skills
-                </button>
               </div>
+              <p className="text-[11px] font-medium text-slate-500">Events completed within the last 5 working days.</p>
             </div>
+            
+            {/* Simulation controls */}
+            <label className="flex items-center gap-2 cursor-pointer text-[10px] font-semibold text-slate-500 bg-slate-50 border border-slate-200 rounded-lg px-2.5 py-1.5 hover:bg-slate-100 transition shadow-sm shrink-0">
+              <input
+                type="checkbox"
+                checked={simulateExpired}
+                onChange={(e) => {
+                  setSimulateExpired(e.target.checked)
+                  onToast(e.target.checked ? 'Simulated outcomes older than 5 working days (archived)' : 'Simulated outcomes active')
+                }}
+                className="rounded text-blue-600 focus:ring-blue-100 cursor-pointer"
+              />
+              <span>Simulate &gt; 5 days ago (Archive)</span>
+            </label>
+          </div>
 
-            {/* AI Review Card */}
-            <div className="grid gap-6 lg:grid-cols-12 items-start bg-slate-50/15 rounded-xl border border-slate-100/50 p-5">
-              
-              {/* Left block: student details & detected activities */}
-              <div className="lg:col-span-4 space-y-4 min-w-0">
-                <div className="flex items-center gap-2.5">
-                  <span className={`flex h-9 w-9 items-center justify-center rounded-full text-xs font-bold shrink-0 ${focusedStudent.avatarBg}`}>
-                    {focusedStudent.initials}
-                  </span>
-                  <div className="min-w-0">
-                    <h4 className="font-semibold text-slate-850 truncate text-xs">{focusedStudent.name}</h4>
-                    <p className="text-[9px] text-slate-400 font-semibold leading-none">{focusedStudent.team} • {focusedStudent.role}</p>
-                  </div>
-                </div>
-
-                <div className="space-y-2 pt-2 border-t border-slate-100/60">
-                  <span className="text-[9px] text-slate-400 font-bold uppercase tracking-wider block">Activities Detected:</span>
-                  <ul className="space-y-2 text-[10px] text-slate-600 font-medium">
-                    {focusedStudent.activities.map((act, idx) => (
-                      <li key={idx} className="flex items-start gap-1.5">
-                        <span className="text-emerald-500 font-bold">✓</span>
-                        <span className="leading-relaxed">{act}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-
-              {/* Center block: Suggested skills & evidence */}
-              <div className="lg:col-span-5 space-y-4 border-slate-100/60 lg:border-x lg:px-5">
-                <div className="space-y-2">
-                  <span className="text-[9px] text-slate-400 font-bold uppercase tracking-wider block">AI Suggested Skills:</span>
-                  <div className="flex flex-wrap gap-1.5">
-                    {(skillsMap[focusedStudentId] || []).map(skill => (
-                      <span
-                        key={skill}
-                        className="rounded bg-violet-50 px-2 py-0.5 text-[9px] font-semibold text-violet-650 border border-violet-100/40 inline-flex items-center gap-1 group"
-                      >
-                        {skill}
-                        <button
-                          type="button"
-                          onClick={() => handleRemoveSkill(skill)}
-                          className="hover:text-red-500 text-[10px] font-bold"
-                        >
-                          ×
-                        </button>
+          {simulateExpired ? (
+            <div className="rounded-2xl border border-slate-200 border-dashed bg-slate-50/50 p-12 text-center flex flex-col justify-center items-center shadow-[inset_0_4px_12px_rgba(0,0,0,0.01)]">
+              <span className="text-3xl mb-3">📁</span>
+              <h3 className="text-xs font-semibold text-slate-700">No outcomes in the last 5 working days</h3>
+              <p className="text-[10px] font-medium text-slate-400 mt-1 max-w-sm">
+                All completed outcomes have elapsed the 5-working-day threshold and are securely archived in the Event Impact History registry.
+              </p>
+            </div>
+          ) : (
+            <div className="grid gap-4 md:grid-cols-3">
+              {recentOutcomes.map(item => (
+                <article
+                  key={item.id}
+                  className="rounded-2xl border border-slate-200/70 bg-white p-4 shadow-sm transition hover:border-blue-200 hover:shadow-[0_8px_24px_rgba(0,0,0,0.02)] flex flex-col justify-between"
+                >
+                  <div className="space-y-3">
+                    <header className="flex items-start justify-between gap-2">
+                      <span className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br ${item.color} text-sm text-white shadow-sm`}>
+                        {item.icon}
                       </span>
-                    ))}
+                      <span className="rounded bg-emerald-50 px-1.5 py-0.5 text-[8px] font-semibold text-emerald-700 border border-emerald-100/50">
+                        {item.daysAgo}
+                      </span>
+                    </header>
+
+                    <div>
+                      <h3 className="text-xs font-semibold text-slate-800 line-clamp-2 leading-snug">{item.title}</h3>
+                      <p className="text-[9px] text-slate-400 font-semibold truncate mt-0.5">{item.organizer}</p>
+                    </div>
+
+                    {/* Compact stats grid */}
+                    <div className="grid grid-cols-2 gap-2 border-t border-slate-50 pt-2 text-[10px]">
+                      <div>
+                        <span className="text-[9px] text-slate-400 font-semibold block uppercase tracking-wider">Readiness</span>
+                        <p className="font-bold text-slate-800 flex items-center gap-0.5 text-[10px] mt-0.5">
+                          <span className="text-emerald-500">↑</span> {item.uplift}
+                        </p>
+                      </div>
+                      <div>
+                        <span className="text-[9px] text-slate-400 font-semibold block uppercase tracking-wider">Priority Gaps</span>
+                        <p className="font-bold text-slate-800 text-[10px] mt-0.5">🎯 {item.gaps} improved</p>
+                      </div>
+                      <div>
+                        <span className="text-[9px] text-slate-400 font-semibold block uppercase tracking-wider">In Pipeline</span>
+                        <p className="font-bold text-slate-800 text-[10px] mt-0.5">👥 {item.students} students</p>
+                      </div>
+                      <div>
+                        <span className="text-[9px] text-slate-400 font-semibold block uppercase tracking-wider">Partners</span>
+                        <p className="font-bold text-slate-800 text-[10px] mt-0.5">🏢 {item.companies} engaged</p>
+                      </div>
+                    </div>
+
+                    <div className="border-t border-slate-50 pt-2">
+                      <p className="text-[10px] font-medium leading-relaxed text-slate-500 italic">
+                        "{item.aiStatement}"
+                      </p>
+                    </div>
                   </div>
 
-                  {/* Add skill input */}
-                  <form onSubmit={handleAddSkill} className="flex gap-2 pt-1.5">
-                    <input
-                      type="text"
-                      placeholder="Add custom skill..."
-                      value={newSkillInput}
-                      onChange={(e) => setNewSkillInput(e.target.value)}
-                      className="rounded-lg border border-slate-200 px-2 py-1 text-[9px] outline-none flex-1"
-                    />
+                  <div className="mt-4">
                     <button
-                      type="submit"
-                      className="rounded-lg bg-blue-600 px-3 py-1 text-[9px] font-semibold text-white hover:bg-blue-700 transition"
+                      type="button"
+                      onClick={() => onViewImpactReport && onViewImpactReport(item)}
+                      className="w-full flex items-center justify-center rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-[10px] font-semibold text-blue-600 shadow-sm transition hover:border-blue-200 hover:bg-blue-50/20"
                     >
-                      Add
+                      View Impact Report
                     </button>
-                  </form>
-                </div>
-
-                <div className="space-y-2 border-t border-slate-100/60 pt-3">
-                  <span className="text-[9px] text-slate-400 font-bold uppercase tracking-wider block">Evidence Sources:</span>
-                  <div className="space-y-1.5">
-                    {focusedStudent.evidence.map(file => (
-                      <button
-                        key={file}
-                        type="button"
-                        onClick={() => onToast(`Opening document: ${file}`)}
-                        className="w-full text-left rounded-lg bg-white border border-slate-200 hover:border-slate-350 p-2 text-[9px] text-slate-600 font-semibold transition truncate flex items-center gap-2"
-                      >
-                        <span>📄</span>
-                        <span className="truncate">{file}</span>
-                      </button>
-                    ))}
                   </div>
-                </div>
-              </div>
+                </article>
+              ))}
+            </div>
+          )}
 
-              {/* Right block: Review actions */}
-              <div className="lg:col-span-3 space-y-4">
-                <span className="text-[9px] text-slate-400 font-bold uppercase tracking-wider block">Your Review:</span>
-                
-                <div className="space-y-2">
-                  {['Approve All', 'Edit Skills', 'Reject All'].map(act => (
-                    <label key={act} className="flex items-center gap-2 text-[10px] font-medium text-slate-650 cursor-pointer">
-                      <input
-                        type="radio"
-                        name="reviewAction"
-                        checked={reviewStates[focusedStudentId] === act}
-                        onChange={() => handleReviewActionChange(act)}
-                        className="text-blue-600 focus:ring-blue-100"
-                      />
-                      <span>{act}</span>
-                    </label>
-                  ))}
-                </div>
+          <div className="flex justify-end pt-1">
+            <button
+              type="button"
+              onClick={() => {
+                setSelectedDate(null)
+                document.getElementById('impact-history')?.scrollIntoView({ behavior: 'smooth' })
+                onToast('Viewing all impact records')
+              }}
+              className="text-[11px] font-semibold text-blue-600 hover:text-blue-700 hover:underline flex items-center gap-0.5"
+            >
+              View all outcomes →
+            </button>
+          </div>
+        </section>
 
+        {/* RIGHT COLUMN: IMPACT CALENDAR (col-span-5) */}
+        <section className="lg:col-span-5 rounded-2xl border border-slate-200/70 bg-white p-5 shadow-sm space-y-4 min-w-0">
+          <header className="flex items-center justify-between border-b border-slate-100 pb-3">
+            <div>
+              <h2 className="text-sm font-semibold text-slate-900">Impact Calendar</h2>
+              <p className="text-[10px] font-medium text-slate-400 mt-0.5">Click a date to filter impact history.</p>
+            </div>
+            
+            <div className="flex items-center gap-2">
+              <div className="flex items-center rounded-lg border border-slate-200 p-0.5 bg-slate-50">
                 <button
                   type="button"
-                  onClick={handleApproveDetails}
-                  className="w-full rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold py-2 px-3 text-[10px] shadow-sm hover:opacity-95 transition"
+                  onClick={() => onToast('Previous month')}
+                  className="flex h-6 w-6 items-center justify-center rounded text-xs text-slate-500 hover:bg-white transition"
                 >
-                  Review Details
+                  &lt;
+                </button>
+                <span className="text-[10px] font-semibold px-2 text-slate-700">{calendarMonth}</span>
+                <button
+                  type="button"
+                  onClick={() => onToast('Next month')}
+                  className="flex h-6 w-6 items-center justify-center rounded text-xs text-slate-500 hover:bg-white transition"
+                >
+                  &gt;
                 </button>
               </div>
-
-            </div>
-          </section>
-
-          {/* SECTION C — EVIDENCE & SUBMISSIONS */}
-          <section className="rounded-2xl border border-slate-200/80 bg-white p-6 shadow-[0_8px_30px_rgba(0,0,0,0.015)] space-y-4">
-            <div className="flex items-center justify-between border-b border-slate-50 pb-3">
-              <div className="space-y-0.5">
-                <h3 className="text-sm font-semibold text-slate-850">C. Evidence & Submissions</h3>
-                <p className="text-[10px] font-medium text-slate-450">Collect and manage supporting documents for verification and future reference.</p>
-              </div>
+              
               <button
                 type="button"
-                onClick={() => onToast('Open Upload Evidence portal...')}
-                className="rounded-xl border border-slate-200 bg-white px-3.5 py-2 text-[10px] font-semibold text-slate-650 hover:bg-slate-50 transition inline-flex items-center gap-1.5"
+                onClick={() => {
+                  setCalendarMonth('May 2025')
+                  setSelectedDate(null)
+                  onToast('Returned to current month')
+                }}
+                className="rounded-lg border border-slate-200 bg-white px-2.5 py-1 text-[10px] font-semibold text-slate-600 hover:bg-slate-50 transition"
               >
-                📤 Upload Evidence
+                Today
               </button>
             </div>
+          </header>
 
-            {/* Folders grid */}
-            <div className="grid gap-3 grid-cols-2 sm:grid-cols-5">
-              {folders.map(folder => (
-                <div
-                  key={folder.name}
-                  onClick={() => onToast(`Selected category folder: ${folder.name}`)}
-                  className="group cursor-pointer rounded-xl border border-slate-200 hover:border-slate-350 p-4 bg-white hover:bg-slate-50/20 text-center transition flex flex-col justify-between items-center"
+          {/* Calendar Grid */}
+          <div className="grid grid-cols-7 gap-1 text-center text-[10px]">
+            {/* Weekdays */}
+            {['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'].map(wd => (
+              <span key={wd} className="font-semibold text-slate-400 py-1">{wd}</span>
+            ))}
+            
+            {/* Days mapping */}
+            {calendarDays.map((cell, idx) => {
+              const formattedCellDate = cell.isCurrentMonth ? `${cell.day.toString().padStart(2, '0')} May 2025`.replace(/^0/, '') : ''
+              const isSelected = selectedDate && selectedDate === formattedCellDate
+              const eventCount = formattedCellDate ? eventCountByDate[formattedCellDate] || 0 : 0
+              
+              return (
+                <button
+                  key={idx}
+                  type="button"
+                  onClick={() => cell.isCurrentMonth && handleDateClick(cell)}
+                  disabled={!cell.isCurrentMonth}
+                  className={`relative flex flex-col justify-between items-center h-11 py-1 rounded-lg transition select-none ${
+                    !cell.isCurrentMonth
+                      ? 'text-slate-200 bg-transparent'
+                      : isSelected
+                      ? 'ring-2 ring-blue-600 bg-blue-50/30 font-medium text-blue-700'
+                      : 'text-slate-650 hover:bg-slate-50/70 hover:text-slate-900'
+                  }`}
                 >
-                  <span className="text-xl mb-2">{folder.icon}</span>
-                  <h4 className="text-xs font-semibold text-slate-800 line-clamp-1">{folder.name}</h4>
-                  <p className="text-[9px] text-slate-400 font-semibold mt-1">{folder.count} Uploaded</p>
-                </div>
-              ))}
-            </div>
-          </section>
+                  <span className="text-[10px] font-semibold">{cell.day}</span>
 
-        </main>
-
-        {/* RIGHT INSIGHT SIDEBAR (4 columns): Sticky layout metrics and donut breakdown */}
-        <aside className="lg:col-span-4 space-y-6 sticky top-6">
-          
-          {/* CARD 1: EVENT IMPACT PREVIEW */}
-          <div className="rounded-2xl border border-slate-200/80 bg-white p-5 shadow-[0_8px_30px_rgba(0,0,0,0.015)] space-y-4">
-            <div className="flex items-center justify-between border-b border-slate-50 pb-2">
-              <h4 className="text-xs font-semibold text-slate-850">Event Impact Preview</h4>
-              <span className="rounded bg-blue-50 px-1 py-0.5 text-[8px] font-semibold text-blue-700">Beta</span>
-            </div>
-
-            <div className="grid grid-cols-4 gap-2 text-center">
-              {[
-                { label: 'Participants', val: '120+', icon: '👥' },
-                { label: 'Skills Identified', val: '48+', icon: '🎯' },
-                { label: 'Teams', val: '16+', icon: '🏫' },
-                { label: 'Partners', val: '5', icon: '🤝' },
-              ].map(stat => (
-                <div key={stat.label} className="rounded-xl bg-slate-50 border border-slate-100 p-2.5 flex flex-col justify-between items-center">
-                  <span className="text-sm mb-1">{stat.icon}</span>
-                  <p className="text-xs font-bold text-slate-800">{stat.val}</p>
-                  <p className="text-[7px] text-slate-400 uppercase font-semibold leading-normal mt-0.5">{stat.label.split(' ')[0]}</p>
-                </div>
-              ))}
-            </div>
+                  {/* Render Dots and Count indicators */}
+                  <div className="flex items-center gap-0.5 justify-center min-h-[12px] w-full">
+                    {cell.dots && cell.dots.map((dot, dIdx) => (
+                      <span key={dIdx} className={`h-1 w-1 rounded-full ${dot}`} />
+                    ))}
+                    {eventCount > 1 && (
+                      <span className="rounded bg-blue-50 px-1 text-[7.5px] font-medium text-blue-700">
+                        {eventCount} events
+                      </span>
+                    )}
+                  </div>
+                </button>
+              )
+            })}
           </div>
 
-          {/* CARD 2: AI SKILL EXTRACTION SUMMARY (SVG DONUT CHART) */}
-          <div className="rounded-2xl border border-slate-200/80 bg-white p-5 shadow-[0_8px_30px_rgba(0,0,0,0.015)] space-y-4">
-            <div>
-              <h4 className="text-xs font-semibold text-slate-800">AI Skill Extraction Summary</h4>
-              <p className="text-[9px] text-slate-400 font-medium mt-0.5">AI analyzed event activities, roles, and submissions to suggest skills.</p>
-            </div>
+          <div className="flex items-center gap-1.5 justify-start text-[9px] text-slate-400 font-medium pb-2 border-b border-slate-100">
+            <span className="flex gap-0.5">
+              <span className="h-1 w-1 bg-red-500 rounded-full" />
+              <span className="h-1 w-1 bg-blue-500 rounded-full" />
+              <span className="h-1 w-1 bg-emerald-500 rounded-full" />
+            </span>
+            <span>Multiple markers indicate multiple completed events. Click a date to filter impact history.</span>
+          </div>
 
-            {/* SVG Donut Ring Chart */}
-            <div className="flex items-center gap-5">
-              <div className="relative shrink-0 flex items-center justify-center h-28 w-28">
-                <svg width="100%" height="100%" viewBox="0 0 36 36" className="drop-shadow-sm">
-                  {/* Base grey background circle */}
-                  <circle cx="18" cy="18" r="15.915" fill="none" stroke="#f1f5f9" strokeWidth="2.5" />
-                  
-                  {/* Leadership: value 18 (37.5%), color violet-400 */}
-                  <circle
-                    cx="18"
-                    cy="18"
-                    r="15.915"
-                    fill="none"
-                    stroke="#a78bfa"
-                    strokeWidth="2.8"
-                    strokeDasharray="37.5 62.5"
-                    strokeDashoffset="100"
-                    className="transition-all hover:stroke-violet-500 cursor-pointer"
-                  />
-                  {/* Problem Solving: value 15 (31.25%), color blue-400 */}
-                  <circle
-                    cx="18"
-                    cy="18"
-                    r="15.915"
-                    fill="none"
-                    stroke="#60a5fa"
-                    strokeWidth="2.8"
-                    strokeDasharray="31.25 68.75"
-                    strokeDashoffset="62.5"
-                    className="transition-all hover:stroke-blue-500 cursor-pointer"
-                  />
-                  {/* Technical: value 10 (20.8%), color emerald-400 */}
-                  <circle
-                    cx="18"
-                    cy="18"
-                    r="15.915"
-                    fill="none"
-                    stroke="#34d399"
-                    strokeWidth="2.8"
-                    strokeDasharray="20.8 79.2"
-                    strokeDashoffset="31.25"
-                    className="transition-all hover:stroke-emerald-500 cursor-pointer"
-                  />
-                  {/* Communication: value 5 (10.45%), color amber-400 */}
-                  <circle
-                    cx="18"
-                    cy="18"
-                    r="15.915"
-                    fill="none"
-                    stroke="#fbbf24"
-                    strokeWidth="2.8"
-                    strokeDasharray="10.45 89.55"
-                    strokeDashoffset="10.45"
-                    className="transition-all hover:stroke-amber-500 cursor-pointer"
-                  />
-
-                  {/* Center Text inside ring */}
-                  <g className="translate-y-[0.5px]">
-                    <text x="18" y="16.5" className="text-[6.5px] font-bold text-slate-800" textAnchor="middle">48</text>
-                    <text x="18" y="21.5" className="text-[2.2px] font-semibold text-slate-400 uppercase tracking-wide" textAnchor="middle">Skills Identified</text>
-                  </g>
-                </svg>
+          {/* Monthly Summary Statistics Grid */}
+          <div className="grid grid-cols-3 gap-2 pt-2">
+            <div className="rounded-xl border border-slate-100 bg-slate-50/20 p-2.5 flex items-center gap-2.5">
+              <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-blue-50 text-blue-600 font-bold text-xs">📅</span>
+              <div className="min-w-0">
+                <p className="text-xs font-bold text-slate-800 leading-none">12</p>
+                <p className="text-[8px] text-slate-400 font-semibold mt-1 leading-none uppercase">Completed</p>
               </div>
-
-              {/* Legend with breakdowns */}
-              <div className="space-y-1.5 flex-1 min-w-0 text-[10px] font-medium text-slate-600">
-                <div className="flex items-center justify-between gap-2">
-                  <span className="flex items-center gap-1.5 truncate">
-                    <span className="h-2.5 w-2.5 rounded bg-violet-400 shrink-0" />
-                    <span className="truncate">Leadership</span>
-                  </span>
-                  <span className="font-bold text-slate-700 shrink-0">18</span>
-                </div>
-                <div className="flex items-center justify-between gap-2">
-                  <span className="flex items-center gap-1.5 truncate">
-                    <span className="h-2.5 w-2.5 rounded bg-blue-400 shrink-0" />
-                    <span className="truncate">Problem Solving</span>
-                  </span>
-                  <span className="font-bold text-slate-700 shrink-0">15</span>
-                </div>
-                <div className="flex items-center justify-between gap-2">
-                  <span className="flex items-center gap-1.5 truncate">
-                    <span className="h-2.5 w-2.5 rounded bg-emerald-400 shrink-0" />
-                    <span className="truncate">Technical</span>
-                  </span>
-                  <span className="font-bold text-slate-700 shrink-0">10</span>
-                </div>
-                <div className="flex items-center justify-between gap-2">
-                  <span className="flex items-center gap-1.5 truncate">
-                    <span className="h-2.5 w-2.5 rounded bg-amber-400 shrink-0" />
-                    <span className="truncate">Communication</span>
-                  </span>
-                  <span className="font-bold text-slate-700 shrink-0">5</span>
-                </div>
+            </div>
+            <div className="rounded-xl border border-slate-100 bg-slate-50/20 p-2.5 flex items-center gap-2.5">
+              <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-amber-50 text-amber-600 font-bold text-xs">⏰</span>
+              <div className="min-w-0">
+                <p className="text-xs font-bold text-slate-800 leading-none">4</p>
+                <p className="text-[8px] text-slate-400 font-semibold mt-1 leading-none uppercase">Follow-ups</p>
+              </div>
+            </div>
+            <div className="rounded-xl border border-slate-100 bg-slate-50/20 p-2.5 flex items-center gap-2.5">
+              <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-violet-50 text-violet-600 font-bold text-xs">🏢</span>
+              <div className="min-w-0">
+                <p className="text-xs font-bold text-slate-800 leading-none">28</p>
+                <p className="text-[8px] text-slate-400 font-semibold mt-1 leading-none uppercase">Companies</p>
               </div>
             </div>
           </div>
+        </section>
 
-          {/* CARD 3: COMPLETION PROGRESS */}
-          <div className="rounded-2xl border border-slate-200/80 bg-white p-5 shadow-[0_8px_30px_rgba(0,0,0,0.015)] space-y-4">
-            <div className="flex items-center justify-between border-b border-slate-50 pb-2">
-              <h4 className="text-xs font-semibold text-slate-850">Completion Progress</h4>
-              <span className="text-[10px] font-bold text-blue-600">68%</span>
-            </div>
+      </div>
 
-            {/* Progress bar */}
-            <div className="h-2.5 w-full rounded-full bg-slate-100 overflow-hidden flex">
-              <div className="bg-blue-650 h-full transition-all" style={{ width: '68%' }} />
-            </div>
+      {/* ================= SECTION 3: AI STRATEGIC INSIGHT ================= */}
+      <section className="rounded-2xl border border-violet-100 bg-violet-50/45 p-5 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+        <div className="flex gap-3.5 items-start md:items-center">
+          <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-violet-600 text-white shadow-sm text-sm font-semibold">
+            ✨
+          </span>
+          <div className="space-y-0.5">
+            <h3 className="text-xs font-semibold text-violet-800 uppercase tracking-wider leading-none">AI Strategic Insight</h3>
+            <p className="text-[11px] font-semibold text-slate-800 leading-relaxed max-w-3xl">
+              Events involving mentors and practical submissions generated <strong className="text-violet-700 font-bold">2.3× more demonstrated skill evidence</strong> than speaker-only events.
+            </p>
+          </div>
+        </div>
 
-            {/* Metrics detail breakdown */}
-            <div className="grid grid-cols-2 gap-3 text-[10px] font-medium text-slate-600">
-              <div className="flex items-center justify-between border-r border-slate-50 pr-2">
-                <span>Verified:</span>
-                <span className="font-bold text-slate-850">82</span>
-              </div>
-              <div className="flex items-center justify-between">
-                <span>Pending Review:</span>
-                <span className="font-bold text-slate-850">24</span>
-              </div>
-              <div className="flex items-center justify-between border-r border-slate-50 pr-2 pt-1">
-                <span>Not Submitted:</span>
-                <span className="font-bold text-slate-850">10</span>
-              </div>
-              <div className="flex items-center justify-between pt-1">
-                <span>Requires Action:</span>
-                <span className="font-bold text-slate-850">8</span>
-              </div>
-            </div>
+        <div className="flex flex-wrap gap-1.5 shrink-0">
+          {[
+            { label: 'Repeat analytics competitions', query: 'Hackathon' },
+            { label: 'Reconnect with Grab and Deloitte', query: 'Grab' },
+            { label: 'Target lower-readiness cohorts', query: 'Bootcamp' }
+          ].map(chip => (
+            <button
+              key={chip.label}
+              type="button"
+              onClick={() => {
+                setSearchQuery(chip.query)
+                onToast(`AI Strategy applied: searching "${chip.query}"`)
+              }}
+              className="rounded-full bg-white px-3.5 py-1.5 text-[10px] font-semibold text-slate-600 border border-slate-200 hover:border-violet-300 hover:text-violet-600 transition shadow-sm"
+            >
+              {chip.label}
+            </button>
+          ))}
+        </div>
+      </section>
+
+      {/* ================= SECTION 4: EVENT IMPACT HISTORY ================= */}
+      <section id="impact-history" className="rounded-2xl border border-slate-200/70 bg-white p-6 shadow-sm space-y-4">
+        <div>
+          <h2 className="text-base font-semibold text-slate-900">Event Impact History</h2>
+          <p className="text-[11px] font-medium text-slate-400">Long-term record of completed events and their strategic impact.</p>
+        </div>
+
+        {/* Filters and Search toolbar */}
+        <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between border-b border-slate-50 pb-3">
+          <div className="flex items-center gap-2 w-full lg:w-96 shrink-0 relative">
+            <span className="absolute left-3 text-slate-400 text-xs font-semibold">🔍</span>
+            <input
+              type="text"
+              placeholder="Search events, partners, or skills..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full rounded-xl border border-slate-200 bg-white pl-9 pr-4 py-2 text-xs outline-none placeholder:text-slate-400 focus:border-blue-300 transition"
+            />
           </div>
 
-          {/* CARD 4: NEXT STEP */}
-          <div className="rounded-2xl border border-slate-250 bg-gradient-to-br from-slate-900 to-indigo-950 p-5 shadow-md text-white space-y-4">
-            <div className="space-y-1">
-              <h4 className="text-xs font-semibold">Next Step</h4>
-              <p className="text-[10px] leading-relaxed text-slate-350">Review and verify all participants before updating student profiles.</p>
+          <div className="flex flex-wrap items-center gap-2">
+            {/* Semester Filter */}
+            <div className="flex items-center gap-1">
+              <span className="text-[10px] font-semibold text-slate-400">Semester:</span>
+              <select
+                value={semesterFilter}
+                onChange={(e) => { setSemesterFilter(e.target.value); setCurrentPage(1); }}
+                className="rounded-lg border border-slate-200 bg-white px-2 py-1.5 text-[10px] font-semibold text-slate-600 outline-none cursor-pointer hover:bg-slate-50"
+              >
+                <option value="All">All</option>
+                <option value="Semester 1">Semester 1</option>
+                <option value="Semester 2">Semester 2</option>
+              </select>
+            </div>
+
+            {/* Program Filter */}
+            <div className="flex items-center gap-1">
+              <span className="text-[10px] font-semibold text-slate-400">Program:</span>
+              <select
+                value={programFilter}
+                onChange={(e) => { setProgramFilter(e.target.value); setCurrentPage(1); }}
+                className="rounded-lg border border-slate-200 bg-white px-2 py-1.5 text-[10px] font-semibold text-slate-600 outline-none cursor-pointer hover:bg-slate-50"
+              >
+                <option value="All">All</option>
+                <option value="Computing">Computing</option>
+                <option value="Business">Business</option>
+                <option value="Science">Science</option>
+                <option value="Humanities">Humanities</option>
+              </select>
+            </div>
+
+            {/* Event Type Filter */}
+            <div className="flex items-center gap-1">
+              <span className="text-[10px] font-semibold text-slate-400">Event Type:</span>
+              <select
+                value={typeFilter}
+                onChange={(e) => { setTypeFilter(e.target.value); setCurrentPage(1); }}
+                className="rounded-lg border border-slate-200 bg-white px-2 py-1.5 text-[10px] font-semibold text-slate-600 outline-none cursor-pointer hover:bg-slate-50"
+              >
+                <option value="All">All</option>
+                <option value="Case Competition">Case Competition</option>
+                <option value="Workshop">Workshop</option>
+                <option value="Sprint">Sprint</option>
+                <option value="Seminar">Seminar</option>
+                <option value="Hackathon">Hackathon</option>
+                <option value="Mentorship">Mentorship</option>
+                <option value="Bootcamp">Bootcamp</option>
+              </select>
             </div>
 
             <button
               type="button"
-              onClick={() => {
-                setActiveStep(3)
-                onToast('Proceeding to Step 3: Review & Verify')
-              }}
-              className="w-full rounded-xl bg-gradient-to-r from-blue-600 via-indigo-600 to-violet-600 px-4 py-2.5 text-xs font-semibold text-white shadow-md hover:opacity-95 transition text-center"
+              onClick={() => onToast('Advanced filters toggled.')}
+              className="rounded-lg border border-slate-250 bg-white px-3 py-1.5 text-[10px] font-semibold text-slate-600 hover:bg-slate-50 transition inline-flex items-center gap-1"
             >
-              Continue to Review →
+              <span>⚙️</span> Filters
             </button>
           </div>
+        </div>
 
-        </aside>
+        {/* Date Filter Removable Badge */}
+        {selectedDate && (
+          <div className="flex items-center gap-2 pt-1">
+            <span className="inline-flex items-center gap-1.5 rounded-lg bg-blue-50 border border-blue-100 px-3 py-1 text-xs font-semibold text-blue-700">
+              Showing events from {selectedDate}
+              <button
+                type="button"
+                onClick={handleClearDateFilter}
+                className="hover:text-red-500 text-xs font-bold leading-none"
+              >
+                ×
+              </button>
+            </span>
+          </div>
+        )}
 
-      </div>
+        {/* Compact Table */}
+        <div className="overflow-x-auto min-w-0 rounded-xl border border-slate-100">
+          <table className="w-full min-w-[980px] text-left text-xs border-collapse">
+            <thead>
+              <tr className="border-b border-slate-100 bg-slate-50/50 text-slate-400 font-semibold uppercase tracking-wider text-[9px]">
+                <th className="py-3 px-4">Event</th>
+                <th className="py-3 px-4">Date</th>
+                <th className="py-3 px-4">Skill Gaps Closed</th>
+                <th className="py-3 px-4 text-center">Readiness Uplift</th>
+                <th className="py-3 px-4 text-center">Companies Engaged</th>
+                <th className="py-3 px-4 text-center">Students Impacted</th>
+                <th className="py-3 px-4 text-center">Report Ready</th>
+                <th className="py-3 px-4 text-center">Actions</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-slate-100">
+              {paginatedHistory.map(row => (
+                <tr key={row.id} className="hover:bg-slate-50/40 transition">
+                  <td className="py-3.5 px-4">
+                    <div className="flex items-center gap-2.5">
+                      <span className="flex h-6.5 w-6.5 shrink-0 items-center justify-center rounded bg-slate-50 text-[11px]">
+                        {row.category === 'Case Competition' ? '🏆' : row.category === 'Hackathon' ? '💻' : row.category === 'Mentorship' ? '🤝' : '📄'}
+                      </span>
+                      <div className="min-w-0">
+                        <p className="font-semibold text-slate-800 line-clamp-1 text-xs">{row.title}</p>
+                        <p className="text-[9px] text-slate-450 font-semibold truncate mt-0.5">{row.organizer}</p>
+                      </div>
+                    </div>
+                  </td>
+                  <td className="py-3.5 px-4 font-semibold text-slate-500 whitespace-nowrap">{row.date}</td>
+                  <td className="py-3.5 px-4">
+                    <div className="flex flex-wrap gap-1">
+                      {row.skills.map(skill => (
+                        <span key={skill} className="rounded bg-slate-100/70 px-1.5 py-0.5 text-[9.5px] font-medium text-slate-600 border border-slate-200/20">
+                          {skill}
+                        </span>
+                      ))}
+                    </div>
+                  </td>
+                  <td className="py-3.5 px-4 text-center font-bold text-emerald-600 text-xs">+{row.uplift}%</td>
+                  <td className="py-3.5 px-4 text-center font-semibold text-slate-700">{row.companies} companies</td>
+                  <td className="py-3.5 px-4 text-center font-semibold text-slate-700">{row.students} students</td>
+                  <td className="py-3.5 px-4 text-center">
+                    <span className="inline-flex items-center gap-1 rounded bg-emerald-50 px-2 py-0.5 text-[9px] font-semibold text-emerald-700 border border-emerald-100/30">
+                      ✓ Yes
+                    </span>
+                  </td>
+                  <td className="py-3.5 px-4 text-center whitespace-nowrap" onClick={(e) => e.stopPropagation()}>
+                    <div className="inline-flex items-center gap-1.5">
+                      <button
+                        type="button"
+                        onClick={() => onViewImpactReport && onViewImpactReport(row)}
+                        className="rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-[10px] font-semibold text-slate-600 hover:border-blue-300 hover:text-blue-600 transition"
+                      >
+                        View Full Impact Report
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => onToast('Action menu opened.')}
+                        className="p-1 rounded text-slate-400 hover:text-slate-750 transition text-xs font-semibold"
+                      >
+                        ⋮
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+              {paginatedHistory.length === 0 && (
+                <tr>
+                  <td colSpan="8" className="py-8 text-center text-xs text-slate-400 italic">
+                    No completed events found matching the active filters.
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
+
+        {/* Pagination */}
+        <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between pt-2 text-[10px] font-semibold text-slate-450">
+          <span>Showing {filteredHistory.length > 0 ? (currentPage - 1) * itemsPerPage + 1 : 0}-{Math.min(currentPage * itemsPerPage, filteredHistory.length)} of {filteredHistory.length} events</span>
+          <div className="flex items-center gap-1">
+            <button
+              type="button"
+              disabled={currentPage === 1}
+              onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+              className="flex h-5.5 w-5.5 items-center justify-center rounded-md border border-slate-200 bg-white text-[9px] font-bold text-slate-500 hover:bg-slate-50 transition disabled:opacity-50 disabled:hover:bg-white"
+            >
+              &lt;
+            </button>
+            {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
+              <button
+                key={page}
+                type="button"
+                onClick={() => setCurrentPage(page)}
+                className={`flex h-5.5 w-5.5 items-center justify-center rounded-md border text-[9px] font-bold transition ${
+                  currentPage === page
+                    ? 'border-blue-600 bg-blue-600 text-white'
+                    : 'border-slate-200 bg-white text-slate-500 hover:bg-slate-50'
+                }`}
+              >
+                {page}
+              </button>
+            ))}
+            <button
+              type="button"
+              disabled={currentPage === totalPages}
+              onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+              className="flex h-5.5 w-5.5 items-center justify-center rounded-md border border-slate-200 bg-white text-[9px] font-bold text-slate-500 hover:bg-slate-50 transition disabled:opacity-50 disabled:hover:bg-white"
+            >
+              &gt;
+            </button>
+          </div>
+        </div>
+      </section>
 
     </div>
   )

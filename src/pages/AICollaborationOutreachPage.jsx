@@ -1,60 +1,93 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 
-export default function AICollaborationOutreachPage({ event, onBack, onToast }) {
-  // 1. Manage state for selected collaborators
-  const [selectedCollaborators, setSelectedCollaborators] = useState({
-    Grab: true,
-    Maybank: true,
-    Deloitte: true,
-    AWS: false,
-  })
+export default function AICollaborationOutreachPage({ event, onBack, onToast, outreachPartner, onSendOutreach }) {
+  const isOwnedEvent = event.hostedByUs
 
-  // 2. State for expanded email drafts
-  const [expandedDraft, setExpandedDraft] = useState('Grab')
+  // Recommended partners list for owned events
+  const ownedCollaborators = [
+    {
+      id: 'Google',
+      name: 'Google',
+      logo: 'G',
+      logoColor: 'from-blue-600 to-indigo-600',
+      matchScore: 98,
+      desc: 'Best for analytics, tech workshops and cloud computing sponsorship.',
+      contributions: ['Tech Sponsor', 'Tech Talks', 'Mentorship'],
+      whyFits: [
+        'Strong focus on Tech & AI',
+        'Industry leader in Cloud/AI',
+        'Strong youth engagement'
+      ],
+      impact: 'High Impact',
+      impactColor: 'bg-emerald-50 text-emerald-700 border-emerald-100'
+    },
+    {
+      id: 'Petronas',
+      name: 'Petronas',
+      logo: 'P',
+      logoColor: 'from-teal-600 to-emerald-500',
+      matchScore: 94,
+      desc: 'Best for engineering talent sponsorship and sustainability programs.',
+      contributions: ['Energy Sponsor', 'Engineering', 'Scholarships'],
+      whyFits: [
+        'Actively recruiting engineering/tech',
+        'Strong sustainability alignment',
+        'Excellent campus history'
+      ],
+      impact: 'High Impact',
+      impactColor: 'bg-emerald-50 text-emerald-700 border-emerald-100'
+    },
+    {
+      id: 'Intel',
+      name: 'Intel',
+      logo: 'I',
+      logoColor: 'from-blue-700 to-cyan-500',
+      matchScore: 91,
+      desc: 'Best for AI mentoring, hardware workshops, and judging.',
+      contributions: ['AI Mentors', 'Hardware Sponsor', 'Judges'],
+      whyFits: [
+        'AI & microprocessor expert',
+        'Offers hardware lab support',
+        'Provides judges/mentors'
+      ],
+      impact: 'High Impact',
+      impactColor: 'bg-emerald-50 text-emerald-700 border-emerald-100'
+    },
+    {
+      id: 'Maxis',
+      name: 'Maxis',
+      logo: 'M',
+      logoColor: 'from-green-600 to-lime-500',
+      matchScore: 88,
+      desc: 'Best for business case study challenges and youth branding.',
+      contributions: ['Case Study', 'Mentorship', 'Digital Sponsor'],
+      whyFits: [
+        'Telco & digital platform focus',
+        'Excellent student brand reach',
+        'Provides internship channels'
+      ],
+      impact: 'High Impact',
+      impactColor: 'bg-emerald-50 text-emerald-700 border-emerald-100'
+    },
+    {
+      id: 'Shopee',
+      name: 'Shopee',
+      logo: 'S',
+      logoColor: 'from-orange-600 to-amber-500',
+      matchScore: 85,
+      desc: 'Best for product management workshops, design, and career mentoring.',
+      contributions: ['Product Sponsor', 'UX/UI Design', 'Mentors'],
+      whyFits: [
+        'High student usage rate',
+        'Strong tech/design team focus',
+        'Aggressive intern placement'
+      ],
+      impact: 'Medium Impact',
+      impactColor: 'bg-blue-50 text-blue-700 border-blue-100'
+    }
+  ]
 
-  // 3. State for editable message drafts
-  const [draftMessages, setDraftMessages] = useState({
-    Grab: `Dear Grab Team,
-
-We are organizing the AI in Finance Case Competition, a national-level event that brings together 120+ talented students to solve real-world AI in finance challenges.
-
-We believe Grab's expertise in data analytics and mentorship can greatly enhance the learning experience. We would love to invite Grab to collaborate with us by conducting an analytics workshop and providing mentorship to participating teams.
-
-We look forward to the opportunity to work together and create meaningful impact for students.
-
-Best regards,
-FinTech Society, Sunway University`,
-    Maybank: `Dear Maybank Team,
-
-We are organizing the AI in Finance Case Competition, a national-level event that brings together 120+ talented students to solve real-world AI in finance challenges.
-
-Maybank's leadership in finance education makes you the ideal partner. We would love to invite Maybank to collaborate as a Cash Prize Sponsor and join our Judging Panel for the final round.
-
-We look forward to collaborating to support student development and early recruitment.
-
-Best regards,
-FinTech Society, Sunway University`,
-    Deloitte: `Dear Deloitte Team,
-
-We are organizing the AI in Finance Case Competition, a national-level event that brings together 120+ talented students to solve real-world AI in finance challenges.
-
-We would love to invite Deloitte to collaborate as a Case Study Provider and support student learning by providing certificates of achievement.
-
-We look forward to a successful collaboration.
-
-Best regards,
-FinTech Society, Sunway University`,
-    AWS: `Dear AWS Team,
-
-We are organizing the AI in Finance Case Competition, a national-level event that brings together 120+ talented students to solve real-world AI challenges.
-
-We would love to invite AWS to support us as a technical partner, providing cloud credits and technical workshop support for students.
-
-Best regards,
-FinTech Society, Sunway University`
-  })
-
-  const suggestedCollaborators = [
+  const defaultExternalCollaborators = [
     {
       id: 'Grab',
       name: 'Grab',
@@ -121,6 +154,127 @@ FinTech Society, Sunway University`
     }
   ]
 
+  const suggestedCollaborators = isOwnedEvent ? ownedCollaborators : defaultExternalCollaborators
+
+  // 1. Manage state for selected collaborators
+  const [selectedCollaborators, setSelectedCollaborators] = useState(() => {
+    if (outreachPartner && outreachPartner.name) {
+      return { [outreachPartner.name]: true }
+    }
+    if (isOwnedEvent) {
+      return {
+        Google: true,
+        Petronas: true,
+        Intel: true,
+        Maxis: false,
+        Shopee: false
+      }
+    }
+    return {
+      Grab: true,
+      Maybank: true,
+      Deloitte: true,
+      AWS: false
+    }
+  })
+
+  // 2. State for expanded email drafts
+  const [expandedDraft, setExpandedDraft] = useState(() => {
+    if (outreachPartner && outreachPartner.name) {
+      return outreachPartner.name
+    }
+    return isOwnedEvent ? 'Google' : 'Grab'
+  })
+
+  // State for show more recommendations
+  const [showMoreMatches, setShowMoreMatches] = useState(false)
+
+  // 3. State for editable message drafts
+  const [draftMessages, setDraftMessages] = useState({
+    Grab: `Dear Grab Team,
+
+We are organizing the AI in Finance Case Competition, a national-level event that brings together 120+ talented students to solve real-world AI in finance challenges.
+
+We believe Grab's expertise in data analytics and mentorship can greatly enhance the learning experience. We would love to invite Grab to collaborate with us by conducting an analytics workshop and providing mentorship to participating teams.
+
+We look forward to the opportunity to work together and create meaningful impact for students.
+
+Best regards,
+FinTech Society, Sunway University`,
+    Maybank: `Dear Maybank Team,
+
+We are organizing the AI in Finance Case Competition, a national-level event that brings together 120+ talented students to solve real-world AI in finance challenges.
+
+Maybank's leadership in finance education makes you the ideal partner. We would love to invite Maybank to collaborate as a Cash Prize Sponsor and join our Judging Panel for the final round.
+
+We look forward to collaborating to support student development and early recruitment.
+
+Best regards,
+FinTech Society, Sunway University`,
+    Deloitte: `Dear Deloitte Team,
+
+We are organizing the AI in Finance Case Competition, a national-level event that brings together 120+ talented students to solve real-world AI in finance challenges.
+
+We would love to invite Deloitte to collaborate as a Case Study Provider and support student learning by providing certificates of achievement.
+
+We look forward to a successful collaboration.
+
+Best regards,
+FinTech Society, Sunway University`,
+    AWS: `Dear AWS Team,
+
+We are organizing the AI in Finance Case Competition, a national-level event that brings together 120+ talented students to solve real-world AI challenges.
+
+We would love to invite AWS to support us as a technical partner, providing cloud credits and technical workshop support for students.
+
+Best regards,
+FinTech Society, Sunway University`,
+    Google: `Dear Google Team,
+
+We are organizing the ${event.title}, a premier campus event driving student innovation.
+
+Given Google's pioneering work in AI and technology, we would love to invite Google to collaborate as a Tech Sponsor and provide technical workshop support for participating students.
+
+We believe this collaboration will offer Google direct access to top technical talent and excellent visibility on campus.
+
+Best regards,
+${event.club || 'FinTech Society'}, Sunway University`,
+    Petronas: `Dear Petronas Team,
+
+We are organizing the ${event.title}, bringing together outstanding students to drive campus innovation.
+
+We would love to invite Petronas to support this event as our Energy & Leadership Sponsor, helping us nurture student capabilities in sustainable technology.
+
+We look forward to a successful partnership.
+
+Best regards,
+${event.club || 'FinTech Society'}, Sunway University`,
+    Intel: `Dear Intel Team,
+
+We are organizing the ${event.title}, focused on advanced technical development and AI.
+
+We would love to invite Intel to collaborate by providing technical mentors and joining our Judging Panel for the final presentations.
+
+Best regards,
+${event.club || 'FinTech Society'}, Sunway University`,
+    Maxis: `Dear Maxis Team,
+
+We are organizing the ${event.title}, a major initiative connecting youth with business-case challenges.
+
+We would love to invite Maxis to support us as a digital partner and sponsor, providing active student mentorship and early recruitment visibility.
+
+Best regards,
+${event.club || 'FinTech Society'}, Sunway University`,
+    Shopee: `Dear Shopee Team,
+
+We are organizing the ${event.title}, focusing on product engineering and user experience.
+
+We would love to invite Shopee to collaborate by providing PM/UX mentors to guide students during their development phase.
+
+Best regards,
+${event.club || 'FinTech Society'}, Sunway University`
+  })
+
   const strategyCards = [
     {
       title: 'Who to Invite',
@@ -159,6 +313,44 @@ FinTech Society, Sunway University`
     }))
   }
 
+  const scrollContainerRef = useRef(null)
+  const [isMouseDown, setIsMouseDown] = useState(false)
+  const [dragged, setDragged] = useState(false)
+  const [startX, setStartX] = useState(0)
+  const [scrollLeftState, setScrollLeftState] = useState(0)
+
+  const handleMouseDown = (e) => {
+    if (showMoreMatches) return
+    setIsMouseDown(true)
+    setDragged(false)
+    setStartX(e.pageX - scrollContainerRef.current.offsetLeft)
+    setScrollLeftState(scrollContainerRef.current.scrollLeft)
+  }
+
+  const handleMouseLeave = () => {
+    setIsMouseDown(false)
+  }
+
+  const handleMouseUp = () => {
+    setIsMouseDown(false)
+  }
+
+  const handleMouseMove = (e) => {
+    if (!isMouseDown || showMoreMatches) return
+    e.preventDefault()
+    const x = e.pageX - scrollContainerRef.current.offsetLeft
+    const walk = (x - startX) * 1.5
+    if (Math.abs(walk) > 5) {
+      setDragged(true)
+    }
+    scrollContainerRef.current.scrollLeft = scrollLeftState - walk
+  }
+
+  const handleCardClick = (colId) => {
+    if (dragged) return
+    handleToggleCollaborator(colId)
+  }
+
   const handleMessageChange = (id, text) => {
     setDraftMessages(prev => ({
       ...prev,
@@ -172,7 +364,10 @@ FinTech Society, Sunway University`
       onToast('Please select at least one collaborator to outreach.')
       return
     }
-    onToast(`Successfully initiated AI collaboration outreach to ${selectedList.join(', ')}!`)
+    onToast(`Successfully sent collaboration invitations to: ${selectedList.join(', ')}!`)
+    if (onSendOutreach) {
+      onSendOutreach(event.id, selectedList)
+    }
     onBack()
   }
 
@@ -299,15 +494,29 @@ FinTech Society, Sunway University`
           </div>
         </div>
 
-        {/* 4 Cards Grid */}
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {/* Horizontal Scroll Snap or Grid Layout */}
+        <div
+          ref={scrollContainerRef}
+          onMouseDown={handleMouseDown}
+          onMouseLeave={handleMouseLeave}
+          onMouseUp={handleMouseUp}
+          onMouseMove={handleMouseMove}
+          className={showMoreMatches
+            ? "grid gap-4 sm:grid-cols-2 lg:grid-cols-4"
+            : `flex gap-4 overflow-x-auto pb-4 scrollbar-thin -mx-6 px-6 lg:mx-0 lg:px-0 select-none ${
+                isMouseDown ? 'cursor-grabbing' : 'cursor-grab'
+              }`
+          }
+        >
           {suggestedCollaborators.map(col => {
             const isSelected = selectedCollaborators[col.id]
             return (
               <div
                 key={col.id}
-                onClick={() => handleToggleCollaborator(col.id)}
+                onClick={() => handleCardClick(col.id)}
                 className={`group cursor-pointer rounded-2xl border bg-white p-5 transition space-y-4 relative ${
+                  showMoreMatches ? "" : "w-[290px] shrink-0 snap-start"
+                } ${
                   isSelected
                     ? 'border-blue-500 shadow-sm ring-1 ring-blue-50'
                     : 'border-slate-200/80 hover:border-slate-300'
@@ -370,10 +579,10 @@ FinTech Society, Sunway University`
         <div className="text-center">
           <button
             type="button"
-            onClick={() => onToast('Loaded 6 more organizations.')}
+            onClick={() => setShowMoreMatches(!showMoreMatches)}
             className="text-[11px] font-semibold text-blue-600 hover:text-blue-700 transition"
           >
-            + View 6 more recommended organizations
+            {showMoreMatches ? 'Collapse Recommendations' : '+ View all recommended organizations'}
           </button>
         </div>
       </section>
