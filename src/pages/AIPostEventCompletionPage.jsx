@@ -17,6 +17,8 @@ export default function AIPostEventCompletionPage({ onBack, onToast, onViewImpac
   // Pagination page state
   const [currentPage, setCurrentPage] = useState(1)
 
+  const normalizeDate = (date) => date.replace(/^0/, '')
+
   // --- MOCK COMPLETED EVENTS DATABASE ---
   const COMPLETED_EVENTS = [
     {
@@ -262,7 +264,7 @@ export default function AIPostEventCompletionPage({ onBack, onToast, onViewImpac
     if (!day.isCurrentMonth) return
     const formattedDate = `${day.day.toString().padStart(2, '0')} May 2025`
     // Convert 09 May 2025 -> 9 May 2025 to align with database
-    const sanitizedDate = formattedDate.replace(/^0/, '')
+    const sanitizedDate = normalizeDate(formattedDate)
     setSelectedDate(sanitizedDate)
     setCurrentPage(1)
     onToast(`Filtered history to ${sanitizedDate}`)
@@ -282,7 +284,7 @@ export default function AIPostEventCompletionPage({ onBack, onToast, onViewImpac
         event.organizer.toLowerCase().includes(query) ||
         event.skills.some(s => s.toLowerCase().includes(query))
 
-      const matchesDate = !selectedDate || event.date === selectedDate
+      const matchesDate = !selectedDate || normalizeDate(event.date) === selectedDate
       const matchesSemester = semesterFilter === 'All' || event.semester === semesterFilter
       const matchesProgram = programFilter === 'All' || event.program === programFilter
       const matchesType = typeFilter === 'All' || event.category === typeFilter
@@ -302,7 +304,8 @@ export default function AIPostEventCompletionPage({ onBack, onToast, onViewImpac
 
   const eventCountByDate = useMemo(() => {
     return COMPLETED_EVENTS.reduce((acc, event) => {
-      acc[event.date] = (acc[event.date] || 0) + 1
+      const normalizedDate = normalizeDate(event.date)
+      acc[normalizedDate] = (acc[normalizedDate] || 0) + 1
       return acc
     }, {})
   }, [])
@@ -508,7 +511,7 @@ export default function AIPostEventCompletionPage({ onBack, onToast, onViewImpac
             
             {/* Days mapping */}
             {calendarDays.map((cell, idx) => {
-              const formattedCellDate = cell.isCurrentMonth ? `${cell.day.toString().padStart(2, '0')} May 2025`.replace(/^0/, '') : ''
+              const formattedCellDate = cell.isCurrentMonth ? normalizeDate(`${cell.day.toString().padStart(2, '0')} May 2025`) : ''
               const isSelected = selectedDate && selectedDate === formattedCellDate
               const eventCount = formattedCellDate ? eventCountByDate[formattedCellDate] || 0 : 0
               
@@ -533,9 +536,12 @@ export default function AIPostEventCompletionPage({ onBack, onToast, onViewImpac
                     {cell.dots && cell.dots.map((dot, dIdx) => (
                       <span key={dIdx} className={`h-1 w-1 rounded-full ${dot}`} />
                     ))}
-                    {eventCount > 1 && (
-                      <span className="rounded bg-blue-50 px-1 text-[7.5px] font-medium text-blue-700">
-                        {eventCount} events
+                    {eventCount > 0 && (
+                      <span
+                        className="inline-flex h-3.5 min-w-3.5 items-center justify-center rounded-full bg-blue-50 px-1 text-[7px] font-medium leading-none text-blue-700"
+                        title={`${eventCount} completed ${eventCount === 1 ? 'event' : 'events'}`}
+                      >
+                        {eventCount}
                       </span>
                     )}
                   </div>
