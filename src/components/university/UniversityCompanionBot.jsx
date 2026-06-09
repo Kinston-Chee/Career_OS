@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from 'react'
 import { useLocation } from 'react-router-dom'
+import TypewriterText from '../ui/TypewriterText'
 import companionBot from '../../assets/career-os-robot.png'
 
 const pageMessages = [
@@ -31,6 +32,22 @@ const pageMessages = [
     match: (pathname) => pathname.includes('/university/settings'),
     text: 'Settings is open. Click the gear again to return to the university page you came from.',
   },
+  {
+    match: (pathname) => pathname === '/employer' || pathname.includes('/employer/talent'),
+    text: "Hi Edwin. I've highlighted student candidates matching your criteria. You can search, filter, and review verified projects or portfolios directly.",
+  },
+  {
+    match: (pathname) => pathname.includes('/employer/posting'),
+    text: 'Ready to engage? Post a new challenge, micro-project, or workshop to collaborate directly with Heriot-Watt Malaysia students.',
+  },
+  {
+    match: (pathname) => pathname.includes('/employer/marketplace'),
+    text: 'Explore campus-hosted initiatives, guest lecture opportunities, and academic events open for corporate collaboration.',
+  },
+  {
+    match: (pathname) => pathname.includes('/employer/settings'),
+    text: 'Settings is open. Click the gear again to return to the employer page you came from.',
+  },
 ]
 
 export default function UniversityCompanionBot() {
@@ -39,7 +56,9 @@ export default function UniversityCompanionBot() {
 
   const message = useMemo(() => {
     return pageMessages.find((item) => item.match(location.pathname))?.text
-      ?? 'I will summarise the important signal on each university page for the demo.'
+      ?? (location.pathname.startsWith('/employer')
+          ? 'I will summarise the important signal on each employer page for the demo.'
+          : 'I will summarise the important signal on each university page for the demo.')
   }, [location.pathname])
 
   return (
@@ -55,7 +74,9 @@ export default function UniversityCompanionBot() {
             x
           </button>
           <p className="pr-3 font-semibold text-slate-950">CareerOS Copilot</p>
-          <p className="mt-1">{message}</p>
+          <p className="mt-1">
+            <TypewriterText text={message} active={isOpen} speed={28} />
+          </p>
           <span className="absolute -bottom-2 left-[58px] h-4 w-4 rotate-45 border-b border-r border-slate-200 bg-white" />
         </div>
       ) : null}

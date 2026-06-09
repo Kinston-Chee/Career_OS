@@ -1,35 +1,14 @@
 import React from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
-import SignOutButton from '../session/SignOutButton';
 import { useEmployerSearchStore } from '../../store/useEmployerSearchStore';
 
 const navItems = [
   { label: 'Talent Discovery', path: '/employer/talent', aliases: ['/employer'] },
-  { label: 'Candidate Insights', path: '/employer/insights', aliases: [] },
   { label: 'Create Engagement', path: '/employer/posting', aliases: [] },
   { label: 'Job Marketplace', path: '/employer/marketplace', aliases: [] },
   { label: 'Saved Searches', path: '/employer/talent?tab=saved', aliases: [] },
   { label: 'Shortlists', path: '/employer/talent?tab=shortlisted', aliases: [] },
 ];
-
-const supportItems = [
-  { label: 'Settings', path: '/employer/settings', aliases: [], icon: 'settings' },
-  { label: 'Help', path: '/employer/help', aliases: [], icon: 'help' },
-];
-
-function SidebarIcon({ name }) {
-  const paths = {
-    settings: <><circle cx="12" cy="12" r="3" /><path d="M12 3v3" /><path d="M12 18v3" /><path d="m4.5 7.5 2.1 2.1" /><path d="m17.4 17.4 2.1 2.1" /><path d="M3 12h3" /><path d="M18 12h3" /><path d="m4.5 16.5 2.1-2.1" /><path d="m17.4 6.6 2.1-2.1" /></>,
-    help: <><circle cx="12" cy="12" r="9" /><path d="M9.5 9a2.6 2.6 0 0 1 5 1c0 2-2.5 2.1-2.5 4" /><path d="M12 17h.01" /></>,
-    building: <><path d="M4 20h16" /><path d="M6 20V5h8v15" /><path d="M14 9h4v11" /><path d="M9 9h2" /><path d="M9 13h2" /></>,
-  };
-
-  return (
-    <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      {paths[name]}
-    </svg>
-  );
-}
 
 export default function EmployerSidebar() {
   const location = useLocation();
@@ -94,29 +73,7 @@ export default function EmployerSidebar() {
           );
         })}
       </nav>
-
-      {/* Bottom 4 Selections (Untouched support items) */}
-      <nav className="mt-auto space-y-2 border-t border-slate-100 pt-5">
-        {supportItems.map((item) => (
-          <NavLink
-            key={item.path}
-            to={item.path}
-            className={({ isActive }) =>
-              `flex items-center gap-3 rounded-[8px] px-4 py-3 text-sm font-normal leading-5 transition-all duration-200 ${
-                isActive ? 'bg-blue-50 text-blue-700' : 'text-slate-500 hover:bg-slate-50 hover:text-slate-950'
-              }`
-            }
-          >
-            <span className="flex h-6 w-6 items-center justify-center"><SidebarIcon name={item.icon} /></span>
-            <span>{item.label}</span>
-          </NavLink>
-        ))}
-        <div className="flex items-center justify-between rounded-[8px] px-4 py-3 text-sm font-normal leading-5 text-slate-600">
-          <span className="flex items-center gap-3"><span className="flex h-6 w-6 items-center justify-center"><SidebarIcon name="building" /></span> Google</span>
-          <span className="text-slate-400">v</span>
-        </div>
-        <SignOutButton tone="indigo" />
-      </nav>
     </aside>
   );
 }
+

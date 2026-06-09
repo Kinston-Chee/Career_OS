@@ -34,14 +34,10 @@ const workspaceConfigs = {
     subtitle: 'Evidence-based talent discovery',
     navItems: [
       { label: 'Talent Discovery', path: '/employer/talent', aliases: ['/employer'] },
-      { label: 'Candidate Insights', path: '/employer/insights', aliases: [] },
       { label: 'Create Engagement', path: '/employer/posting', aliases: [] },
       { label: 'Job Marketplace', path: '/employer/marketplace', aliases: [] },
     ],
-    supportItems: [
-      { label: 'Settings', path: '/employer/settings', aliases: [] },
-      { label: 'Help', path: '/employer/help', aliases: [] },
-    ],
+    supportItems: [],
   },
   university: {
     eyebrow: 'University Workspace',
@@ -165,7 +161,7 @@ export default function AppLayout({ workspace = 'student' }) {
             </div>
           </main>
         </div>
-        {workspace === 'university' ? <UniversityCompanionBot /> : null}
+        {workspace === 'university' || workspace === 'employer' ? <UniversityCompanionBot /> : null}
       </div>
     </div>
   )
