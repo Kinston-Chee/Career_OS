@@ -10,12 +10,12 @@ export default function AICreateEventPage({ onBack, onToast, onPublish }) {
     'A national-level case competition where student teams solve real-world AI in finance challenges and present strategic solutions to an industry panel.'
   )
   const [dateRange, setDateRange] = useState('15 Jul 2026 - 28 Sep 2026')
-  const [venue, setVenue] = useState('Sunway University Campus')
+  const [venue, setVenue] = useState('Heriot-Watt University Malaysia Campus')
   
   // Co-organizers state
   const [coOrganizers, setCoOrganizers] = useState([])
   const [showCoOrganizerDropdown, setShowCoOrganizerDropdown] = useState(false)
-  const availableCoOrganizers = ['Sunway Analytics Club', 'Google Developer Student Club', 'Sunway Business Society', 'IEEE Sunway Student Branch']
+  const availableCoOrganizers = ['Heriot-Watt Analytics Club', 'Google Developer Student Club', 'Heriot-Watt Business Society', 'IEEE Heriot-Watt Student Branch']
 
   // --- COLLABORATION NEEDS ---
   const [needs, setNeeds] = useState({
@@ -104,7 +104,7 @@ export default function AICreateEventPage({ onBack, onToast, onPublish }) {
       }
 
       setOutreachDrafts({
-        Grab: `Hi Grab Malaysia Partnerships Team,\n\nWe are hosting the "${eventName}" and noticed Grab's strong focus on analytics. We would love to collaborate under your mentorship programs to support student developers at Sunway University.\n\nBest,\n${organizingClub}`,
+        Grab: `Hi Grab Malaysia Partnerships Team,\n\nWe are hosting the "${eventName}" and noticed Grab's strong focus on analytics. We would love to collaborate under your mentorship programs to support student developers at Heriot-Watt University Malaysia.\n\nBest,\n${organizingClub}`,
         Deloitte: `Dear Deloitte Malaysia Campus Recruiting Team,\n\nIn planning the upcoming "${eventName}", we would value Deloitte's renowned consulting expertise. We are looking for an Industry Judge to evaluate student business models and case pitches.\n\nBest regards,\n${organizingClub}`,
         Maybank: `Dear Maybank Youth Development Team,\n\nWe are organizing "${eventName}". As a leader in corporate financial technology, Maybank would be an outstanding Event Sponsor. We would love to highlight your brand to 120+ top-tier finance students.\n\nSincerely,\n${organizingClub}`
       })
@@ -281,7 +281,7 @@ export default function AICreateEventPage({ onBack, onToast, onPublish }) {
           </button>
           <div className="flex items-center gap-2">
             <h1 className="text-2xl font-semibold tracking-tight text-slate-900">Create Event</h1>
-            <span className="rounded bg-violet-50 px-1.5 py-0.5 text-[10px] font-semibold text-violet-700 border border-violet-100/50">AI Copilot</span>
+            <span className="rounded bg-violet-50 px-1.5 py-0.5 text-xs font-semibold text-violet-700 border border-violet-100/50">AI Copilot</span>
           </div>
           <p className="text-xs font-medium text-slate-400">Set up your event and let AI help you find the right collaborators.</p>
         </div>
@@ -351,12 +351,12 @@ export default function AICreateEventPage({ onBack, onToast, onPublish }) {
           >
             <div className="flex items-center justify-between border-b border-slate-50 pb-3">
               <h3 className="text-sm font-semibold text-slate-800">A. Event Basics</h3>
-              <span className="text-[10px] text-slate-400 font-medium">Step 1 of 4</span>
+              <span className="text-xs text-slate-400 font-medium">Step 1 of 4</span>
             </div>
 
             <div className="grid gap-4 sm:grid-cols-2">
               <label className="block space-y-1">
-                <span className="text-[11px] font-medium text-slate-500">Event Name *</span>
+                <span className="text-xs font-medium text-slate-500">Event Name *</span>
                 <input
                   type="text"
                   value={eventName}
@@ -367,7 +367,7 @@ export default function AICreateEventPage({ onBack, onToast, onPublish }) {
               </label>
 
               <label className="block space-y-1">
-                <span className="text-[11px] font-medium text-slate-500">Event Type *</span>
+                <span className="text-xs font-medium text-slate-500">Event Type *</span>
                 <select
                   value={eventType}
                   onChange={(e) => setEventType(e.target.value)}
@@ -382,7 +382,7 @@ export default function AICreateEventPage({ onBack, onToast, onPublish }) {
               </label>
 
               <label className="block space-y-1">
-                <span className="text-[11px] font-medium text-slate-500">Mode *</span>
+                <span className="text-xs font-medium text-slate-500">Mode *</span>
                 <select
                   value={mode}
                   onChange={(e) => setMode(e.target.value)}
@@ -395,7 +395,7 @@ export default function AICreateEventPage({ onBack, onToast, onPublish }) {
               </label>
 
               <label className="block space-y-1">
-                <span className="text-[11px] font-medium text-slate-500">Organizing Team / Club *</span>
+                <span className="text-xs font-medium text-slate-500">Organizing Team / Club *</span>
                 <select
                   value={organizingClub}
                   onChange={(e) => setOrganizingClub(e.target.value)}
@@ -409,7 +409,7 @@ export default function AICreateEventPage({ onBack, onToast, onPublish }) {
               </label>
 
               <label className="block sm:col-span-2 space-y-1">
-                <div className="flex justify-between items-center text-[11px] font-medium text-slate-500">
+                <div className="flex justify-between items-center text-xs font-medium text-slate-500">
                   <span>Short Description *</span>
                   <span className={`${description.length > 250 ? 'text-red-500' : 'text-slate-400'}`}>
                     {description.length}/250
@@ -425,7 +425,7 @@ export default function AICreateEventPage({ onBack, onToast, onPublish }) {
               </label>
 
               <label className="block space-y-1">
-                <span className="text-[11px] font-medium text-slate-500">Date *</span>
+                <span className="text-xs font-medium text-slate-500">Date *</span>
                 <input
                   type="text"
                   value={dateRange}
@@ -436,13 +436,13 @@ export default function AICreateEventPage({ onBack, onToast, onPublish }) {
               </label>
 
               <label className="block space-y-1">
-                <span className="text-[11px] font-medium text-slate-500">Venue *</span>
+                <span className="text-xs font-medium text-slate-500">Venue *</span>
                 <input
                   type="text"
                   value={venue}
                   disabled={mode === 'Online'}
                   onChange={(e) => setVenue(e.target.value)}
-                  placeholder={mode === 'Online' ? 'Hosted Online' : 'e.g. Sunway Hall'}
+                  placeholder={mode === 'Online' ? 'Hosted Online' : 'e.g. Heriot-Watt Hall'}
                   className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-xs text-slate-700 outline-none transition focus:border-blue-350 focus:ring-4 focus:ring-blue-100/50 disabled:bg-slate-50 disabled:text-slate-400"
                 />
               </label>
@@ -461,7 +461,7 @@ export default function AICreateEventPage({ onBack, onToast, onPublish }) {
                 {coOrganizers.map(c => (
                   <span
                     key={c}
-                    className="inline-flex items-center gap-1 rounded-full bg-slate-100 px-2.5 py-1 text-[10px] font-semibold text-slate-600 border border-slate-200"
+                    className="inline-flex items-center gap-1 rounded-full bg-slate-100 px-2.5 py-1 text-xs font-semibold text-slate-600 border border-slate-200"
                   >
                     {c}
                     <button
@@ -477,7 +477,7 @@ export default function AICreateEventPage({ onBack, onToast, onPublish }) {
 
               {showCoOrganizerDropdown && (
                 <div className="absolute z-20 mt-2 w-64 rounded-xl border border-slate-100 bg-white p-2 shadow-lg animate-fade-in">
-                  <p className="px-2 py-1 text-[10px] font-bold uppercase tracking-wider text-slate-400">Select Co-Organizer</p>
+                  <p className="px-2 py-1 text-xs font-bold uppercase tracking-wider text-slate-400">Select Co-Organizer</p>
                   <div className="space-y-0.5">
                     {availableCoOrganizers
                       .filter(club => !coOrganizers.includes(club))
@@ -508,12 +508,12 @@ export default function AICreateEventPage({ onBack, onToast, onPublish }) {
             <div className="flex items-center justify-between border-b border-slate-50 pb-3">
               <div className="space-y-0.5">
                 <h3 className="text-sm font-semibold text-slate-800">B. Collaboration Need Builder</h3>
-                <p className="text-[10px] font-medium text-slate-450">Select the types of collaborators you're looking for. AI will help match the best-fit organizations.</p>
+                <p className="text-xs font-medium text-slate-450">Select the types of collaborators you're looking for. AI will help match the best-fit organizations.</p>
               </div>
               <button
                 type="button"
                 onClick={() => onToast('Customize Needs clicked: Additional role parameters can be set when active.')}
-                className="text-[10px] font-semibold text-slate-500 hover:text-blue-600 transition"
+                className="text-xs font-semibold text-slate-500 hover:text-blue-600 transition"
               >
                 Customize Needs
               </button>
@@ -546,7 +546,7 @@ export default function AICreateEventPage({ onBack, onToast, onPublish }) {
 
                     <span className="text-xl mb-2 mt-1">{role.icon}</span>
                     <h4 className="text-xs font-semibold text-slate-800">{role.label}</h4>
-                    <p className="text-[9px] text-slate-450 leading-relaxed mt-1 font-medium">{role.desc}</p>
+                    <p className="text-xs text-slate-450 leading-relaxed mt-1 font-medium">{role.desc}</p>
                   </div>
                 )
               })}
@@ -561,12 +561,12 @@ export default function AICreateEventPage({ onBack, onToast, onPublish }) {
             <div className="flex items-center justify-between border-b border-slate-50 pb-3">
               <div className="space-y-0.5">
                 <h3 className="text-sm font-semibold text-slate-800">C. AI Suggested Collaborators</h3>
-                <p className="text-[10px] font-medium text-slate-450">Based on your event details and needs</p>
+                <p className="text-xs font-medium text-slate-450">Based on your event details and needs</p>
               </div>
               <button
                 type="button"
                 onClick={handleRefreshSuggestions}
-                className="inline-flex items-center gap-1 text-[10px] font-semibold text-blue-600 hover:text-blue-700 transition"
+                className="inline-flex items-center gap-1 text-xs font-semibold text-blue-600 hover:text-blue-700 transition"
               >
                 {isRefreshing ? (
                   <span className="h-2.5 w-2.5 animate-spin rounded-full border-2 border-blue-600 border-t-transparent" />
@@ -594,15 +594,15 @@ export default function AICreateEventPage({ onBack, onToast, onPublish }) {
                         <span className={`flex h-8 w-8 items-center justify-center rounded-lg ${c.logoColor} text-white font-bold text-xs shadow-sm`}>
                           {c.logoTxt}
                         </span>
-                        <span className="rounded-full bg-emerald-50 px-1.5 py-0.5 text-[9px] font-bold text-emerald-700 border border-emerald-100/50">
+                        <span className="rounded-full bg-emerald-50 px-1.5 py-0.5 text-xs font-bold text-emerald-700 border border-emerald-100/50">
                           {c.matchScore}% Match
                         </span>
                       </div>
 
                       <div>
                         <h4 className="text-xs font-semibold text-slate-800 truncate">{c.name}</h4>
-                        <span className="text-[8px] text-slate-400 font-semibold uppercase tracking-wider">Why fits?</span>
-                        <ul className="text-[9px] text-slate-550 leading-relaxed font-medium space-y-0.5 mt-0.5">
+                        <span className="text-xs text-slate-400 font-semibold uppercase tracking-wider">Why fits?</span>
+                        <ul className="text-xs text-slate-555 leading-relaxed font-medium space-y-0.5 mt-0.5">
                           {c.whyFits.slice(0, 2).map((fit, idx) => (
                             <li key={idx} className="flex items-start gap-1">
                               <span className="text-emerald-500 font-bold">✓</span>
@@ -614,10 +614,10 @@ export default function AICreateEventPage({ onBack, onToast, onPublish }) {
                     </div>
 
                     <div className="border-t border-slate-50 pt-2 space-y-1">
-                      <span className="text-[8px] text-slate-400 font-semibold uppercase tracking-wider block">Likely Contribution:</span>
+                      <span className="text-xs text-slate-400 font-semibold uppercase tracking-wider block">Likely Contribution:</span>
                       <div className="flex flex-wrap gap-1">
                         {c.contributions.map(t => (
-                          <span key={t} className="rounded bg-slate-50 px-1 py-0.5 text-[8px] font-semibold text-slate-600 border border-slate-100">
+                          <span key={t} className="rounded bg-slate-50 px-1 py-0.5 text-xs font-semibold text-slate-600 border border-slate-100">
                             {t}
                           </span>
                         ))}
@@ -637,7 +637,7 @@ export default function AICreateEventPage({ onBack, onToast, onPublish }) {
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
               <div className="space-y-0.5">
                 <h3 className="text-sm font-semibold text-slate-800">D. AI Outreach Generator (Preview)</h3>
-                <p className="text-[10px] font-medium text-slate-450">Let AI craft the perfect outreach message for your selected collaborators.</p>
+                <p className="text-xs font-medium text-slate-450">Let AI craft the perfect outreach message for your selected collaborators.</p>
               </div>
 
               <button
@@ -691,7 +691,7 @@ export default function AICreateEventPage({ onBack, onToast, onPublish }) {
                     <button
                       type="button"
                       onClick={() => onToast(`Draft saved for ${activeDraftTab}.`)}
-                      className="rounded-lg bg-blue-50 hover:bg-blue-100/85 px-3 py-1.5 text-[10px] font-semibold text-blue-700 transition"
+                      className="rounded-lg bg-blue-50 hover:bg-blue-100/85 px-3 py-1.5 text-xs font-semibold text-blue-700 transition"
                     >
                       Save Draft Modification
                     </button>
@@ -710,7 +710,7 @@ export default function AICreateEventPage({ onBack, onToast, onPublish }) {
           <div className="rounded-2xl border border-slate-200/80 bg-white p-5 shadow-[0_8px_30px_rgba(0,0,0,0.015)] space-y-4">
             <div className="flex items-center gap-1.5">
               <h4 className="text-xs font-semibold text-slate-800">AI Event Impact Preview</h4>
-              <span className="rounded bg-blue-50 px-1 py-0.5 text-[8px] font-semibold text-blue-700">Beta</span>
+              <span className="rounded bg-blue-50 px-1 py-0.5 text-xs font-semibold text-blue-700">Beta</span>
             </div>
 
             {/* Metrics grid */}
@@ -724,26 +724,26 @@ export default function AICreateEventPage({ onBack, onToast, onPublish }) {
                 <div key={metric.title} className="text-center rounded-xl bg-slate-50/60 border border-slate-100/40 p-2.5 flex flex-col justify-between">
                   <span className="text-sm mb-1">{metric.icon}</span>
                   <p className="text-xs font-bold text-slate-800">{metric.val}</p>
-                  <p className="text-[7.5px] text-slate-400 font-semibold mt-1 leading-normal leading-none uppercase tracking-wide">{metric.title.split(' ')[0]}</p>
+                  <p className="text-xs text-slate-400 font-semibold mt-1 leading-none uppercase tracking-wide">{metric.title.split(' ')[0]}</p>
                 </div>
               ))}
             </div>
 
             {/* Skills & Insights */}
             <div className="space-y-2 pt-2 border-t border-slate-50">
-              <span className="text-[9px] text-slate-400 font-semibold uppercase tracking-wider block">Top Skills Likely to be Developed:</span>
+              <span className="text-xs text-slate-400 font-semibold uppercase tracking-wider block">Top Skills Likely to be Developed:</span>
               <div className="flex flex-wrap gap-1">
                 {['AI/ML', 'Data Analysis', 'Problem Solving', 'Critical Thinking', 'Presentation'].map(s => (
-                  <span key={s} className="rounded bg-blue-50/50 px-1.5 py-0.5 text-[9px] font-medium text-blue-600 border border-blue-100/30">
+                  <span key={s} className="rounded bg-blue-50/50 px-1.5 py-0.5 text-xs font-medium text-blue-600 border border-blue-100/30">
                     {s}
                   </span>
                 ))}
-                <span className="text-[9px] text-slate-450 font-medium self-center ml-0.5">+3 more</span>
+                <span className="text-xs text-slate-450 font-medium self-center ml-0.5">+3 more</span>
               </div>
             </div>
 
             {/* AI Insight banner */}
-            <div className="rounded-xl bg-violet-50/40 border border-violet-100/30 p-3 text-[10px] text-violet-750 font-medium leading-relaxed">
+            <div className="rounded-xl bg-violet-50/40 border border-violet-100/30 p-3 text-xs text-violet-750 font-medium leading-relaxed">
               💡 <span className="font-semibold text-violet-800">AI Insight:</span> Events like this have 3x higher industry engagement compared to general workshops.
             </div>
           </div>
@@ -754,17 +754,17 @@ export default function AICreateEventPage({ onBack, onToast, onPublish }) {
             
             <div className="flex flex-wrap gap-1.5">
               {/* Show default roles selected from Section B */}
-              {needs.Sponsor && <span className="rounded bg-violet-50 px-2 py-0.5 text-[9px] font-semibold text-violet-700">Event Sponsor</span>}
-              {needs.Judge && <span className="rounded bg-violet-50 px-2 py-0.5 text-[9px] font-semibold text-violet-700">Industry Judge</span>}
-              {needs.Mentor && <span className="rounded bg-violet-50 px-2 py-0.5 text-[9px] font-semibold text-violet-700">Mentor</span>}
-              {needs.TechnicalPartner && <span className="rounded bg-violet-50 px-2 py-0.5 text-[9px] font-semibold text-violet-700">Technical Partner</span>}
-              {needs.MediaPartner && <span className="rounded bg-violet-50 px-2 py-0.5 text-[9px] font-semibold text-violet-700">Media Partner</span>}
+              {needs.Sponsor && <span className="rounded bg-violet-50 px-2 py-0.5 text-xs font-semibold text-violet-700">Event Sponsor</span>}
+              {needs.Judge && <span className="rounded bg-violet-50 px-2 py-0.5 text-xs font-semibold text-violet-700">Industry Judge</span>}
+              {needs.Mentor && <span className="rounded bg-violet-50 px-2 py-0.5 text-xs font-semibold text-violet-700">Mentor</span>}
+              {needs.TechnicalPartner && <span className="rounded bg-violet-50 px-2 py-0.5 text-xs font-semibold text-violet-700">Technical Partner</span>}
+              {needs.MediaPartner && <span className="rounded bg-violet-50 px-2 py-0.5 text-xs font-semibold text-violet-700">Media Partner</span>}
 
               {/* Show custom added roles */}
               {customRoles.map(cr => (
                 <span
                   key={cr}
-                  className="rounded bg-blue-50 px-2 py-0.5 text-[9px] font-semibold text-blue-700 inline-flex items-center gap-1"
+                  className="rounded bg-blue-50 px-2 py-0.5 text-xs font-semibold text-blue-700 inline-flex items-center gap-1"
                 >
                   {cr}
                   <button
@@ -778,7 +778,7 @@ export default function AICreateEventPage({ onBack, onToast, onPublish }) {
               ))}
 
               {customRoles.length === 0 && !needs.Sponsor && !needs.Judge && !needs.Mentor && !needs.TechnicalPartner && !needs.MediaPartner && (
-                <span className="text-[10px] text-slate-400 italic">No roles selected. Choose roles in Section B.</span>
+                <span className="text-xs text-slate-400 italic">No roles selected. Choose roles in Section B.</span>
               )}
             </div>
 
@@ -791,19 +791,19 @@ export default function AICreateEventPage({ onBack, onToast, onPublish }) {
                     value={newRoleInput}
                     onChange={(e) => setNewRoleInput(e.target.value)}
                     placeholder="Enter custom role..."
-                    className="flex-1 rounded-lg border border-slate-200 px-2 py-1 text-[10px] outline-none"
+                    className="flex-1 rounded-lg border border-slate-200 px-2 py-1 text-xs outline-none"
                     autoFocus
                   />
                   <button
                     type="submit"
-                    className="rounded-lg bg-blue-600 px-2.5 py-1 text-[10px] text-white font-semibold"
+                    className="rounded-lg bg-blue-600 px-2.5 py-1 text-xs text-white font-semibold"
                   >
                     Add
                   </button>
                   <button
                     type="button"
                     onClick={() => setShowAddRoleInput(false)}
-                    className="text-[10px] text-slate-400 hover:text-slate-655"
+                    className="text-xs text-slate-400 hover:text-slate-655"
                   >
                     Cancel
                   </button>
@@ -812,7 +812,7 @@ export default function AICreateEventPage({ onBack, onToast, onPublish }) {
                 <button
                   type="button"
                   onClick={() => setShowAddRoleInput(true)}
-                  className="inline-flex items-center gap-1 text-[10px] font-semibold text-blue-600 hover:text-blue-700 transition"
+                  className="inline-flex items-center gap-1 text-xs font-semibold text-blue-600 hover:text-blue-700 transition"
                 >
                   + Add Custom Role
                 </button>
@@ -824,7 +824,7 @@ export default function AICreateEventPage({ onBack, onToast, onPublish }) {
           <div className="rounded-2xl border border-slate-200/80 bg-white p-5 shadow-[0_8px_30px_rgba(0,0,0,0.015)] space-y-4">
             <div className="flex items-center justify-between">
               <h4 className="text-xs font-semibold text-slate-800">AI Tips to Improve Your Event</h4>
-              <span className="rounded bg-amber-50 px-1 py-0.5 text-[8px] font-semibold text-amber-700">Beta</span>
+              <span className="rounded bg-amber-50 px-1 py-0.5 text-xs font-semibold text-amber-700">Beta</span>
             </div>
 
             <ul className="space-y-3.5">
@@ -835,7 +835,7 @@ export default function AICreateEventPage({ onBack, onToast, onPublish }) {
               ].map((tip, idx) => (
                 <li key={idx} className="flex gap-2.5 items-start">
                   <span className="text-indigo-500 text-xs">✨</span>
-                  <p className="text-[10px] leading-relaxed text-slate-600 font-medium">{tip}</p>
+                  <p className="text-xs leading-relaxed text-slate-600 font-medium">{tip}</p>
                 </li>
               ))}
             </ul>
@@ -843,7 +843,7 @@ export default function AICreateEventPage({ onBack, onToast, onPublish }) {
             <button
               type="button"
               onClick={() => onToast('Loading all 12 tips...')}
-              className="text-[10px] font-semibold text-blue-600 hover:text-blue-700 transition block pt-1"
+              className="text-xs font-semibold text-blue-600 hover:text-blue-700 transition block pt-1"
             >
               View All Tips →
             </button>
@@ -853,7 +853,7 @@ export default function AICreateEventPage({ onBack, onToast, onPublish }) {
           <div className="rounded-2xl bg-gradient-to-br from-slate-900 to-indigo-950 p-5 shadow-lg text-white space-y-4">
             <div className="space-y-1">
               <h4 className="text-xs font-semibold">Ready to publish?</h4>
-              <p className="text-[10px] leading-relaxed text-slate-350">Once you’ve reviewed all details, publish your event to start attracting collaborators.</p>
+              <p className="text-xs leading-relaxed text-slate-350">Once you’ve reviewed all details, publish your event to start attracting collaborators.</p>
             </div>
 
             <button

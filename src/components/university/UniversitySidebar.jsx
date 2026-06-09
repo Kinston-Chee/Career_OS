@@ -1,6 +1,5 @@
-﻿import React from 'react'
+import React from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
-import SignOutButton from '../session/SignOutButton'
 
 const navItems = [
   { label: 'Overview', path: '/university/overview', aliases: ['/university'] },
@@ -9,10 +8,6 @@ const navItems = [
   { label: 'Student Readiness', path: '/university/readiness', aliases: [] },
   { label: 'Collaboration Marketplace', path: '/university/collaboration', aliases: ['/university/society-corporate-marketplace'] },
   { label: 'Reports', path: '/university/reports', aliases: [] },
-]
-
-const supportItems = [
-  { label: 'Settings', path: '/university/settings', aliases: [] },
 ]
 
 export default function UniversitySidebar() {
@@ -46,35 +41,6 @@ export default function UniversitySidebar() {
           </NavLink>
         ))}
       </nav>
-      <nav className="mt-auto space-y-2 border-t border-slate-100 pt-5">
-        {supportItems.map((item) => (
-          <NavLink
-            key={item.path}
-            to={item.path}
-            className={({ isActive }) =>
-              `block rounded-xl px-4 py-3 text-sm font-medium transition-all duration-200 ${
-                isActive ? 'bg-white text-blue-700 shadow-sm ring-1 ring-blue-100' : 'text-slate-500 hover:bg-white/80 hover:text-slate-950'
-              }`
-            }
-          >
-            {item.label}
-          </NavLink>
-        ))}
-        <div className="rounded-[8px] border border-blue-100 bg-blue-50/70 p-4">
-          <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-blue-500 to-violet-500 text-sm font-semibold text-white">
-              AL
-            </div>
-            <div className="min-w-0">
-              <p className="truncate text-sm font-semibold text-slate-950">Dr. Amanda Lim</p>
-              <p className="text-xs text-slate-500">Career Office</p>
-              <p className="text-xs text-blue-700">Taylor's University</p>
-            </div>
-          </div>
-        </div>
-        <SignOutButton tone="blue" />
-      </nav>
     </aside>
   )
 }
-

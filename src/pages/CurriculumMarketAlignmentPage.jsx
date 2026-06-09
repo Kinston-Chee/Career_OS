@@ -720,9 +720,7 @@ function EmergingGapsTab({ data }) {
               {gapSpotlight.topics.map((topic) => <li key={topic}>– {topic}</li>)}
             </ul>
           </div>
-          <button type="button" className="mt-7 w-full rounded-[8px] border border-blue-200 bg-blue-50 px-4 py-3 text-sm font-medium text-blue-700 shadow-sm">
-            Explore Interventions →
-          </button>
+
         </aside>
       </section>
 
@@ -733,9 +731,6 @@ function EmergingGapsTab({ data }) {
             <h2 className="text-lg font-medium text-slate-950">Skills on the Rise</h2>
             <p className="mt-1 text-sm text-slate-500">Fastest growing skills in the market over the last 12 months.</p>
           </div>
-          <button type="button" className="hidden text-sm font-medium text-blue-700 sm:block">
-            View all rising skills →
-          </button>
         </div>
         <div className="mt-5 grid gap-3 md:grid-cols-3 xl:grid-cols-5">
           {skillsOnRise.map(([skill, lift]) => (

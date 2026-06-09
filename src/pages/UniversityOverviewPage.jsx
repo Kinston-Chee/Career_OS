@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 
 const programData = {
   'BSc Computer Science': {
-    cohorts: ['Year 1', 'Year 2', 'Year 3', 'Year 4'],
+    cohorts: ['Year 1', 'Year 2', 'Year 3'],
     semesters: ['This Semester', 'Last Semester', 'Last Year'],
     aiInsight:
       'Your program excels in core technical skills, but significant gaps in Cloud and MLOps are limiting graduate readiness for high-demand software and AI roles.',
@@ -201,70 +201,11 @@ const programData = {
           ],
         },
       },
-      'Year 4': {
-        'This Semester': {
-          metrics: [
-            { label: 'Market Alignment Score', value: '82%', status: 'Strong', change: '+10%', tone: 'blue', helper: 'Final year students well-aligned with industry expectations.' },
-            { label: 'Graduate Readiness Score', value: '80%', status: 'Strong', change: '+9%', tone: 'violet', helper: 'High readiness as students complete capstone projects.' },
-            { label: 'Students at Risk', value: '28', status: '8% of cohort', change: '-4', tone: 'rose', helper: 'Risk significantly reduced in final year.' },
-            { label: 'Top Emerging Gap', value: 'MLOps & DevOps', status: 'High demand', change: 'Medium coverage', tone: 'amber', helper: 'Last-mile deployment skills needed before graduation.' },
-            { label: 'Data Confidence', value: 'Very High', status: '84% coverage', change: 'Student data', tone: 'emerald', helper: 'Rich capstone and internship data available.' },
-          ],
-          skills: [
-            { rank: 1, skill: 'Python', demand: 92, coverage: 94, gap: 2, priority: 'Low' },
-            { rank: 2, skill: 'SQL', demand: 88, coverage: 90, gap: 2, priority: 'Low' },
-            { rank: 3, skill: 'Data Analysis', demand: 85, coverage: 88, gap: 3, priority: 'Low' },
-            { rank: 4, skill: 'AI / ML Basics', demand: 70, coverage: 84, gap: 14, priority: 'Low' },
-            { rank: 5, skill: 'Cloud Deployment', demand: 76, coverage: 56, gap: -20, priority: 'Medium' },
-            { rank: 6, skill: 'MLOps', demand: 74, coverage: 46, gap: -28, priority: 'High' },
-            { rank: 7, skill: 'Product Analytics', demand: 58, coverage: 52, gap: -6, priority: 'Low' },
-            { rank: 8, skill: 'DevOps Practices', demand: 64, coverage: 40, gap: -24, priority: 'Medium' },
-          ],
-        },
-        'Last Semester': {
-          metrics: [
-            { label: 'Market Alignment Score', value: '78%', status: 'Strong', change: '+8%', tone: 'blue', helper: 'Strong alignment as final-year modules mature.' },
-            { label: 'Graduate Readiness Score', value: '76%', status: 'Good', change: '+7%', tone: 'violet', helper: 'Pre-graduation readiness peak approaching.' },
-            { label: 'Students at Risk', value: '32', status: '9% of cohort', change: '-2', tone: 'rose', helper: 'Risk declining as students gain internship experience.' },
-            { label: 'Top Emerging Gap', value: 'MLOps & DevOps', status: 'High demand', change: 'Medium coverage', tone: 'amber', helper: 'Deployment skills still developing before graduation.' },
-            { label: 'Data Confidence', value: 'Very High', status: '80% coverage', change: 'Student data', tone: 'emerald', helper: 'Excellent coverage from internship and project data.' },
-          ],
-          skills: [
-            { rank: 1, skill: 'Python', demand: 92, coverage: 90, gap: -2, priority: 'Low' },
-            { rank: 2, skill: 'SQL', demand: 88, coverage: 86, gap: -2, priority: 'Low' },
-            { rank: 3, skill: 'Data Analysis', demand: 85, coverage: 84, gap: -1, priority: 'Low' },
-            { rank: 4, skill: 'AI / ML Basics', demand: 70, coverage: 80, gap: 10, priority: 'Low' },
-            { rank: 5, skill: 'Cloud Deployment', demand: 76, coverage: 50, gap: -26, priority: 'Medium' },
-            { rank: 6, skill: 'MLOps', demand: 74, coverage: 40, gap: -34, priority: 'High' },
-            { rank: 7, skill: 'Product Analytics', demand: 58, coverage: 48, gap: -10, priority: 'Low' },
-            { rank: 8, skill: 'DevOps Practices', demand: 64, coverage: 34, gap: -30, priority: 'High' },
-          ],
-        },
-        'Last Year': {
-          metrics: [
-            { label: 'Market Alignment Score', value: '75%', status: 'Good', change: '+6%', tone: 'blue', helper: 'Prior Year 4 cohort alignment at graduation.' },
-            { label: 'Graduate Readiness Score', value: '72%', status: 'Good', change: '+5%', tone: 'violet', helper: 'Prior cohort readiness at final year stage.' },
-            { label: 'Students at Risk', value: '36', status: '11% of cohort', change: '-1', tone: 'rose', helper: 'Historical Year 4 risk profile.' },
-            { label: 'Top Emerging Gap', value: 'MLOps', status: 'High demand', change: 'Low coverage', tone: 'amber', helper: 'Consistent final-year gap across cohorts.' },
-            { label: 'Data Confidence', value: 'Very High', status: '78% coverage', change: 'Student data', tone: 'emerald', helper: 'Rich historical signal from prior graduation cohort.' },
-          ],
-          skills: [
-            { rank: 1, skill: 'Python', demand: 90, coverage: 86, gap: -4, priority: 'Low' },
-            { rank: 2, skill: 'SQL', demand: 86, coverage: 82, gap: -4, priority: 'Low' },
-            { rank: 3, skill: 'Data Analysis', demand: 83, coverage: 80, gap: -3, priority: 'Low' },
-            { rank: 4, skill: 'AI / ML Basics', demand: 68, coverage: 76, gap: 8, priority: 'Low' },
-            { rank: 5, skill: 'Cloud Deployment', demand: 72, coverage: 44, gap: -28, priority: 'Medium' },
-            { rank: 6, skill: 'MLOps', demand: 70, coverage: 34, gap: -36, priority: 'High' },
-            { rank: 7, skill: 'Product Analytics', demand: 55, coverage: 44, gap: -11, priority: 'Low' },
-            { rank: 8, skill: 'DevOps Practices', demand: 62, coverage: 28, gap: -34, priority: 'High' },
-          ],
-        },
-      },
     },
   },
 
   'BSc Data Science': {
-    cohorts: ['Year 1', 'Year 2', 'Year 3', 'Year 4'],
+    cohorts: ['Year 1', 'Year 2', 'Year 3'],
     semesters: ['This Semester', 'Last Semester', 'Last Year'],
     aiInsight:
       'Your Data Science program has a strong statistics and Python foundation. The critical gaps are in production ML deployment (MLOps) and real-world data engineering pipelines — skills increasingly required by top hiring companies.',
@@ -460,65 +401,6 @@ const programData = {
           ],
         },
       },
-      'Year 4': {
-        'This Semester': {
-          metrics: [
-            { label: 'Market Alignment Score', value: '88%', status: 'Excellent', change: '+12%', tone: 'blue', helper: 'Outstanding alignment. DS graduates highly sought after.' },
-            { label: 'Graduate Readiness Score', value: '85%', status: 'Excellent', change: '+10%', tone: 'violet', helper: 'Very high readiness. Capstone projects creating strong signal.' },
-            { label: 'Students at Risk', value: '16', status: '5% of cohort', change: '-6', tone: 'rose', helper: 'Very low risk. Most students ready for industry roles.' },
-            { label: 'Top Emerging Gap', value: 'MLOps Production', status: 'High demand', change: 'Medium coverage', tone: 'amber', helper: 'Some students still need real-world deployment experience.' },
-            { label: 'Data Confidence', value: 'Very High', status: '90% coverage', change: 'Student data', tone: 'emerald', helper: 'Excellent signal from capstone, internship, and competition data.' },
-          ],
-          skills: [
-            { rank: 1, skill: 'Statistics', demand: 95, coverage: 96, gap: 1, priority: 'Low' },
-            { rank: 2, skill: 'Python', demand: 90, coverage: 94, gap: 4, priority: 'Low' },
-            { rank: 3, skill: 'R Programming', demand: 78, coverage: 88, gap: 10, priority: 'Low' },
-            { rank: 4, skill: 'Machine Learning', demand: 88, coverage: 90, gap: 2, priority: 'Low' },
-            { rank: 5, skill: 'SQL', demand: 85, coverage: 92, gap: 7, priority: 'Low' },
-            { rank: 6, skill: 'Data Visualization', demand: 80, coverage: 88, gap: 8, priority: 'Low' },
-            { rank: 7, skill: 'MLOps', demand: 76, coverage: 58, gap: -18, priority: 'Medium' },
-            { rank: 8, skill: 'Data Engineering', demand: 72, coverage: 60, gap: -12, priority: 'Low' },
-          ],
-        },
-        'Last Semester': {
-          metrics: [
-            { label: 'Market Alignment Score', value: '84%', status: 'Excellent', change: '+10%', tone: 'blue', helper: 'Near-perfect alignment for graduating DS students.' },
-            { label: 'Graduate Readiness Score', value: '82%', status: 'Strong', change: '+9%', tone: 'violet', helper: 'Pre-graduation peak readiness in analytical skills.' },
-            { label: 'Students at Risk', value: '20', status: '6% of cohort', change: '-4', tone: 'rose', helper: 'Very low risk heading into final semester.' },
-            { label: 'Top Emerging Gap', value: 'MLOps Production', status: 'High demand', change: 'Medium coverage', tone: 'amber', helper: 'Last-mile deployment gap closing with internships.' },
-            { label: 'Data Confidence', value: 'Very High', status: '86% coverage', change: 'Student data', tone: 'emerald', helper: 'Rich final-year signal from all sources.' },
-          ],
-          skills: [
-            { rank: 1, skill: 'Statistics', demand: 95, coverage: 94, gap: -1, priority: 'Low' },
-            { rank: 2, skill: 'Python', demand: 90, coverage: 92, gap: 2, priority: 'Low' },
-            { rank: 3, skill: 'R Programming', demand: 78, coverage: 86, gap: 8, priority: 'Low' },
-            { rank: 4, skill: 'Machine Learning', demand: 88, coverage: 88, gap: 0, priority: 'Low' },
-            { rank: 5, skill: 'SQL', demand: 85, coverage: 90, gap: 5, priority: 'Low' },
-            { rank: 6, skill: 'Data Visualization', demand: 80, coverage: 85, gap: 5, priority: 'Low' },
-            { rank: 7, skill: 'MLOps', demand: 76, coverage: 52, gap: -24, priority: 'Medium' },
-            { rank: 8, skill: 'Data Engineering', demand: 72, coverage: 54, gap: -18, priority: 'Medium' },
-          ],
-        },
-        'Last Year': {
-          metrics: [
-            { label: 'Market Alignment Score', value: '80%', status: 'Strong', change: '+8%', tone: 'blue', helper: 'Prior Year 4 DS cohort alignment at graduation.' },
-            { label: 'Graduate Readiness Score', value: '78%', status: 'Good', change: '+7%', tone: 'violet', helper: 'Historical DS Year 4 readiness benchmark.' },
-            { label: 'Students at Risk', value: '24', status: '7% of cohort', change: '-2', tone: 'rose', helper: 'Low risk consistent across DS Year 4 cohorts.' },
-            { label: 'Top Emerging Gap', value: 'MLOps', status: 'High demand', change: 'Medium coverage', tone: 'amber', helper: 'Consistent final-year MLOps gap across DS cohorts.' },
-            { label: 'Data Confidence', value: 'Very High', status: '83% coverage', change: 'Student data', tone: 'emerald', helper: 'Prior graduation cohort rich signal data.' },
-          ],
-          skills: [
-            { rank: 1, skill: 'Statistics', demand: 93, coverage: 90, gap: -3, priority: 'Low' },
-            { rank: 2, skill: 'Python', demand: 88, coverage: 88, gap: 0, priority: 'Low' },
-            { rank: 3, skill: 'R Programming', demand: 76, coverage: 82, gap: 6, priority: 'Low' },
-            { rank: 4, skill: 'Machine Learning', demand: 86, coverage: 84, gap: -2, priority: 'Low' },
-            { rank: 5, skill: 'SQL', demand: 83, coverage: 86, gap: 3, priority: 'Low' },
-            { rank: 6, skill: 'Data Visualization', demand: 78, coverage: 80, gap: 2, priority: 'Low' },
-            { rank: 7, skill: 'MLOps', demand: 74, coverage: 46, gap: -28, priority: 'Medium' },
-            { rank: 8, skill: 'Data Engineering', demand: 70, coverage: 48, gap: -22, priority: 'Medium' },
-          ],
-        },
-      },
     },
   },
 
@@ -686,7 +568,7 @@ const programData = {
             { label: 'Graduate Readiness Score', value: '70%', status: 'Good', change: '+5%', tone: 'violet', helper: 'Approaching graduation readiness. Core tools solid.' },
             { label: 'Students at Risk', value: '60', status: '18% of cohort', change: '+5', tone: 'rose', helper: 'Risk elevated as predictive modelling module introduced.' },
             { label: 'Top Emerging Gap', value: 'Python & Modelling', status: 'High demand', change: 'Low coverage', tone: 'amber', helper: 'Advanced analytics skills still lagging for DA students.' },
-            { label: 'Data Confidence', value: 'High', status: '60% coverage', change: 'Student data', tone: 'emerald', helper: 'Growing signal from final-year projects.' },
+            { label: 'Data Confidence', value: 'High', status: '60% coverage', change: 'Student data', tone: 'emerald', helper: 'Growing signal from Year 3 projects.' },
           ],
           skills: [
             { rank: 1, skill: 'SQL', demand: 90, coverage: 86, gap: -4, priority: 'Low' },
@@ -963,6 +845,55 @@ export default function UniversityOverviewPage() {
           </button>
         </div>
       </header>
+
+      <section className="rounded-[8px] border border-indigo-100 bg-white p-5 shadow-[0_10px_28px_rgba(79,70,229,0.06)]">
+        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-5">
+        <div className="flex gap-4 items-start">
+          <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-[8px] bg-indigo-600 text-white shadow-sm text-sm font-bold">EC</span>
+          <div>
+            <div className="flex items-center gap-2 flex-wrap">
+              <h3 className="text-sm font-bold text-slate-900">Dr. Evelyn Chen</h3>
+              <span className="rounded bg-indigo-50 px-2 py-0.5 text-[10px] font-semibold text-indigo-700 border border-indigo-100/50">Dean of Computing & AI</span>
+              <span className="rounded bg-slate-100 px-2 py-0.5 text-[10px] font-semibold text-slate-600 border border-slate-200">Heriot-Watt University Malaysia, MACS</span>
+            </div>
+            <p className="text-xs font-medium text-slate-600 mt-1.5 leading-relaxed max-w-3xl">
+              Dr. Chen is preparing the MACS curriculum review across <strong>BSc Computer Science</strong>, <strong>BSc Data Science</strong>, and <strong>BSc Data Analytics</strong>. The goal is to find the highest-risk Year 1 to Year 3 skill gaps, validate them with alumni and market signals, then launch targeted partner interventions.
+            </p>
+            <p className="mt-1 text-xs font-medium text-slate-400">Contact: evelyn.chen@hw.edu.my</p>
+          </div>
+        </div>
+        <div className="flex gap-3 shrink-0 w-full md:w-auto border-t md:border-t-0 border-slate-100 pt-3 md:pt-0">
+          <div className="text-center px-4 py-2 border-r border-slate-100 last:border-none flex-1 md:flex-none">
+            <span className="block text-lg font-bold text-indigo-600 leading-none">3</span>
+            <span className="block text-[10px] text-slate-400 font-semibold uppercase mt-1 tracking-wider">Programs</span>
+          </div>
+          <div className="text-center px-4 py-2 border-r border-slate-100 last:border-none flex-1 md:flex-none">
+            <span className="block text-lg font-bold text-violet-600 leading-none">9</span>
+            <span className="block text-[10px] text-slate-400 font-semibold uppercase mt-1 tracking-wider">Y1-Y3 Cohorts</span>
+          </div>
+          <div className="text-center px-4 py-2 last:border-none flex-1 md:flex-none">
+            <span className="block text-lg font-bold text-emerald-600 leading-none">840+</span>
+            <span className="block text-[10px] text-slate-400 font-semibold uppercase mt-1 tracking-wider">Students</span>
+          </div>
+        </div>
+        </div>
+        <div className="mt-5 grid gap-3 md:grid-cols-4">
+          {[
+            ['1', 'Spot the risk', 'Start with program-market gaps by selected program and cohort.'],
+            ['2', 'Validate the signal', 'Use alumni outcomes to confirm which gaps affect placement.'],
+            ['3', 'Inspect readiness', 'Check Year 1 to Year 3 skill heatmaps and affected students.'],
+            ['4', 'Launch action', 'Move to collaboration marketplace for workshops and mentors.'],
+          ].map(([step, title, detail]) => (
+            <div key={title} className="rounded-[8px] border border-slate-100 bg-slate-50/70 p-3">
+              <div className="flex items-center gap-2">
+                <span className="flex h-6 w-6 items-center justify-center rounded-full bg-white text-xs font-bold text-blue-700 ring-1 ring-blue-100">{step}</span>
+                <p className="text-xs font-bold text-slate-900">{title}</p>
+              </div>
+              <p className="mt-2 text-xs leading-5 text-slate-500">{detail}</p>
+            </div>
+          ))}
+        </div>
+      </section>
 
       {/* KPI Metrics */}
       <section className="rounded-[8px] border border-blue-100 bg-white/95 p-5 shadow-[0_18px_48px_rgba(30,64,175,0.08)]">

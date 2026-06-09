@@ -1860,7 +1860,7 @@ function EventDetailsWorkspace({ event, shownSkills }) {
 
     { label: 'Event Name', value: event.title, important: true, icon: <FileTextIcon /> },
 
-    { label: 'Organized By', value: `${event.club}, Sunway University`, important: true, icon: <BuildingIcon /> },
+    { label: 'Organized By', value: `${event.club}, Heriot-Watt University Malaysia`, important: true, icon: <BuildingIcon /> },
 
     { label: 'Event Type', value: event.level === 'Workshop' ? 'Workshop' : event.level === 'Hackathon' ? 'Hackathon' : 'Case Competition', important: true, icon: <ClipboardIcon /> },
 
@@ -1868,7 +1868,7 @@ function EventDetailsWorkspace({ event, shownSkills }) {
 
     { label: 'Format', value: event.location === 'Online' ? 'Online' : 'Offline (On Campus)', important: false, icon: <GlobeIcon /> },
 
-    { label: 'Venue', value: event.location === 'Online' ? 'Zoom / Microsoft Teams' : 'Sunway University Campus', important: true, icon: <MapPinIcon /> },
+    { label: 'Venue', value: event.location === 'Online' ? 'Zoom / Microsoft Teams' : 'Heriot-Watt University Malaysia Campus', important: true, icon: <MapPinIcon /> },
 
     { label: 'Date', value: `${event.date} (Preliminary - Grand Final)`, important: true, icon: <CalendarIcon /> },
 
@@ -1876,7 +1876,7 @@ function EventDetailsWorkspace({ event, shownSkills }) {
 
     { label: 'Organizing Team', value: `${event.club} Committee`, important: false, icon: <UsersIcon /> },
 
-    { label: 'Contact Email', value: `${event.club.toLowerCase().replace(/\s+/g, '')}@sunway.edu.my`, important: false, icon: <MailIcon /> },
+    { label: 'Contact Email', value: `${event.club.toLowerCase().replace(/\s+/g, '')}@hw.edu.my`, important: false, icon: <MailIcon /> },
 
     { label: 'Contact Phone', value: '+60 12-345 6789', important: false, icon: <PhoneIcon /> },
 
@@ -2385,7 +2385,7 @@ function SupportOpportunityWorkspace({ event, shownSkills, onOutreach }) {
             <div>
               <h3 className="text-base font-medium text-slate-900">Support Opportunity</h3>
               <p className="mt-1 max-w-2xl text-sm leading-6 text-slate-600">
-                Review how Sunway University can support this external university event without using organizer-only controls.
+                Review how Heriot-Watt University Malaysia can support this external university event without using organizer-only controls.
               </p>
             </div>
             <span className="w-fit rounded-full bg-violet-50 px-3 py-1 text-xs font-medium text-violet-700">
@@ -2394,18 +2394,13 @@ function SupportOpportunityWorkspace({ event, shownSkills, onOutreach }) {
           </div>
 
           <div className="mt-5 grid gap-3 md:grid-cols-3">
-            {supportTracks.map((track, index) => (
+            {supportTracks.map((track) => (
               <article
                 key={track.title}
-                className={`rounded-xl border p-4 ${
-                  index === 0 ? 'border-blue-200 bg-blue-50/40' : 'border-slate-200 bg-white'
-                }`}
+                className="rounded-xl border border-slate-200 bg-white p-4"
               >
                 <div className="flex items-center justify-between gap-2">
                   <h4 className="text-sm font-medium text-slate-900">{track.title}</h4>
-                  {index === 0 ? (
-                    <span className="rounded-full bg-blue-600 px-2 py-0.5 text-[10px] font-medium text-white">Selected</span>
-                  ) : null}
                 </div>
                 <p className="mt-3 text-xs leading-5 text-slate-600">{track.detail}</p>
                 <p className="mt-3 rounded-lg bg-white/80 px-3 py-2 text-[11px] leading-5 text-slate-600">{track.fit}</p>
@@ -2561,13 +2556,13 @@ function EventDetailPage({ event, activeTab, onTabChange, onBack, onOutreach, in
 
           <div className="flex items-center gap-3">
 
-            <span className="flex h-10 w-10 items-center justify-center rounded-full bg-violet-100 text-xs font-semibold text-violet-700">UA</span>
+            <span className="flex h-10 w-10 items-center justify-center rounded-full bg-violet-100 text-xs font-semibold text-violet-700">EC</span>
 
             <div className="hidden sm:block">
 
-              <p className="text-sm font-semibold text-slate-900">University Admin</p>
+              <p className="text-sm font-semibold text-slate-900">Dr. Evelyn Chen</p>
 
-              <p className="text-xs font-medium text-slate-500">Sunway University</p>
+              <p className="text-xs font-medium text-slate-500">Heriot-Watt University Malaysia</p>
 
             </div>
 
@@ -2600,7 +2595,7 @@ function EventDetailPage({ event, activeTab, onTabChange, onBack, onOutreach, in
               <span className={`rounded-full px-2.5 py-1 text-xs font-medium ${
                 isOwnedEvent ? 'bg-blue-50 text-blue-700' : 'bg-violet-50 text-violet-700'
               }`}>
-                {isOwnedEvent ? 'Hosted by Sunway University' : 'Hosted by another university'}
+                {isOwnedEvent ? 'Hosted by Heriot-Watt University Malaysia' : 'Hosted by another university'}
               </span>
             </div>
 
@@ -2836,9 +2831,9 @@ function EventDetailPage({ event, activeTab, onTabChange, onBack, onOutreach, in
 
                   ['Timeline', '15 Jul - 28 Sep 2026'],
 
-                  ['Venue', 'Sunway University Campus'],
+                  ['Venue', 'Heriot-Watt University Malaysia Campus'],
 
-                  ['Organized By', `${event.club}, Sunway University`],
+                  ['Organized By', `${event.club}, Heriot-Watt University Malaysia`],
 
                 ].map(([label, value]) => (
 
@@ -3077,7 +3072,6 @@ export default function CollaborationMarketplace() {
   }, [activeBoardTab, activeFilter, eventList, searchTerm])
 
 
-
   function openDetails(event) {
 
     setSelectedEvent(event)
@@ -3088,26 +3082,7 @@ export default function CollaborationMarketplace() {
 
   }
 
-  function renderMainView() {
-    if (activeLifecycleTab === 'Post-Event') {
-      return (
-        <div className="relative">
-          <AIPostEventCompletionPage
-            onBack={() => setActiveLifecycleTab('Pre-Event')}
-            onToast={showToast}
-            onViewImpactReport={(row) => {
-              navigate(`/university/collaboration/post-event/report/${row.id}`)
-            }}
-          />
-          {toast && (
-            <div className="fixed bottom-5 right-5 z-50 rounded-full bg-slate-900 px-4 py-2.5 text-xs font-semibold text-white shadow-lg transition">
-              {toast}
-            </div>
-          )}
-        </div>
-      )
-    }
-
+  function renderPreEventContent() {
     if (selectedEvent) {
       if (showOutreach) {
         return (
@@ -3117,15 +3092,9 @@ export default function CollaborationMarketplace() {
               onBack={() => setShowOutreach(false)}
               onToast={showToast}
             />
-            {toast && (
-              <div className="fixed bottom-5 right-5 z-50 rounded-full bg-slate-900 px-4 py-2.5 text-xs font-semibold text-white shadow-lg transition">
-                {toast}
-              </div>
-            )}
           </div>
         )
       }
-
       return (
         <div className="relative">
           <EventDetailPage
@@ -3135,11 +3104,6 @@ export default function CollaborationMarketplace() {
             onBack={() => setSelectedEvent(null)}
             onOutreach={() => setShowOutreach(true)}
           />
-          {toast && (
-            <div className="fixed bottom-5 right-5 z-50 rounded-full bg-slate-900 px-4 py-2.5 text-xs font-semibold text-white shadow-lg transition">
-              {toast}
-            </div>
-          )}
         </div>
       )
     }
@@ -3156,17 +3120,12 @@ export default function CollaborationMarketplace() {
               showToast('Event published successfully!')
             }}
           />
-          {toast && (
-            <div className="fixed bottom-5 right-5 z-50 rounded-full bg-slate-900 px-4 py-2.5 text-xs font-semibold text-white shadow-lg transition">
-              {toast}
-            </div>
-          )}
         </div>
       )
     }
 
     return (
-      <div className="min-w-0 space-y-5 pb-10">
+      <>
         <div className="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
           <label className="relative block w-full max-w-3xl">
             <span className="absolute left-4 top-1/2 h-3.5 w-3.5 -translate-y-1/2 rounded-full border-2 border-slate-400">
@@ -3187,34 +3146,6 @@ export default function CollaborationMarketplace() {
             + Create Event
           </button>
         </div>
-
-        <header className="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
-          <div>
-            <h2 className="text-3xl font-semibold tracking-tight text-slate-950">Collaboration Marketplace</h2>
-            <p className="mt-2 max-w-2xl text-sm font-medium text-slate-500">
-              Post club events and find the right collaborators from industry and organizations.
-            </p>
-          </div>
-        </header>
-
-        {/* Main Lifecycle Navigation */}
-        <nav className="border-b border-slate-200">
-          <div className="flex gap-6">
-            <button
-              type="button"
-              className="pb-3 text-sm font-semibold border-b-2 transition border-blue-600 text-blue-700"
-            >
-              Pre-Event
-            </button>
-            <button
-              type="button"
-              onClick={() => setActiveLifecycleTab('Post-Event')}
-              className="pb-3 text-sm font-semibold border-b-2 transition border-transparent text-slate-500 hover:text-slate-700"
-            >
-              Post-Event
-            </button>
-          </div>
-        </nav>
 
         {/* Pre-Event Sub tabs */}
         <div className="border-b border-slate-200">
@@ -3237,12 +3168,8 @@ export default function CollaborationMarketplace() {
         <div className="flex flex-col gap-3 xl:flex-row xl:items-center xl:justify-between">
           <FilterChips activeFilter={activeFilter} onChange={setActiveFilter} />
           <div className="flex shrink-0 items-center gap-2">
-            <button type="button" className="rounded-lg border border-slate-200 bg-white px-3.5 py-2 text-xs font-semibold text-slate-650 shadow-sm">
-              Filter
-            </button>
-            <button type="button" className="rounded-lg border border-slate-200 bg-white px-3.5 py-2 text-xs font-semibold text-slate-650 shadow-sm">
-              Sort: Newest
-            </button>
+            <button type="button" className="rounded-lg border border-slate-200 bg-white px-3.5 py-2 text-xs font-semibold text-slate-650 shadow-sm">Filter</button>
+            <button type="button" className="rounded-lg border border-slate-200 bg-white px-3.5 py-2 text-xs font-semibold text-slate-650 shadow-sm">Sort: Newest</button>
           </div>
         </div>
 
@@ -3289,19 +3216,74 @@ export default function CollaborationMarketplace() {
             ))}
           </div>
         </footer>
+      </>
+    )
+  }
+
+  // ── Shared persistent shell ──────────────────────────────────────────────────
+  // The heading + Pre-Event / Post-Event tab nav always render here.
+  // Only the content area below the nav swaps — so no layout jump on tab switch.
+  function renderRoute() {
+    return (
+      <div className="min-w-0 space-y-5 pb-10">
+        {/* Page heading */}
+        <header className="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
+          <div>
+            <h2 className="text-3xl font-semibold text-slate-950">Collaboration Marketplace</h2>
+            <p className="mt-2 max-w-2xl text-sm font-medium text-slate-500">
+              Post club events and find the right collaborators from industry and organizations.
+            </p>
+          </div>
+        </header>
+
+        {/* Persistent lifecycle tab bar */}
+        <nav className="border-b border-slate-200">
+          <div className="flex gap-6">
+            {['Pre-Event', 'Post-Event'].map((tab) => (
+              <button
+                key={tab}
+                type="button"
+                onClick={() => setActiveLifecycleTab(tab)}
+                className={`pb-3 text-sm font-semibold border-b-2 transition ${
+                  activeLifecycleTab === tab
+                    ? 'border-blue-600 text-blue-700'
+                    : 'border-transparent text-slate-500 hover:text-slate-700'
+                }`}
+              >
+                {tab}
+              </button>
+            ))}
+          </div>
+        </nav>
+
+        {/* Tab body — only this swaps */}
+        {activeLifecycleTab === 'Post-Event' ? (
+          <AIPostEventCompletionPage
+            onBack={() => setActiveLifecycleTab('Pre-Event')}
+            onToast={showToast}
+            onViewImpactReport={(row) => {
+              navigate(`/university/collaboration/post-event/report/${row.id}`)
+            }}
+          />
+        ) : (
+          renderPreEventContent()
+        )}
+
+        {toast && (
+          <div className="fixed bottom-5 right-5 z-50 rounded-full bg-slate-900 px-4 py-2.5 text-xs font-semibold text-white shadow-lg transition">
+            {toast}
+          </div>
+        )}
       </div>
     )
   }
 
   return (
     <Routes>
-      <Route path="/" element={renderMainView()} />
+      <Route path="/" element={renderRoute()} />
       <Route path="/post-event/report/:eventId" element={<EventImpactReportPage onBack={() => navigate('/university/collaboration', { state: { tab: 'Post-Event' } })} onToast={showToast} />} />
       <Route path="/post-event/history" element={<EventImpactHistoryPage onToast={showToast} />} />
       <Route path="/post-event/:eventId/student-spotlights" element={<StudentSpotlightsPage onToast={showToast} />} />
     </Routes>
   )
 }
-
-
-

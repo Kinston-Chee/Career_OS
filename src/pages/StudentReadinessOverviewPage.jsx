@@ -4,7 +4,7 @@ import React, { useState, useRef, useEffect } from 'react'
 
 const programData = {
   'BSc Computer Science': {
-    cohorts: ['Year 1', 'Year 2', 'Year 3', 'Year 4'],
+    cohorts: ['Year 1', 'Year 2', 'Year 3'],
     defaultCohort: 'Year 3',
     defaultSkill: 'Cloud',
     data: {
@@ -95,40 +95,11 @@ const programData = {
           ['62 students need targeted intervention.',     'Personalised cloud + MLOps plans recommended.',       'violet'],
         ],
       },
-      'Year 4': {
-        kpis: [
-          { label: 'Avg. Readiness Score',        value: '82%',  helper: '+8% vs Year 3', tone: 'blue' },
-          { label: 'Strong Skills',                value: '5',    helper: 'Skills above target', tone: 'emerald' },
-          { label: 'Skills Needing Improvement',  value: '2',    helper: 'Skills below target', tone: 'violet' },
-          { label: 'Students at Risk',             value: '28',   helper: 'Requiring attention', tone: 'rose' },
-        ],
-        heatmap: [
-          { skill: 'Python',          values: [60, 78, 92, 94], target: 85, roles: ['Software Engineer', 'Data Analyst'],             actions: ['Capstone-level projects', 'Open source contribution'],                         missing: 8,  demand: 'High'   },
-          { skill: 'Data Structures', values: [42, 74, 85, 90], target: 80, roles: ['Software Engineer', 'Backend Engineer'],         actions: ['Interview prep sessions', 'Advanced DSA contests'],                           missing: 10, demand: 'High'   },
-          { skill: 'Algorithms',      values: [38, 68, 72, 84], target: 75, roles: ['Software Engineer', 'QA Engineer'],              actions: ['Mock interview programme', 'Algorithm optimisation workshops'],                missing: 16, demand: 'Medium' },
-          { skill: 'Database (SQL)',  values: [36, 70, 78, 88], target: 75, roles: ['Data Analyst', 'Backend Engineer'],              actions: ['Advanced DB design', 'Query optimisation module'],                            missing: 12, demand: 'High'   },
-          { skill: 'Web Development', values: [30, 55, 70, 80], target: 70, roles: ['Frontend Engineer', 'Software Engineer'],        actions: ['Capstone full-stack project', 'Internship preparation'],                      missing: 20, demand: 'Medium' },
-          { skill: 'Cloud',           values: [10, 22, 38, 56], target: 70, roles: ['DevOps Engineer', 'Data Engineer', 'ML Eng'],   actions: ['Cloud certification push', 'Final semester cloud lab'],                       missing: 44, demand: 'High'   },
-          { skill: 'MLOps',           values: [5,  14, 26, 46], target: 65, roles: ['ML Engineer', 'Data Engineer'],                 actions: ['MLOps capstone integration', 'Model deployment final project'],               missing: 38, demand: 'High'   },
-          { skill: 'Product Thinking',values: [20, 35, 40, 52], target: 60, roles: ['Product Analyst', 'Business Analyst'],          actions: ['Industry project collaboration', 'PM mentorship sessions'],                   missing: 28, demand: 'Medium' },
-        ],
-        gapActions: [
-          ['Cloud',           '44% missing', 'High demand',   'High impact',   'Cloud certification push (final semester)',     44],
-          ['MLOps',           '38% missing', 'High demand',   'High impact',   'MLOps capstone integration project',            38],
-          ['Product Thinking','28% missing', 'Medium demand', 'Medium impact', 'Industry project + PM mentorship',              28],
-          ['Algorithms',      '16% missing', 'Medium demand', 'Medium impact', 'Mock interview prep sessions',                  16],
-        ],
-        insights: [
-          ['Strongest cohort readiness in program.',     'Python, SQL, Web Dev, Algorithms all above target.', 'emerald'],
-          ['Cloud and MLOps still need final push.',     'Closing these gaps will maximise graduate outcomes.', 'amber'],
-          ['28 students in risk zone heading to grad.',  'Focus on Cloud certification and MLOps capstone.',    'violet'],
-        ],
-      },
     },
   },
 
   'BSc Data Science': {
-    cohorts: ['Year 1', 'Year 2', 'Year 3', 'Year 4'],
+    cohorts: ['Year 1', 'Year 2', 'Year 3'],
     defaultCohort: 'Year 3',
     defaultSkill: 'MLOps',
     data: {
@@ -186,7 +157,7 @@ const programData = {
         ],
         insights: [
           ['Statistics and Python ahead of schedule.', 'Both tracking strongly toward target.',             'emerald'],
-          ['MLOps and Data Engineering critically low.','Must be addressed before final year job prep.',    'amber'],
+          ['MLOps and Data Engineering critically low.','Must be addressed before Year 3 placement prep.',  'amber'],
           ['32 students need ML and Data Eng support.', 'Group-based Kaggle challenge recommended.',        'violet'],
         ],
       },
@@ -214,38 +185,9 @@ const programData = {
           ['Data Visualization','12% missing','High demand', 'Medium impact', 'Interactive dashboards + D3.js workshop',  12],
         ],
         insights: [
-          ['Stats, Python, R, SQL all above target.',  'Analytical core is excellent heading into Year 4.', 'emerald'],
+          ['Stats, Python, R, SQL all above target.',  'Analytical core is excellent by Year 3.',           'emerald'],
           ['MLOps and Data Engineering still critical.','Biggest production skill gaps in the program.',     'amber'],
           ['38 students need MLOps/pipeline support.', 'Structured bootcamp is the highest-impact action.', 'violet'],
-        ],
-      },
-      'Year 4': {
-        kpis: [
-          { label: 'Avg. Readiness Score',        value: '85%',  helper: '+9% vs Year 3', tone: 'blue' },
-          { label: 'Strong Skills',                value: '6',    helper: 'Skills above target', tone: 'emerald' },
-          { label: 'Skills Needing Improvement',  value: '2',    helper: 'Skills below target', tone: 'violet' },
-          { label: 'Students at Risk',             value: '16',   helper: 'Requiring attention', tone: 'rose' },
-        ],
-        heatmap: [
-          { skill: 'Statistics',         values: [72, 88, 94, 96], target: 90, roles: ['Data Scientist', 'Research Analyst'],      actions: ['Capstone research integration', 'Publication prep workshops'],              missing: 4,  demand: 'High'   },
-          { skill: 'Python',             values: [55, 80, 90, 94], target: 88, roles: ['Data Scientist', 'ML Engineer'],            actions: ['Advanced DS capstone', 'Open source DS projects'],                         missing: 6,  demand: 'High'   },
-          { skill: 'R Programming',      values: [50, 72, 82, 88], target: 75, roles: ['Research Analyst', 'Statistician'],         actions: ['R + Python DS pipeline capstone', 'Research mentorship'],                  missing: 6,  demand: 'High'   },
-          { skill: 'SQL',               values: [40, 68, 86, 92], target: 80, roles: ['Data Analyst', 'Data Scientist'],            actions: ['Advanced data pipeline SQL', 'Performance tuning lab'],                   missing: 5,  demand: 'High'   },
-          { skill: 'Data Visualization', values: [35, 65, 78, 88], target: 78, roles: ['Data Analyst', 'BI Developer'],            actions: ['Final dashboards capstone', 'Storytelling with data workshop'],             missing: 8,  demand: 'High'   },
-          { skill: 'Machine Learning',   values: [20, 58, 80, 90], target: 85, roles: ['Data Scientist', 'ML Engineer'],            actions: ['Capstone ML system design', 'Industry collaboration project'],             missing: 6,  demand: 'High'   },
-          { skill: 'MLOps',             values: [5,  18, 36, 58], target: 72, roles: ['ML Engineer', 'MLOps Engineer'],             actions: ['MLOps capstone project', 'Cloud ML deployment lab'],                      missing: 36, demand: 'High'   },
-          { skill: 'Data Engineering',   values: [8,  20, 38, 60], target: 70, roles: ['Data Engineer', 'Data Scientist'],          actions: ['Full pipeline capstone', 'Spark + cloud integration lab'],                 missing: 28, demand: 'High'   },
-        ],
-        gapActions: [
-          ['MLOps',           '36% missing', 'High demand', 'High impact',   'MLOps capstone + Cloud ML deployment',       36],
-          ['Data Engineering','28% missing', 'High demand', 'High impact',   'Full pipeline capstone (Spark + Cloud)',      28],
-          ['Data Visualization','8% missing','High demand', 'Medium impact', 'Final dashboards capstone project',           8],
-          ['Python',           '6% missing', 'High demand', 'Low impact',    'Open source DS contribution programme',       6],
-        ],
-        insights: [
-          ['Outstanding analytical readiness.',         '6 of 8 skills are above or at target.', 'emerald'],
-          ['MLOps is the last critical gap.',           'Production deployment must be addressed before graduation.', 'amber'],
-          ['Only 16 students still at risk.',           'Targeted 1-on-1 mentorship recommended for final push.',    'violet'],
         ],
       },
     },
@@ -434,7 +376,7 @@ function KpiCard({ item }) {
 
 function HeatmapTable({ rows, cohort, selectedSkill, onSelectSkill }) {
   // Determine how many year columns to show based on non-null values across all rows
-  const maxCols = Math.max(...rows.map((r) => r.values.length))
+  const maxCols = Math.min(3, Math.max(...rows.map((r) => r.values.length)))
 
   return (
     <section className="rounded-[8px] border border-slate-200/80 bg-white p-5 shadow-[0_16px_42px_rgba(15,23,42,0.05)]">
@@ -485,7 +427,7 @@ function HeatmapTable({ rows, cohort, selectedSkill, onSelectSkill }) {
                       <span className="text-sm font-semibold text-slate-950">{row.skill}</span>
                     </div>
                   </td>
-                  {row.values.map((value, index) => (
+                  {row.values.slice(0, maxCols).map((value, index) => (
                     <td key={`${row.skill}-${index}`} className="border-b border-white p-1">
                       <div
                         className={`flex min-h-[52px] items-center justify-center rounded-[8px] text-sm font-semibold ring-1 ${readinessTone(value)} ${cohort === `Year ${index + 1}` ? 'ring-2 ring-blue-300' : ''}`}

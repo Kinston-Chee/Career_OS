@@ -172,11 +172,11 @@ export default function EventImpactReportPage({ event, onBack, onToast }) {
           <div className="min-w-0">
             <div className="flex flex-wrap items-center gap-2">
               <h2 className="text-sm font-semibold text-slate-900 truncate">{eventName}</h2>
-              <span className="rounded bg-emerald-50 px-2 py-0.5 text-[9px] font-semibold text-emerald-700 border border-emerald-100/50">
+              <span className="rounded bg-emerald-50 px-2 py-0.5 text-xs font-semibold text-emerald-700 border border-emerald-100/50">
                 Completed
               </span>
             </div>
-            <p className="text-[10px] font-medium text-slate-450 mt-0.5">
+            <p className="text-xs font-medium text-slate-450 mt-0.5">
               Organized by <strong className="text-slate-700 font-semibold">{organizerClub}</strong> • Completion date: {completionDate}
             </p>
           </div>
@@ -184,18 +184,18 @@ export default function EventImpactReportPage({ event, onBack, onToast }) {
 
         {/* Partners Badges */}
         <div className="flex flex-wrap items-center gap-3 text-xs">
-          <span className="text-slate-400 font-semibold text-[10px] uppercase tracking-wider">Partners:</span>
+          <span className="text-slate-400 font-semibold text-xs uppercase tracking-wider">Partners:</span>
           <div className="flex flex-wrap gap-2">
-            <span className="inline-flex items-center gap-1.5 rounded-lg border border-slate-150 bg-white px-2.5 py-1 text-[10px] font-semibold text-slate-700">
-              <span className="flex h-4 w-4 items-center justify-center rounded bg-gradient-to-br from-emerald-600 to-green-500 text-[8px] text-white font-bold">Gr</span>
+            <span className="inline-flex items-center gap-1.5 rounded-lg border border-slate-150 bg-white px-2.5 py-1 text-xs font-semibold text-slate-700">
+              <span className="flex h-4 w-4 items-center justify-center rounded bg-gradient-to-br from-emerald-600 to-green-500 text-xs text-white font-bold">Gr</span>
               Grab
             </span>
-            <span className="inline-flex items-center gap-1.5 rounded-lg border border-slate-150 bg-white px-2.5 py-1 text-[10px] font-semibold text-slate-700">
-              <span className="flex h-4 w-4 items-center justify-center rounded bg-gradient-to-br from-yellow-500 to-amber-500 text-[8px] text-slate-800 font-bold">Mb</span>
+            <span className="inline-flex items-center gap-1.5 rounded-lg border border-slate-150 bg-white px-2.5 py-1 text-xs font-semibold text-slate-700">
+              <span className="flex h-4 w-4 items-center justify-center rounded bg-gradient-to-br from-yellow-500 to-amber-500 text-xs text-slate-800 font-bold">Mb</span>
               Maybank
             </span>
-            <span className="inline-flex items-center gap-1.5 rounded-lg border border-slate-150 bg-white px-2.5 py-1 text-[10px] font-semibold text-slate-700">
-              <span className="flex h-4 w-4 items-center justify-center rounded bg-gradient-to-br from-red-600 to-rose-500 text-[8px] text-white font-bold">Pw</span>
+            <span className="inline-flex items-center gap-1.5 rounded-lg border border-slate-150 bg-white px-2.5 py-1 text-xs font-semibold text-slate-700">
+              <span className="flex h-4 w-4 items-center justify-center rounded bg-gradient-to-br from-red-600 to-rose-500 text-xs text-white font-bold">Pw</span>
               PwC
             </span>
           </div>
@@ -204,7 +204,6 @@ export default function EventImpactReportPage({ event, onBack, onToast }) {
 
       {/* ================= MAIN TWO-COLUMN LAYOUT ================= */}
       <div className="grid gap-6 lg:grid-cols-12 items-start">
-        
         {/* LEFT COLUMN: Strategic outcomes metrics and gap tables (col-span-8) */}
         <main className="lg:col-span-8 space-y-6 min-w-0">
           
@@ -221,13 +220,13 @@ export default function EventImpactReportPage({ event, onBack, onToast }) {
                     onMouseEnter={() => setShowTooltip(true)}
                     onMouseLeave={() => setShowTooltip(false)}
                     onClick={() => setShowTooltip(!showTooltip)}
-                    className="text-slate-400 hover:text-blue-600 text-[10px] font-bold h-4 w-4 flex items-center justify-center rounded-full border border-slate-200"
+                    className="text-slate-400 hover:text-blue-600 text-xs font-bold h-4 w-4 flex items-center justify-center rounded-full border border-slate-200"
                     aria-label="Info about Estimated Readiness Uplift"
                   >
                     ℹ️
                   </button>
                   {showTooltip && (
-                    <div className="absolute left-6 bottom-0 z-30 w-64 rounded-xl border border-slate-100 bg-slate-900 p-3 text-[10px] text-slate-200 shadow-xl leading-relaxed animate-fade-in font-medium">
+                    <div className="absolute left-6 bottom-0 z-30 w-64 rounded-xl border border-slate-100 bg-slate-900 p-3 text-xs text-slate-200 shadow-xl leading-relaxed animate-fade-in font-medium">
                       Readiness change is estimated from pre-event baselines, verified participation, submitted work, role evidence, and evaluator feedback.
                     </div>
                   )}
@@ -238,47 +237,47 @@ export default function EventImpactReportPage({ event, onBack, onToast }) {
             {/* Metrics cards grid */}
             <div className="grid gap-3 grid-cols-2 md:grid-cols-5">
               <div className="rounded-xl border border-slate-100 bg-slate-50/20 p-3.5 space-y-2 flex flex-col justify-between">
-                <span className="text-[15px]">📈</span>
+                <span className="text-lg">📈</span>
                 <div>
                   <p className="text-sm font-semibold text-slate-400 leading-none">Estimated Readiness Uplift</p>
                   <p className="text-xl font-bold text-emerald-600 mt-2 leading-none">+14%</p>
-                  <p className="text-[8px] text-slate-450 font-semibold mt-1">Avg uplift across participating students</p>
+                  <p className="text-xs text-slate-450 font-semibold mt-1">Avg uplift across participating students</p>
                 </div>
               </div>
               
               <div className="rounded-xl border border-slate-100 bg-slate-50/20 p-3.5 space-y-2 flex flex-col justify-between">
-                <span className="text-[15px]">🎯</span>
+                <span className="text-lg">🎯</span>
                 <div>
                   <p className="text-sm font-semibold text-slate-400 leading-none">Priority Skill Gaps Improved</p>
                   <p className="text-xl font-bold text-slate-800 mt-2 leading-none">3 of 4</p>
-                  <p className="text-[8px] text-slate-450 font-semibold mt-1">Program-Market Alignment priority gaps closed</p>
+                  <p className="text-xs text-slate-450 font-semibold mt-1">Program-Market Alignment priority gaps closed</p>
                 </div>
               </div>
 
               <div className="rounded-xl border border-slate-100 bg-slate-50/20 p-3.5 space-y-2 flex flex-col justify-between">
-                <span className="text-[15px]">👤</span>
+                <span className="text-lg">👤</span>
                 <div>
                   <p className="text-sm font-semibold text-slate-400 leading-none">Students in Employer Pipeline</p>
                   <p className="text-xl font-bold text-slate-800 mt-2 leading-none">14</p>
-                  <p className="text-[8px] text-slate-450 font-semibold mt-1">Students added to pipeline post-event</p>
+                  <p className="text-xs text-slate-450 font-semibold mt-1">Students added to pipeline post-event</p>
                 </div>
               </div>
 
               <div className="rounded-xl border border-slate-100 bg-slate-50/20 p-3.5 space-y-2 flex flex-col justify-between">
-                <span className="text-[15px]">🏢</span>
+                <span className="text-lg">🏢</span>
                 <div>
                   <p className="text-sm font-semibold text-slate-400 leading-none">Companies Engaged</p>
                   <p className="text-xl font-bold text-slate-800 mt-2 leading-none">3</p>
-                  <p className="text-[8px] text-slate-450 font-semibold mt-1">Employers actively involved in the event</p>
+                  <p className="text-xs text-slate-450 font-semibold mt-1">Employers actively involved in the event</p>
                 </div>
               </div>
 
               <div className="rounded-xl border border-slate-100 bg-slate-50/20 p-3.5 space-y-2 flex flex-col justify-between">
-                <span className="text-[15px]">👥</span>
+                <span className="text-lg">👥</span>
                 <div>
                   <p className="text-sm font-semibold text-slate-400 leading-none">Students Impacted</p>
                   <p className="text-xl font-bold text-slate-800 mt-2 leading-none">120+</p>
-                  <p className="text-[8px] text-slate-450 font-semibold mt-1">Students in evaluation and considered</p>
+                  <p className="text-xs text-slate-450 font-semibold mt-1">Students in evaluation and considered</p>
                 </div>
               </div>
             </div>
@@ -288,14 +287,14 @@ export default function EventImpactReportPage({ event, onBack, onToast }) {
           <section className="rounded-2xl border border-slate-200/80 bg-white p-5 shadow-sm space-y-4">
             <div>
               <h3 className="text-sm font-medium text-slate-900">2. Skill Gap Closure Analysis</h3>
-              <p className="text-[10px] font-medium text-slate-450 mt-0.5">Readiness levels before vs after the event. Gaps aligned to Program-Market Alignment priority skills.</p>
+              <p className="text-xs font-medium text-slate-450 mt-0.5">Readiness levels before vs after the event. Gaps aligned to Program-Market Alignment priority skills.</p>
             </div>
 
             {/* Gap analysis table */}
             <div className="overflow-x-auto min-w-0 rounded-xl border border-slate-100">
               <table className="w-full min-w-[720px] text-left text-xs border-collapse">
                 <thead>
-                  <tr className="border-b border-slate-100 bg-slate-50/50 text-slate-400 font-semibold uppercase tracking-wider text-[9px]">
+                  <tr className="border-b border-slate-100 bg-slate-50/50 text-slate-400 font-semibold uppercase tracking-wider text-xs">
                     <th className="py-2.5 px-4 w-40">Skill Priority</th>
                     <th className="py-2.5 px-4">Before Event</th>
                     <th className="py-2.5 px-4">After Event</th>
@@ -308,14 +307,14 @@ export default function EventImpactReportPage({ event, onBack, onToast }) {
                       <td className="py-3 px-4">
                         <div className="min-w-0">
                           <p className="text-xs text-slate-805 leading-none">{skill.name}</p>
-                          <span className="inline-block mt-1.5 rounded bg-slate-100 px-1.5 py-0.5 text-[8.5px] font-semibold text-slate-500 leading-none">
+                          <span className="inline-block mt-1.5 rounded bg-slate-100 px-1.5 py-0.5 text-xs font-semibold text-slate-500 leading-none">
                             {skill.level}
                           </span>
                         </div>
                       </td>
                       <td className="py-3 px-4 w-48">
                         <div className="flex items-center gap-2 min-w-0">
-                          <span className="w-8 shrink-0 text-slate-500 text-[10px] text-right">{skill.before}%</span>
+                          <span className="w-8 shrink-0 text-slate-500 text-xs text-right">{skill.before}%</span>
                           <span className="h-1.5 w-full bg-slate-100 rounded-full overflow-hidden block">
                             <span className="block h-full bg-slate-400 rounded-full" style={{ width: `${skill.before}%` }} />
                           </span>
@@ -323,14 +322,14 @@ export default function EventImpactReportPage({ event, onBack, onToast }) {
                       </td>
                       <td className="py-3 px-4 w-48">
                         <div className="flex items-center gap-2 min-w-0">
-                          <span className="w-8 shrink-0 text-blue-600 text-[10px] text-right">{skill.after}%</span>
+                          <span className="w-8 shrink-0 text-blue-600 text-xs text-right">{skill.after}%</span>
                           <span className="h-1.5 w-full bg-slate-100 rounded-full overflow-hidden block">
                             <span className="block h-full bg-blue-600 rounded-full" style={{ width: `${skill.after}%` }} />
                           </span>
                         </div>
                       </td>
                       <td className="py-3 px-4 text-center text-emerald-600 text-xs font-bold whitespace-nowrap">
-                        {skill.change} <span className="text-[10px]">↑</span>
+                        {skill.change} <span className="text-xs">↑</span>
                       </td>
                     </tr>
                   ))}
@@ -338,7 +337,7 @@ export default function EventImpactReportPage({ event, onBack, onToast }) {
               </table>
             </div>
 
-            <div className="rounded-lg bg-blue-50/30 border border-blue-100/40 p-3 text-[10px] text-slate-500 font-medium">
+            <div className="rounded-lg bg-blue-50/30 border border-blue-100/40 p-3 text-xs text-slate-500 font-medium">
               ℹ️ Skill gaps are prioritized based on Program-Market Alignment insights and employer demand.
             </div>
           </section>
@@ -359,34 +358,34 @@ export default function EventImpactReportPage({ event, onBack, onToast }) {
                   <div className="space-y-3">
                     <header className="flex items-start justify-between gap-2">
                       <div className="flex items-center gap-2 min-w-0">
-                        <span className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br ${company.color} text-[10px] font-bold text-white shadow-sm`}>
+                        <span className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br ${company.color} text-xs font-bold text-white shadow-sm`}>
                           {company.logo}
                         </span>
                         <div className="min-w-0">
                           <h4 className="text-xs font-semibold text-slate-800 truncate">{company.name}</h4>
-                          <p className="text-[8px] text-slate-400 font-semibold truncate leading-none mt-0.5">{company.role}</p>
+                          <p className="text-xs text-slate-400 font-semibold truncate leading-none mt-0.5">{company.role}</p>
                         </div>
                       </div>
                     </header>
 
                     {/* Metrics grid */}
-                    <div className="grid grid-cols-3 gap-1 border-t border-slate-50 pt-2 text-[10px] text-center">
+                    <div className="grid grid-cols-3 gap-1 border-t border-slate-50 pt-2 text-xs text-center">
                       <div>
-                        <span className="text-[8px] text-slate-400 font-semibold block uppercase tracking-wider">Engaged</span>
+                        <span className="text-xs text-slate-400 font-semibold block uppercase tracking-wider">Engaged</span>
                         <p className="font-bold text-slate-800 mt-1">{company.engaged}</p>
                       </div>
                       <div>
-                        <span className="text-[8px] text-slate-400 font-semibold block uppercase tracking-wider">Pipeline</span>
+                        <span className="text-xs text-slate-400 font-semibold block uppercase tracking-wider">Pipeline</span>
                         <p className="font-bold text-slate-800 mt-1">{company.pipeline}</p>
                       </div>
                       <div>
-                        <span className="text-[8px] text-slate-400 font-semibold block uppercase tracking-wider">Follow-ups</span>
+                        <span className="text-xs text-slate-400 font-semibold block uppercase tracking-wider">Follow-ups</span>
                         <p className="font-bold text-slate-800 mt-1">{company.followups}</p>
                       </div>
                     </div>
                   </div>
 
-                  <div className="border-t border-slate-50 pt-3 text-[10px] font-medium text-slate-500 leading-relaxed italic">
+                  <div className="border-t border-slate-50 pt-3 text-xs font-medium text-slate-500 leading-relaxed italic">
                     "{company.insight}"
                   </div>
                 </article>
@@ -398,14 +397,14 @@ export default function EventImpactReportPage({ event, onBack, onToast }) {
           <section className="rounded-2xl border border-slate-200/80 bg-white p-5 shadow-sm space-y-4">
             <div>
               <h3 className="text-sm font-medium text-slate-900">4. Comparative Event Benchmarking</h3>
-              <p className="text-[10px] font-medium text-slate-450 mt-0.5">Comparison with similar events at universities.</p>
+              <p className="text-xs font-medium text-slate-450 mt-0.5">Comparison with similar events at universities.</p>
             </div>
 
             {/* Benchmark Table */}
             <div className="overflow-x-auto min-w-0 rounded-xl border border-slate-100">
               <table className="w-full min-w-[860px] text-left text-xs border-collapse">
                 <thead>
-                  <tr className="border-b border-slate-100 bg-slate-50/50 text-slate-400 font-semibold uppercase tracking-wider text-[9px]">
+                  <tr className="border-b border-slate-100 bg-slate-50/50 text-slate-400 font-semibold uppercase tracking-wider text-xs">
                     <th className="py-2.5 px-4">Event</th>
                     <th className="py-2.5 px-4">Date</th>
                     <th className="py-2.5 px-4 text-center">Readiness Lift (Avg)</th>
@@ -424,7 +423,7 @@ export default function EventImpactReportPage({ event, onBack, onToast }) {
                     >
                       <td className="py-3 px-4 text-slate-800">
                         <div className="flex items-center gap-2">
-                          <span className="text-[11px]">{row.isCurrent ? '⭐' : '📄'}</span>
+                          <span className="text-xs">{row.isCurrent ? '⭐' : '📄'}</span>
                           <span className="truncate">{row.name}</span>
                         </div>
                       </td>
@@ -443,7 +442,7 @@ export default function EventImpactReportPage({ event, onBack, onToast }) {
               <button
                 type="button"
                 onClick={() => navigate('/university/collaboration/post-event/history', { state: { fromReportEventId: activeEventId } })}
-                className="text-[11px] font-semibold text-blue-600 hover:text-blue-700 hover:underline"
+                className="text-xs font-semibold text-blue-600 hover:text-blue-700 hover:underline"
               >
                 View all past events
               </button>
@@ -485,36 +484,36 @@ export default function EventImpactReportPage({ event, onBack, onToast }) {
           {/* 2. AI RECOMMENDATION */}
           <div className="rounded-2xl border border-violet-100 bg-violet-50/35 p-5 shadow-sm space-y-4">
             <div className="flex items-center justify-between">
-              <h4 className="text-xs font-semibold text-slate-850 uppercase tracking-wider">AI Recommendation</h4>
-              <span className="rounded bg-violet-100 px-2 py-0.5 text-[8px] font-semibold text-violet-700 uppercase tracking-wider">
+              <h4 className="text-xs font-semibold text-slate-855 uppercase tracking-wider">AI Recommendation</h4>
+              <span className="rounded bg-violet-100 px-2 py-0.5 text-xs font-semibold text-violet-700 uppercase tracking-wider">
                 High Confidence
               </span>
             </div>
 
             <div className="space-y-1.5">
-              <p className="text-xs font-bold text-slate-850">Repeat and expand to Year 2 students</p>
-              <p className="text-[10px] font-medium text-slate-500">This event delivered high impact and strong employer engagement.</p>
+              <p className="text-xs font-bold text-slate-855">Repeat and expand to Year 2 students</p>
+              <p className="text-xs font-medium text-slate-500">This event delivered high impact and strong employer engagement.</p>
             </div>
 
             <div className="grid gap-2 grid-cols-1 sm:grid-cols-3 pt-2">
               <button
                 type="button"
                 onClick={() => onToast('Initiated event replication workflow for next semester.')}
-                className="rounded-lg bg-white border border-slate-200/80 px-2.5 py-2 text-[9px] font-semibold text-slate-700 hover:border-violet-300 hover:text-violet-600 transition text-center"
+                className="rounded-lg bg-white border border-slate-200/80 px-2.5 py-2 text-xs font-semibold text-slate-700 hover:border-violet-300 hover:text-violet-600 transition text-center"
               >
                 Repeat Next Semester
               </button>
               <button
                 type="button"
                 onClick={() => onToast('Adding expansion parameters (Year 2 cohort target) to template...')}
-                className="rounded-lg bg-white border border-slate-200/80 px-2.5 py-2 text-[9px] font-semibold text-slate-700 hover:border-violet-300 hover:text-violet-600 transition text-center"
+                className="rounded-lg bg-white border border-slate-200/80 px-2.5 py-2 text-xs font-semibold text-slate-700 hover:border-violet-300 hover:text-violet-600 transition text-center"
               >
                 Expand to Year 2
               </button>
               <button
                 type="button"
                 onClick={() => onToast('Sharing collaboration outreach to corporate partner registry...')}
-                className="rounded-lg bg-white border border-slate-200/80 px-2.5 py-2 text-[9px] font-semibold text-slate-700 hover:border-violet-300 hover:text-violet-600 transition text-center"
+                className="rounded-lg bg-white border border-slate-200/80 px-2.5 py-2 text-xs font-semibold text-slate-700 hover:border-violet-300 hover:text-violet-600 transition text-center"
               >
                 Open to More Partners
               </button>
@@ -525,26 +524,26 @@ export default function EventImpactReportPage({ event, onBack, onToast }) {
           <div className="rounded-2xl border border-slate-200/80 bg-white p-5 shadow-sm space-y-4">
             <h4 className="text-xs font-semibold text-slate-800">Student Outcome Distribution</h4>
 
-            <div className="grid grid-cols-2 gap-2 text-center text-[10px]">
+            <div className="grid grid-cols-2 gap-2 text-center text-xs">
               <div className="rounded-xl border border-slate-100 bg-slate-50/10 p-3 flex flex-col justify-between items-center">
                 <span className="h-1.5 w-6 rounded bg-emerald-500 mb-1" />
-                <p className="text-xs font-bold text-slate-850">38 students</p>
-                <p className="text-[9px] text-emerald-700 font-bold mt-1">32% High Growth</p>
+                <p className="text-xs font-bold text-slate-855">38 students</p>
+                <p className="text-xs text-emerald-700 font-bold mt-1">32% High Growth</p>
               </div>
               <div className="rounded-xl border border-slate-100 bg-slate-50/10 p-3 flex flex-col justify-between items-center">
                 <span className="h-1.5 w-6 rounded bg-blue-500 mb-1" />
-                <p className="text-xs font-bold text-slate-850">52 students</p>
-                <p className="text-[9px] text-blue-700 font-bold mt-1">43% Moderate Growth</p>
+                <p className="text-xs font-bold text-slate-855">52 students</p>
+                <p className="text-xs text-blue-700 font-bold mt-1">43% Moderate Growth</p>
               </div>
               <div className="rounded-xl border border-slate-100 bg-slate-50/10 p-3 flex flex-col justify-between items-center">
                 <span className="h-1.5 w-6 rounded bg-amber-500 mb-1" />
-                <p className="text-xs font-bold text-slate-850">18 students</p>
-                <p className="text-[9px] text-amber-700 font-bold mt-1">15% No Change</p>
+                <p className="text-xs font-bold text-slate-855">18 students</p>
+                <p className="text-xs text-amber-700 font-bold mt-1">15% No Change</p>
               </div>
               <div className="rounded-xl border border-slate-100 bg-slate-50/10 p-3 flex flex-col justify-between items-center">
                 <span className="h-1.5 w-6 rounded bg-red-500 mb-1" />
-                <p className="text-xs font-bold text-slate-850">12 students</p>
-                <p className="text-[9px] text-red-700 font-bold mt-1">10% Needs Support</p>
+                <p className="text-xs font-bold text-slate-855">12 students</p>
+                <p className="text-xs text-red-700 font-bold mt-1">10% Needs Support</p>
               </div>
             </div>
           </div>
@@ -556,7 +555,7 @@ export default function EventImpactReportPage({ event, onBack, onToast }) {
               <button
                 type="button"
                 onClick={() => navigate(`/university/collaboration/post-event/${activeEventId}/student-spotlights`)}
-                className="text-[9.5px] font-semibold text-blue-600 hover:text-blue-700 transition"
+                className="text-xs font-semibold text-blue-600 hover:text-blue-700 transition"
               >
                 View all
               </button>
@@ -564,41 +563,41 @@ export default function EventImpactReportPage({ event, onBack, onToast }) {
 
             {/* Student spotlight cards */}
             <div className="space-y-3">
-              <div className="rounded-xl border border-slate-150 p-3 flex items-start gap-3 bg-white hover:border-slate-250 transition">
-                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-violet-100 text-violet-700 font-bold text-[10px] shadow-sm">
+              <div className="rounded-xl border border-slate-150 p-3 flex items-start gap-3 bg-white hover:border-slate-255 transition">
+                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-violet-100 text-violet-700 font-bold text-xs shadow-sm">
                   AT
                 </span>
                 <div className="min-w-0 space-y-1.5 flex-1">
                   <div className="min-w-0">
                     <h5 className="text-xs font-semibold text-slate-800 leading-none truncate">Aisha Tan</h5>
-                    <p className="text-[8.5px] text-slate-400 font-semibold leading-none mt-1">BSc Finance</p>
+                    <p className="text-xs text-slate-400 font-semibold leading-none mt-1">BSc Finance</p>
                   </div>
-                  <div className="flex items-baseline gap-2 text-[10px] font-semibold">
-                    <span className="text-slate-450 text-[9px]">Readiness:</span>
+                  <div className="flex items-baseline gap-2 text-xs font-semibold">
+                    <span className="text-slate-455 text-xs">Readiness:</span>
                     <span className="text-slate-800">58% → 78%</span>
-                    <span className="text-emerald-600 text-[9px]">(+20%)</span>
+                    <span className="text-emerald-600 text-xs">(+20%)</span>
                   </div>
-                  <p className="text-[8.5px] text-slate-500 leading-normal font-medium">
+                  <p className="text-xs text-slate-500 leading-normal font-medium">
                     Top skills improved: <strong className="text-slate-700 font-semibold">Financial Analysis, Presentation</strong>
                   </p>
                 </div>
               </div>
 
-              <div className="rounded-xl border border-slate-150 p-3 flex items-start gap-3 bg-white hover:border-slate-250 transition">
-                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-blue-100 text-blue-700 font-bold text-[10px] shadow-sm">
+              <div className="rounded-xl border border-slate-150 p-3 flex items-start gap-3 bg-white hover:border-slate-255 transition">
+                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-blue-100 text-blue-700 font-bold text-xs shadow-sm">
                   JL
                 </span>
                 <div className="min-w-0 space-y-1.5 flex-1">
                   <div className="min-w-0">
                     <h5 className="text-xs font-semibold text-slate-800 leading-none truncate">Jason Lim</h5>
-                    <p className="text-[8.5px] text-slate-400 font-semibold leading-none mt-1">BSc Data Science</p>
+                    <p className="text-xs text-slate-400 font-semibold leading-none mt-1">BSc Data Science</p>
                   </div>
-                  <div className="flex items-baseline gap-2 text-[10px] font-semibold">
-                    <span className="text-slate-450 text-[9px]">Readiness:</span>
+                  <div className="flex items-baseline gap-2 text-xs font-semibold">
+                    <span className="text-slate-455 text-xs">Readiness:</span>
                     <span className="text-slate-800">55% → 75%</span>
-                    <span className="text-emerald-600 text-[9px]">(+20%)</span>
+                    <span className="text-emerald-600 text-xs">(+20%)</span>
                   </div>
-                  <p className="text-[8.5px] text-slate-500 leading-normal font-medium">
+                  <p className="text-xs text-slate-500 leading-normal font-medium">
                     Top skills improved: <strong className="text-slate-700 font-semibold">Python, Team Leadership</strong>
                   </p>
                 </div>
@@ -612,46 +611,46 @@ export default function EventImpactReportPage({ event, onBack, onToast }) {
               onClick={() => setShowEvidenceDetails(!showEvidenceDetails)}
               className="flex items-center justify-between cursor-pointer select-none"
             >
-              <h4 className="text-xs font-semibold text-slate-400 hover:text-slate-650 transition uppercase tracking-wider">
+              <h4 className="text-xs font-semibold text-slate-400 hover:text-slate-655 transition uppercase tracking-wider">
                 Evidence Processing Details
               </h4>
-              <span className="text-slate-400 text-[10px] font-bold">
+              <span className="text-slate-400 text-xs font-bold">
                 {showEvidenceDetails ? '▲' : '▼'}
               </span>
             </header>
 
             {showEvidenceDetails && (
               <div className="space-y-4 animate-fade-in pt-1">
-                <div className="grid grid-cols-2 gap-2 text-center text-[10px]">
+                <div className="grid grid-cols-2 gap-2 text-center text-xs">
                   <div className="rounded-xl border border-slate-100 bg-slate-50/10 p-2 flex items-center gap-2">
-                    <span className="text-[13px] shrink-0">👥</span>
+                    <span className="text-sm shrink-0">👥</span>
                     <div className="text-left leading-normal min-w-0">
                       <p className="font-bold text-slate-800 text-xs">124</p>
-                      <p className="text-[8px] text-slate-400 font-semibold truncate leading-none mt-0.5">Attendance verified</p>
+                      <p className="text-xs text-slate-400 font-semibold truncate leading-none mt-0.5">Attendance verified</p>
                     </div>
                   </div>
                   
                   <div className="rounded-xl border border-slate-100 bg-slate-50/10 p-2 flex items-center gap-2">
-                    <span className="text-[13px] shrink-0">📄</span>
+                    <span className="text-sm shrink-0">📄</span>
                     <div className="text-left leading-normal min-w-0">
                       <p className="font-bold text-slate-800 text-xs">96</p>
-                      <p className="text-[8px] text-slate-400 font-semibold truncate leading-none mt-0.5">Contributions confirmed</p>
+                      <p className="text-xs text-slate-400 font-semibold truncate leading-none mt-0.5">Contributions confirmed</p>
                     </div>
                   </div>
 
                   <div className="rounded-xl border border-slate-100 bg-slate-50/10 p-2 flex items-center gap-2">
-                    <span className="text-[13px] shrink-0">📡</span>
+                    <span className="text-sm shrink-0">📡</span>
                     <div className="text-left leading-normal min-w-0">
                       <p className="font-bold text-slate-800 text-xs">312</p>
-                      <p className="text-[8px] text-slate-400 font-semibold truncate leading-none mt-0.5">Memory signals created</p>
+                      <p className="text-xs text-slate-400 font-semibold truncate leading-none mt-0.5">Memory signals created</p>
                     </div>
                   </div>
 
                   <div className="rounded-xl border border-slate-100 bg-rose-50/20 p-2 flex items-center gap-2 border-rose-100/30">
-                    <span className="text-[13px] shrink-0">⚠️</span>
+                    <span className="text-sm shrink-0">⚠️</span>
                     <div className="text-left leading-normal min-w-0">
                       <p className="font-bold text-rose-600 text-xs">8</p>
-                      <p className="text-[8px] text-rose-500 font-semibold truncate leading-none mt-0.5">Exceptions pending</p>
+                      <p className="text-xs text-rose-500 font-semibold truncate leading-none mt-0.5">Exceptions pending</p>
                     </div>
                   </div>
                 </div>
@@ -660,7 +659,7 @@ export default function EventImpactReportPage({ event, onBack, onToast }) {
                   <button
                     type="button"
                     onClick={() => onToast('Opening verification exceptions panel...')}
-                    className="text-[10px] font-semibold text-rose-500 hover:text-rose-600 hover:underline flex items-center gap-0.5"
+                    className="text-xs font-semibold text-rose-500 hover:text-rose-600 hover:underline flex items-center gap-0.5"
                   >
                     Review Exceptions →
                   </button>

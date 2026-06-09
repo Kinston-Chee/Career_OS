@@ -200,7 +200,7 @@ We believe Grab's expertise in data analytics and mentorship can greatly enhance
 We look forward to the opportunity to work together and create meaningful impact for students.
 
 Best regards,
-FinTech Society, Sunway University`,
+FinTech Society, Heriot-Watt University Malaysia`,
     Maybank: `Dear Maybank Team,
 
 We are organizing the AI in Finance Case Competition, a national-level event that brings together 120+ talented students to solve real-world AI in finance challenges.
@@ -210,7 +210,7 @@ Maybank's leadership in finance education makes you the ideal partner. We would 
 We look forward to collaborating to support student development and early recruitment.
 
 Best regards,
-FinTech Society, Sunway University`,
+FinTech Society, Heriot-Watt University Malaysia`,
     Deloitte: `Dear Deloitte Team,
 
 We are organizing the AI in Finance Case Competition, a national-level event that brings together 120+ talented students to solve real-world AI in finance challenges.
@@ -220,7 +220,7 @@ We would love to invite Deloitte to collaborate as a Case Study Provider and sup
 We look forward to a successful collaboration.
 
 Best regards,
-FinTech Society, Sunway University`,
+FinTech Society, Heriot-Watt University Malaysia`,
     AWS: `Dear AWS Team,
 
 We are organizing the AI in Finance Case Competition, a national-level event that brings together 120+ talented students to solve real-world AI challenges.
@@ -228,7 +228,7 @@ We are organizing the AI in Finance Case Competition, a national-level event tha
 We would love to invite AWS to support us as a technical partner, providing cloud credits and technical workshop support for students.
 
 Best regards,
-FinTech Society, Sunway University`,
+FinTech Society, Heriot-Watt University Malaysia`,
     Google: `Dear Google Team,
 
 We are organizing the ${event.title}, a premier campus event driving student innovation.
@@ -238,7 +238,7 @@ Given Google's pioneering work in AI and technology, we would love to invite Goo
 We believe this collaboration will offer Google direct access to top technical talent and excellent visibility on campus.
 
 Best regards,
-${event.club || 'FinTech Society'}, Sunway University`,
+${event.club || 'FinTech Society'}, Heriot-Watt University Malaysia`,
     Petronas: `Dear Petronas Team,
 
 We are organizing the ${event.title}, bringing together outstanding students to drive campus innovation.
@@ -248,7 +248,7 @@ We would love to invite Petronas to support this event as our Energy & Leadershi
 We look forward to a successful partnership.
 
 Best regards,
-${event.club || 'FinTech Society'}, Sunway University`,
+${event.club || 'FinTech Society'}, Heriot-Watt University Malaysia`,
     Intel: `Dear Intel Team,
 
 We are organizing the ${event.title}, focused on advanced technical development and AI.
@@ -256,7 +256,7 @@ We are organizing the ${event.title}, focused on advanced technical development 
 We would love to invite Intel to collaborate by providing technical mentors and joining our Judging Panel for the final presentations.
 
 Best regards,
-${event.club || 'FinTech Society'}, Sunway University`,
+${event.club || 'FinTech Society'}, Heriot-Watt University Malaysia`,
     Maxis: `Dear Maxis Team,
 
 We are organizing the ${event.title}, a major initiative connecting youth with business-case challenges.
@@ -264,7 +264,7 @@ We are organizing the ${event.title}, a major initiative connecting youth with b
 We would love to invite Maxis to support us as a digital partner and sponsor, providing active student mentorship and early recruitment visibility.
 
 Best regards,
-${event.club || 'FinTech Society'}, Sunway University`,
+${event.club || 'FinTech Society'}, Heriot-Watt University Malaysia`,
     Shopee: `Dear Shopee Team,
 
 We are organizing the ${event.title}, focusing on product engineering and user experience.
@@ -272,7 +272,7 @@ We are organizing the ${event.title}, focusing on product engineering and user e
 We would love to invite Shopee to collaborate by providing PM/UX mentors to guide students during their development phase.
 
 Best regards,
-${event.club || 'FinTech Society'}, Sunway University`
+${event.club || 'FinTech Society'}, Heriot-Watt University Malaysia`
   })
 
   const strategyCards = [
@@ -295,7 +295,7 @@ ${event.club || 'FinTech Society'}, Sunway University`
       icon: '✨',
       color: 'text-emerald-600 bg-emerald-50 border-emerald-100',
       desc: 'Emphasize talent access, brand visibility, and community impact.',
-      sub: 'Highlight Sunway campus reach and quality pool.'
+      sub: 'Highlight Heriot-Watt campus reach and quality pool.'
     },
     {
       title: 'Expected Impact',

@@ -4,6 +4,7 @@ import EmployerSidebar from '../employer/EmployerSidebar'
 import EmployerTopBar from '../employer/EmployerTopBar'
 import SignOutButton from '../session/SignOutButton'
 import StudentSidebar from '../student/StudentSidebar'
+import UniversityCompanionBot from '../university/UniversityCompanionBot'
 import UniversitySidebar from '../university/UniversitySidebar'
 import UniversityTopBar from '../university/UniversityTopBar'
 import { useCareerStore } from '../../store/useCareerStore'
@@ -164,6 +165,7 @@ export default function AppLayout({ workspace = 'student' }) {
             </div>
           </main>
         </div>
+        {workspace === 'university' ? <UniversityCompanionBot /> : null}
       </div>
     </div>
   )
