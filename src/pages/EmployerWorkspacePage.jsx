@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { employerTalentWorkspace } from '../data/mockData';
 import { useEmployerSearchStore } from '../store/useEmployerSearchStore';
 
@@ -80,6 +81,7 @@ function CandidateStream({
 
   // Tab Counts based on absolute candidates list
   const totalAllCount = candidates.length;
+  const totalSavedCount = candidates.filter((c) => savedIds.has(c.id)).length;
   const totalShortlistedCount = candidates.filter((c) => shortlistedIds.has(c.id)).length;
 
   const { chipsByPage } = useEmployerSearchStore();
@@ -127,6 +129,9 @@ function CandidateStream({
       // 3. Tab Filter
       if (selectedTab === 'shortlisted') {
         return shortlistedIds.has(c.id);
+      }
+      if (selectedTab === 'saved') {
+        return savedIds.has(c.id);
       }
       
       return true;
@@ -197,28 +202,39 @@ function CandidateStream({
     <aside className="min-w-0 overflow-hidden rounded-[8px] border border-slate-200/80 bg-white shadow-[0_18px_54px_rgba(15,23,42,0.05)]">
       {/* Header section with Tabs and search */}
       <div className="border-b border-slate-100">
-        <div className="grid grid-cols-2">
+        <div className="grid grid-cols-3">
           <button
             onClick={() => onTabChange('all')}
-            className={`border-b-2 px-4 py-4 text-sm font-semibold transition-all duration-200 ${
+            className={`border-b-2 px-2 py-4 text-xs font-semibold transition-all duration-200 ${
               selectedTab === 'all'
                 ? 'border-blue-600 text-blue-700'
                 : 'border-transparent text-slate-500 hover:text-slate-900'
             }`}
             type="button"
           >
-            All <span className="ml-2 rounded-full bg-blue-50 px-2 py-0.5 text-xs font-medium text-blue-500">{totalAllCount}</span>
+            All <span className="ml-1 rounded-full bg-blue-50 px-2 py-0.5 text-[10px] font-medium text-blue-500">{totalAllCount}</span>
+          </button>
+          <button
+            onClick={() => onTabChange('saved')}
+            className={`border-b-2 px-2 py-4 text-xs font-semibold transition-all duration-200 ${
+              selectedTab === 'saved'
+                ? 'border-blue-600 text-blue-700'
+                : 'border-transparent text-slate-500 hover:text-slate-900'
+            }`}
+            type="button"
+          >
+            Saved <span className="ml-1 rounded-full bg-emerald-50 px-2 py-0.5 text-[10px] font-medium text-emerald-700">{totalSavedCount}</span>
           </button>
           <button
             onClick={() => onTabChange('shortlisted')}
-            className={`border-b-2 px-4 py-4 text-sm font-semibold transition-all duration-200 ${
+            className={`border-b-2 px-2 py-4 text-xs font-semibold transition-all duration-200 ${
               selectedTab === 'shortlisted'
                 ? 'border-blue-600 text-blue-700'
                 : 'border-transparent text-slate-500 hover:text-slate-900'
             }`}
             type="button"
           >
-            Shortlisted <span className="ml-2 rounded-full bg-slate-100 px-2 py-0.5 text-xs font-medium text-slate-500">{totalShortlistedCount}</span>
+            Shortlisted <span className="ml-1 rounded-full bg-slate-100 px-2 py-0.5 text-[10px] font-medium text-slate-500">{totalShortlistedCount}</span>
           </button>
         </div>
 
@@ -1181,7 +1197,11 @@ export default function EmployerWorkspacePage() {
   // Set up state variables
   const [selectedCandidateId, setSelectedCandidateId] = useState(candidatesList[0].id);
   const [activeTab, setActiveTab] = useState('Profile Fit');
-  const [selectedTab, setSelectedTab] = useState('all');
+  const [searchParams, setSearchParams] = useSearchParams();
+  const selectedTab = searchParams.get('tab') || 'all';
+  const setSelectedTab = (newTab) => {
+    setSearchParams({ tab: newTab });
+  };
   const [selectedSort, setSelectedSort] = useState('bestMatch');
   const [isSortDropdownOpen, setIsSortDropdownOpen] = useState(false);
 
@@ -1251,9 +1271,12 @@ export default function EmployerWorkspacePage() {
       if (selectedTab === 'shortlisted') {
         return shortlistedIds.has(c.id);
       }
+      if (selectedTab === 'saved') {
+        return savedIds.has(c.id);
+      }
       return true;
     });
-  }, [candidatesList, globalQuery, activeChips, selectedTab, shortlistedIds]);
+  }, [candidatesList, globalQuery, activeChips, selectedTab, shortlistedIds, savedIds]);
 
   // Selected candidate pointer
   const selectedCandidate = useMemo(() => {
@@ -1311,6 +1334,8 @@ export default function EmployerWorkspacePage() {
             <p className="mt-1 text-sm text-slate-500 max-w-sm">
               {selectedTab === 'shortlisted'
                 ? 'Your shortlist is currently empty. Add candidates to your shortlist from the All Candidates tab.'
+                : selectedTab === 'saved'
+                ? 'You have no saved candidates. Save candidates to view them here.'
                 : 'No candidates matched your search keywords.'}
             </p>
           </div>

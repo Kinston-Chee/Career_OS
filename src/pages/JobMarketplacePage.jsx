@@ -10,7 +10,7 @@ const initialOpportunities = [
   {
     id: 'opp-001',
     title: 'Data Analyst Intern',
-    company: 'Acme Corp',
+    company: 'Google',
     type: 'Internship',
     location: 'Hybrid',
     city: 'Kuala Lumpur',
@@ -33,7 +33,7 @@ const initialOpportunities = [
   {
     id: 'opp-002',
     title: 'Frontend Engineer Associate',
-    company: 'Acme Corp',
+    company: 'Google',
     type: 'Full-Time',
     location: 'On-site',
     city: 'Petaling Jaya',
@@ -56,7 +56,7 @@ const initialOpportunities = [
   {
     id: 'opp-003',
     title: 'Growth Operations Intern',
-    company: 'Acme Corp',
+    company: 'Google',
     type: 'Internship',
     location: 'Remote',
     city: 'Subang Jaya',
@@ -79,7 +79,7 @@ const initialOpportunities = [
   {
     id: 'opp-004',
     title: 'Product Manager Graduate Associate',
-    company: 'Acme Corp',
+    company: 'Google',
     type: 'Graduate Program',
     location: 'Hybrid',
     city: 'Kuala Lumpur',
@@ -102,7 +102,7 @@ const initialOpportunities = [
   {
     id: 'opp-005',
     title: 'UX/UI Design Associate',
-    company: 'Acme Corp',
+    company: 'Google',
     type: 'Full-Time',
     location: 'Hybrid',
     city: 'Kuala Lumpur',
@@ -125,7 +125,7 @@ const initialOpportunities = [
   {
     id: 'opp-006',
     title: 'AI/ML Engineer Intern',
-    company: 'Acme Corp',
+    company: 'Google',
     type: 'Internship',
     location: 'Remote',
     city: 'Kuala Lumpur',
@@ -216,7 +216,7 @@ export default function JobMarketplacePage() {
     const formattedOpp = {
       ...newOpp,
       id,
-      company: 'Acme Corp',
+      company: 'Google',
       applicantsCount: 0,
       averageMatch: 0,
     };

@@ -3,7 +3,7 @@ import React from 'react';
 export default function OpportunityPreview({ formData, mockMatchScore = 91 }) {
   const {
     title = 'Job Title',
-    company = 'Acme Corp',
+    company = 'Google',
     type = 'Internship',
     location = 'Hybrid',
     city = 'Kuala Lumpur',

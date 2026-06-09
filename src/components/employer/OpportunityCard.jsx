@@ -39,7 +39,7 @@ export default function OpportunityCard({ opportunity, onViewApplicants }) {
             <h3 className="text-sm font-semibold text-slate-950 truncate leading-snug group-hover:text-blue-700 transition">
               {title}
             </h3>
-            <p className="mt-1 text-xs font-medium text-slate-400">Acme Corp</p>
+            <p className="mt-1 text-xs font-medium text-slate-400">{opportunity.company || 'Google'}</p>
           </div>
           <span className={`shrink-0 rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide border ${typeBadges[type] || 'bg-slate-50 text-slate-600 border-slate-100'}`}>
             {type}
