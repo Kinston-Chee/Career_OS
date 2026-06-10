@@ -11,7 +11,7 @@ const badgeStyles = {
 export default function CareerActionList({ actions }) {
   return (
     <section className="rounded-3xl border border-violet-100/80 bg-white/90 p-5 shadow-[0_18px_44px_rgba(88,63,188,0.08)]">
-      <h2 className="text-base font-bold text-[#11104a]">Today's Career Actions</h2>
+      <h2 className="text-base font-bold text-[#11104a]">Monthly Career Actions</h2>
       <div className="mt-4 divide-y divide-violet-50 border-t border-violet-100">
         {actions.map((action) => (
           <label key={action.title} className="flex items-center gap-4 py-4 text-sm text-[#11104a]">

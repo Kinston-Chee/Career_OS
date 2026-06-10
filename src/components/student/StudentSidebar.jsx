@@ -43,7 +43,7 @@ export default function StudentSidebar() {
             <div className="pointer-events-none absolute right-5 top-16 h-20 w-12 rounded-full border-r-2 border-violet-200 opacity-70" />
             <div className="relative mx-auto flex h-24 w-24 items-center justify-center rounded-full bg-gradient-to-br from-violet-200 via-white to-indigo-100 p-1 shadow-[0_18px_36px_rgba(88,63,188,0.18)] xl:h-28 xl:w-28">
               <div className="flex h-full w-full items-center justify-center rounded-full bg-gradient-to-br from-violet-500 to-indigo-500 text-3xl font-bold text-white">
-                ST
+                CL
               </div>
             </div>
             <h2 className="relative mt-4 text-lg font-bold text-[#11104a]">{profile.name}</h2>
