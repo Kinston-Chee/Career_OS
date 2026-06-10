@@ -872,7 +872,8 @@ export default function EmployerCreateEngagementPage() {
   const [selectedType, setSelectedType] = useState(employerEngagementBuilder.selectedType)
   const [currentStep, setCurrentStep] = useState(1)
   const [activeFilter, setActiveFilter] = useState('All')
-  const [selectedRequestId, setSelectedRequestId] = useState(employerEngagement.selectedRequestId)
+  const [selectedRequestId, setSelectedRequestId] = useState(null)
+  const [panelTab, setPanelTab] = useState('overview')
   const [sentIds, setSentIds] = useState(() => new Set(employerEngagement.clubRequests.filter((request) => request.status === 'Interest Sent').map((request) => request.id)))
   const [toast, setToast] = useState('')
 
@@ -973,27 +974,48 @@ export default function EmployerCreateEngagementPage() {
           <BuilderPreviewPanel selectedType={selectedType} currentStep={currentStep} />
         </div>
       ) : (
-        <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_380px]">
+        <div className="space-y-6">
           <main className="min-w-0 space-y-6">
             <EngagementFilterChips activeFilter={activeFilter} onFilterChange={setActiveFilter} />
-            <section className="grid gap-5 lg:grid-cols-2 2xl:grid-cols-3">
+            <section className="grid gap-5 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
               {filteredRequests.map((request) => (
                 <ClubRequestCard
                   key={request.id}
                   request={request}
-                  onExpressInterest={(nextRequest) => setSelectedRequestId(nextRequest.id)}
+                  onViewDetails={(req) => {
+                    setSelectedRequestId(req.id)
+                    setPanelTab('overview')
+                  }}
+                  onExpressInterest={(req) => {
+                    setSelectedRequestId(req.id)
+                    setPanelTab('express')
+                  }}
                 />
               ))}
             </section>
             <CTASection onClick={() => setActiveTab('create-engagement')} />
           </main>
 
-          <ExpressInterestPanel
-            request={selectedRequest ? { ...selectedRequest, status: sentIds.has(selectedRequest.id) ? 'Interest Sent' : selectedRequest.status } : null}
-            proposalDraft={employerEngagement.proposalDraft}
-            onClose={() => setSelectedRequestId(null)}
-            onSend={sendInterest}
-          />
+          {selectedRequestId && (
+            <div 
+              onClick={() => setSelectedRequestId(null)}
+              className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-sm cursor-pointer"
+            >
+              <div 
+                onClick={(e) => e.stopPropagation()}
+                className="relative w-full max-w-lg cursor-default"
+              >
+                <ExpressInterestPanel
+                  request={selectedRequest ? { ...selectedRequest, status: sentIds.has(selectedRequest.id) ? 'Interest Sent' : selectedRequest.status } : null}
+                  proposalDraft={employerEngagement.proposalDraft}
+                  onClose={() => setSelectedRequestId(null)}
+                  onSend={sendInterest}
+                  activeTab={panelTab}
+                  setActiveTab={setPanelTab}
+                />
+              </div>
+            </div>
+          )}
         </div>
       )}
 
