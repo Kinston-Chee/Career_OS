@@ -13,10 +13,12 @@ export default function OpportunitiesPage() {
   const [activeSection, setActiveSection] = useState('event-hub')
 
   return (
-    <div className="space-y-6">
+    <div className="min-h-full bg-[radial-gradient(circle_at_top_right,#f2ecff,transparent_26%),linear-gradient(135deg,#ffffff_0%,#fbfaff_46%,#f7f4ff_100%)] pb-2 text-[#11104a]">
+      <div className="space-y-6">
       <header>
-        <h1 className="text-2xl font-semibold tracking-tight text-slate-950">Opportunities</h1>
-        <p className="mt-1 text-sm text-slate-500">
+        <p className="text-xs font-semibold uppercase tracking-wide text-violet-700">Student Workspace</p>
+        <h1 className="mt-2 text-2xl font-semibold tracking-tight">Opportunities</h1>
+        <p className="mt-2 text-sm font-medium text-slate-500">
           Find events, competitions, and jobs that match your goals.
         </p>
       </header>
@@ -49,6 +51,7 @@ export default function OpportunitiesPage() {
       {/* Active section content */}
       {activeSection === 'event-hub' && <EventHub />}
       {activeSection === 'job-market' && <JobMarket />}
+    </div>
     </div>
   )
 }
