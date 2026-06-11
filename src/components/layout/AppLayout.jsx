@@ -1,9 +1,11 @@
 import React from 'react'
 import { Link, NavLink, Outlet, useLocation } from 'react-router-dom'
+import CandidateCompanionBot from '../student/CandidateCompanionBot'
 import EmployerSidebar from '../employer/EmployerSidebar'
 import EmployerTopBar from '../employer/EmployerTopBar'
 import SignOutButton from '../session/SignOutButton'
 import StudentSidebar from '../student/StudentSidebar'
+import StudentTopBar from '../student/StudentTopBar'
 import UniversityCompanionBot from '../university/UniversityCompanionBot'
 import UniversitySidebar from '../university/UniversitySidebar'
 import UniversityTopBar from '../university/UniversityTopBar'
@@ -121,39 +123,7 @@ export default function AppLayout({ workspace = 'student' }) {
         )}
 
         <div className="flex h-screen min-w-0 w-full flex-1 flex-col overflow-hidden">
-          {workspace === 'employer' ? <EmployerTopBar /> : workspace === 'university' ? <UniversityTopBar /> : <header className="shrink-0 border-b border-white/70 bg-white/75 backdrop-blur-xl">
-            <div className="flex w-full items-center justify-between px-4 py-4 sm:px-6 lg:px-6 xl:px-8">
-              <div>
-                <p className="text-xs font-medium uppercase tracking-wide text-blue-600">{config.eyebrow}</p>
-                <h1 className="text-lg font-semibold text-slate-950">{activeItem?.label}</h1>
-              </div>
-              <div className="flex items-center gap-3">
-                <div className="hidden text-right sm:block">
-                  <div className="text-sm font-medium text-slate-900">{user.name}</div>
-                  <div className="text-xs text-slate-500">{user.university}</div>
-                </div>
-                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-blue-600 to-indigo-500 text-sm font-semibold text-white">
-                  {user.avatarInitials}
-                </div>
-              </div>
-            </div>
-            <nav className="flex gap-2 overflow-x-auto px-4 pb-3 lg:hidden">
-              {allItems.map((item) => (
-                <NavLink
-                  key={item.path}
-                  to={item.path}
-                  className={({ isActive }) =>
-                    `whitespace-nowrap rounded-full px-3 py-2 text-xs font-medium ${
-                      isActive || item.aliases.includes(location.pathname) ? 'bg-blue-600 text-white' : 'bg-white text-slate-600'
-                    }`
-                  }
-                >
-                  {item.label}
-                </NavLink>
-              ))}
-              <SignOutButton tone="blue" compact />
-            </nav>
-          </header>}
+          {workspace === 'employer' ? <EmployerTopBar /> : workspace === 'university' ? <UniversityTopBar /> : <StudentTopBar />}
           <main className="min-w-0 flex-1 overflow-y-auto">
             {/* Routed workspace pages render here through React Router's Outlet. */}
             <div className="w-full px-4 py-5 sm:px-6 lg:px-6 xl:px-8">
@@ -161,7 +131,7 @@ export default function AppLayout({ workspace = 'student' }) {
             </div>
           </main>
         </div>
-        {workspace === 'university' || workspace === 'employer' ? <UniversityCompanionBot /> : null}
+        {workspace === 'student' ? <CandidateCompanionBot /> : workspace === 'university' || workspace === 'employer' ? <UniversityCompanionBot /> : null}
       </div>
     </div>
   )

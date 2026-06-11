@@ -166,4 +166,158 @@ export const useCareerStore = create((set) => ({
   removeEventFromCalendar: (eventId) => set((state) => ({
     myEvents: state.myEvents.filter((e) => e.id !== eventId)
   })),
+
+  // ─── Saved Items (Opportunities Page) ───────────────────────────────
+  savedJobs: [],
+  savedEvents: [],
+  toggleSaveJob: (job) => set((state) => {
+    const exists = state.savedJobs.some((j) => j.id === job.id)
+    return {
+      savedJobs: exists
+        ? state.savedJobs.filter((j) => j.id !== job.id)
+        : [...state.savedJobs, { ...job, savedAt: new Date().toISOString() }],
+    }
+  }),
+  toggleSaveEvent: (event) => set((state) => {
+    const exists = state.savedEvents.some((e) => e.id === event.id)
+    return {
+      savedEvents: exists
+        ? state.savedEvents.filter((e) => e.id !== event.id)
+        : [...state.savedEvents, { ...event, savedAt: new Date().toISOString() }],
+    }
+  }),
+  isJobSaved: (jobId) => { /* selector — use inline: useCareerStore(s => s.savedJobs.some(...)) */ },
+  isEventSaved: (eventId) => { /* selector — use inline */ },
+
+  // ─── Application Pipeline ───────────────────────────────────────────
+  applications: [
+    {
+      id: 'app-001',
+      jobTitle: 'Data Analyst Intern',
+      company: 'Google Malaysia',
+      matchPercent: 92,
+      stage: 'Interview',
+      dateApplied: '2026-05-28',
+      logoEmoji: '🔵',
+      logoBg: 'bg-blue-100',
+      statusHistory: [
+        { stage: 'Applied', date: '2026-05-28' },
+        { stage: 'Under Review', date: '2026-06-02' },
+        { stage: 'Interview', date: '2026-06-08' },
+      ],
+    },
+    {
+      id: 'app-002',
+      jobTitle: 'Data Analytics Associate',
+      company: 'Petronas Digital',
+      matchPercent: 88,
+      stage: 'Under Review',
+      dateApplied: '2026-06-01',
+      logoEmoji: '🟢',
+      logoBg: 'bg-emerald-100',
+      statusHistory: [
+        { stage: 'Applied', date: '2026-06-01' },
+        { stage: 'Under Review', date: '2026-06-05' },
+      ],
+    },
+    {
+      id: 'app-003',
+      jobTitle: 'Junior Data Scientist',
+      company: 'Grab',
+      matchPercent: 78,
+      stage: 'Applied',
+      dateApplied: '2026-06-05',
+      logoEmoji: '🟩',
+      logoBg: 'bg-green-100',
+      statusHistory: [
+        { stage: 'Applied', date: '2026-06-05' },
+      ],
+    },
+    {
+      id: 'app-004',
+      jobTitle: 'Business Intelligence Analyst',
+      company: 'Shopee',
+      matchPercent: 85,
+      stage: 'Under Review',
+      dateApplied: '2026-05-30',
+      logoEmoji: '🟠',
+      logoBg: 'bg-orange-100',
+      statusHistory: [
+        { stage: 'Applied', date: '2026-05-30' },
+        { stage: 'Under Review', date: '2026-06-04' },
+      ],
+    },
+    {
+      id: 'app-005',
+      jobTitle: 'Data Engineer Intern',
+      company: 'CIMB Bank',
+      matchPercent: 74,
+      stage: 'Applied',
+      dateApplied: '2026-06-07',
+      logoEmoji: '🔴',
+      logoBg: 'bg-red-100',
+      statusHistory: [
+        { stage: 'Applied', date: '2026-06-07' },
+      ],
+    },
+    {
+      id: 'app-006',
+      jobTitle: 'Product Analyst',
+      company: 'AirAsia Digital',
+      matchPercent: 81,
+      stage: 'Applied',
+      dateApplied: '2026-06-09',
+      logoEmoji: '✈️',
+      logoBg: 'bg-rose-100',
+      statusHistory: [
+        { stage: 'Applied', date: '2026-06-09' },
+      ],
+    },
+    {
+      id: 'app-007',
+      jobTitle: 'Data Analyst',
+      company: 'Accenture Malaysia',
+      matchPercent: 86,
+      stage: 'Under Review',
+      dateApplied: '2026-05-25',
+      logoEmoji: '🟣',
+      logoBg: 'bg-violet-100',
+      statusHistory: [
+        { stage: 'Applied', date: '2026-05-25' },
+        { stage: 'Under Review', date: '2026-06-01' },
+      ],
+    },
+  ],
+  moveApplicationStage: (appId, newStage) => set((state) => ({
+    applications: state.applications.map((app) =>
+      app.id === appId
+        ? {
+            ...app,
+            stage: newStage,
+            statusHistory: [
+              ...app.statusHistory,
+              { stage: newStage, date: new Date().toISOString().split('T')[0] },
+            ],
+          }
+        : app
+    ),
+  })),
+  addApplication: (job) => set((state) => ({
+    applications: [
+      {
+        id: `app-${Date.now()}`,
+        jobTitle: job.title || job.jobTitle,
+        company: job.company,
+        matchPercent: job.matchPercent || job.matchScore || 75,
+        stage: 'Applied',
+        dateApplied: new Date().toISOString().split('T')[0],
+        logoEmoji: '📋',
+        logoBg: 'bg-slate-100',
+        statusHistory: [
+          { stage: 'Applied', date: new Date().toISOString().split('T')[0] },
+        ],
+      },
+      ...state.applications,
+    ],
+  })),
 }))

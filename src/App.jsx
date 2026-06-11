@@ -2,6 +2,7 @@ import React from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
 import AppLayout from './components/layout/AppLayout'
 import AlumniSignalIntelligencePage from './pages/AlumniSignalIntelligencePage'
+import ApplicationsPage from './pages/ApplicationsPage'
 import AuthPage from './pages/AuthPage'
 import CandidateInsightsPage from './pages/CandidateInsightsPage'
 import CandidateOverviewPage from './pages/CandidateOverviewPage'
@@ -38,7 +39,7 @@ export default function App() {
           <Route path="/student/intelligence" element={<CareerIntelligencePage />} />
           <Route path="/student/career-intelligence" element={<CareerIntelligencePage />} />
           <Route path="/student/opportunities" element={<OpportunitiesPage />} />
-          <Route path="/student/applications" element={<PlaceholderPage title="Applications" />} />
+          <Route path="/student/applications" element={<ApplicationsPage />} />
           <Route path="/student/network" element={<PlaceholderPage title="Network & Mentors" />} />
           <Route path="/student/learning" element={<PlaceholderPage title="Learning & Skills" />} />
           <Route path="/student/ai-assistant" element={<PlaceholderPage title="AI Assistant" />} />

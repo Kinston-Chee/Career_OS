@@ -1,13 +1,11 @@
 import React from 'react';
 import { useMarketIntelligenceStore } from '../../store/useMarketIntelligenceStore';
-import AIInsightCard from './AIInsightCard';
 import InteractiveDropdown from './InteractiveDropdown';
-import InDemandSkillsTable from './InDemandSkillsTable';
-import MarketPositionCard from './MarketPositionCard';
-import MarketTrendChart from './MarketTrendChart';
+import MarketPositionDashboard from './MarketPositionDashboard';
 import SalaryBenchmarkCard from './SalaryBenchmarkCard';
 import ShareReportButton from './ShareReportButton';
 import MarketSkeletonLoader from './MarketSkeletonLoader';
+import UpskillingRecommendations from './UpskillingRecommendations';
 
 export default function MarketStanding() {
   const {
@@ -60,47 +58,19 @@ export default function MarketStanding() {
 
       <MarketSkeletonLoader isLoading={isLoading}>
         <div className="space-y-5">
-          <section className="grid gap-5 2xl:grid-cols-[1.25fr_1.1fr_0.95fr]">
-            <MarketTrendChart data={marketData.trendData} growthText={marketData.demandGrowthText} />
-            <InDemandSkillsTable skills={marketData.inDemandSkills} />
-            <SalaryBenchmarkCard benchmark={marketData.salaryBenchmark} />
-          </section>
+          {/* Market Position Dashboard — replaces MarketTrendChart + InDemandSkillsTable + AIInsightCard */}
+          <MarketPositionDashboard
+            score={marketData.marketPositionScore}
+            country={selectedCountry}
+            strongAreas={marketData.strongAreas}
+            improvementAreas={marketData.improvementAreas}
+          />
 
-          <section className="grid gap-5 xl:grid-cols-[1.05fr_1.35fr_1fr]">
-            <MarketPositionCard score={marketData.marketPositionScore} country={selectedCountry} />
+          {/* Salary Benchmark — kept & full-width */}
+          <SalaryBenchmarkCard benchmark={marketData.salaryBenchmark} />
 
-            <div className="grid gap-5 md:grid-cols-2">
-              <section className="rounded-2xl border border-slate-200/80 bg-white p-5 shadow-[0_12px_30px_rgba(15,23,42,0.04)]">
-                <h3 className="text-sm font-semibold text-slate-950">You are strong in</h3>
-                <div className="mt-4 flex flex-wrap gap-2">
-                  {marketData.strongAreas.map((skill) => (
-                    <span
-                      key={skill}
-                      className="rounded-lg bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-700 ring-1 ring-emerald-100"
-                    >
-                      {skill}
-                    </span>
-                  ))}
-                </div>
-              </section>
-
-              <section className="rounded-2xl border border-slate-200/80 bg-white p-5 shadow-[0_12px_30px_rgba(15,23,42,0.04)]">
-                <h3 className="text-sm font-semibold text-slate-950">Focus to improve</h3>
-                <div className="mt-4 flex flex-wrap gap-2">
-                  {marketData.improvementAreas.map((skill) => (
-                    <span
-                      key={skill}
-                      className="rounded-lg bg-rose-50 px-3 py-1 text-xs font-semibold text-rose-700 ring-1 ring-rose-100 animate-pulse"
-                    >
-                      {skill}
-                    </span>
-                  ))}
-                </div>
-              </section>
-            </div>
-
-            <AIInsightCard title="AI Insight" insight={{ text: marketData.aiInsight }} />
-          </section>
+          {/* Upskilling Recommendations — new, links to Opportunities */}
+          <UpskillingRecommendations />
         </div>
       </MarketSkeletonLoader>
     </div>

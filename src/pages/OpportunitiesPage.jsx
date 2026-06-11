@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
 import EventHub from '../components/opportunities/EventHub'
 import JobMarket from '../components/opportunities/JobMarket'
+import SavedHub from '../components/opportunities/SavedHub'
 
 const SECTIONS = [
   { id: 'event-hub', label: 'Event Hub', icon: '🎟' },
   { id: 'job-market', label: 'Job Market', icon: '💼' },
+  { id: 'saved', label: 'Saved', icon: '❤️' },
 ]
 
 export default function OpportunitiesPage() {
@@ -51,6 +53,7 @@ export default function OpportunitiesPage() {
       {/* Active section content */}
       {activeSection === 'event-hub' && <EventHub />}
       {activeSection === 'job-market' && <JobMarket />}
+      {activeSection === 'saved' && <SavedHub />}
     </div>
     </div>
   )
