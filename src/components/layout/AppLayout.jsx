@@ -1,6 +1,5 @@
 import React from 'react'
 import { Link, NavLink, Outlet, useLocation } from 'react-router-dom'
-import CandidateCompanionBot from '../student/CandidateCompanionBot'
 import EmployerSidebar from '../employer/EmployerSidebar'
 import EmployerTopBar from '../employer/EmployerTopBar'
 import SignOutButton from '../session/SignOutButton'
@@ -68,9 +67,13 @@ export default function AppLayout({ workspace = 'student' }) {
   const config = workspaceConfigs[workspace] ?? workspaceConfigs.student
   const allItems = [...config.navItems, ...config.supportItems]
   const activeItem = allItems.find((item) => itemMatchesPath(item, location.pathname)) ?? config.navItems[0]
+  const shellBackground =
+    workspace === 'student'
+      ? 'bg-[radial-gradient(circle_at_top_right,#f2ecff,transparent_28%),linear-gradient(135deg,#ffffff_0%,#fbfaff_46%,#f7f4ff_100%)]'
+      : 'bg-[radial-gradient(circle_at_top_left,#eef6ff,transparent_34%),linear-gradient(135deg,#ffffff_0%,#f8fafc_45%,#eef4ff_100%)]'
 
   return (
-    <div className="h-screen w-screen overflow-hidden bg-[radial-gradient(circle_at_top_left,#eef6ff,transparent_34%),linear-gradient(135deg,#ffffff_0%,#f8fafc_45%,#eef4ff_100%)]">
+    <div className={`h-screen w-screen overflow-hidden ${shellBackground}`}>
       <div className="flex h-screen w-full overflow-hidden">
         {/* Desktop sidebars stay fixed on the left while routed content scrolls. */}
         {workspace === 'student' ? (
@@ -131,7 +134,7 @@ export default function AppLayout({ workspace = 'student' }) {
             </div>
           </main>
         </div>
-        {workspace === 'student' ? <CandidateCompanionBot /> : workspace === 'university' || workspace === 'employer' ? <UniversityCompanionBot /> : null}
+        {workspace === 'university' || workspace === 'employer' ? <UniversityCompanionBot /> : null}
       </div>
     </div>
   )

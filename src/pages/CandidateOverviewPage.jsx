@@ -13,7 +13,7 @@ export default function CandidateOverviewPage() {
   const data = candidateOverview
 
   return (
-    <div className="min-h-full bg-[radial-gradient(circle_at_top_right,#f2ecff,transparent_26%),linear-gradient(135deg,#ffffff_0%,#fbfaff_46%,#f7f4ff_100%)] pb-2 text-[#11104a]">
+    <div className="min-h-full pb-2 text-[#11104a]">
       <div className="grid gap-6 2xl:grid-cols-[minmax(0,1fr)_300px]">
         <main className="min-w-0 space-y-6">
           <header className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">

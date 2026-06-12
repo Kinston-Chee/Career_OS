@@ -158,7 +158,7 @@ export default function ApplicationsPage() {
   }, [applications])
 
   return (
-    <div className="min-h-full bg-[radial-gradient(circle_at_top_right,#f2ecff,transparent_26%),linear-gradient(135deg,#ffffff_0%,#fbfaff_46%,#f7f4ff_100%)] pb-2 text-[#11104a]">
+    <div className="min-h-full pb-2 text-[#11104a]">
       <div className="space-y-6">
         <header>
           <p className="text-xs font-semibold uppercase tracking-wide text-violet-700">Student Workspace</p>
