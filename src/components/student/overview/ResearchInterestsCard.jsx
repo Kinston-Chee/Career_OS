@@ -1,12 +1,13 @@
 import React from 'react'
+import { Plus, Search } from 'lucide-react'
 
 export default function ResearchInterestsCard({ interests }) {
   return (
     <section className="rounded-3xl border border-violet-100/80 bg-white/90 p-5 shadow-[0_18px_44px_rgba(88,63,188,0.08)]">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2.5">
-          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-violet-500 to-indigo-500 text-sm shadow-md shadow-violet-200">
-            🔬
+          <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-violet-100 bg-violet-50 text-violet-600 shadow-sm">
+            <Search size={17} strokeWidth={2} />
           </div>
           <h2 className="text-base font-bold text-[#11104a]">Research Interests</h2>
         </div>
@@ -25,9 +26,7 @@ export default function ResearchInterestsCard({ interests }) {
         ))}
       </div>
       <button type="button" className="mt-4 flex h-10 w-full items-center justify-center gap-1.5 rounded-xl border border-violet-100 bg-white text-sm font-bold text-[#11104a] transition-all hover:bg-violet-50 hover:shadow-sm">
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-          <path d="M7 2v10M2 7h10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-        </svg>
+        <Plus size={15} strokeWidth={2} />
         Add Interest
       </button>
     </section>

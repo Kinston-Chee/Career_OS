@@ -1,9 +1,11 @@
 import React from 'react'
+import { Briefcase, Building2, FilePenLine, GraduationCap, Rocket, Users } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 
 const ACTIONS = [
   {
-    icon: '🏫',
+    icon: Building2,
+    tone: 'border-blue-100 bg-blue-50 text-blue-600',
     title: 'Attend Power BI Workshop',
     description: 'Closest skill gap to close. A dashboard project will make you 15% more competitive.',
     cta: 'Browse Events',
@@ -11,7 +13,8 @@ const ACTIONS = [
     urgency: 'high',
   },
   {
-    icon: '🎓',
+    icon: GraduationCap,
+    tone: 'border-emerald-100 bg-emerald-50 text-emerald-600',
     title: 'Earn SQL Certification',
     description: 'Top employers in Malaysia require SQL proficiency. Certification strengthens credibility.',
     cta: 'View Certifications',
@@ -19,7 +22,8 @@ const ACTIONS = [
     urgency: 'high',
   },
   {
-    icon: '🚀',
+    icon: Rocket,
+    tone: 'border-orange-100 bg-orange-50 text-orange-600',
     title: 'Build Portfolio Project',
     description: 'Create an end-to-end data pipeline project. Real-world evidence beats theoretical knowledge.',
     cta: 'Project Ideas',
@@ -27,7 +31,8 @@ const ACTIONS = [
     urgency: 'medium',
   },
   {
-    icon: '💼',
+    icon: Briefcase,
+    tone: 'border-violet-100 bg-violet-50 text-violet-600',
     title: 'Apply for Data Analyst Roles',
     description: 'You match 92% of requirements for Data Analyst positions. Start applying now.',
     cta: 'View Jobs',
@@ -35,7 +40,8 @@ const ACTIONS = [
     urgency: 'medium',
   },
   {
-    icon: '🤝',
+    icon: Users,
+    tone: 'border-cyan-100 bg-cyan-50 text-cyan-600',
     title: 'Attend Networking Event',
     description: 'Connect with Data Analysts who made the transition. Alumni insights accelerate growth.',
     cta: 'Find Events',
@@ -43,7 +49,8 @@ const ACTIONS = [
     urgency: 'low',
   },
   {
-    icon: '📝',
+    icon: FilePenLine,
+    tone: 'border-slate-200 bg-slate-50 text-slate-600',
     title: 'Practice Interview Skills',
     description: 'SQL case studies and data storytelling are the top interview topics for analyst roles.',
     cta: 'Start Prep',
@@ -61,32 +68,38 @@ export default function RecommendedActions() {
       <p className="mt-1 text-xs text-slate-500">Concrete next steps based on your career goals and skill gaps</p>
 
       <div className="mt-5 grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
-        {ACTIONS.map((action) => (
-          <div
-            key={action.title}
-            className="group flex flex-col rounded-xl border border-slate-100 bg-slate-50/40 p-4 transition hover:border-violet-200 hover:bg-white hover:shadow-md"
-          >
-            <div className="flex items-start gap-3">
-              <span className="mt-0.5 text-xl">{action.icon}</span>
-              <div className="min-w-0 flex-1">
-                <div className="flex items-center gap-2">
-                  <p className="text-sm font-semibold text-slate-900">{action.title}</p>
-                  {action.urgency === 'high' && (
-                    <span className="shrink-0 rounded bg-rose-100 px-1.5 py-0.5 text-[9px] font-bold uppercase text-rose-700">Priority</span>
-                  )}
-                </div>
-                <p className="mt-1 text-[11px] leading-4 text-slate-500">{action.description}</p>
-              </div>
-            </div>
-            <button
-              type="button"
-              onClick={() => navigate(action.link)}
-              className="mt-3 w-full rounded-lg bg-violet-50 py-2 text-xs font-bold text-violet-700 transition group-hover:bg-violet-100"
+        {ACTIONS.map((action) => {
+          const Icon = action.icon
+
+          return (
+            <div
+              key={action.title}
+              className="group flex flex-col rounded-xl border border-slate-100 bg-slate-50/40 p-4 transition hover:border-violet-200 hover:bg-white hover:shadow-md"
             >
-              {action.cta} →
-            </button>
-          </div>
-        ))}
+              <div className="flex items-start gap-3">
+                <span className={`mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border ${action.tone}`}>
+                  <Icon size={18} strokeWidth={2} />
+                </span>
+                <div className="min-w-0 flex-1">
+                  <div className="flex items-center gap-2">
+                    <p className="text-sm font-semibold text-slate-900">{action.title}</p>
+                    {action.urgency === 'high' && (
+                      <span className="shrink-0 rounded bg-rose-100 px-1.5 py-0.5 text-[9px] font-bold uppercase text-rose-700">Priority</span>
+                    )}
+                  </div>
+                  <p className="mt-1 text-[11px] leading-4 text-slate-500">{action.description}</p>
+                </div>
+              </div>
+              <button
+                type="button"
+                onClick={() => navigate(action.link)}
+                className="mt-3 w-full rounded-lg bg-violet-50 py-2 text-xs font-bold text-violet-700 transition group-hover:bg-violet-100"
+              >
+                {action.cta}
+              </button>
+            </div>
+          )
+        })}
       </div>
     </section>
   )

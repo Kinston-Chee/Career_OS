@@ -1,4 +1,5 @@
 import React, { useMemo, useState } from 'react'
+import { Download, FileText, Sparkles } from 'lucide-react'
 
 const INITIAL_SKILL_COUNT = 5
 
@@ -100,8 +101,8 @@ export default function ProfileSummaryCard({ experiences = [] }) {
       {/* ─── Summarise into Resume ─── */}
       <div className="mt-5 border-t border-violet-50 pt-5">
         <div className="flex items-center gap-2.5">
-          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-violet-500 to-indigo-500 text-sm shadow-md shadow-violet-200">
-            📄
+          <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-violet-100 bg-violet-50 text-violet-600 shadow-sm">
+            <FileText size={17} strokeWidth={2.2} />
           </div>
           <div>
             <h5 className="text-xs font-semibold text-[#11104a]">Summarise into Resume</h5>
@@ -117,9 +118,7 @@ export default function ProfileSummaryCard({ experiences = [] }) {
               onClick={handleGenerate}
               className="flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 px-4 py-2.5 text-xs font-bold text-white shadow-md shadow-violet-200 transition-all duration-200 hover:from-violet-700 hover:to-indigo-700"
             >
-              <svg width="14" height="14" viewBox="0 0 18 18" fill="none" className="animate-pulse">
-                <path d="M9 1l1.76 5.24L16 8l-5.24 1.76L9 15l-1.76-5.24L2 8l5.24-1.76L9 1z" fill="currentColor" fillOpacity="0.9" />
-              </svg>
+              <Sparkles size={14} strokeWidth={2.2} className="animate-pulse" />
               Generate Resume
             </button>
             <button
@@ -127,9 +126,7 @@ export default function ProfileSummaryCard({ experiences = [] }) {
               onClick={handleDownload}
               className="flex w-full items-center justify-center gap-2 rounded-xl border border-violet-200 bg-white px-4 py-2 text-xs font-bold text-violet-700 transition-all duration-200 hover:bg-violet-50"
             >
-              <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-                <path d="M8 2v8m0 0l-3-3m3 3l3-3M3 12h10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
+              <Download size={14} strokeWidth={2.2} />
               Download PDF
             </button>
           </div>
@@ -163,9 +160,7 @@ export default function ProfileSummaryCard({ experiences = [] }) {
               onClick={handleDownload}
               className="flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 px-4 py-2.5 text-xs font-bold text-white shadow-md shadow-violet-200 transition-all duration-200 hover:from-violet-700 hover:to-indigo-700"
             >
-              <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-                <path d="M8 2v8m0 0l-3-3m3 3l3-3M3 12h10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
+              <Download size={14} strokeWidth={2.2} />
               Download PDF
             </button>
             <button

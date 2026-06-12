@@ -1,9 +1,61 @@
 import React, { useMemo, useState } from 'react'
+import {
+  Award,
+  Briefcase,
+  Building2,
+  Code2,
+  GraduationCap,
+  MessageCircle,
+  Rocket,
+  Target,
+  TrendingUp,
+  Trophy,
+  Users,
+} from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import Card from '../ui/Card'
 import { careerIntelligence, initialExperiences } from '../../data/mockData'
 
-// ─── Skill Evidence Modal ───────────────────────────────────────────────
+const iconToneClasses = {
+  amber: 'border-amber-100 bg-amber-50 text-amber-600',
+  blue: 'border-blue-100 bg-blue-50 text-blue-600',
+  emerald: 'border-emerald-100 bg-emerald-50 text-emerald-600',
+  orange: 'border-orange-100 bg-orange-50 text-orange-600',
+  violet: 'border-violet-100 bg-violet-50 text-violet-600',
+}
+
+const progressToneClasses = {
+  amber: 'bg-amber-500',
+  blue: 'bg-blue-500',
+  emerald: 'bg-emerald-500',
+  violet: 'bg-violet-500',
+}
+
+const ringToneClasses = {
+  amber: 'ring-amber-200',
+  blue: 'ring-blue-200',
+  emerald: 'ring-emerald-200',
+  violet: 'ring-violet-200',
+}
+
+const hoverBorderToneClasses = {
+  amber: 'hover:border-amber-200',
+  blue: 'hover:border-blue-200',
+  emerald: 'hover:border-emerald-200',
+  violet: 'hover:border-violet-200',
+}
+
+function IconTile({ icon: Icon, tone = 'blue', size = 'md' }) {
+  const dimensions = size === 'sm' ? 'h-9 w-9' : 'h-12 w-12'
+  const iconSize = size === 'sm' ? 17 : 22
+
+  return (
+    <span className={`flex ${dimensions} shrink-0 items-center justify-center rounded-xl border ${iconToneClasses[tone] ?? iconToneClasses.blue}`}>
+      <Icon size={iconSize} strokeWidth={2} />
+    </span>
+  )
+}
+
 function SkillEvidenceModal({ skill, experiences, onClose }) {
   const relatedExps = experiences.filter((exp) =>
     (exp.extractedSkills || []).some((s) => s.name.toLowerCase() === skill.toLowerCase())
@@ -24,8 +76,9 @@ function SkillEvidenceModal({ skill, experiences, onClose }) {
             type="button"
             onClick={onClose}
             className="flex h-8 w-8 items-center justify-center rounded-full border border-slate-200 text-slate-400 transition hover:bg-slate-50 hover:text-slate-700"
+            aria-label="Close evidence modal"
           >
-            ✕
+            x
           </button>
         </div>
 
@@ -38,7 +91,7 @@ function SkillEvidenceModal({ skill, experiences, onClose }) {
                   <div className="flex items-start justify-between gap-2">
                     <div>
                       <p className="text-sm font-semibold text-slate-900">{exp.title}</p>
-                      <p className="mt-0.5 text-xs text-slate-500">{exp.type} · {exp.date}</p>
+                      <p className="mt-0.5 text-xs text-slate-500">{exp.type} - {exp.date}</p>
                     </div>
                     {skillEntry && (
                       <span className="shrink-0 rounded-lg bg-violet-100 px-2 py-0.5 text-[10px] font-bold text-violet-700">
@@ -47,10 +100,16 @@ function SkillEvidenceModal({ skill, experiences, onClose }) {
                     )}
                   </div>
                   {exp.achievement && (
-                    <p className="mt-2 text-xs text-slate-600">🏆 {exp.achievement}</p>
+                    <p className="mt-2 flex items-start gap-1.5 text-xs text-slate-600">
+                      <Trophy className="mt-0.5 h-3.5 w-3.5 shrink-0 text-amber-500" strokeWidth={2} />
+                      <span>{exp.achievement}</span>
+                    </p>
                   )}
                   {exp.organization && (
-                    <p className="mt-1 text-[11px] text-slate-400">🏢 {exp.organization}</p>
+                    <p className="mt-1 flex items-center gap-1.5 text-[11px] text-slate-400">
+                      <Building2 className="h-3.5 w-3.5 shrink-0" strokeWidth={2} />
+                      <span>{exp.organization}</span>
+                    </p>
                   )}
                 </div>
               )
@@ -66,13 +125,13 @@ function SkillEvidenceModal({ skill, experiences, onClose }) {
   )
 }
 
-// ─── Cluster definitions ────────────────────────────────────────────────
 const SKILL_CLUSTERS = [
   {
     id: 'technical',
     label: 'Technical',
-    icon: '💻',
+    icon: Code2,
     color: 'violet',
+    tone: 'violet',
     bgClass: 'bg-violet-50',
     borderClass: 'border-violet-100',
     badgeClass: 'bg-violet-100 text-violet-700',
@@ -81,8 +140,9 @@ const SKILL_CLUSTERS = [
   {
     id: 'business',
     label: 'Business',
-    icon: '📊',
+    icon: Briefcase,
     color: 'blue',
+    tone: 'blue',
     bgClass: 'bg-blue-50',
     borderClass: 'border-blue-100',
     badgeClass: 'bg-blue-100 text-blue-700',
@@ -91,8 +151,9 @@ const SKILL_CLUSTERS = [
   {
     id: 'leadership',
     label: 'Leadership',
-    icon: '👑',
+    icon: Users,
     color: 'amber',
+    tone: 'amber',
     bgClass: 'bg-amber-50',
     borderClass: 'border-amber-100',
     badgeClass: 'bg-amber-100 text-amber-700',
@@ -101,8 +162,9 @@ const SKILL_CLUSTERS = [
   {
     id: 'communication',
     label: 'Communication',
-    icon: '💬',
+    icon: MessageCircle,
     color: 'emerald',
+    tone: 'emerald',
     bgClass: 'bg-emerald-50',
     borderClass: 'border-emerald-100',
     badgeClass: 'bg-emerald-100 text-emerald-700',
@@ -120,14 +182,12 @@ function classifySkill(skillName) {
   return 'technical'
 }
 
-// ─── Main Component ─────────────────────────────────────────────────────
 export default function SkillSummaryTab() {
   const navigate = useNavigate()
   const [expandedCluster, setExpandedCluster] = useState(null)
   const [evidenceSkill, setEvidenceSkill] = useState(null)
   const experiences = initialExperiences
 
-  // Build skills from experiences
   const allSkills = useMemo(() => {
     const freq = {}
     const levelMap = {}
@@ -158,33 +218,29 @@ export default function SkillSummaryTab() {
       if (result[s.cluster]) result[s.cluster].push(s)
       else result.technical.push(s)
     })
-    // Sort by credibility descending within each cluster
     Object.values(result).forEach((arr) => arr.sort((a, b) => b.credibility - a.credibility))
     return result
   }, [allSkills])
 
-  // Level 1 — Overview stats
   const totalSkills = allSkills.length
   const highDemandCount = allSkills.filter((s) => s.demand === 'High').length
   const marketRelevance = totalSkills > 0 ? Math.round((highDemandCount / totalSkills) * 100) : 0
   const avgStrength = totalSkills > 0 ? Math.round(allSkills.reduce((sum, s) => sum + s.credibility, 0) / totalSkills) : 0
 
-  // Level 4 — Improvement suggestions
   const improvementSuggestions = [
-    { type: 'Workshop', title: 'Power BI Dashboard Workshop', skill: 'Power BI', icon: '🏫', cta: 'View in Events' },
-    { type: 'Certification', title: 'Google Data Analytics Certificate', skill: 'Data Analysis', icon: '🎓', cta: 'Learn More' },
-    { type: 'Project', title: 'Build an end-to-end ML pipeline', skill: 'Machine Learning', icon: '🚀', cta: 'Get Started' },
-    { type: 'Certification', title: 'AWS Cloud Practitioner', skill: 'Cloud Computing', icon: '☁️', cta: 'Learn More' },
+    { type: 'Workshop', title: 'Power BI Dashboard Workshop', skill: 'Power BI', icon: Building2, tone: 'blue', cta: 'View in Events' },
+    { type: 'Certification', title: 'Google Data Analytics Certificate', skill: 'Data Analysis', icon: GraduationCap, tone: 'emerald', cta: 'Learn More' },
+    { type: 'Project', title: 'Build an end-to-end ML pipeline', skill: 'Machine Learning', icon: Rocket, tone: 'orange', cta: 'Get Started' },
+    { type: 'Certification', title: 'AWS Cloud Practitioner', skill: 'Cloud Computing', icon: GraduationCap, tone: 'emerald', cta: 'Learn More' },
   ]
 
   return (
     <div className="space-y-6">
-      {/* Level 1 — Skills Overview */}
       <section className="grid gap-4 sm:grid-cols-3">
         {[
-          { label: 'Total Skills', value: totalSkills, sub: 'Across all experiences', icon: '🎯', color: 'violet' },
-          { label: 'Market Relevance', value: `${marketRelevance}%`, sub: 'Skills in high demand', icon: '📈', color: 'emerald' },
-          { label: 'Strength Score', value: `${avgStrength}%`, sub: 'Average proficiency', icon: '💪', color: 'blue' },
+          { label: 'Total Skills', value: totalSkills, sub: 'Across all experiences', icon: Target, color: 'violet' },
+          { label: 'Market Relevance', value: `${marketRelevance}%`, sub: 'Skills in high demand', icon: TrendingUp, color: 'emerald' },
+          { label: 'Strength Score', value: `${avgStrength}%`, sub: 'Average proficiency', icon: Award, color: 'amber' },
         ].map((stat) => (
           <Card key={stat.label} className="rounded-2xl border-slate-200/80 bg-white/95 p-5 shadow-[0_12px_30px_rgba(15,23,42,0.04)]">
             <div className="flex items-start justify-between">
@@ -193,13 +249,12 @@ export default function SkillSummaryTab() {
                 <p className="mt-1 text-3xl font-bold text-[#11104a]">{stat.value}</p>
                 <p className="mt-1 text-[11px] text-slate-500">{stat.sub}</p>
               </div>
-              <span className="text-2xl">{stat.icon}</span>
+              <IconTile icon={stat.icon} tone={stat.color} />
             </div>
           </Card>
         ))}
       </section>
 
-      {/* Level 2 — Skill Clusters */}
       <section>
         <h3 className="mb-4 text-base font-semibold text-slate-950">Skill Clusters</h3>
         <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
@@ -214,12 +269,12 @@ export default function SkillSummaryTab() {
                 onClick={() => setExpandedCluster(isExpanded ? null : cluster.id)}
                 className={`rounded-2xl border p-4 text-left transition-all duration-200 ${
                   isExpanded
-                    ? `${cluster.borderClass} ${cluster.bgClass} ring-2 ring-${cluster.color}-200 shadow-lg`
-                    : `border-slate-200/80 bg-white hover:border-${cluster.color}-200 hover:shadow-md`
+                    ? `${cluster.borderClass} ${cluster.bgClass} ring-2 ${ringToneClasses[cluster.color]} shadow-lg`
+                    : `border-slate-200/80 bg-white ${hoverBorderToneClasses[cluster.color]} hover:shadow-md`
                 }`}
               >
                 <div className="flex items-center gap-2">
-                  <span className="text-lg">{cluster.icon}</span>
+                  <IconTile icon={cluster.icon} tone={cluster.tone} size="sm" />
                   <span className="text-sm font-bold text-slate-900">{cluster.label}</span>
                   <span className={`ml-auto rounded-full px-2 py-0.5 text-[10px] font-bold ${cluster.badgeClass}`}>
                     {skills.length}
@@ -231,7 +286,7 @@ export default function SkillSummaryTab() {
                     <span className="font-bold text-slate-700">{avgCred}%</span>
                   </div>
                   <div className="mt-1.5 h-1.5 overflow-hidden rounded-full bg-slate-100">
-                    <div className={`h-full rounded-full bg-${cluster.color}-500 transition-all duration-500`} style={{ width: `${avgCred}%` }} />
+                    <div className={`h-full rounded-full ${progressToneClasses[cluster.color]} transition-all duration-500`} style={{ width: `${avgCred}%` }} />
                   </div>
                 </div>
                 <div className="mt-3 flex flex-wrap gap-1">
@@ -250,13 +305,11 @@ export default function SkillSummaryTab() {
         </div>
       </section>
 
-      {/* Level 3 — Expanded Cluster Detail */}
       {expandedCluster && (
         <section className="rounded-2xl border border-slate-200/80 bg-white p-5 shadow-[0_12px_30px_rgba(15,23,42,0.04)]">
           <div className="flex items-center justify-between">
             <h3 className="text-base font-semibold text-slate-950">
-              {SKILL_CLUSTERS.find((c) => c.id === expandedCluster)?.icon}{' '}
-              {SKILL_CLUSTERS.find((c) => c.id === expandedCluster)?.label} Skills — Detailed Analysis
+              {SKILL_CLUSTERS.find((c) => c.id === expandedCluster)?.label} Skills - Detailed Analysis
             </h3>
             <button
               type="button"
@@ -276,7 +329,7 @@ export default function SkillSummaryTab() {
                     : skill.demand === 'Gap' ? 'bg-rose-100 text-rose-700'
                     : 'bg-slate-100 text-slate-600'
                   }`}>
-                    {skill.demand === 'Gap' ? '⚠ Gap' : skill.demand}
+                    {skill.demand === 'Gap' ? 'Gap' : skill.demand}
                   </span>
                 </div>
                 <div className="mt-2">
@@ -314,14 +367,13 @@ export default function SkillSummaryTab() {
         </section>
       )}
 
-      {/* Level 4 — Improvement Opportunities */}
       <section>
         <h3 className="mb-4 text-base font-semibold text-slate-950">Improvement Opportunities</h3>
         <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
           {improvementSuggestions.map((item) => (
             <div key={item.title} className="rounded-2xl border border-slate-200/80 bg-white p-4 transition hover:border-violet-200 hover:shadow-md">
               <div className="flex items-center gap-2">
-                <span className="text-lg">{item.icon}</span>
+                <IconTile icon={item.icon} tone={item.tone} size="sm" />
                 <span className="rounded-full bg-slate-100 px-2 py-0.5 text-[10px] font-semibold text-slate-500">{item.type}</span>
               </div>
               <p className="mt-2 text-sm font-semibold text-slate-900">{item.title}</p>
@@ -338,7 +390,6 @@ export default function SkillSummaryTab() {
         </div>
       </section>
 
-      {/* Evidence Modal */}
       {evidenceSkill && (
         <SkillEvidenceModal
           skill={evidenceSkill}

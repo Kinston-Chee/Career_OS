@@ -1,10 +1,10 @@
 import React from 'react'
+import { Award, TrendingUp } from 'lucide-react'
 
 export default function CareerReadinessCard({ data }) {
   const { readiness, keyStrengths, skillsInDemand } = data.careerSnapshot
   const { careerFocus, targetRole } = data.profile
 
-  // SVG ring calculation
   const radius = 42
   const circumference = 2 * Math.PI * radius
   const progress = (readiness / 100) * circumference
@@ -12,7 +12,6 @@ export default function CareerReadinessCard({ data }) {
 
   return (
     <section className="rounded-3xl border border-violet-100/80 bg-white/90 p-6 shadow-[0_18px_44px_rgba(88,63,188,0.08)]">
-      {/* Header row: career focus + target role */}
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
           <h2 className="text-base font-bold text-[#11104a]">Career Readiness</h2>
@@ -26,20 +25,15 @@ export default function CareerReadinessCard({ data }) {
         </div>
       </div>
 
-      {/* Main content: gauge + strengths + in-demand */}
       <div className="mt-6 grid gap-6 sm:grid-cols-[auto_1fr_1fr]">
-        {/* Readiness Gauge */}
         <div className="flex flex-col items-center justify-center">
           <div className="relative h-28 w-28">
             <svg viewBox="0 0 100 100" className="h-full w-full -rotate-90">
+              <circle cx="50" cy="50" r={radius} fill="none" stroke="#f0ecff" strokeWidth="8" />
               <circle
-                cx="50" cy="50" r={radius}
-                fill="none"
-                stroke="#f0ecff"
-                strokeWidth="8"
-              />
-              <circle
-                cx="50" cy="50" r={radius}
+                cx="50"
+                cy="50"
+                r={radius}
                 fill="none"
                 stroke="url(#readinessGradient)"
                 strokeWidth="8"
@@ -65,10 +59,11 @@ export default function CareerReadinessCard({ data }) {
           </p>
         </div>
 
-        {/* Key Strengths */}
         <div className="rounded-2xl border border-emerald-100/60 bg-emerald-50/30 p-4">
           <div className="flex items-center gap-2">
-            <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-emerald-100 text-xs">💪</span>
+            <span className="flex h-7 w-7 items-center justify-center rounded-lg border border-emerald-100 bg-emerald-50 text-emerald-600">
+              <Award size={15} strokeWidth={2} />
+            </span>
             <h3 className="text-xs font-bold uppercase tracking-wide text-emerald-700">Key Strengths</h3>
           </div>
           <div className="mt-3 flex flex-wrap gap-1.5">
@@ -83,10 +78,11 @@ export default function CareerReadinessCard({ data }) {
           </div>
         </div>
 
-        {/* Skills in Demand */}
         <div className="rounded-2xl border border-blue-100/60 bg-blue-50/30 p-4">
           <div className="flex items-center gap-2">
-            <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-blue-100 text-xs">📈</span>
+            <span className="flex h-7 w-7 items-center justify-center rounded-lg border border-blue-100 bg-blue-50 text-blue-600">
+              <TrendingUp size={15} strokeWidth={2} />
+            </span>
             <h3 className="text-xs font-bold uppercase tracking-wide text-blue-700">In Demand</h3>
           </div>
           <div className="mt-3 flex flex-wrap gap-1.5">

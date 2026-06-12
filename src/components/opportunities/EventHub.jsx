@@ -1,4 +1,35 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react'
+import {
+  Bookmark,
+  Briefcase,
+  Building2,
+  CalendarDays,
+  Check,
+  ChevronDown,
+  Clock3,
+  Code2,
+  Coffee,
+  FileText,
+  Filter,
+  Flame,
+  Globe2,
+  Handshake,
+  HeartPulse,
+  Lightbulb,
+  MapPin,
+  Megaphone,
+  MessageCircle,
+  Mic,
+  MonitorPlay,
+  Puzzle,
+  RefreshCw,
+  Search,
+  Shield,
+  Sparkles,
+  Target,
+  Trophy,
+  Users,
+} from 'lucide-react'
 import { eventHub } from '../../data/mockData'
 import EventDetail from './EventDetail'
 import { useCareerStore } from '../../store/useCareerStore'
@@ -31,6 +62,58 @@ const STATUS_PILL_TONE = {
   slate: 'bg-slate-100 text-slate-600',
 }
 
+const categoryIconMap = {
+  all: FileText,
+  hackathons: Code2,
+  'case-competitions': Trophy,
+  workshops: Building2,
+  talks: Mic,
+  webinars: Globe2,
+  networking: Handshake,
+}
+
+const eventIconMap = {
+  hackathons: Code2,
+  'case-competitions': Trophy,
+  workshops: Building2,
+  talks: Mic,
+  webinars: Globe2,
+  networking: Handshake,
+}
+
+const topicIconMap = {
+  video: MonitorPlay,
+  chat: MessageCircle,
+  launch: Sparkles,
+  code: Code2,
+  data: Target,
+  partner: Handshake,
+  global: Globe2,
+  security: Shield,
+  puzzle: Puzzle,
+  growth: Target,
+  mic: Mic,
+  coffee: Coffee,
+  health: HeartPulse,
+  laptop: Code2,
+}
+
+function IconTile({ icon: Icon = Sparkles, className = 'h-9 w-9 border-violet-100 bg-violet-50 text-violet-600', size = 18 }) {
+  return (
+    <span className={`inline-flex shrink-0 items-center justify-center rounded-xl border ${className}`}>
+      <Icon size={size} strokeWidth={2.2} />
+    </span>
+  )
+}
+
+function categoryIconFor(category) {
+  return categoryIconMap[category.id] ?? categoryIconMap[category.category] ?? Sparkles
+}
+
+function eventIconFor(event) {
+  return eventIconMap[event.category] ?? topicIconMap[event.iconKey] ?? Sparkles
+}
+
 // ─── unified search + filter bar ────────────────────────────────────────
 function SearchFilterBar({ search, onSearch, sectorId, onSectorChange, sectors, activeCategory, onCategoryChange, categories }) {
   const [open, setOpen] = useState(false)
@@ -53,9 +136,7 @@ function SearchFilterBar({ search, onSearch, sectorId, onSectorChange, sectors, 
     <div className="space-y-3">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
         <div className="relative flex-1">
-          <span aria-hidden className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">
-            🔍
-          </span>
+          <Search size={16} strokeWidth={2.2} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
           <input
             type="search"
             value={search}
@@ -86,9 +167,9 @@ function SearchFilterBar({ search, onSearch, sectorId, onSectorChange, sectors, 
                 : 'border-slate-200 bg-white text-slate-600 hover:border-violet-300'
             }`}
           >
-            <span aria-hidden>🏢</span>
+            <Filter size={16} strokeWidth={2.2} />
             <span>{isFiltered ? activeSector.label : 'Sector'}</span>
-            <span aria-hidden className={`text-[10px] transition-transform ${open ? 'rotate-180' : ''}`}>▼</span>
+            <ChevronDown size={14} strokeWidth={2.2} className={`transition-transform ${open ? 'rotate-180' : ''}`} />
           </button>
           {open && (
             <div
@@ -112,7 +193,7 @@ function SearchFilterBar({ search, onSearch, sectorId, onSectorChange, sectors, 
                     }`}
                   >
                     <span>{sector.label}</span>
-                    {selected && <span aria-hidden>✓</span>}
+                    {selected && <Check size={14} strokeWidth={2.2} />}
                   </button>
                 )
               })}
@@ -133,7 +214,7 @@ function SearchFilterBar({ search, onSearch, sectorId, onSectorChange, sectors, 
                 : 'border-slate-200 bg-white text-slate-600 hover:border-violet-300 hover:text-violet-600'
             }`}
           >
-            <span aria-hidden>{cat.emoji}</span>
+            {React.createElement(categoryIconFor(cat), { size: 13, strokeWidth: 2.2 })}
             {cat.label}
           </button>
         ))}
@@ -171,7 +252,7 @@ function DeadlineAlert({ alert }) {
   return (
     <div className="flex items-center gap-3 rounded-xl border border-amber-200/80 bg-gradient-to-r from-amber-50/80 to-orange-50/60 p-3.5">
       <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-amber-100 text-amber-600">
-        <span aria-hidden className="text-sm">⏰</span>
+        <Clock3 size={15} strokeWidth={2.2} />
       </div>
       <div className="flex-1 min-w-0">
         <p className="truncate text-sm font-semibold text-amber-900">{alert.title}</p>
@@ -216,7 +297,7 @@ function EventCard({ event, onSelect }) {
         )}
         {event.isHot && (
           <span className="absolute right-2.5 bottom-2.5 rounded-full bg-rose-500 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-white">
-            🔥 Hot
+            <Flame size={10} fill="currentColor" strokeWidth={2.2} /> Hot
           </span>
         )}
         <button
@@ -230,23 +311,21 @@ function EventCard({ event, onSelect }) {
             saved ? 'text-violet-600 !opacity-100' : 'text-slate-400'
           }`}
         >
-          {saved ? '🔖' : '🏷'}
+          {saved ? <Bookmark size={14} fill="currentColor" strokeWidth={2.2} /> : <Bookmark size={14} strokeWidth={2.2} />}
         </button>
-        <div className={`flex h-11 w-11 items-center justify-center rounded-xl text-xl ${event.iconBg}`}>
-          <span aria-hidden>{event.emoji}</span>
-        </div>
+        <IconTile icon={eventIconFor(event)} className={`h-11 w-11 ${event.iconBg} border-slate-100`} size={20} />
       </div>
       <div className="flex flex-1 flex-col p-3.5">
         <p className="flex items-center gap-1 text-[11px] font-medium text-slate-400">
-          <span aria-hidden>🏢</span> {event.org}
+          <Building2 size={12} strokeWidth={2.2} /> {event.org}
         </p>
         <h4 className="mt-1 line-clamp-2 min-h-[36px] text-sm font-bold leading-tight text-slate-900">{event.title}</h4>
         <div className="mt-2 flex items-center gap-3 text-xs text-slate-500">
           <span className="flex items-center gap-1">
-            <span aria-hidden className="text-slate-400">📅</span> {event.date}
+            <CalendarDays size={12} strokeWidth={2.2} className="text-slate-400" /> {event.date}
           </span>
           <span className="flex items-center gap-1">
-            <span aria-hidden className="text-slate-400">{event.location === 'Online' ? '🌐' : '📍'}</span> {event.location}
+            {event.location === 'Online' ? <Globe2 size={12} strokeWidth={2.2} className="text-slate-400" /> : <MapPin size={12} strokeWidth={2.2} className="text-slate-400" />} {event.location}
           </span>
         </div>
         <div className="mt-2.5 flex flex-wrap gap-1">
@@ -258,7 +337,7 @@ function EventCard({ event, onSelect }) {
         </div>
         <div className="mt-auto flex items-center gap-2 border-t border-slate-100 pt-2.5">
           <span className="flex items-center gap-1 text-xs text-slate-500">
-            <span aria-hidden>👥</span> {event.goingCount} {event.goingLabel}
+            <Users size={12} strokeWidth={2.2} /> {event.goingCount} {event.goingLabel}
           </span>
         </div>
       </div>
@@ -290,7 +369,17 @@ function UpcomingItem({ item, onSelect }) {
         <div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-0.5 text-xs text-slate-500">
           {item.meta.map((m, i) => (
             <span key={i} className="flex items-center gap-1">
-              <span aria-hidden>{m.icon}</span> {m.text}
+              {typeof m.icon === 'function'
+                ? React.createElement(m.icon, { size: 12, strokeWidth: 2.2 })
+                : m.icon === 'location-online'
+                  ? <Globe2 size={12} strokeWidth={2.2} />
+                  : m.icon === 'location'
+                    ? <MapPin size={12} strokeWidth={2.2} />
+                    : m.icon === 'time'
+                      ? <Clock3 size={12} strokeWidth={2.2} />
+                      : m.icon === 'people'
+                        ? <Users size={12} strokeWidth={2.2} />
+                        : <CalendarDays size={12} strokeWidth={2.2} />} {m.text}
             </span>
           ))}
         </div>
@@ -302,7 +391,7 @@ function UpcomingItem({ item, onSelect }) {
           </span>
         )}
         <span className="hidden whitespace-nowrap text-[11px] text-slate-400 sm:inline-flex sm:items-center sm:gap-1">
-          <span aria-hidden>⏰</span> {item.countdown}
+          <Clock3 size={12} strokeWidth={2.2} /> {item.countdown}
         </span>
         <span className={`rounded-full px-3 py-1 text-xs font-medium ${STATUS_PILL_TONE[item.statusTone] ?? STATUS_PILL_TONE.slate}`}>
           {item.status}
@@ -317,7 +406,7 @@ function EventCategoriesSidebar({ categories }) {
   return (
     <div className="rounded-2xl border border-slate-200/80 bg-white p-5">
       <h4 className="mb-4 flex items-center gap-2 text-sm font-bold text-slate-900">
-        <span aria-hidden className="text-violet-600">🗂</span> Event Categories
+        <FileText size={16} strokeWidth={2.2} className="text-violet-600" /> Event Categories
       </h4>
       <div className="space-y-2">
         {categories.map((cat) => (
@@ -325,9 +414,7 @@ function EventCategoriesSidebar({ categories }) {
             key={cat.id}
             className="flex cursor-pointer items-center gap-3 rounded-lg p-2 transition hover:bg-slate-50"
           >
-            <div className={`flex h-8 w-8 items-center justify-center rounded-lg text-sm ${cat.bg}`}>
-              <span aria-hidden>{cat.emoji}</span>
-            </div>
+            <IconTile icon={categoryIconFor(cat)} className={`h-8 w-8 ${cat.bg} border-slate-100`} size={15} />
             <div className="flex-1 min-w-0">
               <p className="text-xs font-semibold text-slate-700">{cat.name}</p>
             </div>
@@ -371,13 +458,13 @@ function matchesSector(event, sectorId) {
 }
 
 const CATEGORY_FILTERS = [
-  { id: 'all', label: 'All Events', emoji: '🗂' },
-  { id: 'hackathons', label: 'Hackathons', emoji: '💻' },
-  { id: 'case-competitions', label: 'Case Competitions', emoji: '🏆' },
-  { id: 'workshops', label: 'Workshops', emoji: '🏫' },
-  { id: 'talks', label: 'Talks', emoji: '🎤' },
-  { id: 'webinars', label: 'Webinars', emoji: '🌐' },
-  { id: 'networking', label: 'Networking', emoji: '🤝' },
+  { id: 'all', label: 'All Events' },
+  { id: 'hackathons', label: 'Hackathons' },
+  { id: 'case-competitions', label: 'Case Competitions' },
+  { id: 'workshops', label: 'Workshops' },
+  { id: 'talks', label: 'Talks' },
+  { id: 'webinars', label: 'Webinars' },
+  { id: 'networking', label: 'Networking' },
 ]
 
 const FORMAT_OPTIONS = ['All', 'Online', 'Physical', 'Hybrid']
@@ -393,7 +480,7 @@ const EXTRA_TRENDING_EVENTS = [
     typeColor: 'teal',
     thumbGradient: 'from-cyan-100 to-teal-200',
     iconBg: 'bg-cyan-500/20',
-    emoji: '🎥',
+    iconKey: 'video',
     org: 'Harvard Business Review',
     title: 'Future of Work: Skills That Matter',
     date: '22 May 2025',
@@ -416,7 +503,7 @@ const EXTRA_TRENDING_EVENTS = [
     typeColor: 'violet',
     thumbGradient: 'from-violet-100 to-indigo-200',
     iconBg: 'bg-violet-500/20',
-    emoji: '💬',
+    iconKey: 'chat',
     org: 'Dr. Sarah Chen (AI Researcher)',
     title: 'The Ethics of AI in the Real World',
     date: '23 May 2025',
@@ -439,7 +526,7 @@ const EXTRA_TRENDING_EVENTS = [
     typeColor: 'amber',
     thumbGradient: 'from-amber-100 to-yellow-200',
     iconBg: 'bg-amber-500/20',
-    emoji: '🚀',
+    iconKey: 'launch',
     org: 'Figma',
     title: 'UI/UX Design Sprint with Figma',
     date: '24 May 2025',
@@ -462,7 +549,7 @@ const EXTRA_TRENDING_EVENTS = [
     typeColor: 'blue',
     thumbGradient: 'from-sky-100 to-blue-200',
     iconBg: 'bg-blue-500/20',
-    emoji: '</>',
+    iconKey: 'code',
     org: 'MLH (Major League Hacking)',
     title: 'Build for Impact Hackathon',
     date: '24-25 May 2025',
@@ -486,7 +573,7 @@ const EXTRA_TRENDING_EVENTS = [
     typeColor: 'rose',
     thumbGradient: 'from-rose-100 to-pink-200',
     iconBg: 'bg-rose-500/15',
-    emoji: '📊',
+    iconKey: 'data',
     org: 'BCG (Boston Consulting Group)',
     title: 'BCG Strategy Case Challenge',
     date: '25 May 2025',
@@ -509,7 +596,7 @@ const EXTRA_TRENDING_EVENTS = [
     typeColor: 'emerald',
     thumbGradient: 'from-emerald-100 to-green-200',
     iconBg: 'bg-emerald-500/20',
-    emoji: '🤝',
+    iconKey: 'partner',
     org: 'Women in Tech Malaysia',
     title: 'Tech Careers Networking Night',
     date: '26 May 2025',
@@ -532,7 +619,7 @@ const EXTRA_TRENDING_EVENTS = [
     typeColor: 'teal',
     thumbGradient: 'from-teal-100 to-emerald-200',
     iconBg: 'bg-teal-500/20',
-    emoji: '🌐',
+    iconKey: 'global',
     org: 'LinkedIn Learning',
     title: 'Breaking into Product Management',
     date: '26 May 2025',
@@ -555,7 +642,7 @@ const EXTRA_TRENDING_EVENTS = [
     typeColor: 'amber',
     thumbGradient: 'from-orange-100 to-amber-200',
     iconBg: 'bg-orange-500/20',
-    emoji: '🔒',
+    iconKey: 'security',
     org: 'Google Cloud',
     title: 'Intro to Cloud Security Workshop',
     date: '28 May 2025',
@@ -581,7 +668,7 @@ const EXTRA_RECOMMENDED_EVENTS = [
     typeColor: 'teal',
     thumbGradient: 'from-teal-100 to-emerald-200',
     iconBg: 'bg-teal-500/20',
-    emoji: '🧩',
+    iconKey: 'puzzle',
     org: 'Product School',
     title: 'Product Analytics Bootcamp',
     date: '25 May 2025',
@@ -604,7 +691,7 @@ const EXTRA_RECOMMENDED_EVENTS = [
     typeColor: 'rose',
     thumbGradient: 'from-rose-100 to-orange-200',
     iconBg: 'bg-rose-500/15',
-    emoji: '📈',
+    iconKey: 'growth',
     org: 'CIMB Future Leaders',
     title: 'Fintech Strategy Case Challenge',
     date: '27 May 2025',
@@ -627,7 +714,7 @@ const EXTRA_RECOMMENDED_EVENTS = [
     typeColor: 'blue',
     thumbGradient: 'from-blue-100 to-indigo-200',
     iconBg: 'bg-blue-500/20',
-    emoji: '🎙️',
+    iconKey: 'mic',
     org: 'Grab Data Guild',
     title: 'From SQL to Business Impact',
     date: '29 May 2025',
@@ -650,7 +737,7 @@ const EXTRA_RECOMMENDED_EVENTS = [
     typeColor: 'emerald',
     thumbGradient: 'from-emerald-100 to-teal-200',
     iconBg: 'bg-emerald-500/20',
-    emoji: '☕',
+    iconKey: 'coffee',
     org: 'Taylor Alumni Network',
     title: 'Analytics Alumni Coffee Chats',
     date: '30 May 2025',
@@ -673,7 +760,7 @@ const EXTRA_RECOMMENDED_EVENTS = [
     typeColor: 'teal',
     thumbGradient: 'from-cyan-100 to-blue-200',
     iconBg: 'bg-cyan-500/20',
-    emoji: '🩺',
+    iconKey: 'health',
     org: 'HealthTech Malaysia',
     title: 'Data Careers in Digital Healthcare',
     date: '1 Jun 2025',
@@ -696,7 +783,7 @@ const EXTRA_RECOMMENDED_EVENTS = [
     typeColor: 'violet',
     thumbGradient: 'from-violet-100 to-fuchsia-200',
     iconBg: 'bg-violet-500/20',
-    emoji: '💻',
+    iconKey: 'laptop',
     org: 'AWS Cloud Club',
     title: 'Serverless Student Build Day',
     date: '3 Jun 2025',
@@ -764,7 +851,7 @@ function normalizeRecommendedEvent(event, index) {
       typeColor: event.typeColor ?? (normalizedType === 'Hackathon' ? 'violet' : 'teal'),
       thumbGradient: event.thumbGradient ?? 'from-violet-100 to-indigo-200',
       iconBg: event.iconBg ?? 'bg-violet-500/20',
-      emoji: event.emoji ?? '✨',
+      iconKey: event.iconKey,
       date: event.date?.replace('· Offline', '2025').replace('· Online', '2025') ?? 'Upcoming',
       location: locationText === 'Offline' ? 'Kuala Lumpur' : locationText,
       goingCount: event.goingCount ?? (isFeatured ? 1250 : 180 + index * 37),
@@ -904,20 +991,18 @@ function TrendingModalCard({ event, index, onSelect }) {
             {event.isHot ? 'Hot' : 'New'}
           </span>
         )}
-        <div className={`flex h-12 w-12 items-center justify-center rounded-xl text-xl ${event.iconBg}`}>
-          <span aria-hidden>{event.emoji}</span>
-        </div>
+        <IconTile icon={eventIconFor(event)} className={`h-12 w-12 ${event.iconBg} border-slate-100`} size={21} />
       </div>
       <div className="flex flex-1 flex-col p-4">
         <p className="truncate text-[11px] font-semibold text-slate-400">{event.org}</p>
         <h4 className="mt-1 line-clamp-2 min-h-[40px] text-sm font-bold leading-tight text-slate-950">{event.title}</h4>
         <div className="mt-3 space-y-1 text-xs text-slate-600">
           <p className="flex items-center gap-1.5">
-            <span aria-hidden className="text-blue-500">▣</span>
+            <CalendarDays size={12} strokeWidth={2.2} className="text-blue-500" />
             {event.date}
           </p>
           <p className="flex items-center gap-1.5">
-            <span aria-hidden className="text-blue-500">⌖</span>
+            {event.location?.toLowerCase().includes('online') ? <Globe2 size={12} strokeWidth={2.2} className="text-blue-500" /> : <MapPin size={12} strokeWidth={2.2} className="text-blue-500" />}
             {event.location}
           </p>
         </div>
@@ -1008,7 +1093,7 @@ function AllTrendingEventsModal({
         <div className="flex items-start gap-4">
           <div className="flex-1">
             <h2 id="event-discovery-modal-title" className="flex items-center gap-2 text-xl font-extrabold text-slate-950 sm:text-2xl">
-              <span aria-hidden>{icon}</span>
+              {typeof icon === 'string' ? <Sparkles size={21} strokeWidth={2.2} className="text-violet-600" /> : icon}
               {title}
             </h2>
             <p className="mt-2 text-sm text-slate-500">{subtitle}</p>
@@ -1033,7 +1118,7 @@ function AllTrendingEventsModal({
               placeholder="Search events, organizers, categories, skills..."
               className="h-11 w-full rounded-xl border border-slate-200 bg-white pl-4 pr-10 text-sm outline-none transition placeholder:text-slate-400 focus:border-violet-400 focus:ring-4 focus:ring-violet-50"
             />
-            <span aria-hidden className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400">⌕</span>
+            <Search size={16} strokeWidth={2.2} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400" />
           </label>
           <FilterSelect label="Sort by" value={sort} options={SORT_OPTIONS} onChange={setSort} />
         </div>
@@ -1176,9 +1261,9 @@ export default function EventHub() {
           statusTone: statusToneMap[event.status] || 'slate',
           countdown,
           meta: [
-            { icon: event.location.toLowerCase().includes('online') ? '🌐' : '📍', text: event.location },
-            { icon: '🕘', text: event.time },
-            { icon: '👥', text: event.status === 'Registered' ? '1,250 going' : '842 going' }
+            { icon: event.location.toLowerCase().includes('online') ? 'location-online' : 'location', text: event.location },
+            { icon: 'time', text: event.time },
+            { icon: 'people', text: event.status === 'Registered' ? '1,250 going' : '842 going' }
           ]
         };
       });
@@ -1214,7 +1299,7 @@ export default function EventHub() {
 
       <section>
         <SectionHeader
-          icon="✨"
+          icon={<Sparkles size={21} strokeWidth={2.2} className="text-violet-600" />}
           title="Discover Events"
           count={`${unifiedFeed.length} ${unifiedFeed.length === 1 ? 'event' : 'events'}`}
           link="View all events"
@@ -1260,7 +1345,7 @@ export default function EventHub() {
         events={allEventsForModal}
         onSelect={openDetail}
         title="All Events"
-        icon="✨"
+        icon={<Sparkles size={21} strokeWidth={2.2} className="text-violet-600" />}
         subtitle="Browse all events matched to your skills, goals, and career direction."
       />
 

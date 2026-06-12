@@ -1,4 +1,28 @@
 import React, { useState } from 'react'
+import {
+  Bookmark,
+  Briefcase,
+  Building2,
+  CalendarDays,
+  Check,
+  ClipboardCheck,
+  Clock3,
+  ExternalLink,
+  FileText,
+  Globe2,
+  Gavel,
+  Info,
+  MapPin,
+  Mic,
+  Rocket,
+  Share2,
+  Sparkles,
+  Tag,
+  Target,
+  Trophy,
+  Users,
+  Zap,
+} from 'lucide-react'
 import { eventDetailDefault } from '../../data/mockData'
 
 // All "body" content (tags, agenda, prizes, etc.) is read from `detail`.
@@ -42,12 +66,24 @@ function ContentCard({ title, icon, children, className = '' }) {
     <section className={`rounded-2xl border border-slate-100 bg-white p-5 shadow-[0_4px_16px_rgba(108,99,255,0.06)] ${className}`}>
       {title && (
         <h3 className="mb-3 flex items-center gap-2 text-sm font-bold text-slate-900">
-          {icon && <span aria-hidden>{icon}</span>}
+          {icon && <span className="inline-flex items-center text-violet-600">{icon}</span>}
           {title}
         </h3>
       )}
       {children}
     </section>
+  )
+}
+
+function InlineIcon({ icon: Icon, className = 'text-slate-400', size = 14 }) {
+  return <Icon size={size} strokeWidth={2.2} className={className} />
+}
+
+function SoftIcon({ icon: Icon, className = 'border-violet-100 bg-violet-50 text-violet-600', size = 18 }) {
+  return (
+    <span className={`inline-flex shrink-0 items-center justify-center rounded-xl border ${className}`}>
+      <Icon size={size} strokeWidth={2.2} />
+    </span>
   )
 }
 
@@ -71,16 +107,16 @@ function Hero({ event, onBack }) {
       <div className="relative z-10 max-w-3xl">
         <div className="flex flex-wrap items-center gap-2">
           <span className="inline-flex items-center gap-1.5 rounded-full bg-white/20 px-3 py-1 text-xs font-semibold backdrop-blur">
-            <span aria-hidden>🏷</span> {event.type ?? 'Event'}
+            <InlineIcon icon={Tag} className="text-white/70" size={13} /> {event.type ?? 'Event'}
           </span>
           {event.org && (
             <span className="inline-flex items-center gap-1.5 rounded-full bg-white/15 px-3 py-1 text-xs font-medium backdrop-blur">
-              <span aria-hidden>🏢</span> {event.org}
+              <InlineIcon icon={Building2} className="text-white/70" size={13} /> {event.org}
             </span>
           )}
           {event.isHot && (
             <span className="inline-flex items-center gap-1 rounded-full bg-rose-500/90 px-2.5 py-1 text-[11px] font-bold uppercase tracking-wide">
-              🔥 Trending
+              <Zap size={11} fill="currentColor" strokeWidth={2.2} /> Trending
             </span>
           )}
           {event.matchPercent != null && (
@@ -95,22 +131,22 @@ function Hero({ event, onBack }) {
         <div className="mt-4 flex flex-wrap gap-x-5 gap-y-2 text-sm text-white/90">
           {event.date && (
             <span className="flex items-center gap-1.5">
-              <span aria-hidden className="text-white/60">📅</span> {event.date}
+              <InlineIcon icon={CalendarDays} className="text-white/60" /> {event.date}
             </span>
           )}
           {event.time && (
             <span className="flex items-center gap-1.5">
-              <span aria-hidden className="text-white/60">🕘</span> {event.time}
+              <InlineIcon icon={Clock3} className="text-white/60" /> {event.time}
             </span>
           )}
           {event.location && (
             <span className="flex items-center gap-1.5">
-              <span aria-hidden className="text-white/60">{event.location.toLowerCase().includes('online') ? '🌐' : '📍'}</span> {event.location}
+              <InlineIcon icon={event.location.toLowerCase().includes('online') ? Globe2 : MapPin} className="text-white/60" /> {event.location}
             </span>
           )}
           {event.goingCount != null && (
             <span className="flex items-center gap-1.5">
-              <span aria-hidden className="text-white/60">👥</span> {event.goingCount} {event.goingLabel ?? 'going'}
+              <InlineIcon icon={Users} className="text-white/60" /> {event.goingCount} {event.goingLabel ?? 'going'}
             </span>
           )}
         </div>
@@ -152,21 +188,21 @@ function OverviewTab({ detail }) {
 
   return (
     <div className="space-y-4">
-      <ContentCard title="Tags & Topics" icon="🏷">
+      <ContentCard title="Tags & Topics" icon={<Tag size={16} strokeWidth={2.2} />}>
         <div className="flex flex-wrap gap-2">
           {detail.tags.map((tag) => (
             <span
               key={tag.label}
               className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold ${TAG_TONE[tag.tone] ?? TAG_TONE.neutral}`}
             >
-              {tag.emoji && <span aria-hidden>{tag.emoji}</span>}
+              <Tag size={12} strokeWidth={2.2} />
               {tag.label}
             </span>
           ))}
         </div>
       </ContentCard>
 
-      <ContentCard title="About this Event" icon="ℹ️">
+      <ContentCard title="About this Event" icon={<Info size={16} strokeWidth={2.2} />}>
         <div className="space-y-3 text-sm leading-relaxed text-slate-600">
           {detail.description.map((paragraph, i) => (
             <p key={i}>{paragraph}</p>
@@ -174,11 +210,11 @@ function OverviewTab({ detail }) {
         </div>
       </ContentCard>
 
-      <ContentCard title="What You'll Need" icon="✅">
+      <ContentCard title="What You'll Need" icon={<Check size={16} strokeWidth={2.2} />}>
         <div className="space-y-2.5">
           {detail.requirements.map((req, i) => (
             <div key={i} className="flex items-start gap-3">
-              <span aria-hidden className="text-lg">{req.emoji}</span>
+              <SoftIcon icon={ClipboardCheck} className="h-8 w-8 border-emerald-100 bg-emerald-50 text-emerald-600" size={15} />
               <p className="text-sm text-slate-600">
                 <strong className="text-slate-900">{req.strong}</strong> · {req.text}
               </p>
@@ -187,7 +223,7 @@ function OverviewTab({ detail }) {
         </div>
       </ContentCard>
 
-      <ContentCard title="Pre-event Checklist" icon="📋">
+      <ContentCard title="Pre-event Checklist" icon={<ClipboardCheck size={16} strokeWidth={2.2} />}>
         <div className="space-y-2">
           {checklist.map((item) => (
             <button
@@ -201,7 +237,7 @@ function OverviewTab({ detail }) {
                   item.done ? 'border-violet-600 bg-violet-600 text-white' : 'border-slate-300 text-transparent'
                 }`}
               >
-                ✓
+                <Check size={12} strokeWidth={2.2} />
               </span>
               <span className={`text-sm ${item.done ? 'text-slate-400 line-through' : 'text-slate-700'}`}>
                 {item.label}
@@ -211,7 +247,7 @@ function OverviewTab({ detail }) {
         </div>
       </ContentCard>
 
-      <ContentCard title="Skills You'll Build" icon="📊">
+      <ContentCard title="Skills You'll Build" icon={<Target size={16} strokeWidth={2.2} />}>
         <div className="space-y-3">
           {detail.skillsToBuild.map((skill) => (
             <div key={skill.name}>
@@ -227,16 +263,14 @@ function OverviewTab({ detail }) {
         </div>
       </ContentCard>
 
-      <ContentCard title="Organiser" icon="🏢">
+      <ContentCard title="Organiser" icon={<Building2 size={16} strokeWidth={2.2} />}>
         <div className="flex items-center gap-3">
-          <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-violet-50 text-2xl">
-            <span aria-hidden>{detail.organiser.emoji}</span>
-          </div>
+          <SoftIcon icon={Building2} className="h-12 w-12 border-violet-100 bg-violet-50 text-violet-600" size={22} />
           <div className="flex-1">
             <p className="text-sm font-bold text-slate-900">{detail.organiser.name}</p>
             <div className="mt-0.5 flex gap-3 text-xs text-slate-500">
-              <span>📅 {detail.organiser.pastEvents} past events</span>
-              <span>👥 {detail.organiser.followers} followers</span>
+              <span className="inline-flex items-center gap-1"><CalendarDays size={12} strokeWidth={2.2} /> {detail.organiser.pastEvents} past events</span>
+              <span className="inline-flex items-center gap-1"><Users size={12} strokeWidth={2.2} /> {detail.organiser.followers} followers</span>
             </div>
           </div>
           <button
@@ -256,7 +290,7 @@ function AgendaTab({ detail }) {
   return (
     <div className="space-y-4">
       {detail.agenda.map((day) => (
-        <ContentCard key={day.day} title={day.day} icon="🗓">
+        <ContentCard key={day.day} title={day.day} icon={<CalendarDays size={16} strokeWidth={2.2} />}>
           <div className="space-y-3">
             {day.items.map((item, i) => (
               <div key={i} className="flex gap-4">
@@ -302,7 +336,7 @@ function AgendaTab({ detail }) {
 // ─── prizes tab ────────────────────────────────────────────────────────
 function PrizesTab({ detail }) {
   return (
-    <ContentCard title={detail.prizes.title} icon="🏆">
+    <ContentCard title={detail.prizes.title} icon={<Trophy size={16} strokeWidth={2.2} />}>
       <div className="grid gap-3 sm:grid-cols-3">
         {detail.prizes.top.map((prize) => (
           <div
@@ -350,21 +384,21 @@ function PersonCard({ person }) {
 function PeopleTab({ detail }) {
   return (
     <div className="space-y-4">
-      <ContentCard title="Keynote Speaker" icon="🎤">
+      <ContentCard title="Keynote Speaker" icon={<Mic size={16} strokeWidth={2.2} />}>
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {detail.people.speakers.map((p) => (
             <PersonCard key={p.name} person={p} />
           ))}
         </div>
       </ContentCard>
-      <ContentCard title="Judges" icon="⚖️">
+      <ContentCard title="Judges" icon={<Gavel size={16} strokeWidth={2.2} />}>
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {detail.people.judges.map((p) => (
             <PersonCard key={p.name} person={p} />
           ))}
         </div>
       </ContentCard>
-      <ContentCard title="Mentors" icon="👥">
+      <ContentCard title="Mentors" icon={<Users size={16} strokeWidth={2.2} />}>
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {detail.people.mentors.map((p) => (
             <PersonCard key={p.name} person={p} />
@@ -380,7 +414,7 @@ function VenueTab({ detail }) {
   const { formatCards, chips, inPerson } = detail.venue
   return (
     <div className="space-y-4">
-      <ContentCard title="Event Format" icon="🌐">
+      <ContentCard title="Event Format" icon={<Globe2 size={16} strokeWidth={2.2} />}>
         <div className="grid gap-3 sm:grid-cols-2">
           {formatCards.map((card) => (
             <div
@@ -389,7 +423,7 @@ function VenueTab({ detail }) {
                 card.highlight ? 'border-violet-200 bg-violet-50' : 'border-slate-100 bg-slate-50'
               }`}
             >
-              <div className="text-2xl">{card.emoji}</div>
+              <SoftIcon icon={card.title?.toLowerCase().includes('online') ? Globe2 : MapPin} className={`h-10 w-10 ${card.highlight ? 'border-violet-100 bg-violet-100 text-violet-700' : 'border-slate-200 bg-white text-slate-500'}`} size={18} />
               <p className={`mt-2 text-sm font-bold ${card.highlight ? 'text-violet-700' : 'text-slate-900'}`}>
                 {card.title}
               </p>
@@ -403,24 +437,24 @@ function VenueTab({ detail }) {
               key={chip.label}
               className="inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-slate-600"
             >
-              <span aria-hidden>{chip.emoji}</span> {chip.label}
+              <Tag size={12} strokeWidth={2.2} /> {chip.label}
             </span>
           ))}
         </div>
       </ContentCard>
 
-      <ContentCard title={inPerson.title} icon="📍">
+      <ContentCard title={inPerson.title} icon={<MapPin size={16} strokeWidth={2.2} />}>
         <div className="relative flex h-44 items-center justify-center overflow-hidden rounded-xl border border-slate-100 bg-[linear-gradient(135deg,#ede9fe,#fce7f3)]">
           <div className="absolute inset-0 opacity-25 [background-image:radial-gradient(rgba(108,99,255,0.5)_1px,transparent_1px)] [background-size:18px_18px]" />
           <div className="relative flex flex-col items-center gap-2 text-center">
             <span className="flex h-12 w-12 items-center justify-center rounded-full bg-violet-600 text-2xl text-white shadow-lg">
-              📍
+              <MapPin size={22} strokeWidth={2.2} />
             </span>
             <button
               type="button"
               className="rounded-full bg-white px-3 py-1 text-xs font-semibold text-violet-600 shadow-sm hover:bg-slate-50"
             >
-              ↗ Open in Maps
+              <ExternalLink size={12} strokeWidth={2.2} className="mr-1 inline" /> Open in Maps
             </button>
           </div>
         </div>
@@ -430,7 +464,7 @@ function VenueTab({ detail }) {
               key={chip.label}
               className="inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-slate-600"
             >
-              <span aria-hidden>{chip.emoji}</span> {chip.label}
+              <Tag size={12} strokeWidth={2.2} /> {chip.label}
             </span>
           ))}
         </div>
@@ -454,7 +488,7 @@ function RegisterCard({ event, detail }) {
         <span className="text-xs text-slate-500">{reg.priceLabel}</span>
       </div>
       <p className="mt-1 flex items-center gap-1 text-xs text-slate-500">
-        <span aria-hidden>🕘</span> Registration closes <strong className="ml-1 text-rose-500">{reg.registrationDeadline}</strong>
+        <Clock3 size={12} strokeWidth={2.2} /> Registration closes <strong className="ml-1 text-rose-500">{reg.registrationDeadline}</strong>
       </p>
       <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-slate-100">
         <div className="h-full rounded-full bg-gradient-to-r from-violet-500 to-pink-500" style={{ width: `${seatsPercent}%` }} />
@@ -469,8 +503,8 @@ function RegisterCard({ event, detail }) {
       <div className="space-y-3">
         {reg.details.map((d) => (
           <div key={d.label} className="flex items-start gap-3">
-            <div className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-lg ${TINT_BG[d.tint] ?? TINT_BG.violet}`}>
-              <span aria-hidden>{d.icon}</span>
+            <div className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-lg ${TINT_BG[d.tint] ?? TINT_BG.violet}`}>
+              <CalendarDays size={16} strokeWidth={2.2} />
             </div>
             <div className="min-w-0">
               <p className="text-[10px] font-semibold uppercase tracking-wide text-slate-400">{d.label}</p>
@@ -484,7 +518,7 @@ function RegisterCard({ event, detail }) {
       <div className="my-4 border-t border-slate-100" />
 
       <div className="rounded-lg bg-amber-50 px-3 py-2 text-xs text-amber-700">
-        <span aria-hidden>⏰</span> {reg.deadlineNote}
+        <Clock3 size={13} strokeWidth={2.2} className="mr-1 inline" /> {reg.deadlineNote}
       </div>
       <button
         type="button"
@@ -495,7 +529,7 @@ function RegisterCard({ event, detail }) {
             : 'bg-gradient-to-r from-violet-600 to-pink-500 text-white shadow-md hover:shadow-lg'
         }`}
       >
-        <span aria-hidden>{registered ? '✓' : '⚡'}</span>
+        {registered ? <Check size={15} strokeWidth={2.2} /> : <Zap size={15} strokeWidth={2.2} />}
         {registered ? 'Registered!' : 'Register Now'}
       </button>
       <div className="mt-2 flex gap-2">
@@ -506,13 +540,13 @@ function RegisterCard({ event, detail }) {
             saved ? 'border-violet-300 bg-violet-50 text-violet-700' : 'border-slate-200 text-slate-600 hover:border-slate-300'
           }`}
         >
-          <span aria-hidden>{saved ? '🔖' : '🏷'}</span> {saved ? 'Saved' : 'Save'}
+          {saved ? <Bookmark size={14} fill="currentColor" strokeWidth={2.2} /> : <Bookmark size={14} strokeWidth={2.2} />} {saved ? 'Saved' : 'Save'}
         </button>
         <button
           type="button"
           className="rounded-xl border border-slate-200 px-3 py-2 text-sm font-semibold text-slate-600 transition hover:border-slate-300"
         >
-          <span aria-hidden>↗</span>
+          <Share2 size={14} strokeWidth={2.2} />
         </button>
       </div>
 
@@ -563,7 +597,7 @@ function MatchScore({ matchPercent, score }) {
   return (
     <div className="rounded-2xl border border-slate-100 bg-white p-4 shadow-[0_4px_16px_rgba(108,99,255,0.06)]">
       <div className="mb-3 flex items-center gap-3">
-        <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-emerald-50 text-lg">🎯</div>
+        <SoftIcon icon={Target} className="h-9 w-9 border-emerald-100 bg-emerald-50 text-emerald-600" size={17} />
         <div>
           <p className="text-sm font-bold text-slate-900">{matchPercent ?? score.percent}% Match for you</p>
           <p className="text-xs text-slate-400">{score.sub}</p>
@@ -575,7 +609,7 @@ function MatchScore({ matchPercent, score }) {
             key={i}
             className={`flex items-center gap-2 text-xs ${r.positive ? 'text-emerald-600' : 'text-slate-400'}`}
           >
-            <span aria-hidden>{r.positive ? '✓' : '–'}</span> {r.text}
+            {r.positive ? <Check size={12} strokeWidth={2.2} /> : <span aria-hidden>-</span>} {r.text}
           </p>
         ))}
       </div>
@@ -586,20 +620,18 @@ function MatchScore({ matchPercent, score }) {
 // ─── related events ───────────────────────────────────────────────────
 function RelatedEvents({ items }) {
   return (
-    <ContentCard title="You might also like" icon="✨">
+    <ContentCard title="You might also like" icon={<Sparkles size={16} strokeWidth={2.2} />}>
       <div className="grid gap-3 sm:grid-cols-3">
         {items.map((item) => (
           <div
             key={item.id}
             className="flex cursor-pointer items-center gap-3 rounded-xl border border-slate-100 bg-white p-2.5 transition hover:-translate-y-0.5 hover:shadow-sm"
           >
-            <div className={`flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-to-br text-xl ${item.gradient}`}>
-              {item.emoji}
-            </div>
+            <SoftIcon icon={CalendarDays} className={`h-12 w-12 border-slate-100 bg-gradient-to-br text-white ${item.gradient}`} size={20} />
             <div className="min-w-0 flex-1">
               <p className="truncate text-sm font-bold text-slate-900">{item.title}</p>
               <p className="mt-0.5 flex items-center gap-1.5 text-[11px] text-slate-500">
-                <span aria-hidden>📅</span> {item.date}
+                <CalendarDays size={12} strokeWidth={2.2} /> {item.date}
                 {item.matchPercent != null && (
                   <span className="ml-auto rounded-full bg-emerald-50 px-2 py-0.5 text-[10px] font-semibold text-emerald-600">
                     {item.matchPercent}%

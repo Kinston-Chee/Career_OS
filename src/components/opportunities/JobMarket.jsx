@@ -1,5 +1,67 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react'
+import {
+  AlertTriangle,
+  BarChart3,
+  Bookmark,
+  Briefcase,
+  Building2,
+  CalendarDays,
+  Check,
+  ChevronDown,
+  Clock3,
+  Code2,
+  Database,
+  Filter,
+  Globe2,
+  GraduationCap,
+  LineChart,
+  MapPin,
+  RefreshCw,
+  Rocket,
+  Search,
+  Sparkles,
+  Tag,
+  Target,
+  TrendingUp,
+} from 'lucide-react'
 import { jobMarket } from '../../data/mockData'
+
+const sectorIconMap = {
+  technology: Code2,
+  analytics: BarChart3,
+  finance: LineChart,
+  consulting: Briefcase,
+  healthcare: GraduationCap,
+  education: GraduationCap,
+  engineering: Building2,
+}
+
+const roleIconMap = {
+  data: BarChart3,
+  software: Code2,
+  analyst: LineChart,
+  engineer: Database,
+  product: Target,
+  consultant: Briefcase,
+}
+
+function IconTile({ icon: Icon = Briefcase, className = 'h-9 w-9 bg-violet-50 text-violet-600 border-violet-100', size = 18 }) {
+  return (
+    <span className={`inline-flex shrink-0 items-center justify-center rounded-xl border ${className}`}>
+      <Icon size={size} strokeWidth={2.2} />
+    </span>
+  )
+}
+
+function sectorIconFor(sector) {
+  return sectorIconMap[sector.id] ?? sectorIconMap[sector.slug] ?? Building2
+}
+
+function roleIconFor(item) {
+  const text = `${item.title ?? ''} ${item.meta ?? ''}`.toLowerCase()
+  const key = Object.keys(roleIconMap).find((candidate) => text.includes(candidate))
+  return key ? roleIconMap[key] : TrendingUp
+}
 
 // All sections read from `jobMarket` in mockData.js. Swap that object with
 // the AI backend response when ready — the components below stay the same.
@@ -9,7 +71,7 @@ function SectionHeader({ icon, title, count, link, accent = 'text-violet-600' })
   return (
     <div className="mb-4 flex items-center gap-2">
       <h3 className="flex items-center gap-2 text-base font-bold text-slate-900">
-        {icon && <span className={`text-lg ${accent}`}>{icon}</span>}
+        {icon && <span className={`inline-flex items-center ${accent}`}>{icon}</span>}
         {title}
       </h3>
       {count && (
@@ -64,9 +126,7 @@ function SectorFilterModal({ sectors, committed, onApply, onClose }) {
                     : 'border-slate-200 bg-white hover:border-violet-200 hover:bg-slate-50'
                 }`}
               >
-                <div className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-xl ${sector.iconBg}`}>
-                  <span aria-hidden>{sector.emoji}</span>
-                </div>
+                <IconTile icon={sectorIconFor(sector)} className={`h-9 w-9 ${sector.iconBg} border-slate-100`} />
                 <div className="min-w-0 flex-1">
                   <p className="truncate text-sm font-semibold text-slate-900">{sector.name}</p>
                   <p className="text-xs text-slate-500">{sector.count} roles</p>
@@ -122,7 +182,7 @@ function SearchAndSectorBar({ search, onSearch, committed, onApplyCommitted, sec
   return (
     <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
       <div className="relative flex-1">
-        <span aria-hidden className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">🔍</span>
+        <Search size={16} strokeWidth={2.2} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
         <input
           type="search"
           value={search}
@@ -153,14 +213,14 @@ function SearchAndSectorBar({ search, onSearch, committed, onApplyCommitted, sec
               : 'border-slate-200 bg-white text-slate-600 hover:border-violet-300'
           }`}
         >
-          <span aria-hidden>🏢</span>
+          <Filter size={16} strokeWidth={2.2} />
           <span>Sectors</span>
           {committed.size > 0 && (
             <span className="inline-flex h-5 min-w-[20px] items-center justify-center rounded-full bg-violet-600 px-1.5 text-[11px] font-bold text-white">
               {committed.size}
             </span>
           )}
-          <span aria-hidden className={`text-[10px] transition-transform ${open ? 'rotate-180' : ''}`}>▼</span>
+          <ChevronDown size={14} strokeWidth={2.2} className={`transition-transform ${open ? 'rotate-180' : ''}`} />
         </button>
         {open && (
           <SectorFilterModal
@@ -186,7 +246,7 @@ function ClosingSoonStrip({ items }) {
   return (
     <div className="flex items-center gap-3 rounded-xl border border-rose-200/80 bg-gradient-to-r from-rose-50/80 to-amber-50/60 p-3.5">
       <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-rose-100 text-rose-600">
-        <span aria-hidden className="text-sm">⏰</span>
+        <Clock3 size={15} strokeWidth={2.2} />
       </div>
       <div className="flex-1 min-w-0">
         <p className="text-sm font-semibold text-rose-900">
@@ -206,7 +266,7 @@ function ClosingSoonStrip({ items }) {
                 : 'bg-amber-100 text-amber-800'
             }`}
           >
-            {item.daysLeft <= 1 ? '⚠ Apply Now' : `${item.daysLeft} days left`}
+            {item.daysLeft <= 1 ? 'Apply Now' : `${item.daysLeft} days left`}
           </span>
         ))}
       </div>
@@ -224,9 +284,7 @@ function JobCardLarge({ job }) {
       <div className="grid gap-0 sm:grid-cols-[minmax(0,1fr)_200px]">
         <div className="space-y-3 p-5">
           <div className="flex items-start gap-3">
-            <div className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl text-xl ${job.logoBg}`}>
-              <span aria-hidden>{job.logoEmoji}</span>
-            </div>
+            <IconTile icon={Building2} className={`h-11 w-11 ${job.logoBg} border-slate-100`} size={20} />
             <div className="min-w-0 flex-1">
               <p className="truncate text-xs font-medium text-slate-500">
                 {job.company} · {job.location}
@@ -241,15 +299,15 @@ function JobCardLarge({ job }) {
                 saved ? 'bg-violet-100 text-violet-600' : 'text-slate-400 hover:bg-slate-50 hover:text-violet-600'
               }`}
             >
-              {saved ? '🔖' : '🏷'}
+              {saved ? <Bookmark size={16} fill="currentColor" strokeWidth={2.2} /> : <Bookmark size={16} strokeWidth={2.2} />}
             </button>
           </div>
 
           <div className="flex flex-wrap gap-1.5">
             {[
-              { icon: '🏷', text: job.type },
-              { icon: job.workMode === 'Remote' ? '🌐' : '📍', text: job.workMode },
-              job.duration && { icon: '📅', text: job.duration },
+              { icon: Tag, text: job.type },
+              { icon: job.workMode === 'Remote' ? Globe2 : MapPin, text: job.workMode },
+              job.duration && { icon: CalendarDays, text: job.duration },
             ]
               .filter(Boolean)
               .map((chip, i) => (
@@ -257,7 +315,7 @@ function JobCardLarge({ job }) {
                   key={i}
                   className="inline-flex items-center gap-1 rounded-full border border-slate-200 bg-white px-2.5 py-0.5 text-[11px] font-medium text-slate-600"
                 >
-                  <span aria-hidden>{chip.icon}</span> {chip.text}
+                  <chip.icon size={12} strokeWidth={2.2} /> {chip.text}
                 </span>
               ))}
           </div>
@@ -275,16 +333,16 @@ function JobCardLarge({ job }) {
           <div className="flex flex-wrap items-center gap-2 pt-1">
             {job.isNew && (
               <span className="inline-flex items-center gap-1 rounded-full bg-violet-100 px-2 py-0.5 text-[11px] font-semibold text-violet-700">
-                <span aria-hidden>✨</span> Just posted
+                <Sparkles size={12} strokeWidth={2.2} /> Just posted
               </span>
             )}
             {job.expiringNote && (
               <span className="inline-flex items-center gap-1 rounded-full bg-rose-100 px-2 py-0.5 text-[11px] font-semibold text-rose-700">
-                <span aria-hidden>⏰</span> {job.expiringNote}
+                <Clock3 size={12} strokeWidth={2.2} /> {job.expiringNote}
               </span>
             )}
             <span className="flex items-center gap-1 text-xs text-slate-400">
-              <span aria-hidden>🕘</span> {job.timeAgo}
+              <Clock3 size={12} strokeWidth={2.2} /> {job.timeAgo}
             </span>
             <span className="ml-auto rounded-full bg-emerald-50 px-2.5 py-0.5 text-[11px] font-bold text-emerald-600">
               {job.matchPercent}% Match
@@ -308,7 +366,7 @@ function JobCardLarge({ job }) {
                 job.daysLeft <= 3 ? 'text-rose-500' : 'text-slate-500'
               }`}
             >
-              {job.daysLeft <= 3 && '⚠ '}
+              {job.daysLeft <= 3 && <AlertTriangle size={12} strokeWidth={2.2} className="mr-1 inline" />}
               {job.daysLeft} days left
             </p>
           </div>
@@ -321,7 +379,7 @@ function JobCardLarge({ job }) {
                 : 'bg-gradient-to-r from-violet-600 to-pink-500 text-white shadow-sm hover:shadow-md'
             }`}
           >
-            <span aria-hidden>{applied ? '✓' : '🚀'}</span>
+            {applied ? <Check size={15} strokeWidth={2.2} /> : <Rocket size={15} strokeWidth={2.2} />}
             {applied ? 'Applied' : 'Apply Now'}
           </button>
         </div>
@@ -338,9 +396,7 @@ function JobCardSmall({ job }) {
       <div className={`h-1 w-full bg-gradient-to-r ${job.accentGradient}`} />
       <div className="space-y-2 p-4">
         <div className="flex items-start gap-2.5">
-          <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-lg ${job.logoBg}`}>
-            <span aria-hidden>{job.logoEmoji}</span>
-          </div>
+          <IconTile icon={Building2} className={`h-10 w-10 ${job.logoBg} border-slate-100`} size={18} />
           <div className="min-w-0 flex-1">
             <p className="truncate text-[11px] font-medium text-slate-500">
               {job.company} · {job.location}
@@ -355,15 +411,15 @@ function JobCardSmall({ job }) {
               saved ? 'bg-violet-100 text-violet-600' : 'text-slate-400 hover:bg-slate-50 hover:text-violet-600'
             }`}
           >
-            {saved ? '🔖' : '🏷'}
+            {saved ? <Bookmark size={15} fill="currentColor" strokeWidth={2.2} /> : <Bookmark size={15} strokeWidth={2.2} />}
           </button>
         </div>
         <div className="flex flex-wrap gap-1.5">
           <span className="inline-flex items-center gap-1 rounded-full border border-slate-200 bg-white px-2 py-0.5 text-[10px] font-medium text-slate-600">
-            <span aria-hidden>🏷</span> {job.type}
+            <Tag size={11} strokeWidth={2.2} /> {job.type}
           </span>
           <span className="inline-flex items-center gap-1 rounded-full border border-slate-200 bg-white px-2 py-0.5 text-[10px] font-medium text-slate-600">
-            <span aria-hidden>{job.workMode === 'Remote' ? '🌐' : '📍'}</span> {job.workMode}
+            {job.workMode === 'Remote' ? <Globe2 size={11} strokeWidth={2.2} /> : <MapPin size={11} strokeWidth={2.2} />} {job.workMode}
           </span>
         </div>
         <div className="flex flex-wrap gap-1.5">
@@ -376,11 +432,11 @@ function JobCardSmall({ job }) {
         <div className="flex items-center gap-2 border-t border-slate-100 pt-2">
           {job.isNew && (
             <span className="inline-flex items-center gap-1 rounded-full bg-violet-100 px-1.5 py-0.5 text-[10px] font-semibold text-violet-700">
-              <span aria-hidden>✨</span> New
+              <Sparkles size={11} strokeWidth={2.2} /> New
             </span>
           )}
           <span className="flex items-center gap-1 text-[11px] text-slate-400">
-            <span aria-hidden>🕘</span> {job.timeAgo}
+            <Clock3 size={11} strokeWidth={2.2} /> {job.timeAgo}
           </span>
           {job.matchPercent != null && (
             <span className="ml-auto rounded-full bg-emerald-50 px-2 py-0.5 text-[10px] font-semibold text-emerald-600">
@@ -400,7 +456,7 @@ function MarketPulseSidebar({ skills, trendingRoles }) {
       {/* Skills in Demand */}
       <div className="rounded-2xl border border-slate-200/80 bg-white p-5">
         <h4 className="mb-4 flex items-center gap-2 text-sm font-bold text-slate-900">
-          <span aria-hidden className="text-violet-600">📊</span> Skills in Demand
+          <BarChart3 size={16} strokeWidth={2.2} className="text-violet-600" /> Skills in Demand
         </h4>
         <div className="space-y-3">
           {skills.map((skill) => (
@@ -420,14 +476,12 @@ function MarketPulseSidebar({ skills, trendingRoles }) {
       {/* Trending Roles */}
       <div className="rounded-2xl border border-slate-200/80 bg-white p-5">
         <h4 className="mb-4 flex items-center gap-2 text-sm font-bold text-slate-900">
-          <span aria-hidden className="text-violet-600">📈</span> Trending Roles
+          <TrendingUp size={16} strokeWidth={2.2} className="text-violet-600" /> Trending Roles
         </h4>
         <div className="divide-y divide-slate-100">
           {trendingRoles.map((item) => (
             <div key={item.id} className="flex cursor-pointer items-center gap-3 py-2.5 first:pt-0 last:pb-0">
-              <div className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-lg ${item.bg}`}>
-                <span aria-hidden>{item.emoji}</span>
-              </div>
+              <IconTile icon={roleIconFor(item)} className={`h-9 w-9 ${item.bg} border-slate-100`} />
               <div className="min-w-0 flex-1">
                 <p className="truncate text-sm font-semibold text-slate-900">{item.title}</p>
                 <p className="text-[11px] text-slate-400">{item.meta}</p>
@@ -489,7 +543,7 @@ export default function JobMarket() {
 
       <section>
         <SectionHeader
-          icon="🎯"
+          icon={<Target size={17} strokeWidth={2.2} />}
           title="Best Matches"
           count={`${mostRelevant.length} matches`}
           link="See all"
@@ -507,7 +561,7 @@ export default function JobMarket() {
 
       <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_280px]">
         <section>
-          <SectionHeader icon="✨" title="Latest Postings" count="+340 this week" link="View all" />
+          <SectionHeader icon={<Sparkles size={17} strokeWidth={2.2} />} title="Latest Postings" count="+340 this week" link="View all" />
           {latest.length > 0 ? (
             <>
               <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
@@ -520,7 +574,7 @@ export default function JobMarket() {
                   type="button"
                   className="inline-flex items-center gap-1.5 rounded-full border border-violet-200 bg-white px-6 py-2 text-sm font-semibold text-violet-600 transition hover:border-violet-400 hover:bg-violet-50"
                 >
-                  <span aria-hidden>🔄</span> Show more listings
+                  <RefreshCw size={14} strokeWidth={2.2} /> Show more listings
                 </button>
               </div>
             </>

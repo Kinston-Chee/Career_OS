@@ -1,4 +1,5 @@
 import React, { useMemo, useState } from 'react'
+import { Search } from 'lucide-react'
 import ExperienceCard from './ExperienceCard'
 
 const EVENT_TYPES = [
@@ -160,7 +161,9 @@ export default function ExperienceTimeline({ experiences }) {
       <div className="mt-6 space-y-5">
         {filtered.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-12 text-center">
-            <div className="flex h-16 w-16 items-center justify-center rounded-full bg-violet-50 text-2xl">🔍</div>
+            <div className="flex h-16 w-16 items-center justify-center rounded-full border border-violet-100 bg-violet-50 text-violet-600">
+              <Search size={24} strokeWidth={2.2} />
+            </div>
             <p className="mt-4 text-sm font-semibold text-slate-500">No experiences match your filters.</p>
             <button
               type="button"

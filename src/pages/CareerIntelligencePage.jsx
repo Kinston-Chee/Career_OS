@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { BarChart3, BriefcaseBusiness, LineChart } from 'lucide-react';
 import CareerPathComparison from '../components/career/CareerPathComparison';
 import CareerPathDetail from '../components/career/CareerPathDetail';
 import CareerPathNetworkGraph from '../components/career/network/CareerPathNetworkGraph';
@@ -9,9 +10,9 @@ import TabNav from '../components/career/TabNav';
 import { careerPathNetwork, careerPaths } from '../data/mockData';
 
 const tabs = [
-  { id: 'skill-summary', label: 'Skill Summary', icon: 'S' },
-  { id: 'career-paths', label: 'Career Path', icon: 'P' },
-  { id: 'market-standing', label: 'Market Standing', icon: 'M' },
+  { id: 'skill-summary', label: 'Skills', icon: BarChart3 },
+  { id: 'career-paths', label: 'Career Path', icon: BriefcaseBusiness },
+  { id: 'market-standing', label: 'Market Insights', icon: LineChart },
 ];
 
 function CareerPathsTab() {
