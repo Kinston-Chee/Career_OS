@@ -428,7 +428,20 @@ function CandidateStream({
   );
 }
 
-function CandidateHeader({ candidate, shortlisted, saved, onToggleShortlist, onToggleSave }) {
+function CandidateHeader({ candidate, shortlisted, saved, onToggleShortlist, onToggleSave, onRemove }) {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const menuRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setIsMenuOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
   return (
     <header className="border-b border-slate-100 px-6 py-6">
       <div className="flex flex-col gap-4 xl:flex-row xl:items-start xl:justify-between">
@@ -475,9 +488,32 @@ function CandidateHeader({ candidate, shortlisted, saved, onToggleShortlist, onT
             {shortlisted ? 'Shortlisted' : 'Add to shortlist'}
           </button>
           
-          <button className="flex h-11 w-11 items-center justify-center rounded-[8px] bg-white text-lg font-medium text-slate-500 ring-1 ring-slate-200" type="button">
-            :
-          </button>
+          <div className="relative" ref={menuRef}>
+            <button
+              onClick={() => setIsMenuOpen((prev) => !prev)}
+              className="flex h-11 w-11 items-center justify-center rounded-[8px] bg-white text-lg font-bold text-slate-500 ring-1 ring-slate-200 hover:bg-slate-50 hover:text-slate-800 transition"
+              type="button"
+              aria-label="Actions"
+            >
+              ⋮
+            </button>
+
+            {isMenuOpen && (
+              <div className="absolute right-0 mt-2 z-30 w-44 rounded-xl border border-slate-200 bg-white py-1.5 shadow-[0_12px_30px_rgba(15,23,42,0.12)] animate-[dropdownSlide_0.15s_ease-out]">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setIsMenuOpen(false);
+                    onRemove(candidate.id);
+                  }}
+                  className="flex w-full items-center gap-2 px-4 py-2.5 text-left text-xs font-semibold text-rose-600 hover:bg-rose-50/50 transition"
+                >
+                  <span className="text-sm">🗑️</span>
+                  <span>Remove Candidate</span>
+                </button>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </header>
@@ -1172,6 +1208,7 @@ function CandidateWorkspace({
   onChangeTab,
   onToggleShortlist,
   onToggleSave,
+  onRemove,
 }) {
   return (
     <section className="min-w-0 overflow-hidden rounded-[8px] border border-slate-200 bg-white shadow-[0_18px_54px_rgba(15,23,42,0.05)]">
@@ -1181,6 +1218,7 @@ function CandidateWorkspace({
         saved={saved}
         onToggleShortlist={onToggleShortlist}
         onToggleSave={onToggleSave}
+        onRemove={onRemove}
       />
       <TabNav activeTab={activeTab} candidate={candidate} onChange={onChangeTab} />
       <RecruiterDecisionStrip candidate={candidate} />
@@ -1192,10 +1230,10 @@ function CandidateWorkspace({
 }
 
 export default function EmployerWorkspacePage() {
-  const candidatesList = employerTalentWorkspace.candidates;
+  const [candidates, setCandidates] = useState(employerTalentWorkspace.candidates);
   
   // Set up state variables
-  const [selectedCandidateId, setSelectedCandidateId] = useState(candidatesList[0].id);
+  const [selectedCandidateId, setSelectedCandidateId] = useState(candidates[0]?.id || null);
   const [activeTab, setActiveTab] = useState('Profile Fit');
   const [searchParams, setSearchParams] = useSearchParams();
   const selectedTab = searchParams.get('tab') || 'all';
@@ -1228,9 +1266,34 @@ export default function EmployerWorkspacePage() {
   const toggleShortlist = useEmployerSearchStore((state) => state.toggleShortlist);
   const toggleSave = useEmployerSearchStore((state) => state.toggleSave);
 
+  // Remove candidate action
+  const handleRemoveCandidate = (candidateId) => {
+    const candidateToRemove = candidates.find((c) => c.id === candidateId);
+    if (!candidateToRemove) return;
+
+    const confirmRemove = window.confirm(`Are you sure you want to remove ${candidateToRemove.name} from your workspace?`);
+    if (confirmRemove) {
+      // Find the next candidate to select from the CURRENT filtered list
+      const currentIndex = currentFilteredList.findIndex((c) => c.id === candidateId);
+      let nextSelectedId = null;
+      if (currentIndex !== -1 && currentFilteredList.length > 1) {
+        const nextCand = currentFilteredList[currentIndex + 1] || currentFilteredList[currentIndex - 1];
+        if (nextCand) {
+          nextSelectedId = nextCand.id;
+        }
+      }
+
+      setCandidates((prev) => prev.filter((c) => c.id !== candidateId));
+
+      if (selectedCandidateId === candidateId) {
+        setSelectedCandidateId(nextSelectedId);
+      }
+    }
+  };
+
   // Filtered list computed for current view
   const currentFilteredList = useMemo(() => {
-    return candidatesList.filter((c) => {
+    return candidates.filter((c) => {
       // 1. Search Query
       if (globalQuery) {
         const q = globalQuery.toLowerCase();
@@ -1276,26 +1339,23 @@ export default function EmployerWorkspacePage() {
       }
       return true;
     });
-  }, [candidatesList, globalQuery, activeChips, selectedTab, shortlistedIds, savedIds]);
+  }, [candidates, globalQuery, activeChips, selectedTab, shortlistedIds, savedIds]);
 
   // Selected candidate pointer
   const selectedCandidate = useMemo(() => {
-    // Attempt to find selectedCandidate in the filtered list
     let cand = currentFilteredList.find((c) => c.id === selectedCandidateId);
     if (!cand && currentFilteredList.length > 0) {
-      // Fallback to first filtered candidate
       cand = currentFilteredList[0];
     }
-    return cand || candidatesList[0];
-  }, [currentFilteredList, selectedCandidateId, candidatesList]);
-
+    return cand || null;
+  }, [currentFilteredList, selectedCandidateId]);
 
   return (
     <div className="mx-auto min-w-0 max-w-[1540px]">
       <div className="grid min-w-0 gap-4 md:grid-cols-[315px_minmax(0,1fr)]">
         <CandidateStream
-          candidates={candidatesList}
-          selectedId={selectedCandidate.id}
+          candidates={candidates}
+          selectedId={selectedCandidate ? selectedCandidate.id : null}
           shortlistedIds={shortlistedIds}
           savedIds={savedIds}
           selectedTab={selectedTab}
@@ -1316,7 +1376,7 @@ export default function EmployerWorkspacePage() {
         />
         
         {/* Render Candidate workspace details if candidate exists in filtered pool */}
-        {currentFilteredList.length > 0 ? (
+        {currentFilteredList.length > 0 && selectedCandidate ? (
           <CandidateWorkspace
             candidate={selectedCandidate}
             activeTab={activeTab}
@@ -1325,6 +1385,7 @@ export default function EmployerWorkspacePage() {
             onChangeTab={setActiveTab}
             onToggleShortlist={() => toggleShortlist(selectedCandidate.id)}
             onToggleSave={() => toggleSave(selectedCandidate.id)}
+            onRemove={handleRemoveCandidate}
           />
         ) : (
           /* Empty Workspace Panel when tab yields nothing */
