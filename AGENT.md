@@ -96,17 +96,20 @@ Current user-facing areas include:
 
 - Overview
 - Program-Market Alignment
-- Alumni Signal Intelligence
+- Alumni Signals
 - Student Readiness
 - Collaboration Marketplace
-- Reports
 - Settings / Help
 
 The canonical mock University identity is:
 
-- Dr. Amanda Lim
-- Career Office
-- Sunway University
+- Dr. Evelyn Chen
+- Dean of Computing & AI
+- Heriot-Watt University Malaysia
+- School of Mathematical & Computer Sciences (MACS)
+- evelyn.chen@hw.edu.my
+
+The Reports route may remain as a hidden placeholder for technical stability, but it is not part of the current visible University sidebar or main product story.
 
 ---
 
