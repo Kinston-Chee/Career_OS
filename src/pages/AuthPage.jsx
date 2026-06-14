@@ -420,10 +420,8 @@ function SignupForm({ onSwitchTab, onSubmit }) {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    if (!firstName.trim() || !email.trim() || !password.trim()) {
-      window.alert('Please fill in all fields.')
-      return
-    }
+    // Demo: skip field validation so judges can jump straight into the
+    // selected workspace by clicking "Create my account".
     onSubmit({ role: roleId, firstName, lastName, email, password })
   }
 

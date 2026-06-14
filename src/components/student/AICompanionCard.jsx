@@ -61,12 +61,6 @@ export default function AICompanionCard() {
       }
       return `You have ${totalApps} active applications. Keep updating your status history to get relevant timeline insights.`
     }
-    if (pathname.includes('/student/network')) {
-      return "Connect with 5 recommended mentors from Taylor's University alumni network. Request a session to validate your career strategy."
-    }
-    if (pathname.includes('/student/learning')) {
-      return 'Complete the Power BI dashboard workshop to close your primary technical gap. Your learning progress is currently at 42%.'
-    }
     if (pathname.includes('/student/ai-assistant')) {
       return 'Ask me anything about your career path, skill gaps, or how to prepare for upcoming applications and interviews.'
     }

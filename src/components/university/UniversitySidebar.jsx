@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
+import compassIcon from '../../assets/icon-compass.svg'
 
 const navItems = [
   { label: 'Overview', path: '/university/overview', aliases: ['/university'] },
@@ -15,8 +16,8 @@ export default function UniversitySidebar() {
   return (
     <aside className="hidden h-screen w-72 shrink-0 border-r border-white/70 bg-white/85 px-5 py-6 shadow-[8px_0_30px_rgba(15,23,42,0.03)] backdrop-blur-xl lg:flex lg:flex-col">
       <div className="mb-9 flex items-center gap-3">
-        <Link to="/" className="flex h-11 w-11 items-center justify-center rounded-[8px] bg-gradient-to-br from-blue-500 to-violet-500 text-xl font-semibold text-white shadow-lg shadow-blue-100">
-          C
+        <Link to="/" className="flex h-11 w-11 items-center justify-center rounded-[8px] shadow-lg shadow-blue-100" aria-label="CareerOS home">
+          <img src={compassIcon} alt="CareerOS" className="h-11 w-11 rounded-[8px]" />
         </Link>
         <div>
           <Link to="/" className="text-xl font-semibold text-slate-950">CareerOS</Link>

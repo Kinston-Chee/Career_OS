@@ -24,14 +24,6 @@ const pageMessages = [
     text: 'You have 7 active applications. Your Google Data Analyst interview is coming up — prepare by reviewing SQL joins and data storytelling.',
   },
   {
-    match: (pathname) => pathname.includes('/student/network'),
-    text: 'Connect with alumni who transitioned into Data Analyst roles. Their experience can guide your next steps and help with referrals.',
-  },
-  {
-    match: (pathname) => pathname.includes('/student/learning'),
-    text: 'Your learning roadmap should focus on the gaps behind your Data Analyst goal: SQL depth, Power BI evidence, and a portfolio analytics project.',
-  },
-  {
     match: (pathname) => pathname.includes('/student/settings'),
     text: 'Settings keeps your target role, location, and industry preferences current so CareerOS can tune recommendations across the workspace.',
   },

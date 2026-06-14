@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
+import compassIcon from '../../assets/icon-compass.svg'
 import { candidateOverview } from '../../data/mockData'
 import { useCareerStore } from '../../store/useCareerStore'
 import AICompanionCard from './AICompanionCard'
@@ -10,8 +11,6 @@ const navItems = [
   { label: 'Career Intelligence', path: '/student/intelligence', aliases: ['/student/career-intelligence'], icon: 'CI' },
   { label: 'Opportunities', path: '/student/opportunities', aliases: [], icon: 'O' },
   { label: 'Applications', path: '/student/applications', aliases: [], icon: 'A' },
-  { label: 'Network & Mentors', path: '/student/network', aliases: [], icon: 'N' },
-  { label: 'Learning & Skills', path: '/student/learning', aliases: [], icon: 'L' },
 ]
 
 export default function StudentSidebar() {
@@ -23,8 +22,8 @@ export default function StudentSidebar() {
   return (
     <aside className="hidden h-screen w-72 shrink-0 border-r border-white/70 bg-white/90 px-5 py-5 shadow-[8px_0_30px_rgba(15,23,42,0.03)] backdrop-blur-xl lg:flex lg:flex-col">
       <div className="flex items-center gap-3">
-        <Link to="/" className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-violet-500 to-indigo-500 text-lg font-bold text-white shadow-lg shadow-violet-200">
-          C
+        <Link to="/" className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl shadow-lg shadow-violet-200" aria-label="CareerOS home">
+          <img src={compassIcon} alt="CareerOS" className="h-11 w-11 rounded-xl" />
         </Link>
         <div className="min-w-0">
           <Link to="/student/overview" className="block truncate text-lg font-bold text-slate-950">

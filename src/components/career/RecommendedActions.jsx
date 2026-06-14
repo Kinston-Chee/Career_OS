@@ -54,7 +54,7 @@ const ACTIONS = [
     title: 'Practice Interview Skills',
     description: 'SQL case studies and data storytelling are the top interview topics for analyst roles.',
     cta: 'Start Prep',
-    link: '/student/learning',
+    link: '/student/intelligence',
     urgency: 'low',
   },
 ]

@@ -40,14 +40,6 @@ export default function App() {
           <Route path="/student/career-intelligence" element={<CareerIntelligencePage />} />
           <Route path="/student/opportunities" element={<OpportunitiesPage />} />
           <Route path="/student/applications" element={<ApplicationsPage />} />
-          <Route
-            path="/student/network"
-            element={<PlaceholderPage title="Network & Mentors" />}
-          />
-          <Route
-            path="/student/learning"
-            element={<PlaceholderPage title="Learning & Skills" />}
-          />
           <Route path="/student/ai-assistant" element={<PlaceholderPage title="AI Assistant" />} />
           <Route
             path="/student/settings"

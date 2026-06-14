@@ -80,7 +80,7 @@ export default function RecommendedForYouCard({ recommendations }) {
         })}
       </div>
       <Link
-        to="/student/learning"
+        to="/student/intelligence"
         className="inline-block mt-4 text-sm font-semibold text-violet-700 transition-colors hover:text-violet-900"
       >
         View all recommendations
