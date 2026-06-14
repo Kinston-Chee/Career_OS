@@ -1,33 +1,44 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
+import {
+  ArrowRight,
+  Bot,
+  BriefcaseBusiness,
+  ChartNoAxesColumnIncreasing,
+  Check,
+  Compass as CompassLucide,
+  FolderKanban,
+  GraduationCap,
+  Lightbulb,
+  Mail,
+  Network,
+  Rocket,
+  Route,
+  Search,
+} from 'lucide-react'
 import compassIcon from '../assets/icon-compass.svg'
 import { useCareerStore } from '../store/useCareerStore'
 
-// Reveal: fades + lifts the wrapped node when it scrolls into view. Once the
-// element has been seen, the observer stops watching so animations only play
-// once. `delay` accepts 1–4 to pick a `rdN` stagger class from styles.css.
+// Reveal: fades + lifts the wrapped node when it scrolls into view. It resets
+// when the node leaves the viewport so cards animate again on return.
 function Reveal({ as: Tag = 'div', delay, className = '', children, ...rest }) {
   const ref = useRef(null)
   const [shown, setShown] = useState(false)
 
   useEffect(() => {
-    if (shown) return undefined
     const node = ref.current
     if (!node) return undefined
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setShown(true)
-            observer.disconnect()
-          }
+          setShown(entry.isIntersecting)
         })
       },
       { threshold: 0.12, rootMargin: '0px 0px -40px 0px' },
     )
     observer.observe(node)
     return () => observer.disconnect()
-  }, [shown])
+  }, [])
 
   const delayClass = delay ? `rd${Math.min(Math.max(delay, 1), 4)}` : ''
   const classes = ['landing-reveal', delayClass, shown ? 'is-in' : '', className]
@@ -111,7 +122,7 @@ const PROBLEM_CARDS = [
   {
     iconBg: 'bg-indigo-50 text-indigo-600',
     statColor: 'text-indigo-600',
-    icon: '🔍',
+    Icon: Search,
     stat: '85%',
     title: 'Students navigate blind',
     body: "Most graduates don't know which of their experiences are valued by employers — or what skills they're actually missing to land their target role.",
@@ -120,7 +131,7 @@ const PROBLEM_CARDS = [
   {
     iconBg: 'bg-purple-50 text-purple-600',
     statColor: 'text-purple-600',
-    icon: '💼',
+    Icon: BriefcaseBusiness,
     stat: '72%',
     title: 'Employers screen, not discover',
     body: 'Hiring teams rely on keyword-matched resumes instead of verified skill signals — missing qualified candidates and wasting months in screening cycles.',
@@ -129,7 +140,7 @@ const PROBLEM_CARDS = [
   {
     iconBg: 'bg-cyan-50 text-cyan-700',
     statColor: 'text-cyan-700',
-    icon: '🎓',
+    Icon: GraduationCap,
     stat: '3 yr',
     title: 'Universities lag the market',
     body: 'Curriculum updates take 2–3 years on average, by which time the skills graduates learn are already misaligned with what the industry actually needs.',
@@ -140,25 +151,25 @@ const PROBLEM_CARDS = [
 const STEPS = [
   {
     num: 'Step 01',
-    icon: '🪪',
+    Icon: FolderKanban,
     title: 'Profile ingestion',
     body: 'Candidates log experiences, projects, certifications, and activities — structured or unstructured.',
   },
   {
     num: 'Step 02',
-    icon: '🤖',
+    Icon: Bot,
     title: 'AI skill extraction',
     body: 'Multi-agent system maps inputs to O*NET occupational taxonomy and Lightcast live market demand data.',
   },
   {
     num: 'Step 03',
-    icon: '🕸',
+    Icon: Network,
     title: 'Signal graph build',
     body: 'Skills, roles, and institutions are connected in a dynamic knowledge graph — surfacing hidden talent and gaps.',
   },
   {
     num: 'Step 04',
-    icon: '💡',
+    Icon: Lightbulb,
     title: 'Intelligence delivery',
     body: 'Personalised insights flow to each stakeholder — career paths, candidate matches, and curriculum gaps.',
   },
@@ -168,7 +179,7 @@ const INTEL_CARDS = [
   {
     iconBg: 'bg-indigo-50 text-indigo-600',
     tagBg: 'bg-indigo-50 text-indigo-700',
-    icon: '🗂',
+    Icon: FolderKanban,
     title: 'Evidence Memory Engine',
     body: 'Each experience entry is parsed by AI agents into structured skill dimensions with confidence scores — building a living, shareable, and verifiable career record.',
     tag: 'Google ADK · Multi-agent',
@@ -176,7 +187,7 @@ const INTEL_CARDS = [
   {
     iconBg: 'bg-purple-50 text-purple-600',
     tagBg: 'bg-purple-50 text-purple-700',
-    icon: '🕸',
+    Icon: Network,
     title: 'Talent Signal Graph',
     body: 'A dynamic knowledge graph connecting candidates, skills, and roles using hundreds of verified skill dimensions — enabling employer discovery that goes far beyond keyword matching.',
     tag: 'Knowledge graph · O*NET',
@@ -184,7 +195,7 @@ const INTEL_CARDS = [
   {
     iconBg: 'bg-cyan-50 text-cyan-700',
     tagBg: 'bg-cyan-50 text-cyan-700',
-    icon: '🏫',
+    Icon: GraduationCap,
     title: 'University–Market Alignment',
     body: "Live gap analysis compares what a university's student cohort actually knows against what employers in their target sector are actively hiring for.",
     tag: 'Lightcast API · Real-time',
@@ -192,7 +203,7 @@ const INTEL_CARDS = [
   {
     iconBg: 'bg-orange-50 text-orange-700',
     tagBg: 'bg-orange-50 text-orange-700',
-    icon: '🧭',
+    Icon: Route,
     title: 'Personalised Career Path Engine',
     body: 'For each candidate, the system generates a prioritised skill roadmap — the shortest path from their current profile to their target role, with concrete next steps.',
     tag: 'FastAPI · PostgreSQL · GCP',
@@ -272,16 +283,10 @@ export default function LandingPage() {
   const signedOut = location.state?.signedOut
 
   // Selecting a role in the store is what lets the user past the ProtectedRoute
-  // guard for that workspace. All "enter workspace" / "see the prototype" CTAs
-  // route through this so the navigation works consistently.
+  // guard for that workspace.
   const enterWorkspace = (workspace) => {
     selectRole(workspace.role)
     navigate(workspace.path, { replace: true })
-  }
-
-  const enterStudentPrototype = () => {
-    const student = WORKSPACES.find((w) => w.id === 'student')
-    if (student) enterWorkspace(student)
   }
 
   // Smooth-scroll for in-page anchors. We can't rely on CSS scroll-behavior
@@ -310,7 +315,7 @@ export default function LandingPage() {
       <nav className="sticky top-0 z-40 flex h-16 items-center justify-between border-b border-indigo-100/60 bg-white/85 px-6 backdrop-blur-xl sm:px-12">
         <a href="#top" onClick={(event) => handleAnchorClick(event, '#top')} className="flex items-center gap-2.5">
           <img src={compassIcon} alt="CareerOS compass logo" className="h-9 w-9 rounded-xl" />
-          <span className="text-lg font-extrabold tracking-tight text-slate-900">CareerOS</span>
+          <span className="text-lg font-bold tracking-tight text-slate-900">CareerOS</span>
         </a>
 
         <div className="hidden gap-1 md:flex">
@@ -363,7 +368,7 @@ export default function LandingPage() {
             Now in prototype — Hackathon 2026
           </div>
 
-          <h1 className="landing-fade-in d1 text-4xl font-extrabold leading-[1.08] tracking-tight text-slate-900 sm:text-5xl lg:text-[58px]">
+          <h1 className="landing-fade-in d1 text-4xl font-bold leading-[1.08] tracking-tight text-slate-900 sm:text-5xl lg:text-[58px]">
             The career intelligence layer
             <br />
             the world has been{' '}
@@ -381,17 +386,17 @@ export default function LandingPage() {
           <div className="landing-fade-in d3 mt-10 flex flex-wrap justify-center gap-3">
             <button
               type="button"
-              onClick={enterStudentPrototype}
+              onClick={(event) => handleAnchorClick(event, '#workspaces')}
               className="inline-flex items-center gap-2 rounded-xl bg-slate-900 px-7 py-3.5 text-sm font-semibold text-white shadow-[0_4px_18px_rgba(17,24,39,0.18)] transition hover:-translate-y-0.5 hover:bg-indigo-600 hover:shadow-[0_8px_28px_rgba(91,108,249,0.30)]"
             >
-              <span aria-hidden>🚀</span> See the prototype
+              <Rocket className="h-4 w-4" aria-hidden="true" /> See the prototype
             </button>
             <a
               href="#vision"
               onClick={(event) => handleAnchorClick(event, '#vision')}
               className="inline-flex items-center gap-2 rounded-xl border border-indigo-200/60 bg-white/90 px-6 py-3.5 text-sm font-medium text-slate-700 transition hover:-translate-y-0.5 hover:border-indigo-500 hover:text-indigo-600"
             >
-              <span aria-hidden>📊</span> View our pitch deck
+              <ChartNoAxesColumnIncreasing className="h-4 w-4" aria-hidden="true" /> View our pitch deck
             </a>
           </div>
 
@@ -401,7 +406,7 @@ export default function LandingPage() {
                 key={stat.label}
                 className={`px-7 py-5 text-center sm:px-10 ${i < PROBLEM_STATS.length - 1 ? 'border-r border-slate-200' : ''}`}
               >
-                <div className={`text-2xl font-extrabold tracking-tight sm:text-3xl ${stat.color}`}>
+                <div className={`text-2xl font-bold tracking-tight sm:text-3xl ${stat.color}`}>
                   {stat.value}
                 </div>
                 <div className="mt-1 text-[11px] font-medium uppercase tracking-wider text-slate-400">
@@ -427,7 +432,7 @@ export default function LandingPage() {
         <div className="mx-auto max-w-6xl">
           <Reveal className="max-w-2xl">
             <Eyebrow>The Problem</Eyebrow>
-            <h2 className="mt-3 text-3xl font-extrabold leading-tight tracking-tight text-slate-900 sm:text-4xl">
+            <h2 className="mt-3 text-3xl font-bold leading-tight tracking-tight text-slate-900 sm:text-4xl">
               Three broken relationships.
               <br />
               One system to fix them.
@@ -446,14 +451,14 @@ export default function LandingPage() {
                 className="rounded-2xl border border-slate-200 bg-slate-50 p-6 transition hover:-translate-y-1 hover:shadow-[0_12px_32px_rgba(17,24,39,0.08)]"
               >
                 <div className="mb-4 flex items-start justify-between">
-                  <div className={`flex h-12 w-12 items-center justify-center rounded-lg text-xl ${card.iconBg}`}>
-                    <span aria-hidden>{card.icon}</span>
+                  <div className={`flex h-12 w-12 items-center justify-center rounded-lg ${card.iconBg}`}>
+                    <card.Icon className="h-5 w-5" aria-hidden="true" />
                   </div>
-                  <div className={`text-3xl font-extrabold leading-none tracking-tight ${card.statColor}`}>
+                  <div className={`text-3xl font-bold leading-none tracking-tight ${card.statColor}`}>
                     {card.stat}
                   </div>
                 </div>
-                <h3 className="text-base font-bold text-slate-900">{card.title}</h3>
+                <h3 className="text-base font-semibold text-slate-900">{card.title}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-slate-500">{card.body}</p>
                 <p className="mt-3 text-[11px] italic text-slate-400">{card.source}</p>
               </Reveal>
@@ -467,7 +472,7 @@ export default function LandingPage() {
         <div className="mx-auto max-w-6xl">
           <Reveal className="mb-12 text-center">
             <Eyebrow centered>The Solution</Eyebrow>
-            <h2 className="mt-3 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
+            <h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
               One platform, three perspectives
             </h2>
             <p className="mx-auto mt-3 max-w-xl text-base text-slate-500">
@@ -490,12 +495,12 @@ export default function LandingPage() {
                   className={`absolute inset-x-0 top-0 h-[3px] origin-left scale-x-0 transition-transform duration-300 group-hover:scale-x-100 ${ws.accentClass}`}
                 />
                 <div
-                  className={`mb-5 flex h-13 w-13 items-center justify-center rounded-xl text-lg font-extrabold text-white ${ws.iconClass}`}
+                  className={`mb-5 flex h-13 w-13 items-center justify-center rounded-xl text-lg font-bold text-white ${ws.iconClass}`}
                   style={{ width: 52, height: 52 }}
                 >
                   {ws.icon}
                 </div>
-                <h3 className="text-xl font-extrabold tracking-tight text-slate-900">{ws.title}</h3>
+                <h3 className="text-xl font-semibold tracking-tight text-slate-900">{ws.title}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-slate-500">{ws.description}</p>
                 <ul className="mt-5 flex flex-1 flex-col gap-2.5">
                   {ws.bullets.map((b) => (
@@ -506,9 +511,9 @@ export default function LandingPage() {
                   ))}
                 </ul>
                 <span
-                  className={`mt-7 inline-flex items-center justify-center gap-2 rounded-xl bg-slate-900 px-4 py-3 text-sm font-bold text-white transition group-hover:-translate-y-0.5 ${ws.hoverButton}`}
+                  className={`mt-7 inline-flex items-center justify-center gap-2 rounded-xl bg-slate-900 px-4 py-3 text-sm font-semibold text-white transition group-hover:-translate-y-0.5 ${ws.hoverButton}`}
                 >
-                  {ws.cta} <span aria-hidden>→</span>
+                  {ws.cta} <ArrowRight className="h-4 w-4" aria-hidden="true" />
                 </span>
               </Reveal>
             ))}
@@ -528,7 +533,7 @@ export default function LandingPage() {
         <div className="relative mx-auto max-w-6xl">
           <Reveal>
             <Eyebrow tone="dark">How It Works</Eyebrow>
-            <h2 className="mt-3 text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
+            <h2 className="mt-3 text-3xl font-bold tracking-tight text-white sm:text-4xl">
               From raw experience
               <br />
               to market signal
@@ -546,13 +551,13 @@ export default function LandingPage() {
                 delay={Math.min(i + 1, 4)}
                 className="bg-white/[0.03] p-7 transition hover:bg-white/[0.07]"
               >
-                <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-indigo-300">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-indigo-300">
                   {step.num}
                 </p>
                 <div className="mt-4 flex h-11 w-11 items-center justify-center rounded-lg border border-indigo-400/25 bg-indigo-500/10 text-xl text-indigo-200">
-                  <span aria-hidden>{step.icon}</span>
+                  <step.Icon className="h-5 w-5" aria-hidden="true" />
                 </div>
-                <h3 className="mt-4 text-base font-bold text-white">{step.title}</h3>
+                <h3 className="mt-4 text-base font-semibold text-white">{step.title}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-white/45">{step.body}</p>
               </Reveal>
             ))}
@@ -565,7 +570,7 @@ export default function LandingPage() {
         <div className="mx-auto max-w-6xl">
           <Reveal>
             <Eyebrow>Intelligence Layer</Eyebrow>
-            <h2 className="mt-3 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
+            <h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
               Powered by real labour
               <br />
               market data
@@ -583,11 +588,11 @@ export default function LandingPage() {
                 delay={Math.min(i + 1, 4)}
                 className="flex items-start gap-4 rounded-2xl border border-slate-200 bg-slate-50 p-7 transition hover:-translate-y-0.5 hover:border-indigo-200 hover:bg-white hover:shadow-[0_10px_30px_rgba(17,24,39,0.07)]"
               >
-                <div className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-lg text-xl ${card.iconBg}`}>
-                  <span aria-hidden>{card.icon}</span>
+                <div className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-lg ${card.iconBg}`}>
+                  <card.Icon className="h-5 w-5" aria-hidden="true" />
                 </div>
                 <div>
-                  <h3 className="text-base font-bold text-slate-900">{card.title}</h3>
+                  <h3 className="text-base font-semibold text-slate-900">{card.title}</h3>
                   <p className="mt-2 text-sm leading-relaxed text-slate-500">{card.body}</p>
                   <span className={`mt-3 inline-block rounded-full px-3 py-0.5 text-[11px] font-semibold ${card.tagBg}`}>
                     {card.tag}
@@ -611,7 +616,7 @@ export default function LandingPage() {
         <div className="mx-auto max-w-6xl">
           <Reveal className="mb-12 text-center">
             <Eyebrow centered>Build Roadmap</Eyebrow>
-            <h2 className="mt-3 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
+            <h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
               What we've built. What's next.
             </h2>
             <p className="mx-auto mt-3 max-w-lg text-base text-slate-500">
@@ -628,15 +633,15 @@ export default function LandingPage() {
                 className="rounded-2xl border border-slate-200 bg-white p-7 transition hover:-translate-y-1 hover:shadow-[0_12px_36px_rgba(17,24,39,0.08)]"
               >
                 <span
-                  className={`mb-4 inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-[11px] font-bold uppercase tracking-wide ${phase.pillBg}`}
+                  className={`mb-4 inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-[11px] font-semibold uppercase tracking-wide ${phase.pillBg}`}
                 >
                   <span className={`h-1.5 w-1.5 rounded-full ${phase.dot}`} /> {phase.pill}
                 </span>
-                <h3 className="text-base font-extrabold tracking-tight text-slate-900">{phase.title}</h3>
+                <h3 className="text-base font-semibold tracking-tight text-slate-900">{phase.title}</h3>
                 <ul className="mt-3 flex flex-col gap-2.5">
                   {phase.items.map((item) => (
                     <li key={item} className="flex items-start gap-2.5 text-sm leading-snug text-slate-700">
-                      <span aria-hidden className={`mt-0.5 shrink-0 ${phase.check}`}>✓</span>
+                      <Check className={`mt-0.5 h-4 w-4 shrink-0 ${phase.check}`} aria-hidden="true" />
                       {item}
                     </li>
                   ))}
@@ -667,7 +672,7 @@ export default function LandingPage() {
               </span>
               Prototype ready for demo
             </span>
-            <h2 className="mt-5 text-3xl font-extrabold leading-tight tracking-tight text-white sm:text-4xl">
+            <h2 className="mt-5 text-3xl font-bold leading-tight tracking-tight text-white sm:text-4xl">
               We're building the infrastructure
               <br />
               talent has never had.
@@ -679,16 +684,16 @@ export default function LandingPage() {
             <div className="mt-9 flex flex-wrap justify-center gap-3">
               <button
                 type="button"
-                onClick={enterStudentPrototype}
-                className="inline-flex items-center gap-2 rounded-xl bg-white px-7 py-3.5 text-sm font-bold text-slate-900 transition hover:-translate-y-0.5 hover:bg-indigo-600 hover:text-white hover:shadow-[0_8px_24px_rgba(91,108,249,0.40)]"
+                onClick={(event) => handleAnchorClick(event, '#workspaces')}
+                className="inline-flex items-center gap-2 rounded-xl bg-white px-7 py-3.5 text-sm font-semibold text-slate-900 transition hover:-translate-y-0.5 hover:bg-indigo-600 hover:text-white hover:shadow-[0_8px_24px_rgba(91,108,249,0.40)]"
               >
-                <span aria-hidden>🧭</span> Explore the prototype
+                <CompassLucide className="h-4 w-4" aria-hidden="true" /> Explore the prototype
               </button>
               <a
                 href="#"
                 className="inline-flex items-center gap-2 rounded-xl border border-white/20 bg-transparent px-7 py-3.5 text-sm font-medium text-white/75 transition hover:border-white/55 hover:text-white"
               >
-                <span aria-hidden>✉️</span> Get in touch
+                <Mail className="h-4 w-4" aria-hidden="true" /> Get in touch
               </a>
             </div>
           </div>
@@ -697,7 +702,7 @@ export default function LandingPage() {
 
       {/* ─── FOOTER ──────────────────────────────────────────────── */}
       <footer className="flex flex-wrap items-center justify-between gap-4 border-t border-slate-200 px-6 py-6 sm:px-12">
-        <span className="text-sm font-extrabold tracking-tight text-slate-400">CareerOS</span>
+        <span className="text-sm font-bold tracking-tight text-slate-400">CareerOS</span>
         <div className="flex gap-6">
           {FOOTER_LINKS.map((link) => (
             <a
@@ -721,7 +726,7 @@ function Eyebrow({ children, centered = false, tone = 'light' }) {
   const textColor = isDark ? 'text-white/55' : 'text-indigo-600'
   return (
     <div
-      className={`inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.18em] ${textColor} ${centered ? 'justify-center' : ''}`}
+      className={`inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.18em] ${textColor} ${centered ? 'justify-center' : ''}`}
     >
       <span className={`h-0.5 w-6 rounded-full ${lineColor}`} />
       {children}
