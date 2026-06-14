@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
 import { candidateOverview } from '../../data/mockData'
+import { useCareerStore } from '../../store/useCareerStore'
 import AICompanionCard from './AICompanionCard'
 
 const navItems = [
@@ -16,6 +17,8 @@ const navItems = [
 export default function StudentSidebar() {
   const location = useLocation()
   const profile = candidateOverview.profile
+  const careerFocus = useCareerStore((state) => state.careerFocus)
+  const targetRole = useCareerStore((state) => state.targetRole)
 
   return (
     <aside className="hidden h-screen w-72 shrink-0 border-r border-white/70 bg-white/90 px-5 py-5 shadow-[8px_0_30px_rgba(15,23,42,0.03)] backdrop-blur-xl lg:flex lg:flex-col">
@@ -52,11 +55,11 @@ export default function StudentSidebar() {
       <section className="mt-3 rounded-xl border border-violet-100 bg-violet-50/60 p-3 shadow-[0_10px_26px_rgba(88,63,188,0.06)]">
         <div className="flex items-center gap-3">
           <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-white text-xs font-bold text-violet-600 shadow-sm">
-            CF
+            IF
           </span>
           <div className="min-w-0 flex-1">
-            <p className="text-[11px] font-semibold uppercase tracking-wide text-slate-500">Career Focus</p>
-            <p className="truncate text-xs font-bold text-violet-700">{profile.careerFocus}</p>
+            <p className="text-[11px] font-semibold uppercase tracking-wide text-slate-500">Industry Focus</p>
+            <p className={`truncate text-xs font-bold ${careerFocus ? 'text-violet-700' : 'text-slate-400'}`}>{careerFocus || 'Not set yet'}</p>
           </div>
         </div>
         <div className="my-2 h-px bg-violet-100" />
@@ -66,7 +69,7 @@ export default function StudentSidebar() {
           </span>
           <div className="min-w-0 flex-1">
             <p className="text-[11px] font-semibold uppercase tracking-wide text-slate-500">Target Role</p>
-            <p className="truncate text-xs font-bold text-slate-900">{profile.targetRole}</p>
+            <p className={`truncate text-xs font-bold ${targetRole ? 'text-slate-900' : 'text-slate-400'}`}>{targetRole || 'Not set yet'}</p>
           </div>
         </div>
       </section>

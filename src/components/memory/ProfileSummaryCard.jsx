@@ -51,7 +51,7 @@ export default function ProfileSummaryCard({ experiences = [] }) {
       {/* Career Direction */}
       <div className="mt-5 rounded-2xl border border-violet-50 bg-violet-50/30 p-3">
         <div className="flex items-center justify-between text-xs">
-          <span className="font-semibold text-[#3f3d78]">Career Focus</span>
+          <span className="font-semibold text-[#3f3d78]">Industry Focus</span>
           <span className="rounded-xl bg-violet-100 px-2.5 py-1 font-bold text-violet-700">Data Scientist</span>
         </div>
         <div className="mt-2 flex items-center justify-between text-xs">

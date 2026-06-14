@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useCareerStore } from '../../store/useCareerStore'
-import { candidateOverview } from '../../data/mockData'
 
 function TopBarIconButton({ label, children, onClick, active = false }) {
   return (
@@ -42,9 +41,10 @@ export default function StudentTopBar() {
   const dropdownRef = useRef(null)
   const signOut = useCareerStore((state) => state.signOut)
   const user = useCareerStore((state) => state.currentUser)
+  const careerFocus = useCareerStore((state) => state.careerFocus)
+  const targetRole = useCareerStore((state) => state.targetRole)
   const navigate = useNavigate()
   const location = useLocation()
-  const profile = candidateOverview.profile
 
   const isSettingsPage = location.pathname === '/student/settings'
 
@@ -135,14 +135,22 @@ export default function StudentTopBar() {
                 </div>
 
                 <div className="space-y-2 border-b border-violet-50 py-3">
-                  <span className="block text-[10px] font-bold uppercase tracking-wider text-slate-400">Career Focus</span>
+                  <span className="block text-[10px] font-bold uppercase tracking-wider text-slate-400">Industry Focus</span>
                   <div className="flex items-center justify-between rounded-xl bg-violet-50 p-2 text-xs font-medium text-slate-700">
-                    <span>Career Focus</span>
-                    <span className="rounded-lg bg-violet-200/60 px-2 py-0.5 text-[10px] font-bold text-violet-800">{profile.careerFocus}</span>
+                    <span>Industry Focus</span>
+                    {careerFocus ? (
+                      <span className="rounded-lg bg-violet-200/60 px-2 py-0.5 text-[10px] font-bold text-violet-800">{careerFocus}</span>
+                    ) : (
+                      <span className="text-[10px] font-bold uppercase tracking-wide text-slate-400">Not set</span>
+                    )}
                   </div>
                   <div className="flex items-center justify-between rounded-xl bg-violet-50 p-2 text-xs font-medium text-slate-700">
                     <span>Target Role</span>
-                    <span className="font-bold text-[#11104a]">{profile.targetRole}</span>
+                    {targetRole ? (
+                      <span className="font-bold text-[#11104a]">{targetRole}</span>
+                    ) : (
+                      <span className="text-[10px] font-bold uppercase tracking-wide text-slate-400">Not set</span>
+                    )}
                   </div>
                 </div>
 

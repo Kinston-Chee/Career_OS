@@ -284,11 +284,31 @@ export default function LandingPage() {
     if (student) enterWorkspace(student)
   }
 
+  // Smooth-scroll for in-page anchors. We can't rely on CSS scroll-behavior
+  // alone because the sticky nav would otherwise cover the section heading —
+  // we measure the nav and offset the target position manually.
+  const handleAnchorClick = (event, href) => {
+    if (!href || !href.startsWith('#') || href === '#') return
+    const id = href.slice(1)
+    const target = document.getElementById(id)
+    if (!target) return
+
+    event.preventDefault()
+    const navEl = document.querySelector('nav')
+    const navHeight = navEl ? navEl.getBoundingClientRect().height : 0
+    const targetTop = target.getBoundingClientRect().top + window.scrollY - navHeight - 12
+
+    window.scrollTo({ top: Math.max(targetTop, 0), behavior: 'smooth' })
+    if (window.history && window.history.replaceState) {
+      window.history.replaceState(null, '', href)
+    }
+  }
+
   return (
     <main className="min-h-screen overflow-x-hidden bg-slate-50 font-sans text-slate-900">
       {/* ─── NAV ─────────────────────────────────────────────────── */}
       <nav className="sticky top-0 z-40 flex h-16 items-center justify-between border-b border-indigo-100/60 bg-white/85 px-6 backdrop-blur-xl sm:px-12">
-        <a href="#top" className="flex items-center gap-2.5">
+        <a href="#top" onClick={(event) => handleAnchorClick(event, '#top')} className="flex items-center gap-2.5">
           <img src={compassIcon} alt="CareerOS compass logo" className="h-9 w-9 rounded-xl" />
           <span className="text-lg font-extrabold tracking-tight text-slate-900">CareerOS</span>
         </a>
@@ -298,6 +318,7 @@ export default function LandingPage() {
             <a
               key={link.href}
               href={link.href}
+              onClick={(event) => handleAnchorClick(event, link.href)}
               className="rounded-md px-3 py-1.5 text-sm font-medium text-slate-500 transition hover:bg-indigo-50 hover:text-indigo-600"
             >
               {link.label}
@@ -367,6 +388,7 @@ export default function LandingPage() {
             </button>
             <a
               href="#vision"
+              onClick={(event) => handleAnchorClick(event, '#vision')}
               className="inline-flex items-center gap-2 rounded-xl border border-indigo-200/60 bg-white/90 px-6 py-3.5 text-sm font-medium text-slate-700 transition hover:-translate-y-0.5 hover:border-indigo-500 hover:text-indigo-600"
             >
               <span aria-hidden>📊</span> View our pitch deck

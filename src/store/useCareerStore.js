@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import { initialExperiences, mockUser } from '../data/mockData'
+import { candidateOverview, initialExperiences, mockUser } from '../data/mockData'
 
 const sessionStorageKey = 'careeros-session'
 
@@ -57,6 +57,12 @@ export const useCareerStore = create((set) => ({
     set((state) => ({
       experiences: [{ id: `exp-${Date.now()}`, ...experience }, ...state.experiences],
     })),
+
+  // Editable profile fields surfaced on Career Memory, sidebar, and account dropdown.
+  careerFocus: candidateOverview.profile.careerFocus,
+  targetRole: candidateOverview.profile.targetRole,
+  setCareerFocus: (value) => set({ careerFocus: value }),
+  setTargetRole: (value) => set({ targetRole: value }),
 
   // Calendar State & Actions
   myEvents: [

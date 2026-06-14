@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import CareerFocusEditor from '../components/memory/CareerFocusEditor'
 import CareerProfileBar from '../components/memory/CareerProfileBar'
 import ExperienceInput from '../components/memory/ExperienceInput'
 import ExperienceTimeline from '../components/memory/ExperienceTimeline'
@@ -71,6 +72,7 @@ export default function MemoryProfilePage() {
       </header>
 
       <div className="space-y-6">
+        <CareerFocusEditor />
         <CareerProfileBar experiences={experiences} />
         <ExperienceInput
           onSubmit={handleSubmit}
