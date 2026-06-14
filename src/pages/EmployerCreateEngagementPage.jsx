@@ -868,9 +868,12 @@ function SummaryRow({ icon, label, value }) {
 function ReviewLaunchStep({ form, selectedType, onEdit }) {
   const intelligence = stepIntelligence[5]
 
+  // Responsive grid: stacked at smaller widths, two columns at lg (Summary spans
+  // the full row on top), then three columns at xl+ now that the page-level
+  // preview rail is hidden on this step and the whole main area is available.
   return (
-    <div className="grid gap-5 xl:grid-cols-[minmax(0,1.05fr)_minmax(320px,0.95fr)_280px]">
-      <section className="rounded-[8px] border border-slate-200 bg-white p-5 shadow-[0_10px_24px_rgba(15,23,42,0.04)]">
+    <div className="grid gap-5 lg:grid-cols-2 xl:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)_minmax(240px,300px)]">
+      <section className="rounded-[8px] border border-slate-200 bg-white p-5 shadow-[0_10px_24px_rgba(15,23,42,0.04)] lg:col-span-2 xl:col-span-1">
         <div className="flex items-center justify-between gap-3">
           <h3 className="text-base font-semibold text-slate-950">Engagement Summary</h3>
           <button
@@ -1217,7 +1220,13 @@ export default function EmployerCreateEngagementPage() {
       <InternalTabNav tabs={tabs} activeTab={activeTab} onTabChange={setActiveTab} />
 
       {activeTab === 'create-engagement' ? (
-        <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_360px] 2xl:grid-cols-[minmax(0,1fr)_390px]">
+        <div
+          className={`grid gap-6 ${
+            currentStep === 5
+              ? ''
+              : 'xl:grid-cols-[minmax(0,1fr)_360px] 2xl:grid-cols-[minmax(0,1fr)_390px]'
+          }`}
+        >
           <main className="min-w-0 space-y-5">
             <ProgressTracker currentStep={currentStep} setCurrentStep={setCurrentStep} />
             {stepContent}
@@ -1257,7 +1266,9 @@ export default function EmployerCreateEngagementPage() {
             </div>
           </main>
 
-          <BuilderPreviewPanel selectedType={selectedType} currentStep={currentStep} form={form} />
+          {currentStep !== 5 && (
+            <BuilderPreviewPanel selectedType={selectedType} currentStep={currentStep} form={form} />
+          )}
         </div>
       ) : (
         <div className="space-y-6">
