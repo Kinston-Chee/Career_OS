@@ -1,51 +1,172 @@
-# CareerGraph
+# CareerOS
 
-CareerGraph is a frontend demo for a career operating system. It shows how candidates, employers, and universities can use shared career evidence to make better decisions.
+CareerOS is an AI-assisted career intelligence operating system connecting student evidence, university readiness, and employer talent discovery.
 
-The app is currently a React prototype with mock data. It does not have a backend yet.
+CareerOS connects three workspaces through one shared intelligence system: students turn real activity into evidence, universities see readiness and programme-market gaps, and employers discover talent through explainable skill signals. The current repository is a hackathon frontend prototype that demonstrates the intended product experience with mock data and simulated AI-assisted workflows.
 
-## Project Overview
+## Product Overview
 
-CareerGraph has three main workspaces:
+### Student Workspace
 
-- Candidate workspace: helps students build a memory profile, understand career readiness, and discover matched opportunities.
-- Employer workspace: helps employers find evidence-backed candidates, review talent pipeline insights, and create student engagement opportunities.
-- University workspace: helps universities compare curriculum with market demand, monitor student readiness, and manage society-company collaboration.
+Students can:
 
-## Tech Stack
+- Capture projects, internships, events, certifications, and activities in Career Memory.
+- Build evidence-backed skill profiles.
+- Understand readiness, skill gaps, and career direction.
+- Receive page-specific guidance from the AI Career Companion.
+- Discover relevant events, jobs, and saved opportunities.
+- Track applications through a visual pipeline.
 
-- React
-- Vite
+Current visible areas: Overview, Career Memory, Career Intelligence, Opportunities, Applications, Network & Mentors, Learning & Skills.
+
+Network & Mentors and Learning & Skills are intentionally minimal placeholder areas in the current demo.
+
+### University Workspace
+
+Universities can:
+
+- Monitor programme-market alignment.
+- Identify emerging skill gaps.
+- Analyse student readiness by programme and cohort.
+- Review alumni outcome signals.
+- Manage collaboration opportunities before events.
+- Measure post-event impact, student outcomes, and collaboration value.
+
+Current visible areas: Overview, Program-Market Alignment, Alumni Signals, Student Readiness, Collaboration Marketplace.
+
+The demo university persona is Dr. Evelyn Chen, Dean of Computing & AI at Heriot-Watt University Malaysia, School of Mathematical & Computer Sciences.
+
+### Employer Workspace
+
+Employers can:
+
+- Discover evidence-backed candidates.
+- Review explainable fit and skill evidence.
+- Save searches and shortlist talent.
+- Create student engagement programmes.
+- Respond to club or university engagement opportunities.
+- Publish jobs and manage applicant workflows.
+
+Current visible areas: Talent Discovery, Create Engagement, Job Marketplace, Saved Searches, Shortlists.
+
+## Core Product Flow
+
+```text
+Student activity
+-> Career Memory
+-> Skill evidence
+-> Career Intelligence
+-> Opportunities and applications
+-> University and employer outcomes
+-> Better future guidance
+```
+
+```text
+Student evidence
+-> University intelligence
+-> Employer action
+-> Outcomes feed back into CareerOS
+```
+
+## Key Differentiators
+
+- Evidence-first Career Memory instead of resume-only claims.
+- Three connected workspaces for students, universities, and employers.
+- Program-Market Alignment for curriculum and intervention decisions.
+- Explainable talent discovery based on skill evidence.
+- Collaboration and event impact intelligence.
+- Embedded AI assistance that summarizes page-specific priorities.
+- Action-oriented recommendations across readiness, opportunities, and engagement.
+
+## Current Demo Status
+
+The current version is a frontend prototype using mock data and simulated AI-assisted workflows to demonstrate the intended product experience.
+
+This prototype uses:
+
+- React + Vite
 - React Router
-- Zustand
 - Tailwind CSS
-- Mock data and mock AI helpers
+- Lucide React icons
+- Zustand local state where needed
+- Mock data
+- Simulated AI-assisted logic
 
-## How To Install
+It does not include:
 
-From the project folder:
+- A production backend
+- Production authentication
+- A persistent production database
+- Live institutional integrations
+- Live employer integrations
+- Real labour-market data feeds
+- Real traction, customer, or partnership claims
 
-```powershell
-cd "C:\Users\kinst\OneDrive\文档\TalentBank Hackathon"
+## Demo Workspaces
+
+| Workspace | Main areas |
+| --- | --- |
+| Student | Overview, Career Memory, Career Intelligence, Opportunities, Applications, Network & Mentors, Learning & Skills |
+| University | Overview, Program-Market Alignment, Alumni Signals, Student Readiness, Collaboration Marketplace |
+| Employer | Talent Discovery, Create Engagement, Job Marketplace, Saved Searches, Shortlists |
+
+## Featured Demo Flows
+
+### Student Flow
+
+```text
+Experience
+-> Career Memory
+-> Skill evidence
+-> Career Intelligence
+-> Opportunities
+-> Applications
+```
+
+### University Flow
+
+```text
+Programme-market gap
+-> Recommended intervention
+-> Collaboration event
+-> Post-event impact intelligence
+```
+
+### Employer Flow
+
+```text
+Candidate discovery
+-> Evidence review
+-> Explainable fit
+-> Shortlist or engagement
+```
+
+## Screenshots
+
+No suitable product screenshots are currently committed to the repository. Recommended screenshots to add:
+
+- `docs/screenshots/student-overview.png` - Student Overview with AI Career Companion.
+- `docs/screenshots/student-career-memory.png` - Career Memory evidence timeline.
+- `docs/screenshots/university-program-market-alignment.png` - University Program-Market Alignment.
+- `docs/screenshots/university-collaboration-impact.png` - Collaboration Marketplace or Event Impact Report.
+- `docs/screenshots/employer-talent-discovery.png` - Employer Talent Discovery.
+- `docs/screenshots/employer-create-engagement.png` - Create Engagement or Job Marketplace.
+
+After adding images, reference them here with descriptive alt text and relative paths.
+
+## Live Demo
+
+- Live Demo: Coming soon
+- Pitch Deck: Coming soon
+- Pitch Video: Coming soon
+
+## Getting Started
+
+```bash
+git clone <repository-url>
+cd <repository-folder>
 npm install
-```
-
-If PowerShell blocks `npm`, use:
-
-```powershell
-npm.cmd install
-```
-
-## How To Run Locally
-
-```powershell
 npm run dev
-```
-
-If PowerShell blocks `npm`, use:
-
-```powershell
-npm.cmd run dev
 ```
 
 Then open:
@@ -54,138 +175,102 @@ Then open:
 http://localhost:5173
 ```
 
-## Main Routes
+On Windows PowerShell, if script execution blocks `npm`, use:
 
-- `/` - role selection page
-- `/student/overview` - candidate overview dashboard
-- `/student/profile` - candidate memory profile
-- `/student/intelligence` - candidate career intelligence
-- `/student/opportunities` - candidate opportunity marketplace
-- `/employer/talent` - employer talent discovery
-- `/employer/insights` - employer candidate insights
-- `/employer/posting` - employer engagement builder
-- `/university/curriculum` - curriculum-market alignment
-- `/university/readiness` - student readiness overview
-- `/university/collaboration` - society-corporate marketplace
+```powershell
+npm.cmd install
+npm.cmd run dev
+```
 
-Some older route names redirect to the current routes. See `src/App.jsx`.
+## Available Scripts
 
-## User Roles
+These scripts are defined in `package.json`:
 
-- Candidate: uses the student workspace routes.
-- Employer: uses the employer workspace routes.
-- University: uses the university workspace routes.
+| Script | Purpose |
+| --- | --- |
+| `npm run dev` | Start the Vite development server. |
+| `npm run build` | Build the production bundle. |
+| `npm run preview` | Preview the production build locally. |
 
-The landing page stores the selected role in local storage. Protected routes use that selected role to decide which workspace can be opened.
+There is currently no `lint` script in `package.json`.
 
-## Folder Structure
+## Project Structure
 
 ```text
 src/
-  App.jsx                    App routes and redirects
-  main.jsx                   React app entry point
-  styles.css                 Global Tailwind styles
-  components/                Reusable UI and workspace components
-  data/                      Mock data and mock AI functions
-  pages/                     Route-level pages
-  store/                     Zustand app state
+├── components/
+├── data/
+├── pages/
+├── services/
+├── store/
+├── assets/
+├── App.jsx
+└── main.jsx
+
+docs/
+├── CAREEROS_PRODUCT_REFERENCE.md
+├── MASTER_CONTEXT.md
+└── PAGE_GUIDE.md
+
+pitch-deck/
+└── HANDOFF.md
+
+AGENT.md
+package.json
+README.md
 ```
 
-## Where Mock Data Is Stored
+## Technology Stack
 
-Most mock data is in:
+- React
+- Vite
+- JavaScript / JSX
+- React Router
+- Tailwind CSS
+- Lucide React
+- Zustand
+- Mock data and local state
 
-```text
-src/data/mockData.js
-```
+## Prototype Limitations
 
-Mock AI behavior is in:
+- Demo content is powered by mock data.
+- AI recommendations, summaries, match scores, and assistant messages are simulated.
+- Authentication is role-selection based and not backed by a production identity system.
+- There is no persistent production database.
+- There is no real labour-market data feed.
+- There is no live university, employer, LMS, SIS, ATS, or HRIS integration.
+- Metrics shown in the interface are illustrative demo values.
+- Some legacy route aliases remain for stability but are not separate active product modules.
 
-```text
-src/data/mockAi.js
-```
+## Future Direction
 
-## Where Reusable Components Are Stored
+Potential next steps include:
 
-Shared components are in:
+- Real AI extraction, retrieval, and recommendation services.
+- Live market-demand and skill-demand data.
+- Syllabus and course ingestion for programme skill coverage.
+- QR or attendance-based event participation verification.
+- Verified institutional and employer integrations.
+- Longitudinal outcome intelligence.
+- Institutional benchmarking across cohorts, programmes, and faculties.
 
-```text
-src/components/
-```
+## Team
 
-Important component folders:
+Team details are not currently confirmed in the repository. Add confirmed team member names, roles, and contact links here before public submission.
 
-- `src/components/ui/` - shared cards, buttons, tags, and progress bars
-- `src/components/layout/` - global workspace layout
-- `src/components/session/` - role cards, protected routes, sign out
-- `src/components/memory/` - candidate memory profile components
-- `src/components/career/` - career intelligence components
-- `src/components/career/network/` - career path network graph components
-- `src/components/student/overview/` - candidate overview dashboard components
-- `src/components/opportunities/` - opportunity marketplace components
-- `src/components/employer/` - employer workspace components
-- `src/components/university/` - university workspace components
+## Submission Notes
 
-## How To Add A New Page
+This repository contains the CareerOS hackathon prototype and supporting presentation assets.
 
-1. Create a new page file in `src/pages/`.
-2. Import it in `src/App.jsx`.
-3. Add a new `<Route>` inside the correct workspace route group.
-4. Add a matching sidebar item in `src/components/layout/AppLayout.jsx` or in the matching sidebar component.
-5. Add any mock data needed in `src/data/mockData.js`.
+Product reference documents are available in `docs/`, especially `docs/CAREEROS_PRODUCT_REFERENCE.md` and `docs/MASTER_CONTEXT.md`. Pitch-deck handoff notes are available in `pitch-deck/HANDOFF.md`.
 
-## How To Modify Sidebar Items
+## Public Repository Safety
 
-Start with:
+This README intentionally avoids:
 
-```text
-src/components/layout/AppLayout.jsx
-```
-
-The `workspaceConfigs` object controls the mobile nav labels, active page title, paths, and route aliases.
-
-The desktop sidebars are here:
-
-- `src/components/student/StudentSidebar.jsx`
-- `src/components/employer/EmployerSidebar.jsx`
-- `src/components/university/UniversitySidebar.jsx`
-
-Update both the shared config and the matching desktop sidebar when adding or renaming workspace navigation.
-
-## How To Change Mock Data
-
-Edit:
-
-```text
-src/data/mockData.js
-```
-
-Find the exported object or array for the page you want to change. For example:
-
-- `initialExperiences` controls candidate memory profile examples.
-- `candidateOverview` controls the Candidate Overview dashboard.
-- `careerPaths` controls career path recommendations.
-- `careerPathNetwork` controls the Career Path tab network graph.
-- `opportunities` controls the candidate opportunity marketplace.
-- `employerCandidateInsights` controls employer analytics.
-- `universityCurriculumAlignment` controls curriculum alignment.
-- `universityStudentReadiness` controls student readiness.
-- `universitySocietyMarketplace` controls university event marketplace.
-
-## How To Test The Demo Flow
-
-1. Run the app with `npm.cmd run dev`.
-2. Open `http://localhost:5173`.
-3. Select Candidate, Employer, or University.
-4. Use the sidebar to move through the workspace.
-5. Try a few demo interactions:
-   - Candidate: review the Overview dashboard at `/student/overview`.
-   - Candidate: add an experience in Memory Profile.
-   - Candidate: switch to Career Intelligence, open Career Path, click graph role nodes, and try graph filters.
-   - Candidate: filter/search opportunities.
-   - Employer: search talent and switch Create Engagement tabs.
-   - Employer: send interest to a club request.
-   - University: switch Society-Corporate Marketplace tabs.
-   - University: confirm or reject skill suggestions after an event.
-
-Most actions are mock interactions. They update local UI state or show toast messages.
+- API keys or secrets.
+- `.env` values.
+- Private URLs.
+- Unsupported customer, traction, or integration claims.
+- Hidden or legacy routes presented as active product features.
+- Outdated product naming such as CareerSync as the primary product name.
