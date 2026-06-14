@@ -106,7 +106,7 @@ It does not include:
 
 | Workspace | Main areas |
 | --- | --- |
-| Student | Overview, Career Memory, Career Intelligence, Opportunities, Applications, Network & Mentors, Learning & Skills |
+| Student | Overview, Career Memory, Career Intelligence, Opportunities, Applications |
 | University | Overview, Program-Market Alignment, Alumni Signals, Student Readiness, Collaboration Marketplace |
 | Employer | Talent Discovery, Create Engagement, Job Marketplace, Saved Searches, Shortlists |
 
@@ -140,12 +140,6 @@ Candidate discovery
 -> Explainable fit
 -> Shortlist or engagement
 ```
-
-## Live Demo
-
-- Live Demo: Coming soon
-- Pitch Deck: Coming soon
-- Pitch Video: Coming soon
 
 ## Getting Started
 
@@ -241,15 +235,11 @@ Potential next steps include:
 - Longitudinal outcome intelligence.
 - Institutional benchmarking across cohorts, programmes, and faculties.
 
-## Team
-
-Team details are not currently confirmed in the repository. Add confirmed team member names, roles, and contact links here before public submission.
-
 ## Submission Notes
 
 This repository contains the CareerOS hackathon prototype and supporting presentation assets.
 
-Product reference documents are available in `docs/`, especially `docs/CAREEROS_PRODUCT_REFERENCE.md` and `docs/MASTER_CONTEXT.md`. Pitch-deck handoff notes are available in `pitch-deck/HANDOFF.md`.
+Product reference documents are available in `docs/`, especially `docs/CAREEROS_PRODUCT_REFERENCE.md` and `docs/MASTER_CONTEXT.md`.
 
 ## Public Repository Safety
 
