@@ -2,7 +2,7 @@
   <img src="src/assets/icon-compass.svg" width="50" height="50" alt="CareerOS Logo" style="vertical-align: middle; display: inline-block;">
 </p>
 
-# [CareerOS]([https://github.com](https://career-os-v2.vercel.app/))
+# [CareerOS](https://career-os-v2.vercel.app/)
 
 CareerOS is an AI-assisted career intelligence operating system connecting student evidence, university readiness, and employer talent discovery.
 
