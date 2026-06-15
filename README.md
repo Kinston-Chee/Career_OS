@@ -1,4 +1,8 @@
-# CareerOS
+<p align="center">
+  <img src="src/assets/icon-compass.svg" width="50" height="50" alt="CareerOS Logo" style="vertical-align: middle; display: inline-block;">
+</p>
+
+# [CareerOS](https://career-os-v2.vercel.app/)
 
 CareerOS is an AI-assisted career intelligence operating system connecting student evidence, university readiness, and employer talent discovery.
 
@@ -203,6 +207,9 @@ README.md
 
 ## Technology Stack
 
+Frontend
+-----------
+
 - React
 - Vite
 - JavaScript / JSX
@@ -212,7 +219,24 @@ README.md
 - Zustand
 - Mock data and local state
 
-## Prototype Limitations
+Backend (Future Development)
+----------------------------
+- FastAPI
+- Google ADK for agent orchestration 
+  1) Resource agent: To extract useful and relevant resources for the user (student/candidates) roadmap 
+  2) Roadmap agent: To create a roadmap based on the skills landscape of the users 
+  3) Analysis agent: Analyse the readiness of the candidates and create a matching score 
+  4) Admin agent: Helping applicants and employer to create an email/message draft and schedule an interview 
+- PostgreSQL 
+  - Common Database for saving contents
+  - Vector database for saving text embedding 
+- Google Cloud for hosting 
+- Authentication
+  - Google 
+  - LinkedIn
+
+
+## Current Prototype Limitations
 
 - Demo content is powered by mock data.
 - AI recommendations, summaries, match scores, and assistant messages are simulated.
@@ -240,14 +264,3 @@ Potential next steps include:
 This repository contains the CareerOS hackathon prototype and supporting presentation assets.
 
 Product reference documents are available in `docs/`, especially `docs/CAREEROS_PRODUCT_REFERENCE.md` and `docs/MASTER_CONTEXT.md`.
-
-## Public Repository Safety
-
-This README intentionally avoids:
-
-- API keys or secrets.
-- `.env` values.
-- Private URLs.
-- Unsupported customer, traction, or integration claims.
-- Hidden or legacy routes presented as active product features.
-- Outdated product naming such as CareerSync as the primary product name.
