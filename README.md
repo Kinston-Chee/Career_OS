@@ -206,6 +206,9 @@ README.md
 
 ## Technology Stack
 
+Frontend
+-----------
+
 - React
 - Vite
 - JavaScript / JSX
@@ -214,6 +217,23 @@ README.md
 - Lucide React
 - Zustand
 - Mock data and local state
+
+Backend (Future Development)
+----------------------------
+- FastAPI
+- Google ADK for agent orchestration 
+  1) Resource agent: To extract useful and relevant resources for the user (student/candidates) roadmap 
+  2) Roadmap agent: To create a roadmap based on the skills landscape of the users 
+  3) Analysis agent: Analyse the readiness of the candidates and create a matching score 
+  4) Admin agent: Helping applicants and employer to create an email/message draft and schedule an interview 
+- PostgreSQL 
+  - Common Database for saving content such as username, password, file address and etc 
+  - Vector database for saving text embedding 
+- Google Cloud for hosting 
+- Authentication
+  - Google 
+  - LinkedIn
+
 
 ## Prototype Limitations
 
