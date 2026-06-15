@@ -1,4 +1,4 @@
-# CareerOS
+# ![App Logo](src/assets/icon-compass.svg) CareerOS
 
 CareerOS is an AI-assisted career intelligence operating system connecting student evidence, university readiness, and employer talent discovery.
 
