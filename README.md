@@ -227,7 +227,7 @@ Backend (Future Development)
   3) Analysis agent: Analyse the readiness of the candidates and create a matching score 
   4) Admin agent: Helping applicants and employer to create an email/message draft and schedule an interview 
 - PostgreSQL 
-  - Common Database for saving content such as username, password, file address and etc 
+  - Common Database for saving contents
   - Vector database for saving text embedding 
 - Google Cloud for hosting 
 - Authentication
