@@ -13,7 +13,7 @@ import { useCareerStore } from '../../store/useCareerStore'
 const workspaceConfigs = {
   // Shared nav config drives mobile nav, page titles, and active route aliases.
   student: {
-    eyebrow: 'Student Workspace',
+    eyebrow: 'Candidate Workspace',
     subtitle: 'Your AI career memory',
     navItems: [
       { label: 'Overview', path: '/student/overview', aliases: ['/student'] },

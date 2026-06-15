@@ -66,7 +66,7 @@ export default function MemoryProfilePage() {
   return (
     <div className="min-h-full pb-2 text-[#11104a]">
       <header className="mb-6">
-        <p className="text-xs font-semibold uppercase tracking-wide text-violet-700">Student Workspace</p>
+        <p className="text-xs font-semibold uppercase tracking-wide text-violet-700">Candidate Workspace</p>
         <h2 className="mt-2 text-2xl font-semibold tracking-tight">Career Memory</h2>
         <p className="mt-2 text-sm font-medium text-slate-500">Your journey, your story, your evidence.</p>
       </header>

@@ -17,7 +17,7 @@ export default function OpportunitiesPage() {
     <div className="min-h-full pb-2 text-[#11104a]">
       <div className="space-y-6">
         <header>
-          <p className="text-xs font-semibold uppercase tracking-wide text-violet-700">Student Workspace</p>
+          <p className="text-xs font-semibold uppercase tracking-wide text-violet-700">Candidate Workspace</p>
           <h1 className="mt-2 text-2xl font-semibold tracking-tight">Opportunities</h1>
           <p className="mt-2 text-sm font-medium text-slate-500">
             Find events, competitions, and jobs that match your goals.

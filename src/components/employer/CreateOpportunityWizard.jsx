@@ -626,7 +626,7 @@ export default function CreateOpportunityWizard({ isOpen, onClose, onSave }) {
           {step === 6 && (
             <div className="space-y-4">
               <div className="rounded-[8px] border border-slate-200 bg-slate-50/50 p-4 max-w-3xl mx-auto text-center">
-                <span className="text-xs font-semibold text-slate-600">Student Workspace Preview</span>
+                <span className="text-xs font-semibold text-slate-600">Candidate Workspace Preview</span>
                 <p className="text-[10px] text-slate-400 font-semibold mt-0.5">This is how the opportunity will render on the student-facing jobs dashboard.</p>
               </div>
               <div className="max-w-3xl mx-auto">

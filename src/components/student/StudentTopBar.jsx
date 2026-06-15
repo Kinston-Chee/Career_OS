@@ -81,7 +81,7 @@ export default function StudentTopBar() {
       <div className="flex w-full items-center justify-between gap-5 px-4 py-3 sm:px-6 lg:px-8">
         {/* Page context */}
         <div className="min-w-0">
-          <p className="text-[10px] font-bold uppercase tracking-wider text-violet-500">Student Workspace</p>
+          <p className="text-[10px] font-bold uppercase tracking-wider text-violet-500">Candidate Workspace</p>
         </div>
 
         <div className="ml-auto flex shrink-0 items-center gap-2 sm:gap-3">
