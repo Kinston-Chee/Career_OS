@@ -257,7 +257,7 @@ export default function CandidateHomePage() {
       <div className="mx-auto max-w-[1480px] px-4 py-5 sm:px-6 lg:px-8">
         <header className="mb-4">
           <h1 className="text-2xl font-bold tracking-[-0.01em] text-[#11194a] sm:text-3xl">
-            Good morning, {mockUser.name.split(' ')[0]} <span aria-hidden="true">ðŸ‘‹</span>
+            Good morning, {mockUser.name.split(' ')[0]} <span aria-hidden="true">&#128075;</span>
           </h1>
           <p className="mt-1 text-sm font-medium text-[#637094]">You have 3 career actions to complete today.</p>
         </header>
