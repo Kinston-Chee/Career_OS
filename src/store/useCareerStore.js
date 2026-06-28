@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import { candidateOverview, initialExperiences, mockUser } from '../data/mockData'
+import { candidateOverview, initialExperiences, mockUser, opportunitiesHub } from '../data/mockData'
 
 const sessionStorageKey = 'careeros-session'
 
@@ -326,4 +326,17 @@ export const useCareerStore = create((set) => ({
       ...state.applications,
     ],
   })),
+
+  // ─── Opportunities Hub — Application Tracker sidebar (Round 2) ─────
+  opportunityTracker: opportunitiesHub.applicationTracker,
+  addOpportunityTrackerEntry: (entry) =>
+    set((state) => ({
+      opportunityTracker: [
+        {
+          id: `track-${Date.now()}`,
+          ...entry,
+        },
+        ...state.opportunityTracker,
+      ],
+    })),
 }))

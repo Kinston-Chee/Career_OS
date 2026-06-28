@@ -1,84 +1,44 @@
 import React, { useState } from 'react'
-import CareerFocusEditor from '../components/memory/CareerFocusEditor'
-import CareerProfileBar from '../components/memory/CareerProfileBar'
-import ExperienceInput from '../components/memory/ExperienceInput'
-import ExperienceTimeline from '../components/memory/ExperienceTimeline'
-import { useCareerStore } from '../store/useCareerStore'
+import HomeTopNav from '../components/home/HomeTopNav'
+import CompanionChatPanel from '../components/careerMemory/CompanionChatPanel'
+import MemoryTimeline from '../components/careerMemory/MemoryTimeline'
+import AISignalsPanel from '../components/careerMemory/AISignalsPanel'
+import GapsPanel from '../components/careerMemory/GapsPanel'
+import { candidateOverview, careerMemoryDemo, careerMemoryView, mockUser } from '../data/mockData'
 
 export default function MemoryProfilePage() {
-  const [isExtracting, setIsExtracting] = useState(false)
-  const experiences = useCareerStore((state) => state.experiences)
-  const addExperience = useCareerStore((state) => state.addExperience)
-
-  function handleSubmit(formData) {
-    setIsExtracting(true)
-
-    // Skills are now an array (from searchable selector), not a comma-separated string
-    const skillNames = Array.isArray(formData.skillsLearned)
-      ? formData.skillsLearned
-      : formData.skillsLearned
-        ? formData.skillsLearned.split(',').map((s) => s.trim()).filter(Boolean)
-        : []
-
-    // Technologies are now an array (from searchable selector), not a comma-separated string
-    const techList = Array.isArray(formData.technologies)
-      ? formData.technologies
-      : formData.technologies
-        ? formData.technologies.split(',').map((s) => s.trim()).filter(Boolean)
-        : []
-
-    // Format date from "2026-01-15" (full date) to "Jan 15 2026"
-    let formattedDate = 'Jun 15 2026'
-    if (formData.date) {
-      const dateObj = new Date(formData.date)
-      if (!isNaN(dateObj.getTime())) {
-        const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-        const day = dateObj.getDate().toString().padStart(2, '0')
-        formattedDate = `${months[dateObj.getMonth()]} ${day} ${dateObj.getFullYear()}`
-      }
-    }
-
-    // Simulate a brief processing delay for UX
-    window.setTimeout(() => {
-      addExperience({
-        title: formData.title,
-        type: formData.type,
-        role: formData.role || formData.type,
-        date: formattedDate,
-        summary: formData.description,
-        evidenceLinks: ['Portfolio Entry'],
-        credibility: 'Pending',
-        extractedSkills: skillNames.map((name) => ({
-          name,
-          level: 'Emerging',
-          credibility: 70,
-        })),
-        organization: formData.organization || '',
-        teamSize: formData.teamSize ? parseInt(formData.teamSize, 10) : undefined,
-        duration: formData.duration || undefined,
-        achievement: formData.achievement || '',
-        technologies: techList,
-      })
-      setIsExtracting(false)
-    }, 400)
-  }
+  const readiness = candidateOverview.careerSnapshot.readiness
+  const [draftPhase, setDraftPhase] = useState('hidden')
+  const [leadershipBoost, setLeadershipBoost] = useState(false)
 
   return (
-    <div className="min-h-full pb-2 text-[#11104a]">
-      <header className="mb-6">
-        <p className="text-xs font-semibold uppercase tracking-wide text-violet-700">Student Workspace</p>
-        <h2 className="mt-2 text-2xl font-semibold tracking-tight">Career Memory</h2>
-        <p className="mt-2 text-sm font-medium text-slate-500">Your journey, your story, your evidence.</p>
-      </header>
+    <div className="min-h-screen bg-[#f6f9ff] text-[#121a3a]">
+      <HomeTopNav user={mockUser} readiness={readiness} />
 
-      <div className="space-y-6">
-        <CareerFocusEditor />
-        <CareerProfileBar experiences={experiences} />
-        <ExperienceInput
-          onSubmit={handleSubmit}
-          isExtracting={isExtracting}
-        />
-        <ExperienceTimeline experiences={experiences} />
+      <div className="mx-auto max-w-[1480px] px-4 py-5 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-[300px_minmax(0,1fr)_320px]">
+          <div className="min-w-0 lg:h-[calc(100vh-7rem)]">
+            <CompanionChatPanel
+              companion={careerMemoryView.companion}
+              onShowDraft={() => setDraftPhase('typing')}
+              onConfirmDraft={() => setDraftPhase('confirming')}
+            />
+          </div>
+
+          <div className="min-w-0">
+            <MemoryTimeline
+              timeline={careerMemoryView.timeline}
+              draftEntry={careerMemoryDemo.draftEntry}
+              draftPhase={draftPhase}
+              onSignalBoost={() => setLeadershipBoost(true)}
+            />
+          </div>
+
+          <div className="min-w-0 space-y-4">
+            <AISignalsPanel signals={careerMemoryView.aiSignals} leadershipBoost={leadershipBoost} />
+            <GapsPanel gaps={careerMemoryView.gaps} />
+          </div>
+        </div>
       </div>
     </div>
   )

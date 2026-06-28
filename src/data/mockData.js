@@ -2042,7 +2042,7 @@ export const eventHub = {
       emoji: '💻',
       org: 'Google Developer Student Clubs',
       title: 'AI for Social Good Hackathon 2025',
-      date: '24–26 May 2025',
+      date: '24-26 May 2025',
       location: 'Online',
       goingCount: 842,
       goingLabel: 'joined',
@@ -2840,5 +2840,523 @@ export const eventDetailDefault = {
       date: '28 May · Online',
       matchPercent: 74,
     },
+  ],
+}
+
+// CareerOS Candidate Home (Round 2 AI-first redesign). Kept separate from
+// candidateOverview (Round 1) so both can be demoed without conflict.
+export const candidateHome = {
+  robotBriefing: {
+    message:
+      "While you were away, I found something - TalentBank just opened an AI Challenge. 847 students registered, and your NLP skills give you a 92% match. Deadline's in 2 days.",
+    chips: ['Tell me about this challenge', 'Which companies are watching me?', 'Apply to TalentBank now'],
+  },
+  exploreOpportunities: [
+    {
+      id: 'home-opp-1',
+      role: 'SWE Intern',
+      company: 'ByteDance',
+      matchPercent: 91,
+      image: 'home-1',
+      overlay: 'from-blue-950/78 via-blue-900/46 to-blue-700/20',
+    },
+    {
+      id: 'home-opp-2',
+      role: 'Data Analyst',
+      company: 'Grab',
+      matchPercent: 79,
+      image: 'home-2',
+      overlay: 'from-teal-950/78 via-teal-800/48 to-cyan-600/18',
+    },
+    {
+      id: 'home-opp-3',
+      role: 'AI Challenge',
+      company: 'TalentBank',
+      matchPercent: 92,
+      image: 'home-3',
+      overlay: 'from-violet-950/78 via-indigo-900/46 to-blue-600/16',
+    },
+    {
+      id: 'home-opp-4',
+      role: 'Product Intern',
+      company: 'Shopee',
+      matchPercent: 86,
+      image: 'home-4',
+      overlay: 'from-orange-950/72 via-orange-800/36 to-amber-500/14',
+    },
+  ],
+  quickActions: [
+    { id: 'qa-1', icon: 'Briefcase', title: 'Apply to top match', subtitle: '1-click - TalentBank' },
+    { id: 'qa-2', icon: 'FileText', title: 'Log an experience', subtitle: 'Add to Career Memory' },
+    { id: 'qa-3', icon: 'Mic', title: 'Practice interview', subtitle: 'AI mock - 10 min' },
+    { id: 'qa-4', icon: 'BarChart3', title: 'Check skill gaps', subtitle: 'vs. target roles' },
+    { id: 'qa-5', icon: 'CalendarDays', title: 'Find campus events', subtitle: 'Career fairs and talks' },
+    { id: 'qa-6', icon: 'Bot', title: 'Ask my companion', subtitle: 'Anything career' },
+  ],
+  recentActivity: [
+    { id: 'ra-1', icon: 'Sparkles', tone: 'violet', text: 'AI Career Coach suggested 3 skills for your Software Engineer profile', time: 'Today 09:12' },
+    { id: 'ra-2', icon: 'Briefcase', tone: 'emerald', text: 'Applied to Shopee - Product Manager Intern', time: 'Yesterday 16:45' },
+    { id: 'ra-3', icon: 'FileText', tone: 'blue', text: 'Updated your profile - added 2 new projects', time: 'Yesterday 10:08' },
+    { id: 'ra-4', icon: 'Award', tone: 'amber', text: 'Completed System Design Basics in Learning Hub', time: 'May 14, 20:33' },
+  ],
+  pickingUpWhereLeftOff: [
+    { id: 'pu-1', icon: 'Briefcase', title: 'TalentBank application', tag: '1 step left', tone: 'orange' },
+    { id: 'pu-2', icon: 'BookOpen', title: 'NLP Project in Career Memory', tag: 'Missing evidence', tone: 'red' },
+    { id: 'pu-3', icon: 'Eye', title: 'Google ML Intern', tag: 'New role posted', tone: 'blue' },
+    { id: 'pu-4', icon: 'PlayCircle', title: 'System Design Basics', tag: '60% done', tone: 'slate' },
+  ],
+  whileYouWereAway: [
+    { id: 'wa-1', tone: 'violet', text: 'Matched you to 3 new roles based on your Career Memory', time: '2h ago' },
+    { id: 'wa-2', tone: 'orange', text: 'Lenovo and AIA Malaysia viewed your profile', time: '5h ago' },
+    { id: 'wa-3', tone: 'blue', text: 'NLP skill demand rose +34% - you moved up in ranking', time: 'Yesterday' },
+    { id: 'wa-4', tone: 'emerald', text: 'TalentBank AI Challenge posted - 92% match detected', time: 'Yesterday' },
+  ],
+  skillSignal: {
+    title: 'NLP skills are rising',
+    body: "Demand up +34% this week. You're ahead of 76% of candidates in your field.",
+    attribution: 'Based on your Career Memory - Updated 2h ago',
+  },
+}
+
+// CareerOS Career Memory (Round 2 AI-first redesign). Companion chat + timeline
+// + AI signal panels replace the Round 1 form-based memory profile.
+export const careerMemoryView = {
+  companion: {
+    greeting:
+      "You've logged 6 experiences so far. Your strongest signal is leadership — shown in 4 entries. Want to add something new, or should I help strengthen an existing entry?",
+    chips: ['✨ Add demo experience', 'Strengthen an entry', "What am I missing?"],
+  },
+  timeline: [
+    {
+      id: 'mem-1',
+      logo: 'G',
+      logoTone: 'emerald',
+      title: 'Software Engineering Intern — Grab',
+      period: 'Jun–Aug 2024',
+      year: 'Jun–Aug\n2024',
+      tags: ['Leadership', 'React', 'Agile'],
+      verified: true,
+      signalStrength: 3,
+    },
+    {
+      id: 'mem-2',
+      logo: 'TCS',
+      logoTone: 'rose',
+      title: "Vice President — Taylor's Computing Society",
+      period: '2023–2024',
+      year: '2023–\n2024',
+      tags: ['Leadership', 'Event Management'],
+      verified: false,
+      signalStrength: 3,
+    },
+    {
+      id: 'mem-3',
+      icon: 'Trophy',
+      logoTone: 'amber',
+      title: 'Hackathon — Top 3 Finalist',
+      period: 'Oct 2023',
+      year: 'Oct\n2023',
+      tags: ['Problem Solving'],
+      verified: false,
+      signalStrength: 2,
+    },
+    {
+      id: 'mem-4',
+      icon: 'GraduationCap',
+      logoTone: 'blue',
+      title: "Dean's List — Semester 4",
+      period: '2023',
+      year: '2023',
+      tags: ['Academic Excellence'],
+      tagTone: 'orange',
+      verified: false,
+      signalStrength: 2,
+    },
+  ],
+  aiSignals: [
+    { id: 'sig-1', icon: 'Users', tone: 'blue', label: 'Leadership', value: 92, boostedValue: 100, level: 'High' },
+    { id: 'sig-2', icon: 'Code2', tone: 'violet', label: 'Full-Stack Development', value: 65, level: 'Medium' },
+    { id: 'sig-3', icon: 'BarChart3', tone: 'emerald', label: 'Data Analysis', value: 65, level: 'Medium' },
+  ],
+  gaps: [
+    { id: 'gap-1', text: 'Add a project link to your NLP entry — +3% readiness' },
+    { id: 'gap-2', text: 'Log your FYP — strong signal for data roles' },
+    { id: 'gap-3', text: 'Hackathon entry has no outcome logged' },
+    { id: 'gap-4', text: 'No leadership entry after June 2024' },
+  ],
+}
+
+// Scripted Career Memory "add demo experience" conversation. Every message,
+// chip, and the draft entry it produces are hardcoded — no LLM calls.
+export const careerMemoryDemo = {
+  step1: {
+    message:
+      'Great! Tell me about an experience — it could be an internship, project, competition, or anything career-related.',
+    chip: 'I did an internship at Grab last summer, working on their data pipeline and helped onboard 2 new interns',
+  },
+  step2: {
+    message:
+      "Got it — I'm picking up data engineering and leadership signals here. Let me confirm:\n\nGrab · Data Engineering Intern\nJun – Aug 2024\nSignals: Data Pipeline · Leadership · Mentoring\n\nDoes this look right?",
+    chips: ['Yes, save it', 'Edit details', 'Add more context'],
+  },
+  draftEntry: {
+    logo: 'Grab',
+    title: 'Grab · Data Engineering Intern',
+    date: 'Jun – Aug 2024',
+    tags: [
+      { label: 'Data Pipeline', confirmedTone: 'blue' },
+      { label: 'Leadership', confirmedTone: 'violet' },
+      { label: 'Mentoring', confirmedTone: 'emerald' },
+    ],
+  },
+  confirmed: {
+    message:
+      "Saved! Your leadership signal just got stronger — now confirmed in 5 entries.\n\nOne thing: adding a project link or outcome metrics would boost this entry's signal strength significantly.",
+    chips: ['Add a link', 'Log another experience'],
+  },
+  step4: {
+    message: 'What else have you been up to? Another internship, a project, a competition — anything counts.',
+    chip: "I was VP of Taylor's Computing Society from 2023 to 2024",
+  },
+  step5: {
+    message:
+      "Leadership role in a student organisation — that's a strong signal. This confirms what I'm already seeing across your entries.\n\nYour Career Memory is building a clear picture: you lead, you build, and you deliver. That's exactly what top employers look for.",
+  },
+  addLinkAck: "Got it — you can paste a link anytime from this entry's edit menu.",
+}
+
+// CareerOS Opportunities Hub (Round 2 AI-first redesign).
+export const opportunitiesHub = {
+  filterTabs: ['All', 'Internships', 'Challenges', 'Jobs', 'Events'],
+  heroHeadline: {
+    count: 12,
+    urgentCount: 3,
+  },
+  heroPicks: [
+    {
+      id: 'pick-1',
+      matchPercent: 96,
+      matchTone: 'emerald',
+      title: 'McKinsey Forward Case Challenge',
+      org: 'McKinsey',
+      location: 'Kuala Lumpur',
+      date: '20 May 2025',
+    },
+    {
+      id: 'pick-2',
+      matchPercent: 97,
+      matchTone: 'emerald',
+      title: 'Google ML Intern',
+      org: 'Google - AI/ML Team',
+      location: 'Hybrid',
+      date: '30 May 2025',
+    },
+    {
+      id: 'pick-3',
+      matchPercent: 92,
+      matchTone: 'blue',
+      title: 'TalentBank AI Challenge 2025',
+      org: 'TalentBank',
+      location: 'Online',
+      date: '24-26 May 2025',
+    },
+  ],
+  resultsSummary: 'Showing 12 results - Sorted by AI match',
+  cards: [
+    {
+      id: 'opp-1',
+      type: 'internship',
+      logo: 'BD',
+      logoTone: 'indigo',
+      accentTone: 'indigo',
+      bgImageKey: 'intern',
+      title: 'Software Engineer Intern',
+      org: 'ByteDance',
+      location: 'KL',
+      deadline: '3 days',
+      matchPercent: 91,
+      tags: ['Python', 'Backend', 'System Design'],
+    },
+    {
+      id: 'opp-2',
+      type: 'challenge',
+      logo: 'G',
+      logoTone: 'white-google',
+      accentTone: 'blue',
+      bgImageKey: 'competition',
+      title: 'Engineering Challenge',
+      org: 'Google APAC',
+      location: 'Remote',
+      deadline: '10 days',
+      matchPercent: 87,
+      tags: ['Algorithms', 'Problem Solving', 'Data Structures'],
+    },
+    {
+      id: 'opp-3',
+      type: 'internship',
+      logo: 'GR',
+      logoTone: 'emerald',
+      accentTone: 'emerald',
+      bgImageKey: 'job',
+      title: 'Data Analyst Intern',
+      org: 'Grab',
+      location: 'KL',
+      deadline: '14 days',
+      matchPercent: 79,
+      metaPill: 'Full-time',
+      tags: ['SQL', 'Data Analysis', 'Excel'],
+    },
+    {
+      id: 'opp-4',
+      type: 'event',
+      logo: 'TCS',
+      logoTone: 'rose',
+      accentTone: 'violet',
+      bgImageKey: 'event',
+      title: 'Booth Registration',
+      org: "Taylor's Career Fair",
+      location: 'On-campus',
+      deadline: '5 days',
+      eventTag: 'Event',
+      tags: ['Networking', 'Career Growth', 'Industry Exposure'],
+    },
+  ],
+  applicationTracker: [
+    {
+      id: 'track-1',
+      logo: 'BD',
+      logoTone: 'indigo',
+      company: 'ByteDance',
+      role: 'Software Engineer Intern',
+      dateLabel: 'Applied on May 12',
+      status: 'Applied',
+      statusTone: 'emerald',
+    },
+    {
+      id: 'track-2',
+      logo: 'G',
+      logoTone: 'white-google',
+      company: 'Google APAC',
+      role: 'Engineering Challenge',
+      dateLabel: 'Applied on May 10',
+      status: 'In Review',
+      statusTone: 'blue',
+    },
+    {
+      id: 'track-3',
+      logo: 'GR',
+      logoTone: 'emerald',
+      company: 'Grab',
+      role: 'Data Analyst Intern',
+      dateLabel: 'Interview on May 16',
+      status: 'Interview',
+      statusTone: 'orange',
+    },
+    {
+      id: 'track-4',
+      logo: 'TCS',
+      logoTone: 'rose',
+      company: 'Shopee',
+      role: 'Data Analyst Intern',
+      dateLabel: 'Offered on May 8',
+      status: 'Offer',
+      statusTone: 'violet',
+    },
+  ],
+  whyThese3: [
+    {
+      id: 'why-1',
+      tone: 'emerald',
+      title: 'McKinsey Forward Case Challenge',
+      reason:
+        'Your leadership signal appears in 4 Career Memory entries. McKinsey’s challenge rewards exactly this. Deadline is 20 May — 3 days away.',
+    },
+    {
+      id: 'why-2',
+      tone: 'blue',
+      title: 'Google ML Intern',
+      reason:
+        'You have NLP and Python experience from your Grab internship. This role lists both as primary requirements. 97% skill overlap.',
+    },
+    {
+      id: 'why-3',
+      tone: 'orange',
+      title: 'TalentBank AI Challenge 2025',
+      reason:
+        'This closes soonest — 24 May. Your match score is 92%. I flagged it because waiting risks missing the deadline.',
+    },
+  ],
+}
+
+// Full detail content for the View Details slide-in panel, keyed by opportunity id.
+// Covers the 4 main grid cards (opp-1..4) and the 3 hero picks (pick-1..3).
+export const opportunityDetails = {
+  'opp-1': {
+    id: 'opp-1',
+    logo: 'BD',
+    logoTone: 'indigo',
+    title: 'Software Engineer Intern',
+    org: 'ByteDance',
+    location: 'Kuala Lumpur',
+    matchPercent: 91,
+    category: 'internship',
+    about:
+      "ByteDance's software engineering internship program places you in real product teams. You'll ship features used by millions across TikTok and Lark.",
+    dateRange: 'Jun–Aug 2025',
+    teamSize: 'Full-time',
+    matchSkills: ['Python', 'Backend', 'System Design', 'Leadership'],
+    requirements: ['CS or related degree', 'Strong DSA', 'Python or Java', 'Available full-time'],
+    deadlineLabel: 'Closes in 3 days',
+  },
+  'opp-2': {
+    id: 'opp-2',
+    logo: 'G',
+    logoTone: 'white-google',
+    title: 'Engineering Challenge',
+    org: 'Google APAC',
+    location: 'Remote',
+    matchPercent: 87,
+    category: 'challenge',
+    about:
+      "Google's APAC engineering challenge tests algorithmic thinking and system design. Top performers get fast-tracked to interviews.",
+    dateRange: 'May 30, 2025',
+    teamSize: 'Individual',
+    matchSkills: ['Algorithms', 'Problem Solving', 'Python'],
+    requirements: ['University student', 'Strong CS fundamentals', 'Submit solution within 48h'],
+    deadlineLabel: 'Closes in 10 days',
+  },
+  'opp-3': {
+    id: 'opp-3',
+    logo: 'GR',
+    logoTone: 'emerald',
+    title: 'Data Analyst Intern',
+    org: 'Grab',
+    location: 'Kuala Lumpur',
+    matchPercent: 79,
+    category: 'internship',
+    about:
+      "Join Grab's data team and work on real ridesharing and fintech datasets. You'll build dashboards and run analyses that influence product decisions.",
+    dateRange: 'Jul–Sep 2025',
+    teamSize: 'Full-time',
+    matchSkills: ['SQL', 'Data Analysis', 'Excel', 'Python'],
+    requirements: ['Data-related degree', 'SQL proficiency', 'Excel or Tableau', 'Strong communication'],
+    deadlineLabel: 'Closes in 14 days',
+  },
+  'opp-4': {
+    id: 'opp-4',
+    logo: 'TCS',
+    logoTone: 'rose',
+    title: 'Booth Registration',
+    org: "Taylor's Career Fair",
+    location: "Taylor's University",
+    matchPercent: null,
+    category: 'event',
+    about:
+      "Taylor's University annual career fair connecting students with 50+ employers. Register to attend and get priority access to company booths.",
+    dateRange: 'Jun 15, 2025',
+    teamSize: 'In-person',
+    matchSkills: ['Networking', 'Career Growth'],
+    requirements: ["Taylor's University student", 'Bring printed CV', 'Smart casual dress code'],
+    deadlineLabel: 'Closes in 5 days',
+  },
+  'pick-1': {
+    id: 'pick-1',
+    logo: 'MK',
+    logoTone: 'emerald',
+    title: 'McKinsey Forward Case Challenge',
+    org: 'McKinsey',
+    location: 'Kuala Lumpur',
+    matchPercent: 96,
+    category: 'challenge',
+    about:
+      "McKinsey Forward's case challenge puts you through real consulting scenarios in teams of four, judged by McKinsey consultants.",
+    dateRange: '20 May 2025',
+    teamSize: 'Team of 4',
+    matchSkills: ['Leadership', 'Problem Solving', 'Strategy', 'Communication'],
+    requirements: ['Penultimate or final-year student', 'Strong analytical skills', 'Submit team roster by deadline'],
+    deadlineLabel: 'Closes in 3 days',
+  },
+  'pick-2': {
+    id: 'pick-2',
+    logo: 'G',
+    logoTone: 'white-google',
+    title: 'Google ML Intern',
+    org: 'Google — AI/ML Team',
+    location: 'Hybrid',
+    matchPercent: 97,
+    category: 'internship',
+    about:
+      "Google's AI/ML internship puts you on a team building production ML systems — from data pipelines to model deployment.",
+    dateRange: '30 May 2025',
+    teamSize: 'Full-time',
+    matchSkills: ['Python', 'NLP', 'Machine Learning', 'Backend'],
+    requirements: ['CS, Data Science or related degree', 'Python proficiency', 'ML coursework or projects'],
+    deadlineLabel: 'Closes in 10 days',
+  },
+  'pick-3': {
+    id: 'pick-3',
+    logo: 'TB',
+    logoTone: 'indigo',
+    title: 'TalentBank AI Challenge 2025',
+    org: 'TalentBank',
+    location: 'Online',
+    matchPercent: 92,
+    category: 'challenge',
+    about:
+      "TalentBank's AI Challenge invites students to build career-tech prototypes. Top teams get fast-tracked interviews with partner employers.",
+    dateRange: '24–26 May 2025',
+    teamSize: 'Team of 3–5',
+    matchSkills: ['NLP', 'Python', 'Problem Solving'],
+    requirements: ['University student', 'Basic ML/NLP knowledge', 'Submit working prototype'],
+    deadlineLabel: 'Closes in 2 days',
+  },
+}
+
+// Profile page (Round 2). Reached via the avatar in the top nav, not a nav tab.
+export const profileOverview = {
+  headline: {
+    name: 'Chris Lee',
+    school: "Taylor's University · Y3 · Data Science",
+    tagline: 'Aspiring Software Engineer · Open to internships',
+  },
+  stats: [
+    { id: 'stat-1', label: 'Experiences Logged', value: '6', note: 'Since Jan 2024', noteTone: 'muted' },
+    { id: 'stat-2', label: 'Employers Watching', value: '2', note: '↑ Active today', noteTone: 'emerald' },
+    { id: 'stat-3', label: 'Applications Sent', value: '4', note: 'This month', noteTone: 'muted' },
+    { id: 'stat-4', label: 'Top Skill', value: 'NLP', note: '↑ +34% demand', noteTone: 'emerald' },
+  ],
+  careerNarrative: {
+    body:
+      'Chris is a Y3 Data Science student with demonstrated leadership in student organisations and growing technical depth in NLP and Python. His strongest market signal is initiative — shown across 4 separate Career Memory entries. He is actively building toward a Software Engineering role at a top tech company.',
+    caption: 'This is how your Career Companion describes you to employers.',
+  },
+  selfDiscovery: {
+    lastUpdated: 'Last updated 3 days ago',
+    traits: [
+      { id: 'trait-1', icon: 'Zap', tone: 'blue', label: 'Initiative-driven', sub: 'You move fast and bring others along' },
+      { id: 'trait-2', icon: 'Compass', tone: 'violet', label: 'Ambiguity-tolerant', sub: "You thrive where direction isn't set yet" },
+      { id: 'trait-3', icon: 'Target', tone: 'emerald', label: 'Impact over stability', sub: 'You choose ownership over structure' },
+    ],
+    basis: 'Based on DISC · Strengths · Values assessment',
+    narrative:
+      'You lead with initiative — you move fast and bring others along. Your strongest environment is ambiguous problems where you can define the direction. You value impact over stability, which means startup-style roles or high-ownership internships will suit you better than structured programmes. Your NLP work at Grab and your VP role at Taylor’s Computing Society both reflect this pattern.',
+    footnote: 'This profile evolves automatically as you log more experiences in Career Memory.',
+  },
+  employersWatching: [
+    { id: 'emp-1', logo: 'L', logoTone: 'rose', name: 'Lenovo', focus: 'AI & Software roles', status: 'Viewed today', statusTone: 'orange' },
+    { id: 'emp-2', logo: 'AIA', logoTone: 'rose', name: 'AIA Malaysia', focus: 'Fintech & Data roles', status: 'Viewed yesterday', statusTone: 'slate' },
+  ],
+  topSkills: [
+    { id: 'skill-1', label: 'NLP', tag: '↑ +34% this week', tone: 'emerald' },
+    { id: 'skill-2', label: 'Python', tag: 'Stable demand', tone: 'blue' },
+    { id: 'skill-3', label: 'Leadership', tag: 'Always valued', tone: 'violet' },
+  ],
+  settings: [
+    { id: 'set-1', icon: 'BookOpen', label: 'Edit Career Memory' },
+    { id: 'set-2', icon: 'Shield', label: 'Privacy Settings' },
+    { id: 'set-3', icon: 'Bell', label: 'Notification Preferences' },
+    { id: 'set-4', icon: 'Download', label: 'Download My CV' },
+    { id: 'set-5', icon: 'Link2', label: 'Share Profile Link' },
+    { id: 'set-6', icon: 'Info', label: 'About CareerOS', trailing: 'v1.2.0' },
   ],
 }
