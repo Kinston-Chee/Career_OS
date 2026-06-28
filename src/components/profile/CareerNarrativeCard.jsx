@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { ArrowRight, Bot } from 'lucide-react'
 import { getRandomMountainBg } from './mountainBackgrounds'
 
-export default function CareerNarrativeCard({ narrative }) {
+export default function CareerNarrativeCard({ narrative, onEditNarrative }) {
   const [bg] = useState(getRandomMountainBg)
 
   return (
@@ -19,8 +19,8 @@ export default function CareerNarrativeCard({ narrative }) {
 
       <p className="relative mt-3 text-sm leading-relaxed text-[#3a4669]">{narrative.body}</p>
 
-      <button type="button" className="relative mt-3 inline-flex items-center gap-1 text-sm font-bold text-blue-600 hover:text-blue-700">
-        Regenerate narrative <ArrowRight size={14} />
+      <button type="button" onClick={onEditNarrative} className="relative mt-3 inline-flex items-center gap-1 text-sm font-bold text-blue-600 hover:text-blue-700">
+        Edit narrative <ArrowRight size={14} />
       </button>
 
       <p className="relative mt-3 text-xs font-medium text-[#9aa6c3]">{narrative.caption}</p>

@@ -12,13 +12,6 @@ const LOGO_TONES = {
   'white-google': 'bg-white text-[#4285F4] border border-[#e2eaf8]',
 }
 
-const ACCENT_TONES = {
-  indigo: 'bg-indigo-600 hover:bg-indigo-700 focus:ring-indigo-100',
-  blue: 'bg-blue-600 hover:bg-blue-700 focus:ring-blue-100',
-  emerald: 'bg-emerald-600 hover:bg-emerald-700 focus:ring-emerald-100',
-  violet: 'bg-violet-600 hover:bg-violet-700 focus:ring-violet-100',
-}
-
 const CARD_TONES = {
   indigo: {
     wash: 'from-[#fbfaff] via-[#f3efff] to-[#e9e2ff]',
@@ -53,7 +46,7 @@ const BG_IMAGES = {
   event: eventBg,
 }
 
-export default function OpportunityGridCard({ opportunity, applied, onViewDetails }) {
+export default function OpportunityGridCard({ opportunity, applied, saved, onViewDetails, onToggleSave }) {
   const bgImage = BG_IMAGES[opportunity.bgImageKey]
   const tone = CARD_TONES[opportunity.accentTone] ?? CARD_TONES.indigo
 
@@ -151,12 +144,23 @@ export default function OpportunityGridCard({ opportunity, applied, onViewDetail
               <button
                 type="button"
                 onClick={onViewDetails}
-                className={`flex h-10 w-[132px] items-center justify-center gap-2 rounded-lg text-sm font-semibold text-white transition duration-200 focus:outline-none focus:ring-4 ${ACCENT_TONES[opportunity.accentTone] ?? ACCENT_TONES.indigo}`}
+                className="flex h-10 w-[132px] items-center justify-center gap-2 rounded-xl border border-white/75 bg-white/62 text-sm font-bold text-blue-700 shadow-[0_10px_24px_rgba(37,99,235,0.10),inset_0_1px_0_rgba(255,255,255,0.86)] backdrop-blur-xl transition duration-200 hover:-translate-y-0.5 hover:border-blue-200 hover:bg-white/82 hover:text-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-100"
               >
                 View details <ArrowRight size={15} />
               </button>
-              <button type="button" className="flex h-10 w-[92px] items-center justify-center gap-1.5 rounded-lg border border-[#dfe8f7] bg-white/80 text-sm font-semibold text-[#35507d] transition duration-200 hover:border-blue-300 hover:bg-blue-50 focus:outline-none focus:ring-4 focus:ring-blue-100">
-                <Bookmark size={15} /> Save
+              <button
+                type="button"
+                onClick={(event) => {
+                  event.stopPropagation()
+                  onToggleSave?.()
+                }}
+                className={`flex h-10 w-[92px] items-center justify-center gap-1.5 rounded-lg border text-sm font-semibold transition duration-200 focus:outline-none focus:ring-4 focus:ring-blue-100 ${
+                  saved
+                    ? 'border-blue-200 bg-blue-50/80 text-blue-700 shadow-sm'
+                    : 'border-[#dfe8f7] bg-white/80 text-[#35507d] hover:border-blue-300 hover:bg-blue-50'
+                }`}
+              >
+                <Bookmark size={15} fill={saved ? 'currentColor' : 'none'} /> {saved ? 'Saved' : 'Save'}
               </button>
             </>
           )}

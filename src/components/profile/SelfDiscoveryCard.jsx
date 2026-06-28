@@ -239,14 +239,6 @@ export default function SelfDiscoveryCard({ selfDiscovery }) {
         >
           <p className="text-xs font-bold uppercase tracking-wide text-blue-600">How your Career Companion sees you</p>
           <p className="mt-2 text-sm leading-relaxed text-[#3a4669]">{selfDiscovery.narrative}</p>
-          <div className="mt-3 flex flex-wrap gap-4">
-            <button type="button" className="text-sm font-medium text-[#9aa6c3] hover:text-[#637094]">
-              How did you get this? →
-            </button>
-            <button type="button" className="text-sm font-bold text-blue-600 hover:text-blue-700">
-              Update from my latest experiences →
-            </button>
-          </div>
         </div>
       </div>
 
@@ -474,3 +466,4 @@ function ResultCard({ onProfile, onOpportunities }) {
     </div>
   )
 }
+

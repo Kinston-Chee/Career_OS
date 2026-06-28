@@ -193,7 +193,11 @@ export default function CandidateHomePage() {
       })
       return
     }
-    openTalentBankConfirm()
+    if (chip === 'Apply to TalentBank now') {
+      navigate('/student/opportunities', {
+        state: { highlightOpportunityId: 'talentbank-ai-challenge' },
+      })
+    }
   }
 
   const handlePickUp = (item) => {
@@ -230,7 +234,11 @@ export default function CandidateHomePage() {
   }
 
   const handleQuickAction = (action) => {
-    if (action.title === 'Apply to top match') openTalentBankConfirm()
+    if (action.title === 'Apply to top match') {
+      navigate('/student/opportunities', {
+        state: { highlightOpportunityId: 'talentbank-ai-challenge' },
+      })
+    }
     else if (action.title === 'Log an experience') navigate('/student/profile')
     else if (action.title === 'Practice interview') setModal({
       title: 'AI Mock Interview',
@@ -277,15 +285,6 @@ export default function CandidateHomePage() {
               skillSignal={candidateHome.skillSignal}
               onPickUp={handlePickUp}
               onMenuAction={(_, action) => showToast(action === 'Mark as done' ? 'Marked as done' : action)}
-              onRecommendations={() => setDrawer({
-                title: 'Recommended next actions',
-                rows: [
-                  { title: 'Apply before deadline', body: 'Apply to TalentBank AI Challenge before deadline.' },
-                  { title: 'Add NLP evidence', body: 'Add evidence to NLP Project in Career Memory.' },
-                  { title: 'Practice interview', body: 'Practice a 10-minute interview for software intern roles.' },
-                ],
-                actions: [{ label: 'Close', secondary: true, onClick: () => setDrawer(null) }],
-              })}
               onSkillSignal={() => setModal({
                 title: 'NLP skill trend',
                 rows: [

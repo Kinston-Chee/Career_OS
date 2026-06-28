@@ -1,30 +1,29 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { Loader2 } from 'lucide-react'
+import { CheckCircle2, Loader2, Pencil } from 'lucide-react'
 
-const TAG_GRAY = 'bg-slate-100 text-slate-500'
+const TAG_GRAY = 'border border-slate-100 bg-slate-100 text-slate-500'
 const TAG_CONFIRMED_TONES = {
-  blue: 'bg-blue-50 text-blue-700',
-  violet: 'bg-violet-50 text-violet-700',
-  emerald: 'bg-emerald-50 text-emerald-700',
+  blue: 'border border-blue-100 bg-blue-50/80 text-blue-700',
+  violet: 'border border-violet-100 bg-violet-50/80 text-violet-700',
+  emerald: 'border border-emerald-100 bg-emerald-50/80 text-emerald-700',
 }
 
-export default function DraftTimelineCard({ entry, phase, onSignalBoost }) {
-  // Typing-sequence reveal flags
+export default function DraftTimelineCard({ entry, phase, onSignalBoost, onEdit }) {
   const [logoVisible, setLogoVisible] = useState(false)
   const [titleChars, setTitleChars] = useState(0)
   const [titleDone, setTitleDone] = useState(false)
   const [dateVisible, setDateVisible] = useState(false)
   const [tagsRevealed, setTagsRevealed] = useState(0)
   const [confirmBtnVisible, setConfirmBtnVisible] = useState(false)
-  const [dotState, setDotState] = useState('outline') // outline | pulsing | filled
+  const [dotState, setDotState] = useState('outline')
 
-  // Confirm-sequence flags
   const [confirmLoading, setConfirmLoading] = useState(false)
-  const [borderState, setBorderState] = useState('dashed') // dashed | solid | none
-  const [bgState, setBgState] = useState('blue') // blue | green | white
+  const [borderState, setBorderState] = useState('dashed')
+  const [bgState, setBgState] = useState('blue')
   const [extractingVisible, setExtractingVisible] = useState(true)
   const [tagsColored, setTagsColored] = useState(0)
   const [savedBadge, setSavedBadge] = useState(false)
+  const [finalized, setFinalized] = useState(false)
   const [signalBlocks, setSignalBlocks] = useState(0)
 
   const timersRef = useRef([])
@@ -34,26 +33,24 @@ export default function DraftTimelineCard({ entry, phase, onSignalBoost }) {
     return id
   }
 
-  // ── Typing sequence ──────────────────────────────────────────────────
   useEffect(() => {
     if (phase !== 'typing') return undefined
     timersRef.current.forEach(clearTimeout)
     timersRef.current = []
+    setFinalized(false)
 
     schedule(() => setLogoVisible(true), 300)
-
-    const title = entry.title
     schedule(() => {
       const intervalId = setInterval(() => {
         setTitleChars((prev) => {
           const next = prev + 1
-          if (next >= title.length) {
+          if (next >= entry.title.length) {
             clearInterval(intervalId)
             setTitleDone(true)
             schedule(() => setDateVisible(true), 200)
             schedule(() => {
               entry.tags.forEach((_, idx) => {
-                schedule(() => setTagsRevealed((c) => Math.max(c, idx + 1)), idx * 150)
+                schedule(() => setTagsRevealed((count) => Math.max(count, idx + 1)), idx * 150)
               })
             }, 400)
             const tagsTotalDelay = 400 + entry.tags.length * 150
@@ -71,10 +68,8 @@ export default function DraftTimelineCard({ entry, phase, onSignalBoost }) {
       timersRef.current.forEach(clearTimeout)
       timersRef.current = []
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [phase])
+  }, [phase, entry.title, entry.tags])
 
-  // ── Confirm sequence ─────────────────────────────────────────────────
   useEffect(() => {
     if (phase !== 'confirming') return undefined
     timersRef.current.forEach(clearTimeout)
@@ -89,7 +84,7 @@ export default function DraftTimelineCard({ entry, phase, onSignalBoost }) {
     schedule(() => setExtractingVisible(false), 700)
     schedule(() => {
       entry.tags.forEach((_, idx) => {
-        schedule(() => setTagsColored((c) => Math.max(c, idx + 1)), idx * 150)
+        schedule(() => setTagsColored((count) => Math.max(count, idx + 1)), idx * 150)
       })
     }, 800)
     schedule(() => setSavedBadge(true), 1200)
@@ -104,27 +99,36 @@ export default function DraftTimelineCard({ entry, phase, onSignalBoost }) {
     }, 2000)
     schedule(() => setSignalBlocks(2), 2150)
     schedule(() => setSignalBlocks(3), 2300)
+    schedule(() => {
+      setSavedBadge(false)
+      setFinalized(true)
+    }, 3600)
 
     return () => {
       timersRef.current.forEach(clearTimeout)
       timersRef.current = []
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [phase])
+  }, [phase, entry.tags, onSignalBoost])
 
-  const borderClass =
-    borderState === 'dashed'
+  const borderClass = finalized
+    ? 'border border-white/70'
+    : borderState === 'dashed'
       ? 'border-2 border-dashed border-[#60A5FA]'
       : borderState === 'solid'
         ? 'border-2 border-solid border-[#3B6D11]'
         : 'border border-transparent'
 
-  const bgStyle =
-    bgState === 'blue'
+  const bgStyle = finalized
+    ? null
+    : bgState === 'blue'
       ? { background: 'rgba(240, 246, 255, 0.8)' }
       : bgState === 'green'
         ? { background: 'rgba(240, 255, 244, 0.8)' }
         : { background: '#ffffff' }
+
+  const cardClass = finalized
+    ? 'bg-[linear-gradient(135deg,rgba(255,255,255,0.78),rgba(239,246,255,0.46))] shadow-[0_18px_45px_rgba(37,99,235,0.08),inset_0_1px_0_rgba(255,255,255,0.85)] ring-1 ring-blue-100/40 backdrop-blur-xl'
+    : ''
 
   return (
     <div className="draft-slide-down relative pb-7">
@@ -137,20 +141,17 @@ export default function DraftTimelineCard({ entry, phase, onSignalBoost }) {
       <div className="relative flex gap-4">
         <span
           className={`relative z-10 mt-3 h-2 w-2 flex-shrink-0 rounded-full transition-all duration-300 ${
-            dotState === 'filled' ? 'draft-dot-pulse bg-blue-600' : dotState === 'pulsing' ? 'draft-dot-pulse bg-transparent ring-2 ring-slate-300' : 'bg-white ring-2 ring-slate-300'
+            dotState === 'filled'
+              ? 'draft-dot-pulse bg-blue-600'
+              : dotState === 'pulsing'
+                ? 'draft-dot-pulse bg-transparent ring-2 ring-slate-300'
+                : 'bg-white ring-2 ring-slate-300'
           }`}
         />
-        <span className="w-16 flex-shrink-0 whitespace-pre-line pt-1.5 text-xs font-bold text-blue-700">{'Jun–Aug\n2024'}</span>
+        <span className="w-16 flex-shrink-0 whitespace-pre-line pt-1.5 text-xs font-bold text-blue-700">{'Jun-Aug\n2024'}</span>
 
-        <div
-          className={`flex flex-1 items-center gap-4 rounded-2xl p-4 transition-colors duration-400 ${borderClass}`}
-          style={bgStyle}
-        >
-          <span
-            className={`flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-full bg-emerald-50 text-sm font-bold text-emerald-700 transition-opacity duration-300 ${
-              logoVisible ? 'opacity-100' : 'opacity-0'
-            }`}
-          >
+        <div className={`flex flex-1 items-center gap-4 rounded-[24px] p-4 transition-all duration-300 ${borderClass} ${cardClass}`} style={bgStyle}>
+          <span className={`flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-full border border-emerald-100 bg-emerald-100/55 text-sm font-bold text-emerald-700 shadow-[inset_0_1px_0_rgba(255,255,255,0.85),0_10px_24px_rgba(16,185,129,0.10)] transition-opacity duration-300 ${logoVisible ? 'opacity-100' : 'opacity-0'}`}>
             {entry.logo}
           </span>
 
@@ -168,12 +169,7 @@ export default function DraftTimelineCard({ entry, phase, onSignalBoost }) {
                 const isColored = idx < tagsColored
                 const toneClass = isColored ? TAG_CONFIRMED_TONES[tag.confirmedTone] ?? TAG_GRAY : TAG_GRAY
                 return (
-                  <span
-                    key={tag.label}
-                    className={`draft-tag-pop rounded-full px-2.5 py-0.5 text-[11px] font-medium ${toneClass} ${
-                      isColored ? 'draft-tag-bounce' : ''
-                    }`}
-                  >
+                  <span key={tag.label} className={`draft-tag-pop rounded-full px-2.5 py-0.5 text-[11px] font-medium ${toneClass} ${isColored ? 'draft-tag-bounce' : ''}`}>
                     {tag.label}
                   </span>
                 )
@@ -182,7 +178,7 @@ export default function DraftTimelineCard({ entry, phase, onSignalBoost }) {
           </div>
 
           <div className="flex flex-shrink-0 flex-col items-end gap-2">
-            {!savedBadge && confirmBtnVisible && (
+            {!savedBadge && !finalized && confirmBtnVisible && (
               <button
                 type="button"
                 disabled={confirmLoading || phase === 'confirming'}
@@ -194,19 +190,21 @@ export default function DraftTimelineCard({ entry, phase, onSignalBoost }) {
             )}
             {savedBadge && (
               <span className="draft-fade-in-scale inline-flex items-center gap-1 rounded-full bg-emerald-100 px-2.5 py-1 text-xs font-bold text-emerald-700">
-                ✓ Saved
+                <CheckCircle2 size={12} /> Saved
               </span>
             )}
 
-            {phase === 'confirming' && signalBlocks > 0 && (
+            {(phase === 'confirming' || finalized) && signalBlocks > 0 && (
               <div className="flex items-center gap-1">
                 {[1, 2, 3, 4].map((i) => (
-                  <span
-                    key={i}
-                    className={`h-2.5 w-2.5 rounded-sm transition-colors duration-150 ${i <= signalBlocks ? 'bg-blue-600' : 'bg-slate-200'}`}
-                  />
+                  <span key={i} className={`h-2.5 w-2.5 rounded-sm shadow-[inset_0_1px_0_rgba(255,255,255,0.45)] transition-colors duration-150 ${i <= signalBlocks ? 'bg-blue-600' : 'bg-blue-100'}`} />
                 ))}
               </div>
+            )}
+            {finalized && (
+              <button type="button" onClick={onEdit} className="rounded-full p-1.5 text-[#9aa6c3] transition hover:bg-blue-50 hover:text-blue-600">
+                <Pencil size={14} />
+              </button>
             )}
           </div>
         </div>

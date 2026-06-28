@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useLayoutEffect, useRef, useState } from 'react'
 import { ArrowRight, BookOpen, Briefcase, Eye, MoreHorizontal, PlayCircle, TrendingUp } from 'lucide-react'
 import homeMountainCard from '../../assets/Home_mountain card.png'
 
@@ -18,8 +18,29 @@ const DOT_TONES = {
   emerald: 'bg-emerald-500',
 }
 
-export default function RightSidebar({ pickingUpWhereLeftOff, whileYouWereAway, skillSignal, onPickUp, onMenuAction, onRecommendations, onSkillSignal }) {
+const RECOMMENDATIONS = [
+  { tone: 'bg-blue-500', title: 'Apply to TalentBank AI Challenge', body: '92% match, deadline in 2 days.' },
+  { tone: 'bg-violet-500', title: 'Add evidence to NLP Project', body: 'Employers are responding to your NLP signal.' },
+  { tone: 'bg-emerald-500', title: 'Practise Grab interview', body: 'Interview stage needs preparation.' },
+]
+
+export default function RightSidebar({ pickingUpWhereLeftOff, whileYouWereAway, skillSignal, onPickUp, onMenuAction, onSkillSignal }) {
   const [openMenuId, setOpenMenuId] = useState(null)
+  const [showRecommendations, setShowRecommendations] = useState(false)
+  const frontRef = useRef(null)
+  const backRef = useRef(null)
+  const [flipHeight, setFlipHeight] = useState(null)
+
+  useLayoutEffect(() => {
+    const measure = () => {
+      const activeFace = showRecommendations ? backRef.current : frontRef.current
+      if (activeFace) setFlipHeight(activeFace.scrollHeight)
+    }
+
+    measure()
+    window.addEventListener('resize', measure)
+    return () => window.removeEventListener('resize', measure)
+  }, [showRecommendations, whileYouWereAway])
 
   return (
     <aside className="flex flex-col gap-4">
@@ -72,22 +93,48 @@ export default function RightSidebar({ pickingUpWhereLeftOff, whileYouWereAway, 
         </div>
       </section>
 
-      <section className="rounded-xl border border-[#e2eaf8] bg-white p-5 shadow-[0_8px_22px_rgba(44,76,142,0.07)]">
-        <h2 className="mb-4 text-base font-bold leading-tight text-[#11194a]">What happened while you were away</h2>
-        <div className="space-y-4">
-          {whileYouWereAway.map((item) => (
-            <div key={item.id} className="flex items-start gap-2.5">
-              <span className={`mt-1.5 h-3 w-3 flex-shrink-0 rounded-full ${DOT_TONES[item.tone] ?? DOT_TONES.blue}`} />
-              <div className="min-w-0 flex-1">
-                <p className="text-sm font-medium leading-snug text-[#4d5c7d]">{item.text}</p>
+      <section className="home-away-flip-card" style={flipHeight ? { height: flipHeight } : undefined}>
+        <div className={`home-away-flip-inner ${showRecommendations ? 'is-flipped' : ''}`}>
+          <div className="home-away-flip-face rounded-xl border border-[#e2eaf8] bg-white shadow-[0_8px_22px_rgba(44,76,142,0.07)]">
+            <div ref={frontRef} className="p-5">
+              <h2 className="mb-4 text-base font-bold leading-tight text-[#11194a]">What happened while you were away</h2>
+              <div className="space-y-4">
+                {whileYouWereAway.map((item) => (
+                  <div key={item.id} className="flex items-start gap-2.5">
+                    <span className={`mt-1.5 h-3 w-3 flex-shrink-0 rounded-full ${DOT_TONES[item.tone] ?? DOT_TONES.blue}`} />
+                    <div className="min-w-0 flex-1">
+                      <p className="text-sm font-medium leading-snug text-[#4d5c7d]">{item.text}</p>
+                    </div>
+                    <span className="whitespace-nowrap text-xs font-medium text-[#7382a1]">{item.time}</span>
+                  </div>
+                ))}
               </div>
-              <span className="whitespace-nowrap text-xs font-medium text-[#7382a1]">{item.time}</span>
+              <button type="button" onClick={() => setShowRecommendations(true)} className="mt-5 inline-flex items-center gap-1 text-sm font-bold text-blue-600 hover:text-blue-700">
+                See what I recommend instead <ArrowRight size={12} />
+              </button>
             </div>
-          ))}
+          </div>
+
+          <div className="home-away-flip-face home-away-flip-back rounded-xl border border-[#e2eaf8] bg-white shadow-[0_8px_22px_rgba(44,76,142,0.07)]">
+            <div ref={backRef} className="p-5">
+              <h2 className="mb-4 text-base font-bold leading-tight text-[#11194a]">Recommended next actions</h2>
+              <div className="space-y-3">
+                {RECOMMENDATIONS.map((item) => (
+                  <div key={item.title} className="flex gap-3 rounded-2xl border border-white/70 bg-[linear-gradient(135deg,rgba(255,255,255,0.78),rgba(239,246,255,0.48))] px-4 py-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.8),0_8px_22px_rgba(37,99,235,0.06)]">
+                    <span className={`mt-1 h-2.5 w-2.5 flex-shrink-0 rounded-full ${item.tone}`} />
+                    <span>
+                      <p className="text-sm font-bold text-[#11194a]">{item.title}</p>
+                      <p className="mt-1 text-xs font-semibold leading-5 text-[#637094]">{item.body}</p>
+                    </span>
+                  </div>
+                ))}
+              </div>
+              <button type="button" onClick={() => setShowRecommendations(false)} className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-blue-600 hover:text-blue-700">
+                Back to updates <ArrowRight size={12} />
+              </button>
+            </div>
+          </div>
         </div>
-        <button type="button" onClick={onRecommendations} className="mt-5 inline-flex items-center gap-1 text-sm font-bold text-blue-600 hover:text-blue-700">
-          See what I recommend instead <ArrowRight size={12} />
-        </button>
       </section>
 
       <button type="button" onClick={onSkillSignal} className="relative overflow-hidden rounded-xl border border-[#e2eaf8] text-left shadow-[0_8px_22px_rgba(44,76,142,0.07)] transition hover:-translate-y-0.5">

@@ -7,12 +7,12 @@ const TAG_TONES = {
   violet: 'bg-violet-50 text-violet-700',
 }
 
-export default function TopSkillsPanel({ skills }) {
+export default function TopSkillsPanel({ skills, onViewAll }) {
   return (
     <section className="rounded-xl border border-[#e2eaf8] bg-white p-5 shadow-[0_8px_22px_rgba(44,76,142,0.07)]">
       <div className="mb-4 flex items-center justify-between">
         <h2 className="text-base font-bold text-[#11194a]">Top Skills</h2>
-        <button type="button" className="flex items-center gap-1 text-xs font-bold text-blue-600 hover:text-blue-700">
+        <button type="button" onClick={onViewAll} className="flex items-center gap-1 text-xs font-bold text-blue-600 hover:text-blue-700">
           View all <ArrowRight size={12} />
         </button>
       </div>

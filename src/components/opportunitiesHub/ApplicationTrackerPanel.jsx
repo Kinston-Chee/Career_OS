@@ -15,7 +15,7 @@ const STATUS_TONES = {
   violet: 'bg-violet-50 text-violet-700',
 }
 
-export default function ApplicationTrackerPanel({ applications }) {
+export default function ApplicationTrackerPanel({ applications, onViewAll, onSelectApplication }) {
   return (
     <section className="rounded-xl border border-[#e2eaf8] bg-white p-5 shadow-[0_8px_22px_rgba(44,76,142,0.07)]">
       <div className="mb-4 flex items-center justify-between">
@@ -27,7 +27,12 @@ export default function ApplicationTrackerPanel({ applications }) {
 
       <div className="space-y-3 rounded-xl border border-[#edf3fd] bg-[#fbfdff] p-3">
         {applications.map((app) => (
-          <div key={app.id} className="flex items-start gap-3 rounded-lg bg-white p-2.5 shadow-sm">
+          <button
+            key={app.id}
+            type="button"
+            onClick={() => onSelectApplication?.(app)}
+            className="flex w-full items-start gap-3 rounded-lg bg-white p-2.5 text-left shadow-sm transition hover:-translate-y-0.5 hover:bg-blue-50/60 focus:outline-none focus:ring-4 focus:ring-blue-100"
+          >
             <span className={`flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full text-xs font-semibold ${LOGO_TONES[app.logoTone] ?? LOGO_TONES.indigo}`}>
               {app.logo}
             </span>
@@ -39,11 +44,11 @@ export default function ApplicationTrackerPanel({ applications }) {
             <span className={`flex-shrink-0 rounded-md px-2 py-0.5 text-[11px] font-semibold ${STATUS_TONES[app.statusTone] ?? STATUS_TONES.blue}`}>
               {app.status}
             </span>
-          </div>
+          </button>
         ))}
       </div>
 
-      <button type="button" className="mt-5 inline-flex items-center gap-1 text-sm font-semibold text-blue-600 hover:text-blue-700">
+      <button type="button" onClick={onViewAll} className="mt-5 inline-flex items-center gap-1 text-sm font-semibold text-blue-600 hover:text-blue-700">
         View all applications <ArrowRight size={14} />
       </button>
     </section>

@@ -7,7 +7,7 @@ const NOTE_TONES = {
   emerald: 'text-emerald-600',
 }
 
-export default function ProfileHeroCard({ headline, stats, initials }) {
+export default function ProfileHeroCard({ headline, stats, initials, onEditProfile }) {
   const [bg] = useState(getRandomMountainBg)
 
   return (
@@ -29,6 +29,7 @@ export default function ProfileHeroCard({ headline, stats, initials }) {
 
         <button
           type="button"
+          onClick={onEditProfile}
           className="flex flex-shrink-0 items-center gap-1.5 rounded-full border border-[#dfe8f7] bg-white px-4 py-2 text-sm font-bold text-[#35507d] shadow-sm transition hover:border-blue-300 hover:bg-blue-50"
         >
           <Pencil size={14} strokeWidth={2.2} /> Edit Profile

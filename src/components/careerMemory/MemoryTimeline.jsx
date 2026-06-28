@@ -3,7 +3,7 @@ import { Plus } from 'lucide-react'
 import TimelineCard from './TimelineCard'
 import DraftTimelineCard from './DraftTimelineCard'
 
-export default function MemoryTimeline({ timeline, draftEntry, draftPhase, onSignalBoost }) {
+export default function MemoryTimeline({ timeline, draftEntry, draftPhase, onSignalBoost, onOpenMemory, onEditMemory, onEditDraft }) {
   return (
     <div>
       <div className="mb-6 flex items-start justify-between">
@@ -23,10 +23,10 @@ export default function MemoryTimeline({ timeline, draftEntry, draftPhase, onSig
         <span className="absolute bottom-3 left-[3px] top-3 w-px bg-[#dde6f7]" />
 
         {draftPhase && draftPhase !== 'hidden' && (
-          <DraftTimelineCard entry={draftEntry} phase={draftPhase} onSignalBoost={onSignalBoost} />
+          <DraftTimelineCard entry={draftEntry} phase={draftPhase} onSignalBoost={onSignalBoost} onEdit={onEditDraft} />
         )}
         {timeline.map((entry) => (
-          <TimelineCard key={entry.id} entry={entry} />
+          <TimelineCard key={entry.id} entry={entry} onOpen={onOpenMemory} onEdit={onEditMemory} />
         ))}
       </div>
     </div>
