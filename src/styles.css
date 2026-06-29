@@ -134,3 +134,178 @@
     transition: none !important;
   }
 }
+
+/* ── Career Memory demo chat animations ─────────────────────────────── */
+
+@keyframes typingBounce {
+  0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+  30% { transform: translateY(-4px); opacity: 1; }
+}
+
+.typing-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #9aa6c3;
+  animation: typingBounce 1s infinite;
+}
+
+@keyframes chatFadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.chat-fade-in {
+  animation: chatFadeIn 200ms ease both;
+}
+
+@keyframes opportunityPulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.25), 0 18px 45px rgba(37, 99, 235, 0.08);
+    transform: translateY(0) scale(1);
+  }
+
+  40% {
+    box-shadow: 0 0 0 8px rgba(37, 99, 235, 0.1), 0 24px 65px rgba(37, 99, 235, 0.18);
+    transform: translateY(-2px) scale(1.015);
+  }
+
+  70% {
+    box-shadow: 0 0 0 14px rgba(37, 99, 235, 0.04), 0 20px 55px rgba(37, 99, 235, 0.12);
+    transform: translateY(-1px) scale(1.008);
+  }
+
+  100% {
+    box-shadow: 0 0 0 0 rgba(37, 99, 235, 0), 0 18px 45px rgba(37, 99, 235, 0.08);
+    transform: translateY(0) scale(1);
+  }
+}
+
+.highlight-opportunity {
+  animation: opportunityPulse 1.2s ease-in-out 3;
+  border-color: rgba(37, 99, 235, 0.45);
+  z-index: 1;
+}
+
+.home-away-flip-card {
+  perspective: 1200px;
+  transition: height 500ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.home-away-flip-inner {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  transform-style: preserve-3d;
+  transition: transform 650ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.home-away-flip-inner.is-flipped {
+  transform: rotateY(180deg);
+}
+
+.home-away-flip-face {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  backface-visibility: hidden;
+}
+
+.home-away-flip-back {
+  transform: rotateY(180deg);
+}
+
+@keyframes messageIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.message-enter {
+  animation: messageIn 260ms ease-out both;
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes draftSlideDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.draft-slide-down {
+  animation: draftSlideDown 400ms ease-out both;
+}
+
+@keyframes draftBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.draft-blink {
+  animation: draftBlink 1.5s infinite;
+}
+
+@keyframes cursorBlink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+.typing-cursor {
+  display: inline-block;
+  width: 2px;
+  height: 14px;
+  background: #185FA5;
+  margin-left: 2px;
+  vertical-align: middle;
+  animation: cursorBlink 0.7s infinite;
+}
+
+@keyframes tagPop {
+  from { opacity: 0; transform: scale(0.8); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.draft-tag-pop {
+  animation: tagPop 150ms ease-out both;
+}
+
+@keyframes tagBounce {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+.draft-tag-bounce {
+  animation: tagBounce 200ms ease-out both;
+}
+
+@keyframes dotPulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.3); }
+  100% { transform: scale(1); }
+}
+
+.draft-dot-pulse {
+  animation: dotPulse 300ms ease-out both;
+}
+
+@keyframes fadeInScale {
+  from { opacity: 0; transform: scale(0.8); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.draft-fade-in-scale {
+  animation: fadeInScale 200ms ease-out both;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.draft-spin {
+  animation: spin 0.6s linear infinite;
+}

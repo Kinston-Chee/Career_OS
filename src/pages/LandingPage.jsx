@@ -70,7 +70,7 @@ const WORKSPACES = [
       'Verified evidence portfolio employers can trust',
     ],
     cta: 'Enter Candidate Workspace',
-    path: '/student/overview',
+    path: '/student/home',
     iconClass: 'bg-gradient-to-br from-indigo-500 to-indigo-400',
     accentClass: 'bg-gradient-to-r from-indigo-500 to-indigo-300',
     bulletClass: 'bg-indigo-500',

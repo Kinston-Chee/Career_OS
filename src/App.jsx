@@ -2,8 +2,10 @@ import React from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
 import AppLayout from './components/layout/AppLayout'
 import AlumniSignalIntelligencePage from './pages/AlumniSignalIntelligencePage'
+import AICompanionPage from './pages/AICompanionPage'
 import ApplicationsPage from './pages/ApplicationsPage'
 import AuthPage from './pages/AuthPage'
+import CandidateHomePage from './pages/CandidateHomePage'
 import CandidateInsightsPage from './pages/CandidateInsightsPage'
 import CandidateOverviewPage from './pages/CandidateOverviewPage'
 import CareerIntelligencePage from './pages/CareerIntelligencePage'
@@ -15,6 +17,7 @@ import JobMarketplacePage from './pages/JobMarketplacePage'
 import MemoryProfilePage from './pages/MemoryProfilePage'
 import OpportunitiesPage from './pages/OpportunitiesPage'
 import PlaceholderPage from './pages/PlaceholderPage'
+import ProfilePage from './pages/ProfilePage'
 import ProtectedRoute from './components/session/ProtectedRoute'
 import SocietyCorporateMarketplacePage from './pages/SocietyCorporateMarketplacePage'
 import StudentReadinessOverviewPage from './pages/StudentReadinessOverviewPage'
@@ -31,16 +34,29 @@ export default function App() {
 
       {/* Each workspace is protected by the role selected on the landing page. */}
       <Route element={<ProtectedRoute role="student" />}>
+        {/* Round 2 AI-first pages — own top-nav layout, kept outside AppLayout's sidebar shell. */}
+        <Route path="/student/home" element={<CandidateHomePage />} />
+        <Route path="/student/profile" element={<MemoryProfilePage />} />
+        <Route path="/student/memory-profile" element={<MemoryProfilePage />} />
+        <Route path="/student/intelligence" element={<CareerIntelligencePage />} />
+        <Route path="/student/career-intelligence" element={<CareerIntelligencePage />} />
+        <Route path="/student/opportunities" element={<OpportunitiesPage />} />
+        <Route path="/student/ai-companion" element={<AICompanionPage />} />
+        <Route path="/student/ai-assistant" element={<Navigate to="/student/ai-companion" replace />} />
+        <Route path="/student/account" element={<ProfilePage />} />
+
         <Route element={<AppLayout workspace="student" />}>
           <Route path="/student" element={<Navigate to="/student/overview" replace />} />
           <Route path="/student/overview" element={<CandidateOverviewPage />} />
-          <Route path="/student/profile" element={<MemoryProfilePage />} />
-          <Route path="/student/memory-profile" element={<MemoryProfilePage />} />
-          <Route path="/student/intelligence" element={<CareerIntelligencePage />} />
-          <Route path="/student/career-intelligence" element={<CareerIntelligencePage />} />
-          <Route path="/student/opportunities" element={<OpportunitiesPage />} />
           <Route path="/student/applications" element={<ApplicationsPage />} />
-          <Route path="/student/ai-assistant" element={<PlaceholderPage title="AI Assistant" />} />
+          <Route
+            path="/student/network"
+            element={<PlaceholderPage title="Network & Mentors" />}
+          />
+          <Route
+            path="/student/learning"
+            element={<PlaceholderPage title="Learning & Skills" />}
+          />
           <Route
             path="/student/settings"
             element={<PlaceholderPage title="Settings" />}
