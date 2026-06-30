@@ -10,10 +10,10 @@ import { candidates, postings } from '../../data/talentDiscoveryData'
 
 function PageHeader() {
   return (
-    <div className="flex flex-wrap items-center justify-between gap-4">
+    <div className="employer-page-header flex flex-wrap items-center justify-between gap-4">
       <div>
-        <h1 className="text-2xl font-bold text-gray-900">Talent Discovery</h1>
-        <p className="mt-1 text-sm text-gray-500">AI-ranked applicants across your active postings</p>
+        <h1 className="employer-page-title">Talent Discovery</h1>
+        <p className="employer-page-subtitle">AI-ranked applicants across your active postings</p>
       </div>
 
       <div className="relative w-full max-w-xl">
@@ -21,9 +21,9 @@ function PageHeader() {
         <input
           type="text"
           placeholder="Show me top applicants for the Software Engineer internship available in June…"
-          className="h-11 w-full rounded-full border border-gray-200 bg-white pl-11 pr-16 text-sm text-gray-700 shadow-sm outline-none placeholder:text-gray-400 focus:border-blue-300"
+          className="employer-home-command h-11 w-full pl-11 pr-16 text-sm text-slate-700 outline-none placeholder:text-slate-400"
         />
-        <span className="absolute right-3 top-1/2 flex -translate-y-1/2 items-center gap-0.5 rounded-md bg-gray-100 px-1.5 py-0.5 text-[10px] font-medium text-gray-400">
+        <span className="employer-command-kbd absolute right-3 top-1/2 -translate-y-1/2">
           <Command className="h-3 w-3" /> K
         </span>
       </div>
@@ -34,7 +34,7 @@ function PageHeader() {
 function DemoToast({ message }) {
   if (!message) return null
   return (
-    <div className="fixed bottom-5 right-5 z-50 rounded-xl border border-gray-100 bg-white px-4 py-3 text-sm font-semibold text-gray-800 shadow-lg">
+    <div className="employer-glass-card fixed bottom-5 right-5 z-50 px-4 py-3 text-sm font-semibold text-slate-800">
       {message}
     </div>
   )
@@ -80,10 +80,10 @@ export default function TalentDiscovery() {
   }
 
   return (
-    <div className="flex h-screen w-screen flex-col overflow-hidden bg-[#F4F6FB]">
-      <EmployerNav />
+    <div className="employer-workspace-page flex h-screen w-screen flex-col overflow-hidden">
+      <EmployerNav variant="glass" />
       <main className="min-w-0 flex-1 overflow-y-auto">
-        <div className="mx-auto max-w-[1480px] space-y-5 px-6 py-6">
+        <div className="relative z-10 mx-auto max-w-[1480px] space-y-5 px-6 py-6">
           <PageHeader />
 
           <PostingsRow selectedPostingId={selectedPostingId} onSelectPosting={setSelectedPostingId} />
@@ -107,8 +107,8 @@ export default function TalentDiscovery() {
               <AllApplicantsPanel candidates={sweCandidates} statuses={statuses} onView={handleView} />
             </div>
           ) : (
-            <div className="flex h-[300px] flex-col items-center justify-center rounded-2xl border border-gray-100 bg-white text-center shadow-sm">
-              <p className="text-sm font-medium text-gray-500">Loading applicants for {selectedPosting.title}…</p>
+            <div className="employer-glass-card flex h-[300px] flex-col items-center justify-center text-center">
+              <p className="text-sm font-medium text-slate-500">Loading applicants for {selectedPosting.title}…</p>
             </div>
           )}
         </div>

@@ -8,13 +8,13 @@ const NOTE_TONES = { green: 'text-green-600', muted: 'text-gray-400' }
 
 export default function QuarterSummary({ onExport }) {
   return (
-    <section className="rounded-2xl border border-gray-100 bg-white p-5 shadow-sm">
+    <section className="employer-glass-card p-5">
       <div className="flex flex-wrap items-center justify-between gap-2">
         <div className="flex items-baseline gap-2">
           <h2 className="text-sm font-bold text-gray-900">Quarter Summary</h2>
           <span className="text-xs text-gray-400">{quarterSummary.period}</span>
         </div>
-        <button type="button" onClick={onExport} className="flex items-center gap-1 text-xs font-semibold text-[#185FA5] hover:underline">
+        <button type="button" onClick={onExport} className="flex items-center gap-1 text-xs font-semibold text-[#185FA5] hover:text-[#134c87]">
           Export for leadership
           <ArrowRight className="h-3.5 w-3.5" />
         </button>

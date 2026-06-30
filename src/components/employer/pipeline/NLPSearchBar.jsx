@@ -34,15 +34,15 @@ export default function NLPSearchBar() {
           }}
           placeholder="Show me candidates ready for our next intake…"
           disabled={status === 'loading'}
-          className="h-11 w-full rounded-full border border-gray-200 bg-white pl-11 pr-16 text-sm text-gray-700 shadow-sm outline-none placeholder:text-gray-400 focus:border-blue-300 disabled:opacity-70"
+          className="employer-home-command h-11 w-full pl-11 pr-16 text-sm text-slate-700 outline-none placeholder:text-slate-400 disabled:opacity-70"
         />
-        <span className="absolute right-3 top-1/2 flex -translate-y-1/2 items-center gap-0.5 rounded-md bg-gray-100 px-1.5 py-0.5 text-[10px] font-medium text-gray-400">
+        <span className="employer-command-kbd absolute right-3 top-1/2 -translate-y-1/2">
           <Command className="h-3 w-3" /> K
         </span>
       </div>
 
       {status === 'results' ? (
-        <div className="mt-3 rounded-2xl border border-gray-100 bg-white p-4 shadow-sm">
+        <div className="employer-glass-card mt-3 p-4">
           <p className="text-sm text-gray-700">{searchSuggestionResults.summary}</p>
           <div className="mt-3 flex gap-3 overflow-x-auto pb-1 [&::-webkit-scrollbar]:hidden">
             {searchSuggestionResults.candidates.map((candidate) => {

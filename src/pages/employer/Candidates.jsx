@@ -10,19 +10,19 @@ import { PIPELINE_STAGES, candidates } from '../../data/candidatesData'
 
 function PageHeader() {
   return (
-    <div className="flex flex-wrap items-center justify-between gap-4">
+    <div className="employer-page-header flex flex-wrap items-center justify-between gap-4">
       <div>
-        <h1 className="text-2xl font-bold text-gray-900">Candidates</h1>
-        <p className="mt-1 text-sm text-gray-500">Your full talent pool — searchable and filterable across every posting and stage</p>
+        <h1 className="employer-page-title">Candidates</h1>
+        <p className="employer-page-subtitle">Your full talent pool — searchable and filterable across every posting and stage</p>
       </div>
       <div className="relative w-full max-w-xl">
         <Sparkles className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[#185FA5]" />
         <input
           type="text"
           placeholder="Find candidates with React and SQL available in June…"
-          className="h-11 w-full rounded-full border border-gray-200 bg-white pl-11 pr-16 text-sm text-gray-700 shadow-sm outline-none placeholder:text-gray-400 focus:border-blue-300"
+          className="employer-home-command h-11 w-full pl-11 pr-16 text-sm text-slate-700 outline-none placeholder:text-slate-400"
         />
-        <span className="absolute right-3 top-1/2 flex -translate-y-1/2 items-center gap-0.5 rounded-md bg-gray-100 px-1.5 py-0.5 text-[10px] font-medium text-gray-400">
+        <span className="employer-command-kbd absolute right-3 top-1/2 -translate-y-1/2">
           <Command className="h-3 w-3" /> K
         </span>
       </div>
@@ -33,7 +33,7 @@ function PageHeader() {
 function DemoToast({ message }) {
   if (!message) return null
   return (
-    <div className="fixed bottom-5 right-5 z-50 rounded-xl border border-gray-100 bg-white px-4 py-3 text-sm font-semibold text-gray-800 shadow-lg">
+    <div className="employer-glass-card fixed bottom-5 right-5 z-50 px-4 py-3 text-sm font-semibold text-slate-800">
       {message}
     </div>
   )
@@ -107,8 +107,8 @@ export default function Candidates() {
   }
 
   return (
-    <div className="flex h-screen w-screen flex-col overflow-hidden bg-[#F4F6FB]">
-      <EmployerNav />
+    <div className="employer-workspace-page flex h-screen w-screen flex-col overflow-hidden">
+      <EmployerNav variant="glass" />
       <main className="min-w-0 flex-1 overflow-y-auto">
         {view === 'detail' && selectedCandidate ? (
           <CandidateDetailView
@@ -119,7 +119,7 @@ export default function Candidates() {
             onMoveStage={handleMoveStage}
           />
         ) : (
-          <div className="mx-auto max-w-[1480px] space-y-5 px-6 py-6">
+          <div className="relative z-10 mx-auto max-w-[1480px] space-y-5 px-6 py-6">
             <PageHeader />
             <CandidateFilters
               query={query}
@@ -132,7 +132,7 @@ export default function Candidates() {
               onViewChange={setListView}
             />
 
-            <p className="text-xs text-gray-400">{filteredCandidates.length} candidate{filteredCandidates.length === 1 ? '' : 's'}</p>
+            <p className="text-xs text-slate-500">{filteredCandidates.length} candidate{filteredCandidates.length === 1 ? '' : 's'}</p>
 
             {listView === 'grid' ? (
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
@@ -141,7 +141,7 @@ export default function Candidates() {
                 ))}
               </div>
             ) : (
-              <div className="rounded-2xl border border-gray-100 bg-white p-2 shadow-sm">
+              <div className="employer-glass-card p-2">
                 {filteredCandidates.map((candidate) => (
                   <CandidateRow key={candidate.id} candidate={candidate} onSelect={(c) => openCandidate(c, 'Candidates')} />
                 ))}
@@ -149,8 +149,8 @@ export default function Candidates() {
             )}
 
             {filteredCandidates.length === 0 ? (
-              <div className="flex flex-col items-center justify-center rounded-2xl border border-gray-100 bg-white py-12 text-center shadow-sm">
-                <p className="text-sm font-medium text-gray-500">No candidates match your filters.</p>
+              <div className="employer-glass-card flex flex-col items-center justify-center py-12 text-center">
+                <p className="text-sm font-medium text-slate-500">No candidates match your filters.</p>
               </div>
             ) : null}
           </div>

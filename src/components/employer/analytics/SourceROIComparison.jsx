@@ -6,7 +6,7 @@ const PILL_TONES = { green: 'bg-green-50 text-green-700', gray: 'bg-gray-100 tex
 
 export default function SourceROIComparison() {
   return (
-    <section className="rounded-2xl border border-gray-100 bg-white p-5 shadow-sm">
+    <section className="employer-glass-card p-5">
       <h2 className="text-sm font-bold text-gray-900">Source ROI comparison</h2>
       <p className="text-xs text-gray-400">Cost per qualified candidate</p>
 

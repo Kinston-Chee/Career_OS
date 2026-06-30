@@ -15,10 +15,10 @@ export default function HomeTopNav({ user, readiness }) {
 
   return (
     <header className="sticky top-0 z-30 flex items-center justify-between border-b border-[#e2eaf8] bg-white/95 px-4 py-3 backdrop-blur sm:px-6 lg:px-8">
-      <div className="flex items-center gap-2 text-base font-bold text-[#11194a]">
+      <Link to="/" className="flex items-center gap-2 text-base font-bold text-[#11194a]">
         <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#1f65d8] text-sm font-bold text-white shadow-[0_8px_16px_rgba(31,101,216,0.18)]">C</span>
         CareerOS
-      </div>
+      </Link>
 
       <nav className="hidden items-center gap-6 md:flex">
         {TABS.map((tab) => {

@@ -16,13 +16,13 @@ export default function EmployerWorkspaceTopNav({ active = 'Home' }) {
   const navigate = useNavigate()
 
   return (
-    <header className="flex h-16 w-full shrink-0 items-center justify-between border-b border-gray-100 bg-white px-6">
+    <header className="employer-glass-nav flex h-16 w-full shrink-0 items-center justify-between px-6">
       <div className="flex items-center gap-8">
         <div className="flex items-center gap-2">
           <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-blue-600 text-sm font-bold text-white">C</span>
           <span className="text-base font-semibold text-gray-900">CareerOS</span>
         </div>
-        <button type="button" className="flex items-center gap-1 rounded-full bg-blue-50 px-3 py-1.5 text-xs font-semibold text-blue-700">
+        <button type="button" className="flex items-center gap-1 rounded-full bg-white/70 px-3 py-1.5 text-xs font-semibold text-blue-700 ring-1 ring-blue-100/80">
           Employer Workspace
           <ChevronDown className="h-3.5 w-3.5" />
         </button>
@@ -37,8 +37,8 @@ export default function EmployerWorkspaceTopNav({ active = 'Home' }) {
                 onClick={() => item.path && navigate(item.path)}
                 className={`border-b-2 pb-1 transition ${
                   isActive
-                    ? 'border-blue-600 text-gray-900'
-                    : `border-transparent ${item.path ? 'hover:text-gray-900' : 'cursor-default'}`
+                    ? 'border-blue-600 text-slate-950'
+                    : `border-transparent ${item.path ? 'hover:text-slate-900' : 'cursor-default'}`
                 }`}
               >
                 {item.label}
@@ -55,7 +55,7 @@ export default function EmployerWorkspaceTopNav({ active = 'Home' }) {
           <Bell className="h-5 w-5" />
           <span className="absolute -right-1.5 -top-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-blue-600 text-[10px] font-semibold text-white">12</span>
         </button>
-        <div className="flex items-center gap-2 rounded-full border border-gray-100 px-2 py-1">
+        <div className="flex items-center gap-2 rounded-full bg-white/60 px-2 py-1 ring-1 ring-blue-100/70">
           <span className="flex h-6 w-6 items-center justify-center rounded-full bg-red-500 text-[10px] font-bold text-white">G</span>
           <div className="leading-tight">
             <p className="text-xs font-semibold text-gray-800">Google</p>

@@ -30,7 +30,7 @@ function PostingCard({ posting, isSelected, onSelect }) {
       type="button"
       onClick={onSelect}
       className={`w-[280px] shrink-0 rounded-2xl p-4 text-left shadow-sm transition-all duration-200 ${
-        isSelected ? 'border-2 border-[#185FA5] bg-[#185FA5]/[0.03]' : 'border border-gray-100 bg-white hover:border-blue-200'
+        isSelected ? 'border-2 border-[#185FA5] bg-white/82 shadow-sm shadow-blue-200/60' : 'border border-blue-100/70 bg-white/68 hover:border-blue-200 hover:bg-white/82'
       }`}
     >
       <div className="flex justify-end">
@@ -76,7 +76,7 @@ export default function PostingsRow({ selectedPostingId, onSelectPosting }) {
     <section>
       <div className="mb-3 flex items-center justify-between">
         <h2 className="text-sm font-bold text-gray-900">Your active postings</h2>
-        <button type="button" className="flex items-center gap-1 text-xs font-semibold text-[#185FA5] hover:underline">
+        <button type="button" className="flex items-center gap-1 text-xs font-semibold text-[#185FA5] hover:text-[#134c87]">
           Manage postings
           <ArrowRight className="h-3.5 w-3.5" />
         </button>

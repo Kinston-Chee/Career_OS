@@ -19,7 +19,7 @@ export default function PipelineMetrics() {
       {pipelineMetrics.map((metric) => {
         const Icon = ICONS[metric.icon] || Users
         return (
-          <div key={metric.id} className="flex items-start gap-3 rounded-2xl border border-gray-100 bg-white p-5 shadow-sm">
+          <div key={metric.id} className="employer-glass-metric flex items-start gap-3 p-5">
             <span className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-full ${ICON_TONES[metric.noteTone]}`}>
               <Icon className="h-5 w-5" />
             </span>

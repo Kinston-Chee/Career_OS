@@ -14,7 +14,7 @@ export default function EngagementMetrics() {
       {engagementMetrics.map((metric, index) => {
         const Icon = ICONS[metric.icon] || CalendarDays
         return (
-          <div key={metric.id} className="rounded-2xl border border-gray-100 bg-white p-4 shadow-sm">
+          <div key={metric.id} className="employer-glass-metric p-4">
             <span className={`flex h-9 w-9 items-center justify-center rounded-lg ${ICON_TONES[index % ICON_TONES.length]}`}>
               <Icon className="h-4.5 w-4.5" />
             </span>

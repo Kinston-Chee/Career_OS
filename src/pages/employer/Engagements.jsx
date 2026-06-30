@@ -20,7 +20,7 @@ function defaultDeadline() {
 function DemoToast({ message }) {
   if (!message) return null
   return (
-    <div className="fixed bottom-5 right-5 z-50 rounded-xl border border-gray-100 bg-white px-4 py-3 text-sm font-semibold text-gray-800 shadow-lg">
+    <div className="employer-glass-card fixed bottom-5 right-5 z-50 px-4 py-3 text-sm font-semibold text-slate-800">
       {message}
     </div>
   )
@@ -114,21 +114,21 @@ export default function Engagements() {
   }
 
   return (
-    <div className="flex h-screen w-screen flex-col overflow-hidden bg-[#F4F6FB]">
-      <EmployerNav />
+    <div className="employer-workspace-page flex h-screen w-screen flex-col overflow-hidden">
+      <EmployerNav variant="glass" />
 
       {viewMode === 'list' ? (
         <main className="min-w-0 flex-1 overflow-y-auto engagements-fade">
-          <div className="mx-auto max-w-[1480px] space-y-5 px-6 py-6">
-            <div className="flex flex-wrap items-center justify-between gap-4">
+          <div className="relative z-10 mx-auto max-w-[1480px] space-y-5 px-6 py-6">
+            <div className="employer-page-header flex flex-wrap items-center justify-between gap-4">
               <div>
-                <h1 className="text-2xl font-bold text-gray-900">Engagements</h1>
-                <p className="mt-1 text-sm text-gray-500">Manage your campus challenges, workshops, and hiring events</p>
+                <h1 className="employer-page-title">Engagements</h1>
+                <p className="employer-page-subtitle">Manage your campus challenges, workshops, and hiring events</p>
               </div>
               <button
                 type="button"
                 onClick={startWizard}
-                className="rounded-full bg-[#185FA5] px-6 py-3 text-sm font-bold text-white shadow-md hover:bg-[#134c87]"
+                className="employer-primary-button px-6 py-3 text-sm"
               >
                 + Create New Engagement
               </button>
@@ -147,11 +147,11 @@ export default function Engagements() {
       ) : (
         <>
           <main className="min-w-0 flex-1 overflow-y-auto engagements-fade">
-            <div className="mx-auto max-w-[1480px] space-y-6 px-6 py-6">
-              <div className="flex flex-wrap items-start justify-between gap-4">
+            <div className="relative z-10 mx-auto max-w-[1480px] space-y-6 px-6 py-6">
+              <div className="employer-page-header flex flex-wrap items-start justify-between gap-4">
                 <div>
-                  <h1 className="text-2xl font-bold text-gray-900">Create Engagement</h1>
-                  <p className="mt-1 text-sm text-gray-500">Let AI design the right campus strategy for your hiring goals</p>
+                  <h1 className="employer-page-title">Create Engagement</h1>
+                  <p className="employer-page-subtitle">Let AI design the right campus strategy for your hiring goals</p>
                 </div>
                 {!isPublished ? (
                   <button type="button" onClick={cancelWizard} className="text-sm font-medium text-gray-400 hover:text-gray-600">

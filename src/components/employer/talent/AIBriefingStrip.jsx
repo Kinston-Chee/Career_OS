@@ -7,8 +7,7 @@ export default function AIBriefingStrip({ posting, hasFullData, onContactTop3, o
 
   return (
     <section
-      className="flex flex-wrap items-center gap-4 rounded-xl p-4"
-      style={{ backgroundColor: 'rgba(240,246,255,0.8)', border: '1px solid rgba(180,210,255,0.5)' }}
+      className="employer-glass-card flex flex-wrap items-center gap-4 p-4"
     >
       <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#534AB7] text-sm font-semibold text-white">
         n_n
@@ -19,14 +18,14 @@ export default function AIBriefingStrip({ posting, hasFullData, onContactTop3, o
           <button
             type="button"
             onClick={onContactTop3}
-            className="rounded-full bg-[#185FA5] px-5 py-2 text-sm font-semibold text-white hover:bg-[#134c87]"
+            className="employer-primary-button px-5 py-2 text-sm"
           >
             Contact top 3 now
           </button>
           <button
             type="button"
             onClick={onSeeAllShortlisted}
-            className="rounded-full border border-gray-200 px-5 py-2 text-sm font-semibold text-gray-700 hover:bg-white"
+            className="employer-secondary-button px-5 py-2 text-sm"
           >
             See all 8 shortlisted
           </button>

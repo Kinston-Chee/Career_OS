@@ -7,7 +7,7 @@ const TEXT_TONES = { green: 'text-green-600', blue: 'text-[#185FA5]', gray: 'tex
 
 export default function SignalCorrelation() {
   return (
-    <section className="rounded-2xl border border-gray-100 bg-white p-5 shadow-sm">
+    <section className="employer-glass-card p-5">
       <h2 className="text-sm font-bold text-gray-900">Signals that predict success</h2>
       <p className="text-xs text-gray-400">Based on 90-day performance data</p>
 

@@ -7,7 +7,7 @@ const DOT_TONES = { green: 'bg-green-500', orange: 'bg-orange-500' }
 
 export default function RetentionRiskForecast() {
   return (
-    <section className="rounded-2xl border border-gray-100 bg-white p-5 shadow-sm">
+    <section className="employer-glass-card p-5">
       <div className="flex items-center gap-2">
         <ShieldCheck className="h-4 w-4 text-[#185FA5]" />
         <h2 className="text-sm font-bold text-gray-900">Retention Risk Forecast</h2>
@@ -16,7 +16,7 @@ export default function RetentionRiskForecast() {
 
       <div className="mt-3">
         {retentionRiskForecast.map((candidate) => (
-          <div key={candidate.id} className="flex flex-wrap items-center gap-4 border-b border-gray-50 py-3 last:border-b-0">
+          <div key={candidate.id} className="flex flex-wrap items-center gap-4 rounded-xl border border-transparent px-2 py-3 hover:border-blue-100/80 hover:bg-white/50">
             <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-slate-500 to-blue-500 text-xs font-semibold text-white">
               {candidate.initials}
             </span>

@@ -38,7 +38,7 @@ function MiniCandidateCard({ candidate, tone, isOpen, onToggle }) {
     <button
       type="button"
       onClick={() => onToggle(candidate.id)}
-      className={`flex w-full items-center gap-2.5 rounded-xl bg-white p-2.5 text-left shadow-sm transition hover:shadow-md ${isOpen ? 'ring-2 ring-blue-200' : ''}`}
+      className={`flex w-full items-center gap-2.5 rounded-xl bg-white/70 p-2.5 text-left ring-1 ring-blue-100/50 transition hover:bg-white ${isOpen ? 'ring-2 ring-blue-200' : ''}`}
     >
       <span className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-xs font-semibold text-white ${tone.avatar}`}>
         {initials}
@@ -56,7 +56,7 @@ function StageColumn({ stage, isLastStage, openPreviewId, onTogglePreview, onMov
   const tone = TONE[stage.tone] || TONE.slate
 
   return (
-    <div className={`rounded-2xl p-3.5 ${tone.columnBg}`}>
+    <div className={`rounded-2xl border border-blue-100/60 bg-white/38 p-3.5 backdrop-blur-md ${tone.columnBg}`}>
       <div className="flex items-center gap-2 px-1">
         <span className={`h-2.5 w-2.5 rounded-full ${tone.dot}`} />
         <p className="text-sm font-bold text-gray-900">{stage.name}</p>
