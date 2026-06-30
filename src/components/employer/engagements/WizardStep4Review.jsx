@@ -12,7 +12,7 @@ function SummaryRow({ label, value }) {
 
 function SummaryCard({ formData, onEdit }) {
   return (
-    <div className="rounded-2xl border border-gray-100 bg-white p-6 shadow-sm">
+    <div className="employer-glass-card p-6">
       <div className="flex items-center justify-between">
         <h3 className="text-sm font-bold text-gray-900">Event summary</h3>
         <button type="button" onClick={onEdit} className="text-xs font-semibold text-[#185FA5] hover:underline">
@@ -41,7 +41,7 @@ function SummaryCard({ formData, onEdit }) {
 
 function CandidatePreview({ formData }) {
   return (
-    <aside className="rounded-2xl border border-gray-100 bg-white p-6 shadow-sm">
+    <aside className="employer-glass-card p-6">
       <p className="text-xs font-medium text-gray-400">How this looks to candidates</p>
       <div className="mt-3 overflow-hidden rounded-2xl bg-[linear-gradient(135deg,#0f172a,#1e40af_55%,#185FA5)] p-5 text-white">
         <span className="rounded-full bg-white/15 px-2.5 py-0.5 text-[11px] font-medium">{formData.eventType}</span>
@@ -60,7 +60,7 @@ function CandidatePreview({ formData }) {
 
 function PublishSuccess({ matchedCount }) {
   return (
-    <div className="flex flex-col items-center justify-center rounded-2xl border border-gray-100 bg-white px-6 py-16 text-center shadow-sm">
+    <div className="employer-glass-card flex flex-col items-center justify-center px-6 py-16 text-center">
       <span className="flex h-16 w-16 items-center justify-center rounded-full bg-green-50 text-green-600">
         <CheckCircle2 className="h-9 w-9" />
       </span>

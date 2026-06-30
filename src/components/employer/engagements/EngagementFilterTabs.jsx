@@ -10,7 +10,7 @@ export default function EngagementFilterTabs({ activeTab, onChange }) {
           type="button"
           onClick={() => onChange(tab)}
           className={`rounded-full px-4 py-2 text-sm font-medium transition-all duration-200 ${
-            activeTab === tab ? 'bg-blue-600 text-white' : 'border border-gray-200 bg-white text-gray-600 hover:bg-gray-50'
+            activeTab === tab ? 'employer-filter-chip-active' : 'employer-filter-chip'
           }`}
         >
           {tab}

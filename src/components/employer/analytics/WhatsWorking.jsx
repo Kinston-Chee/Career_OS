@@ -10,7 +10,7 @@ const ICON_TONES = { green: 'text-green-600', blue: 'text-[#185FA5]', purple: 't
 function HighlightCard({ highlight }) {
   const Icon = ICONS[highlight.icon] || Trophy
   return (
-    <div className={`rounded-xl border-t-[3px] bg-white p-4 shadow-sm ${BORDER_TONES[highlight.tone]}`}>
+    <div className={`employer-glass-subcard border-t-[3px] p-4 ${BORDER_TONES[highlight.tone]}`}>
       <Icon className={`h-4 w-4 ${ICON_TONES[highlight.tone]}`} />
       <p className="mt-2 text-xs text-gray-400">{highlight.label}</p>
       <p className="text-[15px] font-bold text-gray-900">{highlight.title}</p>
@@ -22,8 +22,7 @@ function HighlightCard({ highlight }) {
 export default function WhatsWorking() {
   return (
     <section
-      className="rounded-2xl p-5"
-      style={{ backgroundColor: 'rgba(240,238,255,0.5)', border: '1px solid rgba(200,190,255,0.4)' }}
+      className="employer-glass-card p-5"
     >
       <div className="flex items-center gap-2">
         <Sparkles className="h-4 w-4 text-[#534AB7]" />

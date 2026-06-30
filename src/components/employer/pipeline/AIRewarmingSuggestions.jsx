@@ -46,7 +46,7 @@ function SuggestionItem({ item, onPrimaryAction, onViewCandidates, onToggleWhy }
         <button
           type="button"
           onClick={() => onViewCandidates(item)}
-          className="rounded-full border border-gray-200 bg-white px-4 py-1.5 text-xs font-semibold text-gray-600 hover:bg-gray-50"
+          className="employer-secondary-button px-4 py-1.5 text-xs"
         >
           {item.secondaryAction}
         </button>
@@ -58,8 +58,7 @@ function SuggestionItem({ item, onPrimaryAction, onViewCandidates, onToggleWhy }
 export default function AIRewarmingSuggestions({ suggestions, activeCount, onPrimaryAction, onViewCandidates, onToggleWhy }) {
   return (
     <section
-      className="rounded-2xl p-5"
-      style={{ backgroundColor: 'rgba(240,242,255,0.6)', border: '1px solid rgba(180,180,250,0.4)' }}
+      className="employer-glass-card p-5"
     >
       <div className="flex items-center gap-2">
         <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[#534AB7] text-white">

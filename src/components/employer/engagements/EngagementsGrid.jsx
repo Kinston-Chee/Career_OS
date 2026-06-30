@@ -31,7 +31,7 @@ function EngagementCard({ engagement, isNew, onViewApplicants }) {
 
   return (
     <article
-      className={`rounded-2xl border border-gray-100 bg-white p-5 shadow-sm transition-all duration-200 ${isNew ? 'engagement-card-glow' : ''}`}
+      className={`employer-glass-card p-5 transition-all duration-200 ${isNew ? 'engagement-card-glow' : ''}`}
     >
       <div className="flex items-start justify-between gap-3">
         <span className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl ${ICON_TONES[engagement.iconTone]}`}>
@@ -75,7 +75,7 @@ function EngagementCard({ engagement, isNew, onViewApplicants }) {
       </div>
 
       <div className="mt-3 flex items-center justify-between">
-        <button type="button" onClick={onViewApplicants} className="flex items-center gap-1 text-sm font-semibold text-[#185FA5] hover:underline">
+        <button type="button" onClick={onViewApplicants} className="flex items-center gap-1 text-sm font-semibold text-[#185FA5] hover:text-[#134c87]">
           {engagement.actionLabel}
           <span aria-hidden="true">→</span>
         </button>

@@ -14,7 +14,7 @@ export default function CandidateGridCard({ candidate, onSelect }) {
     <button
       type="button"
       onClick={() => onSelect(candidate)}
-      className="flex flex-col rounded-2xl border border-gray-100 bg-white p-4 text-left shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md"
+      className="employer-glass-card flex flex-col p-4 text-left transition-all duration-200 hover:-translate-y-0.5"
     >
       <div className="flex items-start justify-between gap-2">
         <div className="flex items-center gap-2.5">
@@ -34,11 +34,11 @@ export default function CandidateGridCard({ candidate, onSelect }) {
 
       <div className="mt-2 flex flex-wrap gap-1">
         {candidate.evidenceChips.slice(0, 2).map((chip) => (
-          <span key={chip} className="rounded bg-gray-100 px-1.5 py-0.5 text-[11px] text-gray-600">{chip}</span>
+          <span key={chip} className="rounded bg-blue-50/70 px-1.5 py-0.5 text-[11px] text-[#185FA5] ring-1 ring-blue-100/60">{chip}</span>
         ))}
       </div>
 
-      <div className="mt-3 flex items-center justify-between border-t border-gray-50 pt-2.5">
+      <div className="mt-3 flex items-center justify-between border-t border-white/70 pt-2.5">
         <span className={`rounded-full px-2 py-0.5 text-[11px] font-medium ${STAGE_TONE[candidate.pipelineStage] || STAGE_TONE.Aware}`}>
           {candidate.pipelineStage}
         </span>

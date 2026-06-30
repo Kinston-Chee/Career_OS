@@ -1395,10 +1395,10 @@ export default function EmployerWorkspacePage() {
   }, [currentFilteredList, selectedCandidateId]);
 
   return (
-    <div className="flex h-screen w-screen flex-col overflow-hidden bg-gradient-to-br from-slate-100 via-blue-50 to-indigo-100">
+    <div className="employer-workspace-page flex h-screen w-screen flex-col overflow-hidden">
       <EmployerWorkspaceTopNav active="Candidates" />
 
-      <div className="flex flex-1 gap-5 overflow-hidden px-8 py-6">
+      <div className="relative z-10 flex flex-1 gap-5 overflow-hidden px-8 py-6">
         <CandidateSidebar selectedRole={selectedRole} onSelectRole={setSelectedRole} />
 
         {/* Right main area */}

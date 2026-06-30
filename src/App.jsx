@@ -27,7 +27,12 @@ import ProfilePage from './pages/ProfilePage'
 import ProtectedRoute from './components/session/ProtectedRoute'
 import SocietyCorporateMarketplacePage from './pages/SocietyCorporateMarketplacePage'
 import StudentReadinessOverviewPage from './pages/StudentReadinessOverviewPage'
-import UniversityOverviewPage from './pages/UniversityOverviewPage'
+import UniversityOverview from './pages/university/Overview'
+import CurriculumMarketAlignment from './pages/university/CurriculumMarketAlignment'
+import StudentReadiness from './pages/university/StudentReadiness'
+import AlumniSignalIntelligence from './pages/university/AlumniSignalIntelligence'
+import CollaborationMarketplace from './pages/university/CollaborationMarketplace'
+import AccreditationHub from './pages/university/AccreditationHub'
 import WorkspacePlaceholderPage from './pages/WorkspacePlaceholderPage'
 
 export default function App() {
@@ -92,11 +97,17 @@ export default function App() {
       </Route>
 
       <Route element={<ProtectedRoute role="university" />}>
+        {/* Round 2 AI-first pages — own top-nav layout, kept outside AppLayout's sidebar shell. */}
+        <Route path="/university" element={<Navigate to="/university/overview" replace />} />
+        <Route path="/university/overview" element={<UniversityOverview />} />
+        <Route path="/university/student-readiness" element={<StudentReadiness />} />
+        <Route path="/university/curriculum-alignment" element={<CurriculumMarketAlignment />} />
+        <Route path="/university/alumni-signals" element={<AlumniSignalIntelligence />} />
+        <Route path="/university/collaboration" element={<CollaborationMarketplace />} />
+        <Route path="/university/accreditation" element={<AccreditationHub />} />
+
         <Route element={<AppLayout workspace="university" />}>
-          <Route path="/university" element={<UniversityOverviewPage />} />
-          <Route path="/university/overview" element={<UniversityOverviewPage />} />
           <Route path="/university/readiness" element={<StudentReadinessOverviewPage />} />
-          <Route path="/university/student-readiness" element={<StudentReadinessOverviewPage />} />
           <Route path="/university/curriculum" element={<CurriculumMarketAlignmentPage />} />
           <Route path="/university/curriculum-market-alignment" element={<CurriculumMarketAlignmentPage />} />
           <Route path="/university/signals" element={<AlumniSignalIntelligencePage />} />

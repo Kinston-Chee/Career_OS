@@ -110,7 +110,7 @@ const WORKSPACES = [
       'Graduate outcome analytics dashboard',
     ],
     cta: 'Enter University Workspace',
-    path: '/university',
+    path: '/university/overview',
     iconClass: 'bg-gradient-to-br from-sky-600 to-cyan-400',
     accentClass: 'bg-gradient-to-r from-sky-600 to-cyan-400',
     bulletClass: 'bg-sky-600',

@@ -49,7 +49,7 @@ export default function WizardStep3Details({ formData, onChange, onContinue }) {
       <h2 className="text-2xl font-bold text-gray-900">Review and customize your event</h2>
       <p className="mt-1 text-sm text-gray-500">I&rsquo;ve pre-filled this based on your goals — edit anything you&rsquo;d like</p>
 
-      <div className="mt-6 rounded-2xl border border-gray-100 bg-white p-7 shadow-sm">
+      <div className="employer-glass-card mt-6 p-7">
         <p className="mb-5 flex items-center gap-1.5 text-xs font-medium text-[#185FA5]">
           <Sparkles className="h-3.5 w-3.5" />
           AI pre-filled based on your hiring goals — review and edit as needed

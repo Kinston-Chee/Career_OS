@@ -26,13 +26,13 @@ function QuarterDropdown() {
       <button
         type="button"
         onClick={() => setOpen((p) => !p)}
-        className="flex items-center gap-1.5 rounded-full border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50"
+        className="employer-secondary-button flex items-center gap-1.5 px-4 py-2 text-sm"
       >
         {selected}
         <ChevronDown className="h-3.5 w-3.5 text-gray-400" />
       </button>
       {open ? (
-        <div className="absolute right-0 z-20 mt-1.5 w-40 overflow-hidden rounded-xl border border-gray-100 bg-white py-1 shadow-lg">
+        <div className="employer-glass-card absolute right-0 z-20 mt-1.5 w-40 overflow-hidden py-1">
           {quarterOptions.map((option) => (
             <button
               key={option}
@@ -55,7 +55,7 @@ function QuarterDropdown() {
 function DemoToast({ message }) {
   if (!message) return null
   return (
-    <div className="fixed bottom-5 right-5 z-50 rounded-xl border border-gray-100 bg-white px-4 py-3 text-sm font-semibold text-gray-800 shadow-lg">
+    <div className="employer-glass-card fixed bottom-5 right-5 z-50 px-4 py-3 text-sm font-semibold text-slate-800">
       {message}
     </div>
   )
@@ -77,14 +77,14 @@ export default function Analytics() {
   }
 
   return (
-    <div className="flex h-screen w-screen flex-col overflow-hidden bg-[#F4F6FB]">
-      <EmployerNav />
+    <div className="employer-workspace-page flex h-screen w-screen flex-col overflow-hidden">
+      <EmployerNav variant="glass" />
       <main className="min-w-0 flex-1 overflow-y-auto">
-        <div className="mx-auto max-w-[1480px] space-y-5 px-6 py-6">
-          <div className="flex flex-wrap items-center justify-between gap-4">
+        <div className="relative z-10 mx-auto max-w-[1480px] space-y-5 px-6 py-6">
+          <div className="employer-page-header flex flex-wrap items-center justify-between gap-4">
             <div>
-              <h1 className="text-2xl font-bold text-gray-900">Analytics</h1>
-              <p className="mt-1 text-sm text-gray-500">What&rsquo;s working, what&rsquo;s not, and what to do next</p>
+              <h1 className="employer-page-title">Analytics</h1>
+              <p className="employer-page-subtitle">What&rsquo;s working, what&rsquo;s not, and what to do next</p>
             </div>
             <QuarterDropdown />
           </div>

@@ -48,7 +48,7 @@ function GoalSummaryPill({ goal, onEdit }) {
 
 function RecommendationCard({ onAccept, onShowOther }) {
   return (
-    <div className="rounded-2xl border border-gray-100 bg-white p-5 shadow-sm">
+    <div className="employer-glass-card p-5">
       <div className="flex items-start gap-3">
         <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-purple-50 text-[#534AB7]">
           <Bot className="h-5 w-5" />
@@ -126,7 +126,7 @@ function AlternativeTypes() {
 
 function CampusIntelligencePanel() {
   return (
-    <aside className="rounded-2xl border border-gray-100 bg-white p-5 shadow-sm">
+    <aside className="employer-glass-card p-5">
       <div className="flex items-center gap-2">
         <BarChart3 className="h-4 w-4 text-[#185FA5]" />
         <h3 className="text-sm font-bold text-gray-900">Campus Intelligence</h3>

@@ -29,7 +29,7 @@ export default function AllApplicantsPanel({ candidates, statuses, onView }) {
   })
 
   return (
-    <section className="rounded-2xl border border-gray-100 bg-white p-5 shadow-sm">
+    <section className="employer-glass-card p-5">
       <div className="flex items-center justify-between">
         <div className="flex items-baseline gap-2">
           <h2 className="text-sm font-bold text-gray-900">All Applicants</h2>
@@ -47,7 +47,7 @@ export default function AllApplicantsPanel({ candidates, statuses, onView }) {
             type="button"
             onClick={() => setActiveFilter(tab)}
             className={`rounded-full px-3 py-1 text-xs font-medium transition-all duration-200 ${
-              activeFilter === tab ? 'bg-blue-600 text-white' : 'border border-gray-200 bg-white text-gray-600 hover:bg-gray-50'
+              activeFilter === tab ? 'employer-filter-chip-active' : 'employer-filter-chip'
             }`}
           >
             {tab}
@@ -60,7 +60,7 @@ export default function AllApplicantsPanel({ candidates, statuses, onView }) {
           const status = statuses[candidate.id] || candidate.status
           const rank = candidates.indexOf(candidate) + 1
           return (
-            <div key={candidate.id} className="flex items-center gap-3 border-b border-gray-50 py-2.5 last:border-b-0">
+            <div key={candidate.id} className="flex items-center gap-3 rounded-xl border border-transparent px-2 py-2.5 transition hover:border-blue-100/80 hover:bg-white/50">
               <span className="w-5 shrink-0 text-xs text-gray-400">{rank}</span>
               <span className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-xs font-semibold text-white ${AVATAR_BG[index % AVATAR_BG.length]}`}>
                 {candidate.initials}
@@ -71,7 +71,7 @@ export default function AllApplicantsPanel({ candidates, statuses, onView }) {
               </div>
               <span className={`shrink-0 rounded-full px-2 py-0.5 text-xs font-semibold ${MATCH_TONE[candidate.matchTier]}`}>{candidate.matchScore}%</span>
               <span className={`shrink-0 rounded-full px-2 py-0.5 text-xs font-medium ${STATUS_TONE[status]}`}>{status}</span>
-              <button type="button" onClick={() => onView(candidate)} className="shrink-0 text-xs font-semibold text-[#185FA5] hover:underline">
+              <button type="button" onClick={() => onView(candidate)} className="shrink-0 text-xs font-semibold text-[#185FA5] hover:text-[#134c87]">
                 View →
               </button>
             </div>

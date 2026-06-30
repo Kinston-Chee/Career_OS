@@ -42,7 +42,7 @@ function CandidateAvatar({ initials, size = 'lg' }) {
 
 function MatchHeader({ candidate, onShortlist, onScheduleInterview, onPass, shortlisted, passed }) {
   return (
-    <section className={`rounded-2xl border-l-4 bg-white p-5 shadow-sm ${RISK_BORDER[candidate.matchScore >= 90 ? 'LOW' : 'MEDIUM']}`}>
+    <section className={`employer-glass-card border-l-4 p-5 ${RISK_BORDER[candidate.matchScore >= 90 ? 'LOW' : 'MEDIUM']}`}>
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div className="flex items-start gap-4">
           <CandidateAvatar initials={candidate.initials} />
@@ -100,7 +100,7 @@ function MatchHeader({ candidate, onShortlist, onScheduleInterview, onPass, shor
             type="button"
             onClick={onPass}
             disabled={passed}
-            className="rounded-full border border-gray-200 px-4 py-2 text-sm font-semibold text-gray-600 hover:bg-gray-50"
+            className="employer-secondary-button px-4 py-2 text-sm"
           >
             {passed ? 'Passed' : 'Pass'}
           </button>
@@ -112,7 +112,7 @@ function MatchHeader({ candidate, onShortlist, onScheduleInterview, onPass, shor
 
 function CareerNarrative({ narrative }) {
   return (
-    <section className="rounded-2xl border-l-4 border-l-purple-500 bg-white p-5 shadow-sm">
+    <section className="employer-glass-card border-l-4 border-l-purple-500 p-5">
       <div className="flex items-center gap-2">
         <span className="flex h-8 w-8 items-center justify-center rounded-full bg-purple-50 text-purple-600">
           <Bot className="h-4 w-4" />
@@ -130,7 +130,7 @@ function CareerNarrative({ narrative }) {
 
 function SelfDiscoveryCard({ name, traits, summary }) {
   return (
-    <section className="rounded-2xl bg-white p-5 shadow-sm">
+    <section className="employer-glass-card p-5">
       <div className="flex items-baseline gap-2">
         <User className="h-4 w-4 text-[#185FA5]" />
         <h2 className="text-sm font-bold text-gray-900">How {name.split(' ')[0]} Works</h2>
@@ -158,7 +158,7 @@ function SelfDiscoveryCard({ name, traits, summary }) {
 
 function CareerMemoryTimeline({ entries }) {
   return (
-    <section className="rounded-2xl bg-white p-5 shadow-sm">
+    <section className="employer-glass-card p-5">
       <div className="flex items-baseline gap-2">
         <Bookmark className="h-4 w-4 text-[#185FA5]" />
         <h2 className="text-sm font-bold text-gray-900">Career Memory</h2>
@@ -200,7 +200,7 @@ function CareerMemoryTimeline({ entries }) {
 
 function PipelineStatusCard({ candidate, onMoveNext }) {
   return (
-    <section className="rounded-2xl bg-white p-5 shadow-sm">
+    <section className="employer-glass-card p-5">
       <div className="flex items-center justify-between">
         <h2 className="text-sm font-bold text-gray-900">Pipeline Status</h2>
       </div>
@@ -211,7 +211,7 @@ function PipelineStatusCard({ candidate, onMoveNext }) {
       <div className="mt-4">
         <PipelineStepper currentStage={candidate.pipelineStage} />
       </div>
-      <button type="button" onClick={onMoveNext} className="mt-4 flex w-full items-center justify-center gap-1.5 rounded-xl bg-[#185FA5] px-4 py-2.5 text-sm font-semibold text-white hover:bg-[#134c87]">
+      <button type="button" onClick={onMoveNext} className="employer-primary-button mt-4 flex w-full items-center justify-center gap-1.5 px-4 py-2.5 text-sm">
         Move to next stage
         <ArrowRight className="h-3.5 w-3.5" />
       </button>
@@ -232,7 +232,7 @@ function WhatToValidateCard({ items, onAddToInterview }) {
   }
 
   return (
-    <section className="rounded-2xl bg-white p-5 shadow-sm">
+    <section className="employer-glass-card p-5">
       <h2 className="text-sm font-bold text-gray-900">What to validate</h2>
       <div className="mt-3 space-y-3">
         {items.map((item) => (
@@ -261,7 +261,7 @@ function WhatToValidateCard({ items, onAddToInterview }) {
 
 function RetentionConditionsCard({ conditions, risk }) {
   return (
-    <section className={`rounded-2xl border-l-4 bg-white p-5 shadow-sm ${RISK_BORDER[risk] || RISK_BORDER.MEDIUM}`}>
+    <section className={`employer-glass-card border-l-4 p-5 ${RISK_BORDER[risk] || RISK_BORDER.MEDIUM}`}>
       <div className="flex items-center justify-between gap-2">
         <div className="flex items-center gap-2">
           <ShieldAlert className="h-4 w-4 text-orange-500" />
@@ -283,7 +283,7 @@ const QUICK_ACTIONS = [
 
 function QuickActionsCard({ onAction }) {
   return (
-    <section className="rounded-2xl bg-white p-5 shadow-sm">
+    <section className="employer-glass-card p-5">
       <h2 className="text-sm font-bold text-gray-900">Quick Actions</h2>
       <div className="mt-3 space-y-2">
         {QUICK_ACTIONS.map((action) => (
@@ -291,7 +291,7 @@ function QuickActionsCard({ onAction }) {
             key={action.id}
             type="button"
             onClick={() => onAction(action.label)}
-            className="flex w-full items-center justify-between rounded-xl border border-gray-100 px-3.5 py-2.5 text-left text-sm font-medium text-gray-700 hover:bg-gray-50"
+            className="flex w-full items-center justify-between rounded-xl bg-white/60 px-3.5 py-2.5 text-left text-sm font-medium text-slate-700 ring-1 ring-blue-100/60 hover:bg-white"
           >
             <span className="flex items-center gap-2">
               <action.icon className="h-4 w-4 text-[#185FA5]" />
@@ -312,8 +312,8 @@ export default function CandidateDetailView({ candidate, backLabel, onBack, onTo
   const narrative = { firstName: candidate.name.split(' ')[0], text: detail.narrative }
 
   return (
-    <div className="mx-auto max-w-[1480px] space-y-4 px-6 py-6">
-      <button type="button" onClick={onBack} className="flex items-center gap-1.5 text-sm font-medium text-[#185FA5] hover:underline">
+    <div className="relative z-10 mx-auto max-w-[1480px] space-y-4 px-6 py-6">
+      <button type="button" onClick={onBack} className="flex items-center gap-1.5 text-sm font-medium text-[#185FA5] hover:text-[#134c87]">
         <ArrowLeft className="h-4 w-4" />
         Back to {backLabel}
       </button>

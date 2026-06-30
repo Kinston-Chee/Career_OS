@@ -28,7 +28,7 @@ function CandidateCard({ candidate, avatarTone, status, onShortlist, onPass }) {
 
   return (
     <article
-      className={`rounded-2xl border-l-[3px] bg-white p-5 shadow-sm transition-opacity duration-200 ${TIER_BORDER[candidate.matchTier]} ${
+      className={`employer-glass-card border-l-[3px] p-5 transition-opacity duration-200 ${TIER_BORDER[candidate.matchTier]} ${
         isPassed ? 'opacity-50' : 'opacity-100'
       }`}
     >
@@ -84,7 +84,7 @@ function CandidateCard({ candidate, avatarTone, status, onShortlist, onPass }) {
           <button
             type="button"
             onClick={() => onPass(candidate)}
-            className="rounded-full border border-gray-200 px-4 py-1.5 text-sm font-semibold text-gray-600 hover:bg-gray-50"
+            className="employer-secondary-button px-4 py-1.5 text-sm"
           >
             Pass
           </button>
@@ -121,7 +121,7 @@ export default function AIShortlistedList({ candidates, statuses, onShortlist, o
         ))}
       </div>
 
-      <button type="button" onClick={onViewAll} className="mt-3 w-full text-center text-sm font-semibold text-[#185FA5] hover:underline">
+      <button type="button" onClick={onViewAll} className="mt-3 w-full text-center text-sm font-semibold text-[#185FA5] hover:text-[#134c87]">
         View all 8 shortlisted candidates →
       </button>
     </section>
