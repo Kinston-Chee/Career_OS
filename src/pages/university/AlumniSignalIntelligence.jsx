@@ -11,12 +11,12 @@ import { summaryBanner } from '../../data/alumniSignalsData'
 
 function PageHeader() {
   return (
-    <div className="flex flex-wrap items-start justify-between gap-4">
+    <div className="employer-home-header flex flex-wrap items-start justify-between gap-4">
       <div>
-        <h1 className="text-2xl font-bold text-gray-900">Alumni Signal Intelligence</h1>
+        <h1 className="text-2xl font-semibold text-slate-950">Alumni Signal Intelligence</h1>
         <p className="mt-1 text-sm text-gray-500">Proof that what we teach translates into career outcomes — not just where alumni work</p>
       </div>
-      <button type="button" className="flex items-center gap-1.5 rounded-full border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50">
+      <button type="button" className="employer-secondary-button flex items-center gap-1.5 px-4 py-2 text-sm">
         Last 3 Years
         <ChevronDown className="h-3.5 w-3.5 text-gray-400" />
       </button>
@@ -27,8 +27,7 @@ function PageHeader() {
 function SummaryBanner() {
   return (
     <section
-      className="flex items-start gap-3 rounded-2xl p-4"
-      style={{ backgroundColor: 'rgba(240,238,255,0.5)', border: '1px solid rgba(200,190,255,0.4)' }}
+      className="employer-glass-card flex items-start gap-3 p-4"
     >
       <Sparkles className="mt-0.5 h-5 w-5 shrink-0 text-purple-600" />
       <p className="text-sm leading-6 text-gray-700">{summaryBanner.text}</p>
@@ -43,10 +42,10 @@ export default function AlumniSignalIntelligence() {
   const handleViewPartnerships = () => navigate('/university/collaboration')
 
   return (
-    <div className="flex h-screen w-screen flex-col overflow-hidden bg-[#F4F6FB]">
+    <div className="university-workspace-page flex h-screen w-screen flex-col overflow-hidden">
       <UniversityNav />
       <main className="min-w-0 flex-1 overflow-y-auto">
-        <div className="mx-auto max-w-[1480px] space-y-5 px-6 py-6">
+        <div className="relative z-10 mx-auto max-w-[1480px] space-y-5 px-6 py-6">
           <PageHeader />
           <SummaryBanner />
           <KpiRow />

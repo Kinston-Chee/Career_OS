@@ -10,7 +10,8 @@
 
 @layer components {
   .employer-home-page,
-  .employer-workspace-page {
+  .employer-workspace-page,
+  .university-workspace-page {
     background:
       radial-gradient(circle at 12% 8%, rgba(93, 173, 255, 0.28), transparent 26rem),
       radial-gradient(circle at 88% 0%, rgba(196, 226, 255, 0.42), transparent 24rem),
@@ -18,7 +19,8 @@
   }
 
   .employer-home-page::before,
-  .employer-workspace-page::before {
+  .employer-workspace-page::before,
+  .university-workspace-page::before {
     content: '';
     position: fixed;
     inset: 4rem 0 auto 0;
