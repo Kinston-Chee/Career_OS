@@ -24,6 +24,7 @@ import MemoryProfilePage from './pages/MemoryProfilePage'
 import OpportunitiesPage from './pages/OpportunitiesPage'
 import PlaceholderPage from './pages/PlaceholderPage'
 import ProfilePage from './pages/ProfilePage'
+import CareerAnimalPage from './pages/CareerAnimalPage'
 import ProtectedRoute from './components/session/ProtectedRoute'
 import SocietyCorporateMarketplacePage from './pages/SocietyCorporateMarketplacePage'
 import StudentReadinessOverviewPage from './pages/StudentReadinessOverviewPage'
@@ -55,6 +56,7 @@ export default function App() {
         <Route path="/student/ai-companion" element={<AICompanionPage />} />
         <Route path="/student/ai-assistant" element={<Navigate to="/student/ai-companion" replace />} />
         <Route path="/student/account" element={<ProfilePage />} />
+        <Route path="/student/career-animal" element={<CareerAnimalPage />} />
 
         <Route element={<AppLayout workspace="student" />}>
           <Route path="/student" element={<Navigate to="/student/overview" replace />} />
