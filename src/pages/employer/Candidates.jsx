@@ -8,7 +8,7 @@ import CandidateRow from '../../components/employer/candidates/CandidateRow'
 import CandidateDetailView from '../../components/employer/candidates/CandidateDetailView'
 import { PIPELINE_STAGES, candidates } from '../../data/candidatesData'
 
-function PageHeader() {
+function PageHeader({ query, onQueryChange }) {
   return (
     <div className="employer-page-header flex flex-wrap items-center justify-between gap-4">
       <div>
@@ -19,6 +19,8 @@ function PageHeader() {
         <Sparkles className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[#185FA5]" />
         <input
           type="text"
+          value={query}
+          onChange={(e) => onQueryChange(e.target.value)}
           placeholder="Find candidates with React and SQL available in June…"
           className="employer-home-command h-11 w-full pl-11 pr-16 text-sm text-slate-700 outline-none placeholder:text-slate-400"
         />
@@ -43,14 +45,16 @@ export default function Candidates() {
   const [searchParams, setSearchParams] = useSearchParams()
   const initialCandidateId = searchParams.get('candidateId')
   const initialFrom = searchParams.get('from') || 'Candidates'
+  const initialQuery = searchParams.get('q') || ''
+  const initialStage = searchParams.get('stage') || 'All'
 
   const [view, setView] = useState(initialCandidateId ? 'detail' : 'list')
   const [selectedCandidateId, setSelectedCandidateId] = useState(initialCandidateId)
   const [backLabel, setBackLabel] = useState(initialFrom)
 
   const [candidateList, setCandidateList] = useState(() => candidates.map((c) => ({ ...c })))
-  const [query, setQuery] = useState('')
-  const [stageFilter, setStageFilter] = useState('All')
+  const [query, setQuery] = useState(initialQuery)
+  const [stageFilter, setStageFilter] = useState(initialStage)
   const [sortBy, setSortBy] = useState('matchDesc')
   const [listView, setListView] = useState('grid')
 
@@ -64,12 +68,16 @@ export default function Candidates() {
   }
 
   const filteredCandidates = useMemo(() => {
+    // Supports comma-separated terms as an OR match, so AI-generated queries
+    // like "taylor's, apu" (from Home NLP search / Action Queue) work without
+    // a real NLP backend.
+    const terms = query.split(',').map((t) => t.trim().toLowerCase()).filter(Boolean)
+
     let list = candidateList.filter((c) => {
       if (stageFilter !== 'All' && c.pipelineStage !== stageFilter) return false
-      if (query) {
-        const q = query.toLowerCase()
+      if (terms.length) {
         const haystack = `${c.name} ${c.university} ${c.course} ${c.skills.join(' ')}`.toLowerCase()
-        if (!haystack.includes(q)) return false
+        if (!terms.some((term) => haystack.includes(term))) return false
       }
       return true
     })
@@ -120,7 +128,7 @@ export default function Candidates() {
           />
         ) : (
           <div className="relative z-10 mx-auto max-w-[1480px] space-y-5 px-6 py-6">
-            <PageHeader />
+            <PageHeader query={query} onQueryChange={setQuery} />
             <CandidateFilters
               query={query}
               onQueryChange={setQuery}

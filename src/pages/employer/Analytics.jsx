@@ -6,11 +6,23 @@ import WhatsWorking from '../../components/employer/analytics/WhatsWorking'
 import SourceROIComparison from '../../components/employer/analytics/SourceROIComparison'
 import SignalCorrelation from '../../components/employer/analytics/SignalCorrelation'
 import RetentionRiskForecast from '../../components/employer/analytics/RetentionRiskForecast'
-import { quarterOptions } from '../../data/analyticsData'
+import ExportSummaryModal from '../../components/employer/analytics/ExportSummaryModal'
+import {
+  quarterOptions,
+  quarterSummary,
+  lastQuarterSummary,
+  sourceROI,
+  lastQuarterSourceROI,
+} from '../../data/analyticsData'
 
-function QuarterDropdown() {
+const DATASETS = {
+  'This Quarter': { summary: quarterSummary, sourceROI },
+  'Last Quarter': { summary: lastQuarterSummary, sourceROI: lastQuarterSourceROI },
+  'This Year': { summary: quarterSummary, sourceROI },
+}
+
+function QuarterDropdown({ selected, onSelect }) {
   const [open, setOpen] = useState(false)
-  const [selected, setSelected] = useState(quarterOptions[0])
   const ref = useRef(null)
 
   React.useEffect(() => {
@@ -38,7 +50,7 @@ function QuarterDropdown() {
               key={option}
               type="button"
               onClick={() => {
-                setSelected(option)
+                onSelect(option)
                 setOpen(false)
               }}
               className={`flex w-full items-center px-4 py-2 text-left text-xs ${option === selected ? 'font-semibold text-[#185FA5]' : 'text-gray-600 hover:bg-gray-50'}`}
@@ -62,6 +74,8 @@ function DemoToast({ message }) {
 }
 
 export default function Analytics() {
+  const [selectedQuarter, setSelectedQuarter] = useState(quarterOptions[0])
+  const [showExportModal, setShowExportModal] = useState(false)
   const [toast, setToast] = useState('')
   const toastRef = useRef(null)
 
@@ -71,9 +85,16 @@ export default function Analytics() {
     toastRef.current = window.setTimeout(() => setToast(''), 2400)
   }
 
+  const dataset = DATASETS[selectedQuarter] || DATASETS['This Quarter']
+
+  const handleQuarterSelect = (option) => {
+    setSelectedQuarter(option)
+    showToast(`Showing ${option.toLowerCase()} data`)
+  }
+
   const handleExport = () => {
     showToast('Generating leadership summary…')
-    window.setTimeout(() => showToast('Summary ready — check your downloads'), 1000)
+    window.setTimeout(() => setShowExportModal(true), 700)
   }
 
   return (
@@ -86,14 +107,14 @@ export default function Analytics() {
               <h1 className="employer-page-title">Analytics</h1>
               <p className="employer-page-subtitle">What&rsquo;s working, what&rsquo;s not, and what to do next</p>
             </div>
-            <QuarterDropdown />
+            <QuarterDropdown selected={selectedQuarter} onSelect={handleQuarterSelect} />
           </div>
 
-          <QuarterSummary onExport={handleExport} />
+          <QuarterSummary onExport={handleExport} summary={dataset.summary} />
           <WhatsWorking />
 
           <div className="grid grid-cols-1 gap-5 lg:grid-cols-[1.5fr_1fr]">
-            <SourceROIComparison />
+            <SourceROIComparison data={dataset.sourceROI} />
             <SignalCorrelation />
           </div>
 
@@ -101,6 +122,15 @@ export default function Analytics() {
         </div>
       </main>
       <DemoToast message={toast} />
+
+      {showExportModal ? (
+        <ExportSummaryModal
+          summary={dataset.summary}
+          sourceROI={dataset.sourceROI}
+          onClose={() => setShowExportModal(false)}
+          onToast={showToast}
+        />
+      ) : null}
     </div>
   )
 }

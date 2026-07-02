@@ -18,10 +18,14 @@ const BADGE_TONES = {
 
 const STATUS_DOT = { green: 'bg-green-500', gray: 'bg-gray-400' }
 
-function EventCard({ event }) {
+function EventCard({ event, onSelect }) {
   const Icon = ICONS[event.icon] || Trophy
   return (
-    <div className="rounded-xl border border-gray-100 p-4 shadow-sm">
+    <button
+      type="button"
+      onClick={() => onSelect(event)}
+      className="rounded-xl border border-gray-100 p-4 text-left shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
+    >
       <div className="flex items-start justify-between gap-2">
         <span className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl ${ICON_TONES[event.iconTone]}`}>
           <Icon className="h-4.5 w-4.5" />
@@ -35,12 +39,12 @@ function EventCard({ event }) {
         <span className={`h-1.5 w-1.5 rounded-full ${STATUS_DOT[event.statusDot]}`} />
         <span className="text-gray-500">{event.statusText}</span>
       </div>
-    </div>
+    </button>
   )
 }
 
-export default function ActiveEvents({ activeTab, onTabChange, onCreate }) {
-  const filtered = activeTab === 'All' ? events : events.filter((e) => e.filterGroup === activeTab)
+export default function ActiveEvents({ activeTab, onTabChange, onCreate, onSelectEvent, events: eventsList = events }) {
+  const filtered = activeTab === 'All' ? eventsList : eventsList.filter((e) => e.filterGroup === activeTab)
 
   return (
     <section className="rounded-2xl border border-gray-100 bg-white p-5 shadow-sm">
@@ -70,7 +74,7 @@ export default function ActiveEvents({ activeTab, onTabChange, onCreate }) {
 
       <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {filtered.map((event) => (
-          <EventCard key={event.id} event={event} />
+          <EventCard key={event.id} event={event} onSelect={onSelectEvent} />
         ))}
       </div>
     </section>

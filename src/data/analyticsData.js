@@ -44,11 +44,32 @@ export const whatsWorking = {
 }
 
 export const sourceROI = [
-  { id: 'ai-challenge', label: 'AI & Data Challenge', cost: 'RM 180/qualified', retention: '34% retention', widthPct: 25, retentionTone: 'green' },
-  { id: 'backend-workshop', label: 'Backend Workshop', cost: 'RM 240/qualified', retention: '28% retention', widthPct: 40, retentionTone: 'gray' },
-  { id: 'job-posting', label: 'Job Posting (standard)', cost: 'RM 410/qualified', retention: '19% retention', widthPct: 75, retentionTone: 'gray' },
-  { id: 'career-fair', label: 'Career Fair', cost: 'RM 520/qualified', retention: '15% retention', widthPct: 90, retentionTone: 'gray' },
-  { id: 'referral', label: 'Referral Program', cost: 'RM 95/qualified', retention: '41% retention', widthPct: 15, retentionTone: 'green' },
+  { id: 'ai-challenge', label: 'AI & Data Challenge', cost: 'RM 180/qualified', retention: '34% retention', widthPct: 25, retentionTone: 'green', qualifiedCount: 23, totalSpend: 'RM 4,140' },
+  { id: 'backend-workshop', label: 'Backend Workshop', cost: 'RM 240/qualified', retention: '28% retention', widthPct: 40, retentionTone: 'gray', qualifiedCount: 12, totalSpend: 'RM 2,880' },
+  { id: 'job-posting', label: 'Job Posting (standard)', cost: 'RM 410/qualified', retention: '19% retention', widthPct: 75, retentionTone: 'gray', qualifiedCount: 31, totalSpend: 'RM 12,710' },
+  { id: 'career-fair', label: 'Career Fair', cost: 'RM 520/qualified', retention: '15% retention', widthPct: 90, retentionTone: 'gray', qualifiedCount: 8, totalSpend: 'RM 4,160' },
+  { id: 'referral', label: 'Referral Program', cost: 'RM 95/qualified', retention: '41% retention', widthPct: 15, retentionTone: 'green', qualifiedCount: 6, totalSpend: 'RM 570' },
+]
+
+// Second dataset so the "This Quarter" / "Last Quarter" dropdown actually
+// changes displayed numbers — makes the AI briefing feel live, per research.
+export const lastQuarterSummary = {
+  period: 'Q1 2025 · Jan–Mar',
+  metrics: [
+    { id: 'total-hires', icon: 'people', label: 'Total hires', value: '4', note: 'From 298 pipeline candidates', noteTone: 'muted' },
+    { id: 'time-to-fill', icon: 'clock', label: 'Time to fill (avg)', value: '32 days', note: '▲ 4% vs prior quarter', noteTone: 'muted' },
+    { id: 'quality-of-hire', icon: 'shield', label: 'Quality of hire (90-day)', value: '82%', note: '▲ 2%', noteTone: 'green' },
+    { id: 'offer-acceptance', icon: 'check', label: 'Offer acceptance', value: '86%', note: '▼ 3%', noteTone: 'muted' },
+    { id: 'cost-per-hire', icon: 'dollar', label: 'Cost per hire', value: 'RM 3,900', note: '▲ 6%', noteTone: 'muted' },
+  ],
+}
+
+export const lastQuarterSourceROI = [
+  { id: 'ai-challenge', label: 'AI & Data Challenge', cost: 'RM 210/qualified', retention: '31% retention', widthPct: 32, retentionTone: 'green', qualifiedCount: 17, totalSpend: 'RM 3,570' },
+  { id: 'backend-workshop', label: 'Backend Workshop', cost: 'RM 265/qualified', retention: '25% retention', widthPct: 45, retentionTone: 'gray', qualifiedCount: 9, totalSpend: 'RM 2,385' },
+  { id: 'job-posting', label: 'Job Posting (standard)', cost: 'RM 395/qualified', retention: '20% retention', widthPct: 72, retentionTone: 'gray', qualifiedCount: 27, totalSpend: 'RM 10,665' },
+  { id: 'career-fair', label: 'Career Fair', cost: 'RM 540/qualified', retention: '14% retention', widthPct: 93, retentionTone: 'gray', qualifiedCount: 6, totalSpend: 'RM 3,240' },
+  { id: 'referral', label: 'Referral Program', cost: 'RM 110/qualified', retention: '38% retention', widthPct: 18, retentionTone: 'green', qualifiedCount: 4, totalSpend: 'RM 440' },
 ]
 
 export const signalCorrelation = [

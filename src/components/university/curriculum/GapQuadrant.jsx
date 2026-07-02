@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { ChevronDown } from 'lucide-react'
-import { quadrantNodes } from '../../../data/curriculumAlignmentData'
+import { programOptions } from '../../../data/curriculumAlignmentData'
 
 const SIZE_PX = { lg: 26, md: 19, sm: 13 }
 
@@ -19,21 +19,55 @@ const LEGEND_SWATCHES = [
   { tone: 'blue', label: 'Maintain Momentum' },
 ]
 
-export default function GapQuadrant({ selectedGapId, onSelectGap }) {
+export default function GapQuadrant({ selectedGapId, onSelectGap, program, onProgramChange, quadrantNodes }) {
+  const [open, setOpen] = useState(false)
+  const ref = useRef(null)
+
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (ref.current && !ref.current.contains(e.target)) setOpen(false)
+    }
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [])
+
   return (
     <section className="rounded-2xl border border-gray-100 bg-white p-5 shadow-sm">
       <div className="flex flex-wrap items-center justify-between gap-2">
         <h2 className="text-sm font-bold text-gray-900">Gap Overview</h2>
-        <button type="button" className="flex items-center gap-1 text-xs text-gray-400">
-          BSc Data Science · All cohorts
-          <ChevronDown className="h-3.5 w-3.5" />
-        </button>
+        <div ref={ref} className="relative">
+          <button
+            type="button"
+            onClick={() => setOpen((p) => !p)}
+            className="flex items-center gap-1 rounded-full px-2 py-1 text-xs text-gray-500 hover:bg-gray-50"
+          >
+            {program} · All cohorts
+            <ChevronDown className="h-3.5 w-3.5" />
+          </button>
+          {open ? (
+            <div className="absolute right-0 z-20 mt-1.5 w-52 overflow-hidden rounded-xl border border-gray-100 bg-white py-1 shadow-lg">
+              {programOptions.map((p) => (
+                <button
+                  key={p}
+                  type="button"
+                  onClick={() => {
+                    onProgramChange(p)
+                    setOpen(false)
+                  }}
+                  className={`flex w-full items-center px-3.5 py-2 text-left text-xs ${p === program ? 'font-semibold text-[#185FA5]' : 'text-gray-600 hover:bg-gray-50'}`}
+                >
+                  {p}
+                </button>
+              ))}
+            </div>
+          ) : null}
+        </div>
       </div>
 
       <div className="relative mt-4 ml-8 h-[380px]">
         <span className="absolute -left-7 top-1/2 -translate-y-1/2 -rotate-90 whitespace-nowrap text-[11px] text-gray-400">Market Demand</span>
 
-        <div className="relative h-full w-full overflow-hidden rounded-xl border border-gray-100">
+        <div key={program} className="relative h-full w-full overflow-hidden rounded-xl border border-gray-100 quadrant-fade">
           <div className="absolute inset-0 grid grid-cols-2 grid-rows-2">
             <div className="relative border-b border-r border-gray-100 bg-red-50/60">
               <span className="absolute left-2 top-2 text-[10px] font-medium text-red-500">Priority Focus</span>
@@ -90,6 +124,11 @@ export default function GapQuadrant({ selectedGapId, onSelectGap }) {
           ))}
         </span>
       </div>
+      <style dangerouslySetInnerHTML={{
+        __html: `
+        @keyframes quadrantFadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .quadrant-fade { animation: quadrantFadeIn 200ms ease; }
+      `}} />
     </section>
   )
 }
