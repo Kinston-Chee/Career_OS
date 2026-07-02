@@ -3338,36 +3338,9 @@ export const profileOverview = {
       { id: 'trait-3', icon: 'Target', tone: 'emerald', label: 'Impact over stability', sub: 'You choose ownership over structure' },
     ],
     basis: 'Based on DISC · Strengths · Values assessment',
-    narrative: [
-      'You lead with initiative — you move fast and bring others along. Your strongest environment is ambiguous problems where you can define the direction.',
-      'Based on what I know today, your current work style most closely resembles the Lion. You take charge instinctively and work decisively under pressure.',
-      'Your recent experiences in Career Memory show developing Owl tendencies — thinking deeply and methodically to build structured solutions.'
-    ],
+    narrative:
+      'You lead with initiative — you move fast and bring others along. Your strongest environment is ambiguous problems where you can define the direction. You value impact over stability, which means startup-style roles or high-ownership internships will suit you better than structured programmes. Your NLP work at Grab and your VP role at Taylor’s Computing Society both reflect this pattern.',
     footnote: 'This profile evolves automatically as you log more experiences in Career Memory.',
-    primaryAnimal: {
-      id: 'lion',
-      name: 'Lion',
-      emoji: '🦁',
-      archetype: 'The Commander',
-      category: 'leadership',
-      personality: 'Takes charge instinctively. Comfortable with authority and decisive under pressure. Moves the team forward when nobody else will.',
-      strengths: ['Natural authority', 'Decisive under pressure', 'Drives results through ownership'],
-      growthAreas: ['Listening before deciding', 'Delegating instead of controlling', 'Patience with slower processes'],
-      preferredEnvironment: 'High-stakes environments where someone needs to step up and make the call. Startups, leadership roles, crisis management.',
-      suggestedRoles: ['Product Manager', 'Startup Founder', 'Project Lead', 'Operations Manager'],
-      shortSummary: 'You naturally take charge and make decisive calls when the team needs direction.',
-    },
-    emergingAnimal: {
-      id: 'owl',
-      name: 'Owl',
-      emoji: '🦉',
-      archetype: 'The Scholar',
-      category: 'leadership',
-      shortSummary: 'You think deeply and methodically, becoming the person everyone turns to for real understanding.',
-    },
-    confidence: 72,
-    completedAt: '2026-06-27T10:00:00.000Z',
-    strengthReasons: ['Taking Initiative', 'Decisive Action', 'High Ownership'],
   },
   employersWatching: [
     { id: 'emp-1', logo: 'L', logoTone: 'rose', name: 'Lenovo', focus: 'AI & Software roles', status: 'Viewed today', statusTone: 'orange' },

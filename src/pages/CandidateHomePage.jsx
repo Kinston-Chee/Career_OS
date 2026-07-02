@@ -3,8 +3,6 @@ import { ArrowRight, X } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import HomeTopNav from '../components/home/HomeTopNav'
 import HeroCard from '../components/home/HeroCard'
-import CareerAnimalHomeCard from '../components/home/CareerAnimalHomeCard'
-import { SelfDiscoveryFlow } from '../components/profile/SelfDiscoveryCard'
 import OpportunityCards from '../components/home/OpportunityCards'
 import QuickActions from '../components/home/QuickActions'
 import RecentActivity from '../components/home/RecentActivity'
@@ -134,7 +132,6 @@ export default function CandidateHomePage() {
   const [modal, setModal] = useState(null)
   const [drawer, setDrawer] = useState(null)
   const [toast, setToast] = useState('')
-  const [showAssessment, setShowAssessment] = useState(false)
   const toastRef = useRef(null)
 
   useEffect(() => {
@@ -276,7 +273,6 @@ export default function CandidateHomePage() {
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1fr)_360px]">
           <div className="min-w-0 space-y-4">
             <HeroCard briefing={candidateHome.robotBriefing} onChipClick={handleHeroChip} />
-            <CareerAnimalHomeCard onRetake={() => setShowAssessment(true)} />
             <OpportunityCards opportunities={candidateHome.exploreOpportunities} onSelect={handleOpportunity} />
             <QuickActions actions={candidateHome.quickActions} onAction={handleQuickAction} />
             <RecentActivity items={candidateHome.recentActivity} onSelect={(item) => showToast(item.text)} onViewAll={openRecentActivity} />
@@ -304,7 +300,6 @@ export default function CandidateHomePage() {
 
       <DemoModal modal={modal} onClose={() => setModal(null)} />
       <DemoDrawer drawer={drawer} onClose={() => setDrawer(null)} />
-      {showAssessment && <SelfDiscoveryFlow onClose={() => setShowAssessment(false)} />}
       <DemoToast message={toast} />
     </div>
   )
