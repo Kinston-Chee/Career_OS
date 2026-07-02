@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { rolePathway } from '../../../data/alumniSignalsData'
 
 const W = 560
@@ -19,13 +19,13 @@ function layout(items) {
 }
 
 export default function RolePathwaySankey() {
+  const [hovered, setHovered] = useState(null) // { i, track, role, weight, x, y }
   const trackNodes = layout(rolePathway.tracks)
   const roleNodes = layout(rolePathway.roles)
 
   // Track running offsets so multiple flows from/to the same node stack instead of overlapping.
   const trackOffsets = trackNodes.map(() => 0)
   const roleOffsets = roleNodes.map(() => 0)
-  const trackTotal = rolePathway.tracks.reduce((s, t) => s + t.pct, 0)
 
   const ribbons = rolePathway.flows.map(([trackIdx, roleIdx, weight], i) => {
     const track = trackNodes[trackIdx]
@@ -46,14 +46,28 @@ export default function RolePathwaySankey() {
     const cx = (x0 + x1) / 2
 
     const path = `M${x0},${sy0} C${cx},${sy0} ${cx},${ty0} ${x1},${ty0} L${x1},${ty1} C${cx},${ty1} ${cx},${sy1} ${x0},${sy1} Z`
+    const isHovered = hovered?.i === i
+    const midY = (sy0 + ty0) / 2
 
-    return <path key={i} d={path} fill={track.tone} fillOpacity="0.18" />
+    return (
+      <path
+        key={i}
+        d={path}
+        fill={track.tone}
+        fillOpacity={isHovered ? 0.55 : hovered ? 0.08 : 0.18}
+        stroke={isHovered ? track.tone : 'none'}
+        strokeWidth={isHovered ? 1 : 0}
+        className="cursor-pointer transition-all duration-200"
+        onMouseEnter={() => setHovered({ i, track: track.label, role: role.label, weight, x: cx, y: midY })}
+        onMouseLeave={() => setHovered((prev) => (prev?.i === i ? null : prev))}
+      />
+    )
   })
 
   return (
     <section className="rounded-2xl border border-gray-100 bg-white p-5 shadow-sm">
       <h2 className="text-sm font-bold text-gray-900">Graduate Role Pathway</h2>
-      <p className="text-xs text-gray-400">{rolePathway.subtitle}</p>
+      <p className="text-xs text-gray-400">{rolePathway.subtitle} — hover a flow for the exact share</p>
 
       <div className="relative mt-3">
         <svg viewBox={`0 0 ${W} ${H}`} className="w-full">
@@ -90,6 +104,16 @@ export default function RolePathwaySankey() {
             </div>
           ))}
         </div>
+
+        {hovered ? (
+          <div
+            className="pointer-events-none absolute -translate-x-1/2 -translate-y-full rounded-lg border border-gray-200 bg-white px-3 py-2 text-center shadow-lg"
+            style={{ left: `${(hovered.x / W) * 100}%`, top: `${(hovered.y / H) * 100}%`, marginTop: -8 }}
+          >
+            <p className="whitespace-nowrap text-xs font-semibold text-gray-800">{hovered.track} → {hovered.role}</p>
+            <p className="text-xs font-bold text-[#185FA5]">{Math.round(hovered.weight * 100)}% of track graduates</p>
+          </div>
+        ) : null}
       </div>
 
       <p className="mt-2 text-xs italic text-gray-400">{rolePathway.footnote}</p>

@@ -30,7 +30,7 @@ function RecommendationCard({ partner, status, onStartOutreach }) {
       >
         {isLoading ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : null}
         {isSent ? <CheckCircle2 className="h-3.5 w-3.5" /> : null}
-        {isLoading ? 'Sending…' : isSent ? '✓ Outreach sent' : 'Start outreach →'}
+        {isLoading ? 'Drafting outreach…' : isSent ? '✓ Outreach sent' : 'Start outreach →'}
       </button>
     </div>
   )

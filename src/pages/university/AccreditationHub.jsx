@@ -5,12 +5,17 @@ import AccreditationKpis from '../../components/university/accreditation/Accredi
 import EvidenceBuilder from '../../components/university/accreditation/EvidenceBuilder'
 import RequirementsChecklist from '../../components/university/accreditation/RequirementsChecklist'
 import SubmissionTimeline from '../../components/university/accreditation/SubmissionTimeline'
+import GenerateDraftModal from '../../components/university/accreditation/GenerateDraftModal'
+import RequestDataModal from '../../components/university/accreditation/RequestDataModal'
+import OverrideConfirmModal from '../../components/university/accreditation/OverrideConfirmModal'
+import AacsbTimelineModal from '../../components/university/accreditation/AacsbTimelineModal'
 import {
   accreditationSummary,
   evidenceByRequirement,
   requirementGroups,
   timelineSubmissions,
 } from '../../components/university/accreditation/accreditationData'
+import { useUniversityWorkspaceStore } from '../../store/useUniversityWorkspaceStore'
 
 function findRequirement(id) {
   for (const group of requirementGroups) {
@@ -18,6 +23,46 @@ function findRequirement(id) {
     if (match) return match
   }
   return requirementGroups[0].items[0]
+}
+
+// The Curriculum-Market Alignment evidence pack count is fed live from the
+// shared store — this is the "close the loop" cross-page connection: adding
+// gap evidence there updates this requirement's completeness here.
+function curriculumEvidenceEntry(packSize) {
+  const gapNames = ['Cloud Computing', 'Generative AI / LLMs', 'MLOps', 'Data Visualization']
+  const completeness = Math.min(100, packSize * 25)
+  const status = packSize === 0 ? 'missing' : packSize < 3 ? 'in-progress' : 'ready'
+  return {
+    status,
+    requiredBy: 'MQA Self-Review',
+    completeness,
+    readySources: packSize,
+    totalSources: 4,
+    sources:
+      packSize === 0
+        ? [
+            {
+              id: 'curriculum-evidence-empty',
+              label: 'Missing: Curriculum-Market Alignment evidence pack',
+              sourcePage: '/university/curriculum-alignment',
+              title: 'No skill gaps have been added to the evidence pack yet',
+              updated: 'Last updated: N/A',
+              status: 'missing',
+              action: 'View source',
+              icon: 'warning',
+            },
+          ]
+        : gapNames.slice(0, packSize).map((name, i) => ({
+            id: `curriculum-evidence-${i}`,
+            label: 'From: Curriculum-Market Alignment',
+            sourcePage: '/university/curriculum-alignment',
+            title: `${name} evidence pack — curriculum, market demand, alumni feedback, employer language`,
+            updated: 'Last updated: just now',
+            status: 'ready',
+            action: 'View source',
+            icon: 'trend',
+          })),
+  }
 }
 
 function DemoToast({ message }) {
@@ -32,22 +77,63 @@ function DemoToast({ message }) {
 export default function AccreditationHub() {
   const [expandedGroup, setExpandedGroup] = useState('graduate-employability')
   const [selectedRequirement, setSelectedRequirement] = useState('graduate-destination')
+  const [selectedFramework, setSelectedFramework] = useState('QS World Rankings 2025')
+  const [overrides, setOverrides] = useState({})
   const [toast, setToast] = useState('')
   const toastRef = useRef(null)
+
+  const [activeModal, setActiveModal] = useState(null) // null | 'generate' | 'request' | 'override' | 'aacsb'
+  const [requestSource, setRequestSource] = useState(null)
+  const [draftTitle, setDraftTitle] = useState('QS World Rankings 2025')
+
+  const evidencePackGaps = useUniversityWorkspaceStore((s) => s.evidencePackGaps)
+  const markRequirementOverride = useUniversityWorkspaceStore((s) => s.markRequirementOverride)
 
   const showToast = (message) => {
     window.clearTimeout(toastRef.current)
     setToast(message)
-    toastRef.current = window.setTimeout(() => setToast(''), 2400)
-  }
-
-  const handleGenerate = () => {
-    showToast('Generating evidence pack...')
-    window.setTimeout(() => showToast('Draft pack ready - 41 evidence points included'), 1000)
+    toastRef.current = window.setTimeout(() => setToast(''), 2800)
   }
 
   const requirement = findRequirement(selectedRequirement)
-  const evidence = evidenceByRequirement[selectedRequirement]
+  const evidence =
+    selectedRequirement === 'curriculum-evidence-packs'
+      ? curriculumEvidenceEntry(evidencePackGaps.size)
+      : evidenceByRequirement[selectedRequirement]
+
+  const handleGenerateDraft = () => {
+    setDraftTitle('QS World Rankings 2025')
+    showToast('Generating evidence pack...')
+    window.setTimeout(() => setActiveModal('generate'), 900)
+  }
+
+  const handleTimelineAction = (submissionId) => {
+    if (submissionId === 'qs') {
+      handleGenerateDraft()
+    } else if (submissionId === 'mqa') {
+      setSelectedFramework('MQA Self-Review 2025')
+      setExpandedGroup('industry-alignment')
+      setSelectedRequirement('curriculum-evidence-packs')
+      showToast('Highlighting MQA Self-Review 2025 requirements')
+      document.getElementById('requirements-checklist')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    } else if (submissionId === 'aacsb') {
+      setActiveModal('aacsb')
+    }
+  }
+
+  const handleRequestData = (source) => {
+    setRequestSource(source)
+    setActiveModal('request')
+  }
+
+  const handleOverride = () => setActiveModal('override')
+
+  const confirmOverride = () => {
+    setOverrides((prev) => ({ ...prev, [selectedRequirement]: true }))
+    markRequirementOverride(selectedRequirement)
+    setActiveModal(null)
+    showToast(`${requirement.name} marked as ready (override) — logged`)
+  }
 
   return (
     <div className="university-workspace-page flex h-screen w-screen flex-col overflow-hidden text-[#111B3F]">
@@ -68,7 +154,7 @@ export default function AccreditationHub() {
             <p className="min-w-0 flex-1 text-sm font-semibold leading-6 text-[#252A85]">{accreditationSummary.banner}</p>
             <button
               type="button"
-              onClick={handleGenerate}
+              onClick={handleGenerateDraft}
               className="employer-primary-button flex shrink-0 items-center gap-2 px-6 py-3 text-sm"
             >
               Generate draft pack
@@ -78,26 +164,54 @@ export default function AccreditationHub() {
 
           <AccreditationKpis kpis={accreditationSummary.kpis} />
 
-          <div className="grid grid-cols-[0.95fr_1.05fr] gap-4">
+          <div id="requirements-checklist" className="grid grid-cols-[0.95fr_1.05fr] gap-4">
             <RequirementsChecklist
               groups={requirementGroups}
               expandedGroup={expandedGroup}
               selectedRequirement={selectedRequirement}
+              selectedFramework={selectedFramework}
+              overrides={overrides}
               onToggleGroup={(groupId) => setExpandedGroup((current) => (current === groupId ? '' : groupId))}
               onSelectRequirement={setSelectedRequirement}
+              onSelectFramework={setSelectedFramework}
             />
             <EvidenceBuilder
               requirement={requirement}
               evidence={evidence}
-              onSourceAction={showToast}
-              onOverride={() => showToast('Marked as ready - override logged')}
+              overridden={!!overrides[selectedRequirement]}
+              onRequestData={handleRequestData}
+              onOverride={handleOverride}
             />
           </div>
 
-          <SubmissionTimeline submissions={timelineSubmissions} onAction={handleGenerate} />
+          <SubmissionTimeline submissions={timelineSubmissions} onAction={handleTimelineAction} />
         </div>
       </main>
       <DemoToast message={toast} />
+
+      {activeModal === 'generate' ? (
+        <GenerateDraftModal submissionTitle={draftTitle} onClose={() => setActiveModal(null)} onToast={showToast} />
+      ) : null}
+
+      {activeModal === 'request' && requestSource ? (
+        <RequestDataModal
+          requirementName={requirement.name}
+          sourceLabel={requestSource.label}
+          onClose={() => setActiveModal(null)}
+          onSend={(recipient) => {
+            setActiveModal(null)
+            showToast(`Request sent to ${recipient}`)
+          }}
+        />
+      ) : null}
+
+      {activeModal === 'override' ? (
+        <OverrideConfirmModal requirementName={requirement.name} onClose={() => setActiveModal(null)} onConfirm={confirmOverride} />
+      ) : null}
+
+      {activeModal === 'aacsb' ? (
+        <AacsbTimelineModal onClose={() => setActiveModal(null)} onToast={showToast} />
+      ) : null}
     </div>
   )
 }

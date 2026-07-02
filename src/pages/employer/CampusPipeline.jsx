@@ -7,6 +7,7 @@ import PipelineStagesBoard from '../../components/employer/pipeline/PipelineStag
 import CandidatesDrawer from '../../components/employer/pipeline/CandidatesDrawer'
 import NLPSearchBar from '../../components/employer/pipeline/NLPSearchBar'
 import { pipelineStages, rewarmingSuggestions, STAGE_ORDER } from '../../data/campusPipelineData'
+import { useEmployerWorkspaceStore } from '../../store/useEmployerWorkspaceStore'
 
 function PageHeader() {
   return (
@@ -31,6 +32,7 @@ function DemoToast({ message }) {
 
 export default function CampusPipeline() {
   const navigate = useNavigate()
+  const shortlistCandidate = useEmployerWorkspaceStore((s) => s.shortlistCandidate)
   const [stages, setStages] = useState(pipelineStages)
   const [suggestions, setSuggestions] = useState(() => rewarmingSuggestions.map((s) => ({ ...s, status: 'idle', whyOpen: false })))
   const [drawerSuggestion, setDrawerSuggestion] = useState(null)
@@ -85,7 +87,14 @@ export default function CampusPipeline() {
   }
 
   const handleDrawerRowAction = (candidate) => {
-    showToast(`Action recorded for ${candidate.name}`)
+    if (drawerSuggestion?.drawerType === 'workshop') {
+      shortlistCandidate(candidate.id)
+      showToast(`${candidate.name} added to shortlist`)
+    } else if (drawerSuggestion?.drawerType === 'future-intake') {
+      showToast(`${candidate.name} moved to Warm`)
+    } else {
+      showToast(`Check-in sent to ${candidate.name}`)
+    }
   }
 
   const handleTogglePreview = (candidateId) => {

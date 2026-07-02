@@ -1,4 +1,5 @@
 import React, { useRef, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import EmployerNav from '../../components/employer/EmployerNav'
 import EngagementMetrics from '../../components/employer/engagements/EngagementMetrics'
 import EngagementFilterTabs from '../../components/employer/engagements/EngagementFilterTabs'
@@ -10,6 +11,7 @@ import WizardStep3Details from '../../components/employer/engagements/WizardStep
 import WizardStep4Review from '../../components/employer/engagements/WizardStep4Review'
 import WizardBottomNav from '../../components/employer/engagements/WizardBottomNav'
 import { engagements as initialEngagements, eventDetailsDefault } from '../../data/engagementsData'
+import { useEmployerWorkspaceStore } from '../../store/useEmployerWorkspaceStore'
 
 function defaultDeadline() {
   const d = new Date()
@@ -27,6 +29,8 @@ function DemoToast({ message }) {
 }
 
 export default function Engagements() {
+  const navigate = useNavigate()
+  const recordPublishedEngagement = useEmployerWorkspaceStore((s) => s.recordPublishedEngagement)
   const [viewMode, setViewMode] = useState('list')
   const [wizardStep, setWizardStep] = useState(1)
   const [selectedGoal, setSelectedGoal] = useState(null)
@@ -104,6 +108,7 @@ export default function Engagements() {
       setNewEngagementId(newEngagement.id)
       setViewMode('list')
       setFilterTab('All')
+      recordPublishedEngagement(newEngagement.title)
       showToast('Engagement published — visible to 42 matched candidates now')
       window.setTimeout(() => setNewEngagementId(null), 1500)
     }, 1500)
@@ -111,6 +116,7 @@ export default function Engagements() {
 
   const handleViewApplicants = (engagement) => {
     showToast(`Opening applicants for ${engagement.title}`)
+    navigate(`/employer/talent-discovery?postingId=${encodeURIComponent(engagement.id)}`)
   }
 
   return (

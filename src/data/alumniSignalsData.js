@@ -13,6 +13,26 @@ export const kpis = [
   { id: 'tracked-alumni', icon: 'people', tone: 'blue', label: 'Tracked alumni', value: '412', note: '78% response rate', noteTone: 'muted' },
 ]
 
+export const timeRangeOptions = ['Last Year', 'Last 3 Years', 'Last 5 Years']
+
+// Time-range-specific KPI + salary trend datasets, so the dropdown actually
+// changes displayed numbers instead of just being a label.
+export const kpisByRange = {
+  'Last Year': [
+    { id: 'avg-salary', icon: 'dollar', tone: 'green', label: 'Avg starting salary', value: 'RM 5,100', note: '▲ 4% vs prior year', noteTone: 'green' },
+    { id: 'time-to-role', icon: 'clock', tone: 'blue', label: 'Time to first role', value: '2.1 months', note: '▼ 5% vs prior year', noteTone: 'green' },
+    { id: 'employer-satisfaction', icon: 'star', tone: 'purple', label: 'Employer satisfaction', value: '4.3/5', note: 'Based on 6-month reviews', noteTone: 'muted' },
+    { id: 'tracked-alumni', icon: 'people', tone: 'blue', label: 'Tracked alumni', value: '96', note: '82% response rate', noteTone: 'muted' },
+  ],
+  'Last 3 Years': kpis,
+  'Last 5 Years': [
+    { id: 'avg-salary', icon: 'dollar', tone: 'green', label: 'Avg starting salary', value: 'RM 5,100', note: '▲ 21% vs 2019 cohort', noteTone: 'green' },
+    { id: 'time-to-role', icon: 'clock', tone: 'blue', label: 'Time to first role', value: '2.5 months', note: '▼ 9% vs 2019 cohorts', noteTone: 'green' },
+    { id: 'employer-satisfaction', icon: 'star', tone: 'purple', label: 'Employer satisfaction', value: '4.0/5', note: 'Based on 6-month reviews', noteTone: 'muted' },
+    { id: 'tracked-alumni', icon: 'people', tone: 'blue', label: 'Tracked alumni', value: '680', note: '74% response rate', noteTone: 'muted' },
+  ],
+}
+
 export const salaryTrend = {
   cohort: 'BSc Data Science',
   years: ['2021', '2022', '2023', '2024', '2025'],
@@ -21,10 +41,45 @@ export const salaryTrend = {
   axisMax: 6000,
   axisStep: 500,
   annotations: [
-    { year: '2023', label: 'Cloud fundamentals added to curriculum' },
-    { year: '2024', label: 'AI/ML elective expanded' },
+    {
+      year: '2023',
+      label: 'Cloud fundamentals added to curriculum',
+      detail: 'CS301 added a 2-week AWS fundamentals module in Fall 2023. Graduates from this cohort onward show a 14% faster time-to-first-role than pre-2023 cohorts.',
+      impact: 'Measured impact: +RM 250 avg starting salary, -0.3 months time-to-role',
+    },
+    {
+      year: '2024',
+      label: 'AI/ML elective expanded',
+      detail: 'CS410 (AI/ML elective) expanded from 1 to 2 semesters and added a capstone project requirement in early 2024.',
+      impact: 'Measured impact: +RM 200 avg starting salary for AI/ML track graduates',
+    },
   ],
   footnote: 'Curriculum changes are annotated on the timeline — showing correlation between updates and salary growth.',
+}
+
+export const salaryTrendByRange = {
+  'Last Year': {
+    ...salaryTrend,
+    years: ['2025'],
+    values: [5100],
+    axisMin: 4500,
+    axisMax: 5500,
+    axisStep: 250,
+    annotations: [],
+  },
+  'Last 3 Years': salaryTrend,
+  'Last 5 Years': {
+    ...salaryTrend,
+    years: ['2019', '2020', '2021', '2022', '2023', '2024', '2025'],
+    values: [3600, 3750, 4200, 4450, 4700, 4900, 5100],
+    axisMin: 3200,
+    axisMax: 6000,
+    axisStep: 500,
+    annotations: [
+      { year: '2023', label: 'Cloud fundamentals added to curriculum', detail: salaryTrend.annotations[0].detail, impact: salaryTrend.annotations[0].impact },
+      { year: '2024', label: 'AI/ML elective expanded', detail: salaryTrend.annotations[1].detail, impact: salaryTrend.annotations[1].impact },
+    ],
+  },
 }
 
 export const rolePathway = {

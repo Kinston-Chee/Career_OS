@@ -16,7 +16,11 @@ import {
   Zap,
 } from 'lucide-react'
 import PipelineStepper from './PipelineStepper'
+import ManagerBriefModal from './ManagerBriefModal'
+import ScheduleInterviewModal from './ScheduleInterviewModal'
+import MessageComposeModal from './MessageComposeModal'
 import { getCandidateDetail } from '../../../data/candidatesData'
+import { useEmployerWorkspaceStore } from '../../../store/useEmployerWorkspaceStore'
 
 const TRAIT_ICONS = { zap: Zap, shuffle: Shuffle, target: Target }
 const TRAIT_TONES = {
@@ -221,6 +225,7 @@ function PipelineStatusCard({ candidate, onMoveNext }) {
 
 function WhatToValidateCard({ items, onAddToInterview }) {
   const [checked, setChecked] = useState(() => new Set())
+  const [added, setAdded] = useState(() => new Set())
 
   const toggle = (item) => {
     setChecked((prev) => {
@@ -229,6 +234,12 @@ function WhatToValidateCard({ items, onAddToInterview }) {
       else next.add(item)
       return next
     })
+  }
+
+  const handleAdd = (item) => {
+    if (added.has(item)) return
+    setAdded((prev) => new Set(prev).add(item))
+    onAddToInterview(item)
   }
 
   return (
@@ -240,7 +251,7 @@ function WhatToValidateCard({ items, onAddToInterview }) {
             <button
               type="button"
               onClick={() => toggle(item)}
-              className={`mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded border ${
+              className={`mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded border transition-colors ${
                 checked.has(item) ? 'border-[#185FA5] bg-[#185FA5] text-white' : 'border-gray-300'
               }`}
             >
@@ -248,8 +259,13 @@ function WhatToValidateCard({ items, onAddToInterview }) {
             </button>
             <div className="min-w-0">
               <p className={`text-sm ${checked.has(item) ? 'text-gray-400 line-through' : 'text-gray-700'}`}>{item}</p>
-              <button type="button" onClick={() => onAddToInterview(item)} className="text-xs font-medium text-[#185FA5] hover:underline">
-                Add to interview questions
+              <button
+                type="button"
+                onClick={() => handleAdd(item)}
+                disabled={added.has(item)}
+                className={`flex items-center gap-1 text-xs font-medium ${added.has(item) ? 'text-green-600' : 'text-[#185FA5] hover:underline'}`}
+              >
+                {added.has(item) ? <><CheckCircle2 className="h-3 w-3" /> Added to interview questions</> : 'Add to interview questions'}
               </button>
             </div>
           </div>
@@ -281,35 +297,59 @@ const QUICK_ACTIONS = [
   { id: 'favorite', icon: Star, label: 'Add to favorites' },
 ]
 
-function QuickActionsCard({ onAction }) {
+function QuickActionsCard({ onAction, favorited }) {
   return (
     <section className="employer-glass-card p-5">
       <h2 className="text-sm font-bold text-gray-900">Quick Actions</h2>
       <div className="mt-3 space-y-2">
-        {QUICK_ACTIONS.map((action) => (
-          <button
-            key={action.id}
-            type="button"
-            onClick={() => onAction(action.label)}
-            className="flex w-full items-center justify-between rounded-xl bg-white/60 px-3.5 py-2.5 text-left text-sm font-medium text-slate-700 ring-1 ring-blue-100/60 hover:bg-white"
-          >
-            <span className="flex items-center gap-2">
-              <action.icon className="h-4 w-4 text-[#185FA5]" />
-              {action.label}
-            </span>
-            <ArrowRight className="h-3.5 w-3.5 text-gray-300" />
-          </button>
-        ))}
+        {QUICK_ACTIONS.map((action) => {
+          const isFavorite = action.id === 'favorite'
+          return (
+            <button
+              key={action.id}
+              type="button"
+              onClick={() => onAction(action.id)}
+              className="flex w-full items-center justify-between rounded-xl bg-white/60 px-3.5 py-2.5 text-left text-sm font-medium text-slate-700 ring-1 ring-blue-100/60 hover:bg-white"
+            >
+              <span className="flex items-center gap-2">
+                <action.icon className={`h-4 w-4 ${isFavorite && favorited ? 'fill-amber-400 text-amber-400' : 'text-[#185FA5]'}`} />
+                {isFavorite && favorited ? 'Added to favorites' : action.label}
+              </span>
+              <ArrowRight className="h-3.5 w-3.5 text-gray-300" />
+            </button>
+          )
+        })}
       </div>
     </section>
   )
 }
 
 export default function CandidateDetailView({ candidate, backLabel, onBack, onToast, onMoveStage }) {
-  const [shortlisted, setShortlisted] = useState(false)
-  const [passed, setPassed] = useState(false)
+  const shortlistCandidate = useEmployerWorkspaceStore((s) => s.shortlistCandidate)
+  const passCandidate = useEmployerWorkspaceStore((s) => s.passCandidate)
+  const addInterviewPrepQuestion = useEmployerWorkspaceStore((s) => s.addInterviewPrepQuestion)
+  const shortlistedIds = useEmployerWorkspaceStore((s) => s.shortlistedIds)
+  const passedIds = useEmployerWorkspaceStore((s) => s.passedIds)
+
+  const [favorited, setFavorited] = useState(false)
+  const [activeModal, setActiveModal] = useState(null) // null | 'message' | 'interview' | 'brief'
+
+  const shortlisted = shortlistedIds.has(candidate.id)
+  const passed = passedIds.has(candidate.id)
   const detail = getCandidateDetail(candidate)
   const narrative = { firstName: candidate.name.split(' ')[0], text: detail.narrative }
+
+  const handleQuickAction = (actionId) => {
+    if (actionId === 'favorite') {
+      setFavorited((prev) => {
+        const next = !prev
+        onToast(next ? `${candidate.name} added to favorites` : `${candidate.name} removed from favorites`)
+        return next
+      })
+      return
+    }
+    setActiveModal(actionId)
+  }
 
   return (
     <div className="relative z-10 mx-auto max-w-[1480px] space-y-4 px-6 py-6">
@@ -325,12 +365,12 @@ export default function CandidateDetailView({ candidate, backLabel, onBack, onTo
             shortlisted={shortlisted}
             passed={passed}
             onShortlist={() => {
-              setShortlisted(true)
+              shortlistCandidate(candidate.id)
               onToast(`${candidate.name} added to shortlist`)
             }}
-            onScheduleInterview={() => onToast(`Interview scheduling started for ${candidate.name}`)}
+            onScheduleInterview={() => setActiveModal('interview')}
             onPass={() => {
-              setPassed(true)
+              passCandidate(candidate.id)
               onToast(`${candidate.name} marked as passed`)
             }}
           />
@@ -341,11 +381,48 @@ export default function CandidateDetailView({ candidate, backLabel, onBack, onTo
 
         <div className="space-y-4">
           <PipelineStatusCard candidate={candidate} onMoveNext={() => onMoveStage(candidate)} />
-          <WhatToValidateCard items={detail.whatToValidate} onAddToInterview={(item) => onToast(`Added "${item}" to interview questions`)} />
+          <WhatToValidateCard
+            items={detail.whatToValidate}
+            onAddToInterview={(item) => {
+              addInterviewPrepQuestion({ text: item, candidateId: candidate.id, candidateName: candidate.name })
+              onToast(`Added "${item}" to interview prep list`)
+            }}
+          />
           <RetentionConditionsCard conditions={detail.retentionConditions} risk={detail.retentionRisk} />
-          <QuickActionsCard onAction={(label) => onToast(`${label}: ${candidate.name}`)} />
+          <QuickActionsCard onAction={handleQuickAction} favorited={favorited} />
         </div>
       </div>
+
+      {activeModal === 'message' ? (
+        <MessageComposeModal
+          candidate={candidate}
+          onClose={() => setActiveModal(null)}
+          onSend={() => {
+            setActiveModal(null)
+            onToast(`Message sent to ${candidate.name}`)
+          }}
+        />
+      ) : null}
+
+      {activeModal === 'interview' ? (
+        <ScheduleInterviewModal
+          candidate={candidate}
+          onClose={() => setActiveModal(null)}
+          onConfirm={({ date, time }) => {
+            setActiveModal(null)
+            onToast(`Interview scheduled with ${candidate.name} — ${date} at ${time}`)
+          }}
+        />
+      ) : null}
+
+      {activeModal === 'brief' ? (
+        <ManagerBriefModal
+          candidate={candidate}
+          detail={detail}
+          onClose={() => setActiveModal(null)}
+          onToast={onToast}
+        />
+      ) : null}
     </div>
   )
 }

@@ -48,7 +48,7 @@ function PartnerCard({ partner, onViewPartnership }) {
           <div className="mt-2.5 flex items-center justify-between">
             <p className="text-xs text-gray-400">{partner.events} events · {partner.hires} hires this year</p>
             <button type="button" onClick={() => onViewPartnership(partner)} className="text-xs font-semibold text-[#185FA5] hover:underline">
-              View partnership →
+              View partnership details →
             </button>
           </div>
         </div>

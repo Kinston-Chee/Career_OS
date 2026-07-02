@@ -36,6 +36,8 @@ export const leadershipInbox = [
     link: 'View evidence',
     pill: 'Critical',
     pillTone: 'red',
+    to: '/university/curriculum-alignment?gap=cloud-computing',
+    source: 'Source: Curriculum-Market Alignment · syllabus mapping + 47 job postings, last 90 days',
   },
   {
     id: 'dsa-readiness',
@@ -45,6 +47,8 @@ export const leadershipInbox = [
     link: 'View at-risk cohort',
     pill: 'Time sensitive',
     pillTone: 'orange',
+    to: '/university/student-readiness',
+    source: 'Source: Student Readiness · academic scores + Career Memory completeness, updated today',
   },
   {
     id: 'grab-partnership',
@@ -54,6 +58,8 @@ export const leadershipInbox = [
     link: 'Review partnership',
     pill: 'Opportunity',
     pillTone: 'green',
+    to: '/university/collaboration',
+    source: 'Source: Collaboration Marketplace · partnership hiring conversion records',
   },
   {
     id: 'qs-deadline',
@@ -63,6 +69,8 @@ export const leadershipInbox = [
     link: 'Go to Accreditation Hub',
     pill: 'Deadline',
     pillTone: 'purple',
+    to: '/university/accreditation',
+    source: 'Source: Accreditation Hub · evidence pack completeness tracker',
   },
 ]
 

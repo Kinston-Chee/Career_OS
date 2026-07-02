@@ -1,4 +1,5 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 import { AlertTriangle, ArrowRight, CheckCircle2, Handshake, TrendingUp } from 'lucide-react'
 
 const icons = {
@@ -32,6 +33,7 @@ function fallbackEvidence(requirement) {
       {
         id: `${requirement.id}-primary`,
         label: 'From: Alumni Signal Intelligence',
+        sourcePage: '/university/alumni-signals',
         title: `${requirement.name} source data verified and mapped to accreditation evidence`,
         updated: 'Last updated: 2 days ago',
         status: 'ready',
@@ -41,6 +43,7 @@ function fallbackEvidence(requirement) {
       {
         id: `${requirement.id}-market`,
         label: 'From: Curriculum-Market Alignment',
+        sourcePage: '/university/curriculum-alignment',
         title: 'Supporting program and market validation evidence is complete',
         updated: 'Last updated: 4 days ago',
         status: 'ready',
@@ -50,6 +53,7 @@ function fallbackEvidence(requirement) {
       {
         id: `${requirement.id}-partner`,
         label: 'From: Collaboration Marketplace',
+        sourcePage: '/university/collaboration',
         title: 'Employer and partner evidence has been checked for submission use',
         updated: 'Last updated: 5 days ago',
         status: 'ready',
@@ -60,7 +64,10 @@ function fallbackEvidence(requirement) {
   }
 }
 
-function StatusPill({ status }) {
+function StatusPill({ status, overridden }) {
+  if (overridden) {
+    return <span className="rounded-lg border border-orange-300 bg-orange-100 px-4 py-1 text-xs font-semibold text-orange-700">Ready (override)</span>
+  }
   const label = status === 'missing' ? 'Missing' : status === 'ready' ? 'Ready' : 'In progress'
   const classes =
     status === 'ready'
@@ -72,8 +79,17 @@ function StatusPill({ status }) {
   return <span className={`rounded-lg border px-4 py-1 text-xs font-semibold ${classes}`}>{label}</span>
 }
 
-export default function EvidenceBuilder({ requirement, evidence, onSourceAction, onOverride }) {
+export default function EvidenceBuilder({ requirement, evidence, overridden, onRequestData, onOverride }) {
+  const navigate = useNavigate()
   const activeEvidence = evidence || fallbackEvidence(requirement)
+
+  const handleSourceAction = (source) => {
+    if (source.action === 'Request data') {
+      onRequestData(source)
+    } else if (source.sourcePage) {
+      navigate(source.sourcePage)
+    }
+  }
 
   return (
     <section className="rounded-2xl border border-[#B9CDF7] bg-white/85 p-6 shadow-[0_18px_60px_rgba(21,94,232,0.13)] backdrop-blur-xl">
@@ -82,7 +98,7 @@ export default function EvidenceBuilder({ requirement, evidence, onSourceAction,
           <h2 className="text-lg font-bold text-[#111B3F]">Evidence: {requirement.name}</h2>
           <p className="mt-2 text-sm font-medium text-[#64708F]">Required by: {activeEvidence.requiredBy}</p>
         </div>
-        <StatusPill status={activeEvidence.status} />
+        <StatusPill status={activeEvidence.status} overridden={overridden} />
       </div>
 
       <div className="mt-3 space-y-2">
@@ -103,7 +119,7 @@ export default function EvidenceBuilder({ requirement, evidence, onSourceAction,
               </div>
               <button
                 type="button"
-                onClick={() => onSourceAction(isRequest ? 'Request data' : 'Opening source data...')}
+                onClick={() => handleSourceAction(source)}
                 className={`flex shrink-0 items-center gap-2 rounded-lg px-4 py-2 text-sm font-bold transition ${
                   isRequest ? 'border border-orange-200 bg-orange-50 text-orange-600 hover:bg-orange-100' : 'text-[#155EE8] hover:bg-blue-50'
                 }`}
@@ -124,9 +140,10 @@ export default function EvidenceBuilder({ requirement, evidence, onSourceAction,
         <button
           type="button"
           onClick={onOverride}
-          className="flex items-center gap-2 rounded-lg border border-[#CBD7EA] bg-white/80 px-5 py-2 text-sm font-bold text-[#26304D] shadow-sm hover:bg-blue-50"
+          disabled={overridden}
+          className="flex items-center gap-2 rounded-lg border border-[#CBD7EA] bg-white/80 px-5 py-2 text-sm font-bold text-[#26304D] shadow-sm hover:bg-blue-50 disabled:opacity-50"
         >
-          Mark as ready (override)
+          {overridden ? 'Marked ready (override)' : 'Mark as ready (override)'}
           <AlertTriangle className="h-4 w-4 text-[#53617F]" />
         </button>
       </div>

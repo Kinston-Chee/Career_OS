@@ -5,7 +5,15 @@ import KpiRow from '../../components/university/collaboration/KpiRow'
 import PartnershipPortfolio from '../../components/university/collaboration/PartnershipPortfolio'
 import RecommendedPartners from '../../components/university/collaboration/RecommendedPartners'
 import ActiveEvents from '../../components/university/collaboration/ActiveEvents'
-import { summaryBanner } from '../../data/collaborationData'
+import OutreachEmailModal from '../../components/university/collaboration/OutreachEmailModal'
+import PartnerDetailModal from '../../components/university/collaboration/PartnerDetailModal'
+import CreateCollaborationModal from '../../components/university/collaboration/CreateCollaborationModal'
+import EventDetailModal from '../../components/university/collaboration/EventDetailModal'
+import { events as initialEvents, summaryBanner } from '../../data/collaborationData'
+import { useUniversityWorkspaceStore } from '../../store/useUniversityWorkspaceStore'
+
+const TYPE_ICON = { Challenge: 'trophy', Workshop: 'cloud', Talk: 'mic' }
+const TYPE_TONE = { Challenge: 'orange', Workshop: 'teal', Talk: 'purple' }
 
 function PageHeader() {
   return (
@@ -39,8 +47,16 @@ function DemoToast({ message }) {
 export default function CollaborationMarketplace() {
   const [outreachStatus, setOutreachStatus] = useState({})
   const [eventTab, setEventTab] = useState('All')
+  const [eventsList, setEventsList] = useState(initialEvents)
   const [toast, setToast] = useState('')
   const toastRef = useRef(null)
+
+  const [outreachPartner, setOutreachPartner] = useState(null)
+  const [detailPartner, setDetailPartner] = useState(null)
+  const [detailEvent, setDetailEvent] = useState(null)
+  const [showCreateModal, setShowCreateModal] = useState(false)
+
+  const incrementPartnerships = useUniversityWorkspaceStore((s) => s.incrementPartnerships)
 
   const showToast = (message) => {
     window.clearTimeout(toastRef.current)
@@ -48,19 +64,47 @@ export default function CollaborationMarketplace() {
     toastRef.current = window.setTimeout(() => setToast(''), 2400)
   }
 
-  const handleViewPartnership = (partner) => showToast(`Opening ${partner.name} partnership details…`)
+  const handleViewPartnership = (partner) => setDetailPartner(partner)
   const handleViewAll = () => showToast('Opening all 12 partnerships…')
 
   const handleStartOutreach = (partner) => {
     if (outreachStatus[partner.id]) return
     setOutreachStatus((prev) => ({ ...prev, [partner.id]: 'loading' }))
     window.setTimeout(() => {
-      setOutreachStatus((prev) => ({ ...prev, [partner.id]: 'sent' }))
-      showToast(`Outreach email drafted and sent to ${partner.name}`)
-    }, 600)
+      setOutreachPartner(partner)
+    }, 800)
   }
 
-  const handleCreate = () => showToast('Create New Collaboration form would open here')
+  const handleSendOutreach = () => {
+    const partner = outreachPartner
+    setOutreachPartner(null)
+    setOutreachStatus((prev) => ({ ...prev, [partner.id]: 'sent' }))
+    showToast(`Outreach email sent to ${partner.name} contact`)
+  }
+
+  const handleCreate = () => setShowCreateModal(true)
+
+  const handleSaveCollaboration = (form) => {
+    const newEvent = {
+      id: `draft-${Date.now()}`,
+      icon: TYPE_ICON[form.type] || 'trophy',
+      iconTone: TYPE_TONE[form.type] || 'orange',
+      title: form.eventName,
+      with: form.partner,
+      badge: form.type,
+      badgeTone: TYPE_TONE[form.type] || 'orange',
+      stat: form.targetSkills ? `Target skills: ${form.targetSkills}` : 'Details pending',
+      statusDot: 'gray',
+      statusText: 'Draft',
+      filterGroup: 'Draft',
+      detail: { participants: 'Not yet scheduled', partnerFeedback: 'Awaiting partner confirmation', skillUplift: 'Not yet measurable' },
+    }
+    setEventsList((prev) => [newEvent, ...prev])
+    setShowCreateModal(false)
+    setEventTab('Draft')
+    incrementPartnerships()
+    showToast(`${form.eventName} added as a new draft collaboration`)
+  }
 
   return (
     <div className="university-workspace-page flex h-screen w-screen flex-col overflow-hidden">
@@ -76,10 +120,28 @@ export default function CollaborationMarketplace() {
             <RecommendedPartners outreachStatus={outreachStatus} onStartOutreach={handleStartOutreach} />
           </div>
 
-          <ActiveEvents activeTab={eventTab} onTabChange={setEventTab} onCreate={handleCreate} />
+          <ActiveEvents
+            activeTab={eventTab}
+            onTabChange={setEventTab}
+            onCreate={handleCreate}
+            onSelectEvent={setDetailEvent}
+            events={eventsList}
+          />
         </div>
       </main>
       <DemoToast message={toast} />
+
+      {outreachPartner ? (
+        <OutreachEmailModal partner={outreachPartner} onClose={() => setOutreachPartner(null)} onSend={handleSendOutreach} />
+      ) : null}
+
+      {detailPartner ? <PartnerDetailModal partner={detailPartner} onClose={() => setDetailPartner(null)} /> : null}
+
+      {showCreateModal ? (
+        <CreateCollaborationModal onClose={() => setShowCreateModal(false)} onSave={handleSaveCollaboration} />
+      ) : null}
+
+      {detailEvent ? <EventDetailModal event={detailEvent} onClose={() => setDetailEvent(null)} /> : null}
     </div>
   )
 }

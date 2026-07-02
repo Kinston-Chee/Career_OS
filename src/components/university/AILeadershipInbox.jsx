@@ -46,6 +46,7 @@ export default function AILeadershipInbox({ onItemClick }) {
               <div className="min-w-0 flex-1">
                 <p className="text-sm leading-5 text-gray-800">{item.text}</p>
                 <span className="mt-1 inline-block text-xs font-semibold text-[#185FA5] hover:underline">{item.link} →</span>
+                {item.source ? <p className="mt-0.5 text-[11px] italic text-gray-400">{item.source}</p> : null}
               </div>
               <span className={`shrink-0 rounded-full px-2.5 py-0.5 text-[11px] font-medium ${PILL_TONES[item.pillTone]}`}>{item.pill}</span>
               <ChevronRight className="mt-1 h-4 w-4 shrink-0 text-gray-300" />

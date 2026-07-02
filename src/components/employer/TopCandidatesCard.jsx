@@ -1,4 +1,5 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 import { ArrowRight, MoreHorizontal, User } from 'lucide-react'
 import { topCandidates } from '../../data/employerMockData'
 
@@ -16,9 +17,12 @@ function CandidateAvatar({ name }) {
   )
 }
 
-function CandidateRow({ candidate }) {
+function CandidateRow({ candidate, onSelect }) {
   return (
-    <div className="rounded-xl border border-transparent px-2 py-3.5 transition hover:border-blue-100/80 hover:bg-white/50">
+    <div
+      onClick={() => onSelect(candidate)}
+      className="cursor-pointer rounded-xl border border-transparent px-2 py-3.5 transition hover:border-blue-100/80 hover:bg-white/50"
+    >
       <div className="flex items-start gap-3">
         <CandidateAvatar name={candidate.name} />
         <div className="min-w-0 flex-1">
@@ -58,6 +62,9 @@ function CandidateRow({ candidate }) {
 }
 
 export default function TopCandidatesCard() {
+  const navigate = useNavigate()
+  const openCandidate = (candidate) => navigate(`/employer/candidates?candidateId=${candidate.id}&from=${encodeURIComponent('Home')}`)
+
   return (
     <section className="employer-glass-card p-5">
       <div className="flex items-center justify-between gap-2">
@@ -66,20 +73,28 @@ export default function TopCandidatesCard() {
             <User className="h-4 w-4 text-[#185FA5]" />
             <h2 className="text-sm font-semibold text-slate-950">Top Candidates</h2>
           </div>
-          <p className="mt-0.5 text-xs text-slate-500">Evidence-based matches for your open roles</p>
+          <p className="mt-0.5 text-xs text-slate-500">Evidence-based matches for your open roles — click to view</p>
         </div>
-        <button type="button" className="shrink-0 whitespace-nowrap text-xs font-semibold text-[#185FA5] hover:text-[#134c87]">
+        <button
+          type="button"
+          onClick={() => navigate('/employer/candidates')}
+          className="shrink-0 whitespace-nowrap text-xs font-semibold text-[#185FA5] hover:text-[#134c87]"
+        >
           View all candidates →
         </button>
       </div>
 
       <div className="mt-2">
         {topCandidates.map((candidate) => (
-          <CandidateRow key={candidate.id} candidate={candidate} />
+          <CandidateRow key={candidate.id} candidate={candidate} onSelect={openCandidate} />
         ))}
       </div>
 
-      <button type="button" className="mt-3 flex items-center gap-1 text-xs font-semibold text-[#185FA5] hover:text-[#134c87]">
+      <button
+        type="button"
+        onClick={() => navigate('/employer/candidates')}
+        className="mt-3 flex items-center gap-1 text-xs font-semibold text-[#185FA5] hover:text-[#134c87]"
+      >
         View all top candidates
         <ArrowRight className="h-3 w-3" />
       </button>

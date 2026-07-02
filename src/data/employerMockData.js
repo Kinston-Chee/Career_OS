@@ -18,6 +18,8 @@ export const briefingBoxes = [
     value: '2',
     detail: 'Software Engineering Intern, Data Analyst Intern',
     footer: 'At risk due to pipeline drop-off',
+    why: 'Both roles have seen applicant volume drop 30%+ week-over-week and no shortlisted candidate has responded to outreach in 5+ days — CareerOS flags this as a stalling pipeline before the deadline passes.',
+    to: '/employer/talent-discovery',
   },
   {
     id: 'candidates-needing-action',
@@ -27,6 +29,8 @@ export const briefingBoxes = [
     value: '5',
     detail: 'Highly-fit candidates are waiting for your next step',
     link: 'Review candidates',
+    why: '5 candidates are scoring 85%+ match with verified evidence but have been sitting in "New" or "Reviewed" status for 3+ days — the longer they wait, the more likely they accept a competing offer.',
+    to: '/employer/candidates?stage=Engaged',
   },
   {
     id: 'event-performance',
@@ -37,6 +41,8 @@ export const briefingBoxes = [
     detail: 'Events completed this month',
     footer: '▲ 18% vs last month',
     footerTone: 'green',
+    why: 'Based on registrant-to-qualified conversion across your last 4 engagements, compared against the same window last month.',
+    to: '/employer/posting',
   },
   {
     id: 'bottlenecks',
@@ -46,6 +52,8 @@ export const briefingBoxes = [
     value: '2',
     detail: 'Feedback pending, interviews awaiting scheduling',
     link: 'View bottlenecks',
+    why: '2 candidates completed technical screening 4+ days ago with no hiring-manager feedback logged, and 1 interview request has not been scheduled — both slow down time-to-hire.',
+    to: '/employer/candidates?stage=In%20Process',
   },
 ]
 
@@ -62,11 +70,55 @@ export const leadershipSnapshot = {
 }
 
 export const metricsPills = [
-  { id: 'time-to-fill', icon: 'clock', label: 'Time to fill (avg)', value: '28 days', delta: '▼ 12% vs last 30 days', deltaTone: 'red' },
-  { id: 'quality-of-hire', icon: 'star', label: 'Quality of hire (pred.)', value: '87%', delta: '▲ 5% vs last 30 days', deltaTone: 'green', info: true },
-  { id: 'offer-acceptance', icon: 'check', label: 'Offer acceptance', value: '92%', delta: '▲ 6% vs last 30 days', deltaTone: 'green', info: true },
-  { id: 'shortlisted', icon: 'people', label: 'Shortlisted this week', value: '34', delta: '▲ 21% vs last week', deltaTone: 'green', info: true },
-  { id: 'event-roi', icon: 'chart', label: 'Event ROI (this month)', value: '4.6x', delta: '▲ 0.9x vs last month', deltaTone: 'green', info: true },
+  {
+    id: 'time-to-fill',
+    icon: 'clock',
+    label: 'Time to fill (avg)',
+    value: '28 days',
+    delta: '▼ 12% vs last 30 days',
+    deltaTone: 'red',
+    calc: 'Average calendar days from job posting live to offer accepted, across all roles closed in the last 30 days.',
+  },
+  {
+    id: 'quality-of-hire',
+    icon: 'star',
+    label: 'Quality of hire (pred.)',
+    value: '87%',
+    delta: '▲ 5% vs last 30 days',
+    deltaTone: 'green',
+    info: true,
+    calc: 'Predicted from evidence strength at hire time (verified skills, career memory signal, self-discovery completion) — validated against 90-day manager satisfaction ratings from prior hires.',
+  },
+  {
+    id: 'offer-acceptance',
+    icon: 'check',
+    label: 'Offer acceptance',
+    value: '92%',
+    delta: '▲ 6% vs last 30 days',
+    deltaTone: 'green',
+    info: true,
+    calc: 'Offers accepted ÷ offers extended, trailing 30 days.',
+  },
+  {
+    id: 'shortlisted',
+    icon: 'people',
+    label: 'Shortlisted this week',
+    value: '34',
+    delta: '▲ 21% vs last week',
+    deltaTone: 'green',
+    info: true,
+    calc: 'Candidates moved to "Shortlisted" status across all open postings, Mon–Sun this week.',
+  },
+  {
+    id: 'event-roi',
+    icon: 'chart',
+    label: 'Event ROI (this month)',
+    value: '4.6x',
+    delta: '▲ 0.9x vs last month',
+    deltaTone: 'green',
+    info: true,
+    calc: 'Estimated hire value generated ÷ cost per engagement (venue, staff time, incentives), based on 90-day retention of engagement-sourced hires vs standard job-posting hires.',
+  },
 ]
 
 export const topCandidates = [
@@ -145,6 +197,8 @@ export const actionQueue = [
     text: '3 shortlisted interns likely to accept if contacted today',
     pill: 'High impact',
     pillTone: 'green',
+    why: 'These 3 candidates were shortlisted 2+ days ago, have no competing offers on record, and respond to messages within a day on average — acting today maximizes accept probability.',
+    to: '/employer/candidates?stage=Shortlisted',
   },
   {
     id: 'action-2',
@@ -153,6 +207,8 @@ export const actionQueue = [
     text: '2 high-fit candidates with expiring availability windows',
     pill: 'Time sensitive',
     pillTone: 'orange',
+    why: 'These candidates listed availability start dates that expire within 2 weeks — after that, their profile availability window closes for this intake.',
+    to: '/employer/talent-discovery',
   },
   {
     id: 'action-3',
@@ -161,6 +217,8 @@ export const actionQueue = [
     text: '1 requisition at risk because feedback is late',
     pill: 'At risk',
     pillTone: 'red',
+    why: 'A candidate completed a technical screen 4 days ago with no hiring-manager feedback logged — SLA for feedback is 3 days.',
+    to: '/employer/candidates?stage=In%20Process',
   },
   {
     id: 'action-4',
@@ -169,6 +227,8 @@ export const actionQueue = [
     text: 'Challenge sign-ups high but qualified conversion low',
     pill: 'Needs attention',
     pillTone: 'blue',
+    why: 'AI & Data Challenge 2025 has 214 registrants but only 23 qualified (11%) — well below your 20% benchmark from past challenges, suggesting the brief may be filtering out otherwise-strong candidates.',
+    to: '/employer/posting',
   },
   {
     id: 'action-5',
@@ -177,6 +237,8 @@ export const actionQueue = [
     text: '12 strong candidates rediscovered from previous events',
     pill: 'Easy win',
     pillTone: 'green',
+    why: 'These candidates attended past workshops or challenges, scored well, but were never followed up with — they already know your brand, making re-engagement cheaper than new sourcing.',
+    to: '/employer/campus-pipeline',
   },
 ]
 

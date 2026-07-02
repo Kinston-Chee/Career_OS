@@ -1,5 +1,7 @@
 import React from 'react'
+import { Star } from 'lucide-react'
 import CandidateQuickPreview from './CandidateQuickPreview'
+import { useEmployerWorkspaceStore } from '../../../store/useEmployerWorkspaceStore'
 
 const TONE = {
   slate: {
@@ -34,14 +36,20 @@ const TONE = {
 
 function MiniCandidateCard({ candidate, tone, isOpen, onToggle }) {
   const initials = candidate.name.split(' ').map((p) => p[0]).join('')
+  const shortlisted = useEmployerWorkspaceStore((s) => s.shortlistedIds.has(candidate.id))
   return (
     <button
       type="button"
       onClick={() => onToggle(candidate.id)}
       className={`flex w-full items-center gap-2.5 rounded-xl bg-white/70 p-2.5 text-left ring-1 ring-blue-100/50 transition hover:bg-white ${isOpen ? 'ring-2 ring-blue-200' : ''}`}
     >
-      <span className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-xs font-semibold text-white ${tone.avatar}`}>
+      <span className={`relative flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-xs font-semibold text-white ${tone.avatar}`}>
         {initials}
+        {shortlisted ? (
+          <span className="absolute -right-1 -top-1 flex h-3.5 w-3.5 items-center justify-center rounded-full bg-green-600 ring-2 ring-white">
+            <Star className="h-2 w-2 fill-white text-white" />
+          </span>
+        ) : null}
       </span>
       <div className="min-w-0 flex-1">
         <p className="truncate text-sm font-semibold text-gray-900">{candidate.name}</p>

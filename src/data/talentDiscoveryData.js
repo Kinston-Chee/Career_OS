@@ -109,6 +109,12 @@ export const candidates = [
     appliedDate: 'Applied May 12',
     status: 'Shortlisted',
     postingId: 'swe-intern',
+    matchEvidence: [
+      { label: 'Skill evidence', detail: 'Shipped a full-stack project (React + Node.js) verified by CareerOS Career Memory — matches your React/Node.js requirement directly.' },
+      { label: 'Behavioral evidence', detail: '4 separate Career Memory entries show initiative and leadership in team settings, including a hackathon top-3 finish.' },
+      { label: 'Engagement evidence', detail: 'Attended your AI Workshop in April 2025 — already familiar with your team and brand.' },
+      { label: 'Availability evidence', detail: 'Profile lists availability starting June 2025, matching this internship’s start window.' },
+    ],
   },
   {
     id: 'nur-alya',
@@ -126,6 +132,11 @@ export const candidates = [
     appliedDate: 'Applied May 10',
     status: 'Shortlisted',
     postingId: 'swe-intern',
+    matchEvidence: [
+      { label: 'Skill evidence', detail: 'SQL and Python verified through a data storytelling project and a class dashboard build — both scored highly for clarity.' },
+      { label: 'Behavioral evidence', detail: 'Finalist in a competitive analytics challenge — shows she can perform under external evaluation, not just coursework.' },
+      { label: 'Risk signal', detail: 'CareerOS detects activity on multiple other job applications in the same window — lower exclusivity signal than other candidates.' },
+    ],
   },
   {
     id: 'marcus-tan',
@@ -143,6 +154,11 @@ export const candidates = [
     appliedDate: 'Applied May 8',
     status: 'Reviewed',
     postingId: 'swe-intern',
+    matchEvidence: [
+      { label: 'Skill evidence', detail: '2+ years of consistent open-source contributions and a dedicated API design project — direct evidence of backend systems thinking.' },
+      { label: 'Behavioral evidence', detail: 'Comfortable owning a module independently based on solo hackathon entry — may need more structured onboarding than team-heavy candidates.' },
+      { label: 'Risk signal', detail: 'Career Memory shows applications graded toward larger, brand-name companies — retention risk if offer isn’t competitive.' },
+    ],
   },
   {
     id: 'aisha-rahman',

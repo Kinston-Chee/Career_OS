@@ -1,4 +1,6 @@
 import React from 'react'
+import { Star } from 'lucide-react'
+import { useEmployerWorkspaceStore } from '../../../store/useEmployerWorkspaceStore'
 
 const MATCH_TONE = (score) => (score >= 90 ? 'text-green-600' : score >= 75 ? 'text-[#185FA5]' : 'text-gray-500')
 const STAGE_TONE = {
@@ -10,6 +12,8 @@ const STAGE_TONE = {
 }
 
 export default function CandidateGridCard({ candidate, onSelect }) {
+  const shortlisted = useEmployerWorkspaceStore((s) => s.shortlistedIds.has(candidate.id))
+
   return (
     <button
       type="button"
@@ -18,8 +22,13 @@ export default function CandidateGridCard({ candidate, onSelect }) {
     >
       <div className="flex items-start justify-between gap-2">
         <div className="flex items-center gap-2.5">
-          <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-blue-50 text-sm font-bold text-[#185FA5]">
+          <span className="relative flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-blue-50 text-sm font-bold text-[#185FA5]">
             {candidate.initials}
+            {shortlisted ? (
+              <span className="absolute -right-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-green-600 ring-2 ring-white">
+                <Star className="h-2.5 w-2.5 fill-white text-white" />
+              </span>
+            ) : null}
           </span>
           <div className="min-w-0">
             <p className="truncate text-sm font-bold text-gray-900">{candidate.name}</p>

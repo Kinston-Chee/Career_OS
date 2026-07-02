@@ -26,6 +26,7 @@ const toneStyles = {
 }
 
 export default function SubmissionTimeline({ submissions, onAction }) {
+  // onAction receives the submission id so the page can route QS/MQA/AACSB differently.
   return (
     <section className="rounded-2xl border border-white/75 bg-white/80 p-5 shadow-[0_18px_55px_rgba(24,95,165,0.09)] backdrop-blur-xl">
       <h2 className="text-lg font-bold text-[#111B3F]">Submission Timeline</h2>
@@ -51,7 +52,7 @@ export default function SubmissionTimeline({ submissions, onAction }) {
                     <p className="text-xs font-medium text-[#667394]">{submission.ready}</p>
                     <button
                       type="button"
-                      onClick={onAction}
+                      onClick={() => onAction(submission.id)}
                       className={`flex min-w-[154px] items-center justify-center gap-2 rounded-lg px-5 py-2.5 text-sm font-bold shadow-sm transition ${tone.button}`}
                     >
                       {submission.action}

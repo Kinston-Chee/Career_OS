@@ -1,6 +1,6 @@
 import React from 'react'
 import { Clock, DollarSign, Star, Users } from 'lucide-react'
-import { kpis } from '../../../data/alumniSignalsData'
+import { kpis as defaultKpis } from '../../../data/alumniSignalsData'
 
 const ICONS = { dollar: DollarSign, clock: Clock, star: Star, people: Users }
 
@@ -12,7 +12,7 @@ const ICON_TONES = {
 
 const NOTE_TONES = { green: 'text-green-600', muted: 'text-gray-400' }
 
-export default function KpiRow() {
+export default function KpiRow({ kpis = defaultKpis }) {
   return (
     <section className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
       {kpis.map((kpi) => {
