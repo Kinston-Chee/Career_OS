@@ -554,9 +554,28 @@ function ProgramDetailsStep({ form, setForm, onApplyAISuggestions }) {
     <StepShell title="Program Details" subtitle="Tell students what they will build, learn, and prove.">
       <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_280px]">
         <div className="space-y-5">
-          <FieldDisplay label="Engagement Title" value={form.title} required count={`${form.title.length}/100`} />
-          <FieldDisplay label="Goal / Objective" value={form.goal} required count={`${form.goal.length}/100`} />
-          <FieldDisplay label="Description" value={form.description} required multiline count={`${form.description.length}/700`} />
+          <FieldDisplay
+            label="Engagement Title"
+            value={form.title}
+            required
+            count={`${(form.title || '').length}/100`}
+            onChange={(val) => setForm((prev) => ({ ...prev, title: val }))}
+          />
+          <FieldDisplay
+            label="Goal / Objective"
+            value={form.goal}
+            required
+            count={`${(form.goal || '').length}/100`}
+            onChange={(val) => setForm((prev) => ({ ...prev, goal: val }))}
+          />
+          <FieldDisplay
+            label="Description"
+            value={form.description}
+            required
+            multiline
+            count={`${(form.description || '').length}/700`}
+            onChange={(val) => setForm((prev) => ({ ...prev, description: val }))}
+          />
           <ChipGroup
             label="Student Outcomes (What students will gain)"
             items={form.outcomes}
@@ -888,6 +907,8 @@ function ReviewLaunchStep({ form, selectedType, onEdit }) {
           <SummaryRow icon="doc" label="Type" value={selectedType} />
           <SummaryRow icon="lock" label="Title" value={form.title} />
           <SummaryRow icon="trend" label="Goal" value={form.goal} />
+          <SummaryRow icon="doc" label="Description" value={form.description} />
+          <SummaryRow icon="check" label="Outcomes" value={form.outcomes} />
           <SummaryRow icon="calendar" label="Duration" value={`${form.startDate} - 29 Jun 2025 (${form.duration})`} />
           <SummaryRow icon="board" label="Mode" value={form.mode} />
           <SummaryRow icon="users" label="Capacity" value={form.capacity} />
