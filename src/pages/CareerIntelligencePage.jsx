@@ -148,7 +148,10 @@ export default function CareerIntelligencePage() {
               onSelectPath={handleRoleSelect}
             />
 
-            <DynamicModulePlaceholder activeModule={activeModule} />
+            <DynamicModulePlaceholder 
+              activeModule={activeModule} 
+              selectedRoleId={selectedPathId}
+            />
           </div>
         </div>
       </div>
