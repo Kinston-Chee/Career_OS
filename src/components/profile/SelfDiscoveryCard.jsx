@@ -1,13 +1,14 @@
-import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { useNavigate, useLocation } from 'react-router-dom'
 import {
   ArrowLeft,
   ArrowRight,
   BarChart3,
   Bot,
   Building2,
+  Check,
   ClipboardList,
-  Compass,
+  ChevronRight,
   DollarSign,
   Headphones,
   Heart,
@@ -23,226 +24,174 @@ import {
   Zap,
 } from 'lucide-react'
 import robotImage from '../../assets/career-os-robot.png'
-import { getRandomMountainBg } from './mountainBackgrounds'
+import mountainBg from '../../assets/Paper mountain 1.png'
+import { ANIMAL_CATEGORIES, ASSESSMENT_QUESTIONS } from '../../data/selfDiscoveryEngine'
+import { useSelfDiscoveryStore } from '../../store/useSelfDiscoveryStore'
 
-const ICONS = { Zap, Compass, Target }
-
-const DISC_OPTIONS = [
-  [
-    { icon: Zap, title: 'Take charge', text: "I'd step in and make the call to keep things moving.", tone: 'blue' },
-    { icon: Users, title: 'Find consensus', text: "I'd facilitate until everyone feels heard.", tone: 'blue' },
-    { icon: BarChart3, title: 'Gather data', text: "I'd research before making any decision.", tone: 'blue' },
-    { icon: Lightbulb, title: 'Propose a creative alternative', text: "I'd reframe the problem entirely.", tone: 'violet' },
-  ],
-  [
-    { icon: Target, title: 'Define the goal', text: 'I need to know what success looks like before I start.', tone: 'blue' },
-    { icon: MessageCircle, title: 'Talk to people', text: "I'd gather input from everyone involved.", tone: 'blue' },
-    { icon: ClipboardList, title: 'Make a plan', text: "I'd map out every step before touching anything.", tone: 'blue' },
-    { icon: Rocket, title: 'Just start', text: 'I learn best by doing, not planning.', tone: 'violet' },
-  ],
-  [
-    { icon: Trophy, title: 'Results-based', text: 'Tell me the impact my work had.', tone: 'blue' },
-    { icon: Users, title: 'Relationship-based', text: 'Tell me how I helped the team.', tone: 'blue' },
-    { icon: BarChart3, title: 'Progress-based', text: "Show me how I've improved.", tone: 'blue' },
-    { icon: Lightbulb, title: 'Creative-based', text: 'Tell me what was original about my approach.', tone: 'violet' },
-  ],
-]
-
-const QUESTIONS = [
-  {
-    round: 1,
-    label: 'Work Style',
-    kind: 'choice',
-    question: "When your team disagrees on the direction of a project, what's your instinct?",
-    options: DISC_OPTIONS[0],
-  },
-  {
-    round: 1,
-    label: 'Work Style',
-    kind: 'choice',
-    question: "You're given a new project with no instructions. What do you do first?",
-    options: DISC_OPTIONS[1],
-  },
-  {
-    round: 1,
-    label: 'Work Style',
-    kind: 'choice',
-    question: 'What kind of feedback energises you most?',
-    options: DISC_OPTIONS[2],
-  },
-  {
-    round: 2,
-    label: 'Your Strengths',
-    kind: 'text',
-    question: 'When does time pass the fastest for you - what were you doing?',
-    placeholder: "e.g. When I'm debugging a tricky problem and suddenly everything clicks...",
-  },
-  {
-    round: 2,
-    label: 'Your Strengths',
-    kind: 'text',
-    question: 'What do you find yourself doing without anyone asking you to?',
-    placeholder: "e.g. I always end up being the one who organises the group, even when it's not my job...",
-  },
-  {
-    round: 2,
-    label: 'Your Strengths',
-    kind: 'text',
-    question: 'What achievement are you most proud of, and what made it meaningful?',
-    placeholder: 'e.g. Leading my team to win the hackathon because I believed in the idea when nobody else did...',
-  },
-  {
-    round: 3,
-    label: 'What Matters to You',
-    kind: 'tradeoff',
-    question: 'If you had to choose one:',
-    options: [
-      { icon: DollarSign, title: 'High salary, repetitive work', text: 'Financial security, predictable days' },
-      { icon: Lightbulb, title: 'Lower salary, creative freedom', text: 'Do what excites you, every day different' },
-    ],
-  },
-  {
-    round: 3,
-    label: 'What Matters to You',
-    kind: 'tradeoff',
-    question: 'Which work environment fits you?',
-    options: [
-      { icon: Headphones, title: 'Work alone, deep focus', text: 'Quiet, independent, go deep on problems' },
-      { icon: Zap, title: 'Work with a team, high energy', text: 'Collaborative, fast-moving, always something happening' },
-    ],
-  },
-  {
-    round: 3,
-    label: 'What Matters to You',
-    kind: 'tradeoff',
-    question: 'Which opportunity would you take?',
-    options: [
-      { icon: Building2, title: 'Stable large company', text: 'Structure, prestige, clear career ladder' },
-      { icon: Rocket, title: 'Fast-moving startup', text: 'Ambiguity, ownership, build from scratch' },
-    ],
-  },
-  {
-    round: 3,
-    label: 'What Matters to You',
-    kind: 'tradeoff',
-    question: 'At the end of the day, what matters?',
-    options: [
-      { icon: Star, title: "Work you're great at", text: 'Master your craft, be the best' },
-      { icon: Heart, title: "Work you're passionate about", text: 'Love what you do, even on hard days' },
-    ],
-  },
-]
-
-const TRAIT_STYLES = {
-  blue: {
-    cardStyle: {
-      background: 'linear-gradient(135deg, rgba(255,255,255,0.74), rgba(219,234,254,0.36))',
-      backdropFilter: 'blur(18px)',
-      WebkitBackdropFilter: 'blur(18px)',
-      border: '1px solid rgba(147, 197, 253, 0.58)',
-      borderRadius: '14px',
-      padding: '14px 16px',
-      boxShadow: '0 18px 42px rgba(37, 99, 235, 0.08), inset 0 1px 0 rgba(255,255,255,0.82), inset 0 -18px 34px rgba(255,255,255,0.22)',
-    },
-    iconBg: 'border border-white/70 bg-blue-100/45 text-blue-700 shadow-[0_10px_22px_rgba(37,99,235,0.12),inset_0_1px_0_rgba(255,255,255,0.85)] backdrop-blur-md',
-    textColor: 'text-blue-700',
-  },
-  violet: {
-    cardStyle: {
-      background: 'linear-gradient(135deg, rgba(255,255,255,0.74), rgba(237,233,254,0.42))',
-      backdropFilter: 'blur(18px)',
-      WebkitBackdropFilter: 'blur(18px)',
-      border: '1px solid rgba(196, 181, 253, 0.6)',
-      borderRadius: '14px',
-      padding: '14px 16px',
-      boxShadow: '0 18px 42px rgba(124, 58, 237, 0.08), inset 0 1px 0 rgba(255,255,255,0.82), inset 0 -18px 34px rgba(255,255,255,0.22)',
-    },
-    iconBg: 'border border-white/70 bg-violet-100/45 text-violet-700 shadow-[0_10px_22px_rgba(124,58,237,0.12),inset_0_1px_0_rgba(255,255,255,0.85)] backdrop-blur-md',
-    textColor: 'text-violet-700',
-  },
-  emerald: {
-    cardStyle: {
-      background: 'linear-gradient(135deg, rgba(255,255,255,0.74), rgba(209,250,229,0.4))',
-      backdropFilter: 'blur(18px)',
-      WebkitBackdropFilter: 'blur(18px)',
-      border: '1px solid rgba(110, 231, 183, 0.58)',
-      borderRadius: '14px',
-      padding: '14px 16px',
-      boxShadow: '0 18px 42px rgba(16, 185, 129, 0.08), inset 0 1px 0 rgba(255,255,255,0.82), inset 0 -18px 34px rgba(255,255,255,0.22)',
-    },
-    iconBg: 'border border-white/70 bg-emerald-100/45 text-emerald-700 shadow-[0_10px_22px_rgba(16,185,129,0.12),inset_0_1px_0_rgba(255,255,255,0.85)] backdrop-blur-md',
-    textColor: 'text-emerald-700',
-  },
+const ICONS = {
+  Zap,
+  Users,
+  BarChart3,
+  Lightbulb,
+  Target,
+  MessageCircle,
+  ClipboardList,
+  Rocket,
+  Trophy,
+  DollarSign,
+  Headphones,
+  Building2,
+  Check,
+  Star,
+  Heart,
+  ShieldCheck,
 }
 
-export default function SelfDiscoveryCard({ selfDiscovery }) {
-  const [bg] = useState(getRandomMountainBg)
+export default function SelfDiscoveryCard({ selfDiscovery: propSelfDiscovery }) {
+  const navigate = useNavigate()
+  const location = useLocation()
+  const store = useSelfDiscoveryStore()
   const [showFlow, setShowFlow] = useState(false)
+
+  useEffect(() => {
+    if (location.state?.openAssessment) {
+      setShowFlow(true)
+      // Clear location state so it doesn't open on reload
+      window.history.replaceState({}, document.title)
+    }
+  }, [location.state])
+
+  // Use store data if completed, otherwise fallback to prop (for backwards compat) or empty state
+  const isCompleted = store.hasCompleted()
+  const activeData = isCompleted ? store : propSelfDiscovery
+
+  if (!activeData || (!isCompleted && !propSelfDiscovery?.traits)) {
+    // Uncompleted Empty State
+    return (
+      <section className="relative overflow-hidden rounded-xl bg-[#faf8ff] p-6 shadow-[0_8px_22px_rgba(44,76,142,0.07)] border border-blue-100/50">
+        <img src={mountainBg} alt="" aria-hidden="true" className="absolute inset-0 h-full w-full object-cover opacity-15" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#faf8ff]/95 via-[#faf8ff]/90 to-[#faf8ff]/80" />
+        
+        <div className="relative flex flex-col items-center text-center py-6">
+          <div className="flex h-14 w-14 items-center justify-center rounded-full bg-violet-100 text-violet-600 mb-4 shadow-[0_8px_20px_rgba(124,58,237,0.15)]">
+            <Bot size={28} strokeWidth={2} />
+          </div>
+          <h2 className="text-xl font-bold text-[#11194a]">Discover Your Career Animal</h2>
+          <p className="mt-2 max-w-md text-sm text-[#4d5c7d] leading-relaxed">
+            Your Career Companion wants to get to know you. Take a brief, 5-minute situational assessment to reveal your work style archetype.
+          </p>
+          <button
+            type="button"
+            onClick={() => setShowFlow(true)}
+            className="mt-5 flex items-center gap-2 rounded-full bg-blue-600 px-6 py-2.5 text-sm font-bold text-white shadow-[0_12px_30px_rgba(37,99,235,0.25)] transition hover:bg-blue-700 hover:scale-[1.02]"
+          >
+            Start Assessment <ArrowRight size={16} />
+          </button>
+        </div>
+        {showFlow && <SelfDiscoveryFlow onClose={() => setShowFlow(false)} />}
+      </section>
+    )
+  }
+
+  // Loaded/Completed state
+  const animalName = activeData.primaryAnimal?.name || 'Lion'
+  const animalEmoji = activeData.primaryAnimal?.emoji || '🦁'
+  const archetype = activeData.primaryAnimal?.archetype || 'The Commander'
+  const categoryId = activeData.primaryAnimal?.category || 'leadership'
+  const categoryInfo = ANIMAL_CATEGORIES[categoryId] || ANIMAL_CATEGORIES.leadership
+  const confidence = activeData.confidence || 30
+  
+  // Format narrative paragraphs (might be a string or array)
+  const paragraphs = Array.isArray(activeData.narrative) 
+    ? activeData.narrative 
+    : [activeData.narrative || '']
+
+  // Category Colors mapping
+  const categoryColors = {
+    leadership: 'bg-amber-50 text-amber-700 border-amber-100',
+    relational: 'bg-blue-50 text-blue-700 border-blue-100',
+    execution: 'bg-emerald-50 text-emerald-700 border-emerald-100',
+  }
 
   return (
     <>
-      <section className="relative overflow-hidden rounded-xl bg-[#faf8ff] p-5 shadow-[0_8px_22px_rgba(44,76,142,0.07)]">
-        <img src={bg} alt="" aria-hidden="true" className="absolute inset-0 h-full w-full object-cover" />
+      <section className="relative overflow-hidden rounded-xl bg-[#faf8ff] p-5 shadow-[0_8px_22px_rgba(44,76,142,0.07)] border border-[#e2eaf8]">
+        <img src={mountainBg} alt="" aria-hidden="true" className="absolute inset-0 h-full w-full object-cover opacity-20" />
         <div className="absolute inset-0 bg-gradient-to-r from-[#faf8ff]/97 via-[#faf8ff]/95 to-[#faf8ff]/90" />
 
-      <div className="relative flex flex-wrap items-center justify-between gap-2">
-        <div className="flex items-center gap-2.5">
-          <span className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-violet-100 text-violet-600">
-            <Bot size={15} strokeWidth={2.2} />
-          </span>
-          <h2 className="text-base font-bold text-[#11194a]">Self-Discovery</h2>
-        </div>
-        <div className="flex items-center gap-3">
-          <span className="text-xs font-medium text-[#9aa6c3]">{selfDiscovery.lastUpdated}</span>
-          <button type="button" onClick={() => setShowFlow(true)} className="flex items-center gap-1 rounded-full border border-[#dfe8f7] bg-white px-3 py-1.5 text-xs font-bold text-[#35507d] transition hover:border-blue-300 hover:bg-blue-50">
-            Retake <ArrowRight size={12} />
-          </button>
-        </div>
-      </div>
-
-      <div className="relative mt-4 grid grid-cols-1 gap-4 lg:grid-cols-[2fr_3fr]">
-        <div>
-          <div className="space-y-2.5">
-            {selfDiscovery.traits.map((trait) => {
-              const Icon = ICONS[trait.icon] ?? Zap
-              const style = TRAIT_STYLES[trait.tone] ?? TRAIT_STYLES.blue
-              return (
-                <div
-                  key={trait.id}
-                  style={style.cardStyle}
-                  className="transition duration-200 hover:brightness-[1.03]"
-                >
-                  <p className={`flex items-center gap-2 text-sm font-bold ${style.textColor}`}>
-                    <span className={`flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full ${style.iconBg}`}>
-                      <Icon size={14} strokeWidth={2.2} />
-                    </span>
-                    {trait.label}
-                  </p>
-                  <p className="mt-1.5 pl-9 text-xs font-medium text-[#4d5c7d]">{trait.sub}</p>
-                </div>
-              )
-            })}
+        <div className="relative flex flex-wrap items-center justify-between gap-2">
+          <div className="flex items-center gap-2.5">
+            <span className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-violet-100 text-violet-600">
+              <Bot size={15} strokeWidth={2.2} />
+            </span>
+            <h2 className="text-base font-bold text-[#11194a]">Career Animal Style</h2>
           </div>
-          <p className="mt-3 text-xs font-medium text-[#9aa6c3]">{selfDiscovery.basis}</p>
+          <div className="flex items-center gap-3">
+            <span className="text-xs font-medium text-[#9aa6c3]">{activeData.lastUpdated || 'Recently updated'}</span>
+            <button
+              type="button"
+              onClick={() => setShowFlow(true)}
+              className="flex items-center gap-1 rounded-full border border-[#dfe8f7] bg-white px-3 py-1.5 text-xs font-bold text-[#35507d] transition hover:border-blue-300 hover:bg-blue-50"
+            >
+              Retake <ArrowRight size={12} />
+            </button>
+          </div>
         </div>
 
-        <div
-          style={{
-            background: 'rgba(255, 255, 255, 0.7)',
-            backdropFilter: 'blur(16px)',
-            WebkitBackdropFilter: 'blur(16px)',
-            border: '1px solid rgba(255, 255, 255, 0.8)',
-            borderRadius: '12px',
-            boxShadow: '0 4px 20px rgba(0, 0, 0, 0.06)',
-            padding: '20px',
-          }}
-        >
-          <p className="text-xs font-bold uppercase tracking-wide text-blue-600">How your Career Companion sees you</p>
-          <p className="mt-2 text-sm leading-relaxed text-[#3a4669]">{selfDiscovery.narrative}</p>
-        </div>
-      </div>
+        <div className="relative mt-4 grid grid-cols-1 gap-5 lg:grid-cols-[1fr_1.8fr]">
+          {/* Animal Card Display */}
+          <div className="flex flex-col items-center justify-center rounded-2xl border border-white/80 bg-white/60 p-5 shadow-[0_8px_24px_rgba(37,99,235,0.04)] backdrop-blur-md text-center">
+            <span className="text-6xl filter drop-shadow-md animate-[bounce_3s_ease-in-out_infinite]">{animalEmoji}</span>
+            <h3 className="mt-3 text-lg font-extrabold text-[#11194a]">{animalName}</h3>
+            <p className="text-xs font-semibold text-slate-500">{archetype}</p>
+            <span className={`mt-2 rounded-full border px-2.5 py-0.5 text-[10px] font-bold tracking-wide uppercase ${categoryColors[categoryId]}`}>
+              {categoryInfo.label}
+            </span>
+            
+            {/* Confidence metric */}
+            <div className="mt-5 w-full">
+              <div className="flex items-center justify-between text-[11px] font-bold text-[#637094]">
+                <span>Profile Confidence</span>
+                <span className="text-blue-600">{confidence}%</span>
+              </div>
+              <div className="mt-1 h-1.5 w-full rounded-full bg-slate-100 overflow-hidden">
+                <div 
+                  className="h-full bg-blue-600 rounded-full transition-all duration-1000 ease-out" 
+                  style={{ width: `${confidence}%` }}
+                />
+              </div>
+            </div>
+          </div>
 
-        <p className="relative mt-4 text-xs font-medium italic text-[#9aa6c3]">{selfDiscovery.footnote}</p>
+          {/* Text Summary Display */}
+          <div className="flex flex-col justify-between rounded-2xl border border-white/60 bg-white/75 p-5 shadow-[0_8px_24px_rgba(37,99,235,0.03)] backdrop-blur-md">
+            <div>
+              <p className="text-xs font-bold uppercase tracking-wider text-blue-600">AI Companion insights</p>
+              <p className="mt-2 text-sm leading-relaxed text-[#3a4669] font-semibold">
+                {paragraphs[0]}
+              </p>
+              {activeData.emergingAnimal && (
+                <p className="mt-3 text-xs font-bold text-[#637094] flex items-center gap-1.5">
+                  <span className="inline-block w-2 h-2 rounded-full bg-indigo-500 animate-pulse"></span>
+                  Recent activity suggests developing <strong className="text-[#11194a]">{activeData.emergingAnimal.emoji} {activeData.emergingAnimal.name}</strong> tendencies.
+                </p>
+              )}
+            </div>
+
+            <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+              <p className="text-[11px] font-semibold text-[#9aa6c3] italic">
+                Evolves naturally with your projects & reflections.
+              </p>
+              <button
+                type="button"
+                onClick={() => navigate('/student/career-animal')}
+                className="flex items-center gap-1 text-xs font-bold text-blue-600 hover:text-blue-700"
+              >
+                View Full Profile <ChevronRight size={14} className="mt-0.5" />
+              </button>
+            </div>
+          </div>
+        </div>
       </section>
 
       {showFlow && <SelfDiscoveryFlow onClose={() => setShowFlow(false)} />}
@@ -250,83 +199,112 @@ export default function SelfDiscoveryCard({ selfDiscovery }) {
   )
 }
 
-function SelfDiscoveryFlow({ onClose }) {
-  const navigate = useNavigate()
+export function SelfDiscoveryFlow({ onClose }) {
   const [step, setStep] = useState(0)
-  const [, setAnswers] = useState([])
+  const [answers, setAnswers] = useState([])
   const [selected, setSelected] = useState(null)
   const [textAnswer, setTextAnswer] = useState('')
-  const [phase, setPhase] = useState('questions')
-  const question = QUESTIONS[step]
-  const progress = phase === 'result' ? 100 : ((step + 1) / QUESTIONS.length) * 100
+  const [phase, setPhase] = useState('intro') // intro | questions | result
 
-  const advance = (answer = 'skipped') => {
-    setAnswers((current) => [...current, { step: step + 1, answer }])
+  const question = ASSESSMENT_QUESTIONS[step]
+  const progress = phase === 'result' ? 100 : ((step + 1) / ASSESSMENT_QUESTIONS.length) * 100
+
+  const handleNext = (answerVal) => {
+    // Save current step answer
+    const newAnswers = [...answers, { questionIndex: step, answer: answerVal }]
+    setAnswers(newAnswers)
+    setSelected(null)
     setTextAnswer('')
-    if (step >= QUESTIONS.length - 1) {
+
+    if (step >= ASSESSMENT_QUESTIONS.length - 1) {
+      // Complete!
+      const store = useSelfDiscoveryStore.getState()
+      store.completeAssessment(newAnswers)
       setPhase('result')
-      return
+    } else {
+      setStep((prev) => prev + 1)
     }
-    setStep((current) => current + 1)
   }
 
   const chooseOption = (option) => {
-    setSelected(option.title)
-    window.setTimeout(() => {
-      setSelected(null)
-      advance(option.title)
-    }, 400)
+    setSelected(option.id)
+    setTimeout(() => {
+      handleNext(option)
+    }, 450)
   }
 
   const goBack = () => {
+    if (phase === 'intro') {
+      onClose()
+      return
+    }
     if (phase === 'result') {
       setPhase('questions')
-      setStep(QUESTIONS.length - 1)
+      setStep(ASSESSMENT_QUESTIONS.length - 1)
       return
     }
     if (step === 0) {
       onClose()
       return
     }
-    setAnswers((current) => current.slice(0, -1))
-    setStep((current) => current - 1)
-  }
-
-  const finish = (path) => {
-    onClose()
-    if (path) navigate(path)
+    // Remove last answer
+    setAnswers((prev) => prev.slice(0, -1))
+    setStep((prev) => prev - 1)
   }
 
   return (
     <div className="fixed inset-0 z-50 overflow-y-auto bg-[#f4f6fb] px-4 py-8 text-[#11194a] sm:px-6">
-      <button type="button" onClick={goBack} className="fixed left-5 top-5 flex h-10 w-10 items-center justify-center rounded-full border border-white/70 bg-white/75 text-[#506181] shadow-[0_12px_30px_rgba(37,99,235,0.10)] backdrop-blur-xl transition hover:text-blue-700">
+      <button 
+        type="button" 
+        onClick={goBack} 
+        className="fixed left-5 top-5 flex h-10 w-10 items-center justify-center rounded-full border border-white/70 bg-white/75 text-[#506181] shadow-[0_12px_30px_rgba(37,99,235,0.10)] backdrop-blur-xl transition hover:text-blue-700"
+      >
         <ArrowLeft size={18} />
       </button>
-      <button type="button" onClick={onClose} className="fixed right-5 top-5 flex h-10 w-10 items-center justify-center rounded-full border border-white/70 bg-white/75 text-[#506181] shadow-[0_12px_30px_rgba(37,99,235,0.10)] backdrop-blur-xl transition hover:text-blue-700">
+      <button 
+        type="button" 
+        onClick={onClose} 
+        className="fixed right-5 top-5 flex h-10 w-10 items-center justify-center rounded-full border border-white/70 bg-white/75 text-[#506181] shadow-[0_12px_30px_rgba(37,99,235,0.10)] backdrop-blur-xl transition hover:text-blue-700"
+      >
         <X size={18} />
       </button>
 
       <div className="mx-auto flex min-h-[calc(100vh-4rem)] w-full max-w-[980px] flex-col justify-center">
-        {phase === 'questions' ? (
+        {phase === 'intro' && (
+          <div className="mx-auto w-full max-w-[760px] rounded-[28px] border border-white/80 bg-[linear-gradient(135deg,rgba(255,255,255,0.92),rgba(239,246,255,0.70))] px-6 py-9 text-center shadow-[0_28px_90px_rgba(37,99,235,0.13),inset_0_1px_0_rgba(255,255,255,0.92)] ring-1 ring-blue-100/50 backdrop-blur-2xl sm:px-12">
+            <img src={robotImage} alt="CareerOS companion" className="mx-auto h-24 w-24 object-contain drop-shadow-[0_14px_25px_rgba(37,99,235,0.18)]" />
+            <p className="mt-5 text-xs font-bold uppercase tracking-[0.18em] text-blue-600">Self discovery</p>
+            <h2 className="mt-2 text-2xl font-black tracking-[-0.01em] text-[#101846]">Before I recommend what fits you, I want to understand how you naturally work.</h2>
+            <p className="mx-auto mt-4 max-w-[560px] text-sm font-semibold leading-7 text-[#4d5c7d]">
+              This takes about 5 minutes. There are no right or wrong answers. I am building a starting point, and I will keep learning as you use CareerOS.
+            </p>
+            <button
+              type="button"
+              onClick={() => setPhase('questions')}
+              className="mt-7 inline-flex items-center gap-2 rounded-full bg-blue-600 px-6 py-3 text-sm font-bold text-white shadow-[0_14px_34px_rgba(37,99,235,0.26)] transition hover:bg-blue-700"
+            >
+              Begin <ArrowRight size={16} />
+            </button>
+          </div>
+        )}
+
+        {phase === 'questions' && (
           <>
-            <div className="mb-7">
+            <div className="mb-7 max-w-[820px] mx-auto w-full">
               <div className="flex items-center justify-between gap-4">
-                <p key={`${question.round}-${question.label}`} className="text-sm font-semibold text-[#52627f]">
-                  Self-Discovery - Round {question.round}: {question.label}
+                <p className="text-xs font-bold text-[#52627f] uppercase tracking-wider">
+                  Companion Assessment · Round {question.round}
                 </p>
-                <p className="text-sm font-bold text-blue-600">{step + 1} / {QUESTIONS.length}</p>
+                <p className="text-sm font-black text-blue-600">{step + 1} / {ASSESSMENT_QUESTIONS.length}</p>
               </div>
-              <div className="mt-4 h-2 overflow-hidden rounded-full bg-white/65 shadow-[inset_0_1px_2px_rgba(15,23,42,0.08)]">
+              <div className="mt-3 h-2 overflow-hidden rounded-full bg-white/65 shadow-[inset_0_1px_2px_rgba(15,23,42,0.08)]">
                 <div className="h-full rounded-full bg-blue-600 transition-all duration-500 ease-out" style={{ width: `${progress}%` }} />
               </div>
             </div>
 
             <div className="mx-auto w-full max-w-[820px] rounded-[28px] border border-white/80 bg-[linear-gradient(135deg,rgba(255,255,255,0.90),rgba(239,246,255,0.68))] px-6 py-9 shadow-[0_28px_90px_rgba(37,99,235,0.13),inset_0_1px_0_rgba(255,255,255,0.92)] ring-1 ring-blue-100/50 backdrop-blur-2xl sm:px-10">
-              <div className="mx-auto flex h-28 w-28 items-center justify-center rounded-full bg-[radial-gradient(circle,rgba(219,234,254,0.85),rgba(255,255,255,0.18)_62%)]">
-                <img src={robotImage} alt="CareerOS companion" className="h-24 w-24 object-contain drop-shadow-[0_14px_25px_rgba(37,99,235,0.18)]" />
-              </div>
-
-              <div className="mx-auto -mt-1 max-w-[520px] rounded-2xl border border-white/80 bg-white/78 px-6 py-4 text-center text-xl font-bold leading-snug text-[#101846] shadow-[0_16px_45px_rgba(37,99,235,0.10),inset_0_1px_0_rgba(255,255,255,0.9)] backdrop-blur-xl">
+              <p className="text-center text-xs font-bold uppercase tracking-[0.18em] text-blue-600">{question.label}</p>
+              <div className="mx-auto mt-3 max-w-[620px] rounded-2xl border border-white/80 bg-white/78 px-6 py-5 text-center text-xl font-bold leading-snug text-[#101846] shadow-[0_16px_45px_rgba(37,99,235,0.10),inset_0_1px_0_rgba(255,255,255,0.9)] backdrop-blur-xl">
                 {question.question}
               </div>
 
@@ -334,7 +312,12 @@ function SelfDiscoveryFlow({ onClose }) {
                 {question.kind === 'choice' && (
                   <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                     {question.options.map((option) => (
-                      <AnswerCard key={option.title} option={option} selected={selected === option.title} onClick={() => chooseOption(option)} />
+                      <AnswerCard 
+                        key={option.id} 
+                        option={option} 
+                        selected={selected === option.id} 
+                        onClick={() => chooseOption(option)} 
+                      />
                     ))}
                   </div>
                 )}
@@ -345,125 +328,205 @@ function SelfDiscoveryFlow({ onClose }) {
                       value={textAnswer}
                       onChange={(event) => setTextAnswer(event.target.value)}
                       placeholder={question.placeholder}
-                      className="min-h-[130px] w-full resize-none rounded-3xl border border-white/80 bg-white/70 px-5 py-4 text-sm font-medium leading-relaxed text-[#263556] shadow-[0_14px_36px_rgba(37,99,235,0.08),inset_0_1px_0_rgba(255,255,255,0.9)] outline-none backdrop-blur-xl transition placeholder:text-[#9aa6c3] focus:border-blue-300 focus:bg-white/85"
+                      className="min-h-[130px] w-full resize-none rounded-3xl border border-white/80 bg-white/70 px-5 py-4 text-sm font-semibold leading-relaxed text-[#263556] shadow-[0_14px_36px_rgba(37,99,235,0.08),inset_0_1px_0_rgba(255,255,255,0.9)] outline-none backdrop-blur-xl transition placeholder:text-[#9aa6c3] focus:border-blue-300 focus:bg-white/85"
                     />
-                    {textAnswer.trim().length > 10 && (
-                      <button type="button" onClick={() => advance(textAnswer.trim())} className="mt-5 w-full rounded-full bg-blue-600 px-5 py-3 text-sm font-bold text-white shadow-[0_14px_34px_rgba(37,99,235,0.26)] transition hover:bg-blue-700">
+                    <div className="flex justify-end mt-3">
+                      <button 
+                        type="button" 
+                        disabled={textAnswer.trim().length < 5}
+                        onClick={() => handleNext(textAnswer.trim())} 
+                        className="rounded-full bg-blue-600 px-6 py-2.5 text-sm font-bold text-white shadow-[0_14px_34px_rgba(37,99,235,0.26)] transition hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                      >
                         Continue <ArrowRight className="ml-1 inline" size={15} />
                       </button>
-                    )}
+                    </div>
                   </div>
                 )}
 
                 {question.kind === 'tradeoff' && (
                   <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                     {question.options.map((option) => (
-                      <TradeoffCard key={option.title} option={option} selected={selected === option.title} onClick={() => chooseOption(option)} />
+                      <TradeoffCard 
+                        key={option.id} 
+                        option={option} 
+                        selected={selected === option.id} 
+                        onClick={() => chooseOption(option)} 
+                      />
                     ))}
                   </div>
                 )}
               </div>
 
-              <button type="button" onClick={() => advance()} className="mx-auto mt-7 block text-sm font-semibold text-[#7e8aa6] underline decoration-dashed underline-offset-4 transition hover:text-blue-700">
+              <button 
+                type="button" 
+                onClick={() => handleNext(null)} 
+                className="mx-auto mt-6 block text-sm font-semibold text-[#7e8aa6] underline decoration-dashed underline-offset-4 transition hover:text-blue-700"
+              >
                 Skip this question
               </button>
             </div>
           </>
-        ) : (
-          <ResultCard onProfile={() => finish()} onOpportunities={() => finish('/student/opportunities')} />
         )}
 
-        <p className="mx-auto mt-7 flex items-center justify-center gap-2 text-center text-sm font-medium text-[#687897]">
-          <span className="flex h-8 w-8 items-center justify-center rounded-full border border-blue-100 bg-white/80 text-blue-600 shadow-[0_8px_20px_rgba(37,99,235,0.10)]">
-            <ShieldCheck size={16} />
-          </span>
-          Your answers shape your Career DNA - they're never locked in.
-        </p>
+        {phase === 'result' && (
+          <AnimalRevealCard onClose={onClose} />
+        )}
+
+        {phase === 'questions' && (
+          <p className="mx-auto mt-7 flex items-center justify-center gap-2 text-center text-xs font-semibold text-[#687897]">
+            <span className="flex h-6 w-6 items-center justify-center rounded-full border border-blue-100 bg-white/80 text-blue-600 shadow-sm">
+              <ShieldCheck size={13} />
+            </span>
+            Your answers shape your work style. Nothing is set in stone.
+          </p>
+        )}
       </div>
     </div>
   )
 }
 
 function AnswerCard({ option, selected, onClick }) {
-  const Icon = option.icon
-  const tone = option.tone === 'violet' ? 'text-violet-700 bg-violet-100/65' : 'text-blue-700 bg-blue-100/65'
+  const Icon = ICONS[option.icon] || Zap
 
   return (
     <button
       type="button"
       onClick={onClick}
-      className={`flex min-h-[108px] items-center gap-4 rounded-2xl border p-4 text-left shadow-[0_12px_30px_rgba(37,99,235,0.07),inset_0_1px_0_rgba(255,255,255,0.9)] backdrop-blur-xl transition duration-200 hover:border-blue-300 hover:bg-blue-50/75 ${selected ? 'scale-[1.02] border-blue-500 bg-blue-50' : 'border-white/80 bg-white/68'}`}
+      className={`flex min-h-[96px] items-center gap-4 rounded-2xl border p-4 text-left shadow-[0_8px_24px_rgba(37,99,235,0.04),inset_0_1px_0_rgba(255,255,255,0.9)] backdrop-blur-xl transition duration-200 hover:border-blue-300 hover:bg-blue-50/50 ${
+        selected ? 'scale-[1.02] border-blue-500 bg-blue-50/70' : 'border-white/80 bg-white/60'
+      }`}
     >
-      <span className={`flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-full border border-white/75 shadow-[inset_0_1px_0_rgba(255,255,255,0.9)] ${tone}`}>
-        <Icon size={25} strokeWidth={2.25} />
+      <span className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full border border-white/70 bg-blue-50 text-blue-700 shadow-sm">
+        <Icon size={20} strokeWidth={2.2} />
       </span>
       <span>
-        <span className="block text-base font-bold text-[#121a3a]">{option.title}</span>
-        <span className="mt-1 block text-sm font-medium leading-relaxed text-[#596987]">{option.text}</span>
+        <span className="block text-sm font-semibold text-[#121a3a]">{option.title}</span>
+        <span className="mt-1 block text-xs font-semibold leading-relaxed text-[#596987]">{option.text}</span>
       </span>
     </button>
   )
 }
 
 function TradeoffCard({ option, selected, onClick }) {
-  const Icon = option.icon
+  const Icon = ICONS[option.icon] || Zap
 
   return (
     <button
       type="button"
       onClick={onClick}
-      className={`min-h-[190px] rounded-[24px] border p-6 text-center shadow-[0_14px_38px_rgba(37,99,235,0.08),inset_0_1px_0_rgba(255,255,255,0.9)] backdrop-blur-xl transition duration-200 hover:border-blue-300 hover:bg-blue-50/75 ${selected ? 'scale-[1.02] border-blue-500 bg-blue-50' : 'border-white/80 bg-white/68'}`}
+      className={`min-h-[170px] rounded-2xl border p-5 text-center shadow-[0_12px_28px_rgba(37,99,235,0.05),inset_0_1px_0_rgba(255,255,255,0.9)] backdrop-blur-xl transition duration-200 hover:border-blue-300 hover:bg-blue-50/50 ${
+        selected ? 'scale-[1.02] border-blue-500 bg-blue-50/70' : 'border-white/80 bg-white/60'
+      }`}
     >
-      <span className="mx-auto flex h-16 w-16 items-center justify-center rounded-full border border-white/75 bg-blue-100/65 text-blue-700 shadow-[inset_0_1px_0_rgba(255,255,255,0.9)]">
-        <Icon size={28} strokeWidth={2.25} />
+      <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-full border border-white/70 bg-blue-50 text-blue-700 shadow-sm">
+        <Icon size={22} strokeWidth={2.2} />
       </span>
-      <span className="mt-5 block text-lg font-bold text-[#121a3a]">{option.title}</span>
-      <span className="mt-2 block text-sm font-medium leading-relaxed text-[#596987]">{option.text}</span>
+      <span className="mt-4 block text-base font-semibold text-[#121a3a]">{option.title}</span>
+      <span className="mt-1 block text-xs font-semibold leading-relaxed text-[#596987]">{option.text}</span>
     </button>
   )
 }
 
-function ResultCard({ onProfile, onOpportunities }) {
-  const paragraphs = [
-    "You work best when you have a clear goal and the freedom to get there your own way. You're a natural executor - you prefer action over endless planning.",
-    "Your energy comes from solving real, tangible problems. You get restless when work doesn't have visible impact.",
-    "You value creative freedom over stability. You'd rather do meaningful work at a startup than comfortable work at a large company.",
-    "This tells me you'd thrive in roles like:",
-  ]
-  const roles = [
-    { label: 'Product Management', className: 'bg-blue-50 text-blue-700 border-blue-100' },
-    { label: 'Data-driven Strategy', className: 'bg-violet-50 text-violet-700 border-violet-100' },
-    { label: 'Tech Consulting', className: 'bg-emerald-50 text-emerald-700 border-emerald-100' },
-  ]
+function AnimalRevealCard({ onClose }) {
+  const navigate = useNavigate()
+  const store = useSelfDiscoveryStore()
+
+  const animal = store.primaryAnimal
+  const paragraphs = store.narrative || []
+  const confidence = store.confidence || 30
+  const reasons = store.strengthReasons || []
+
+  const categoryColors = {
+    leadership: 'bg-amber-50 text-amber-700 border-amber-100',
+    relational: 'bg-blue-50 text-blue-700 border-blue-100',
+    execution: 'bg-emerald-50 text-emerald-700 border-emerald-100',
+  }
+
+  const categoryLabel = ANIMAL_CATEGORIES[animal.category]?.label || 'Leadership'
 
   return (
-    <div className="mx-auto w-full max-w-[760px] rounded-[30px] border border-white/80 bg-[linear-gradient(135deg,rgba(255,255,255,0.92),rgba(239,246,255,0.70))] px-7 py-9 shadow-[0_28px_90px_rgba(37,99,235,0.13),inset_0_1px_0_rgba(255,255,255,0.92)] ring-1 ring-blue-100/50 backdrop-blur-2xl sm:px-12">
-      <img src={robotImage} alt="CareerOS companion" className="mx-auto h-32 w-32 object-contain drop-shadow-[0_16px_28px_rgba(37,99,235,0.18)]" />
-      <h2 className="mt-2 text-center text-2xl font-black text-[#101846]">Here's what I see in you, Chris.</h2>
-      <div className="mx-auto mt-6 max-w-[610px] space-y-4 text-left text-[15px] font-medium leading-8 text-[#3a4669]">
-        {paragraphs.map((paragraph, index) => (
-          <p key={paragraph} className="animate-[slideUp_0.35s_ease-out_both]" style={{ animationDelay: `${index * 80}ms` }}>
-            {paragraph}
+    <div className="mx-auto w-full max-w-[760px] rounded-[30px] border border-white/80 bg-[linear-gradient(135deg,rgba(255,255,255,0.92),rgba(239,246,255,0.70))] px-6 py-8 shadow-[0_28px_90px_rgba(37,99,235,0.13),inset_0_1px_0_rgba(255,255,255,0.92)] ring-1 ring-blue-100/50 backdrop-blur-2xl sm:px-12">
+      <img src={robotImage} alt="Companion" className="mx-auto h-24 w-24 object-contain drop-shadow-[0_12px_24px_rgba(37,99,235,0.15)]" />
+      <h2 className="mt-2 text-center text-xl font-black text-[#101846]">Here's what I've noticed about you, Chris.</h2>
+      
+      {/* Narrative paragraphs */}
+      <div className="mx-auto mt-6 max-w-[610px] space-y-3.5 text-left text-sm font-semibold leading-relaxed text-[#3a4669]">
+        {paragraphs.map((p, index) => (
+          <p key={index} className="animate-[slideUp_0.35s_ease-out_both]" style={{ animationDelay: `${index * 150}ms` }}>
+            {p}
           </p>
         ))}
       </div>
-      <div className="mt-5 flex flex-wrap justify-center gap-3">
-        {roles.map((role, index) => (
-          <span key={role.label} className={`inline-flex items-center gap-1 rounded-full border px-4 py-2 text-sm font-bold shadow-[0_8px_22px_rgba(37,99,235,0.08)] animate-[fadeInScale_0.28s_ease-out_both] ${role.className}`} style={{ animationDelay: `${340 + index * 100}ms` }}>
-            <ArrowRight size={14} /> {role.label}
+
+      <div className="mt-7 text-center">
+        <p className="text-xs font-bold text-slate-500 uppercase tracking-widest">Based on what I know today, your current Career Animal is</p>
+        
+        {/* Large reveal */}
+        <div className="mt-3 inline-flex flex-col items-center p-6 rounded-2xl bg-white/50 border border-white shadow-sm max-w-[340px] w-full animate-[animalReveal_0.6s_ease-out_both]">
+          <span className="text-7xl filter drop-shadow-md">{animal.emoji}</span>
+          <h3 className="mt-4 text-2xl font-black text-[#11194a]">{animal.name}</h3>
+          <p className="text-xs font-extrabold text-slate-400 mt-0.5 uppercase tracking-wider">{animal.archetype}</p>
+          <span className={`mt-2 rounded-full border px-2.5 py-0.5 text-[10px] font-bold tracking-wide uppercase ${categoryColors[animal.category]}`}>
+            {categoryLabel}
           </span>
-        ))}
+        </div>
       </div>
-      <p className="mt-7 text-center text-sm font-semibold text-[#7a87a2]">Want me to find opportunities that match this?</p>
-      <div className="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-2">
-        <button type="button" onClick={onOpportunities} className="rounded-full bg-blue-600 px-5 py-3 text-sm font-bold text-white shadow-[0_14px_34px_rgba(37,99,235,0.26)] transition hover:bg-blue-700">
-          Yes, show me <ArrowRight className="ml-1 inline" size={15} />
+
+      {/* Why matched section */}
+      {reasons.length > 0 && (
+        <div className="mx-auto mt-6 max-w-[420px] rounded-xl border border-white/60 bg-white/30 p-4 shadow-sm text-center">
+          <p className="text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">Why I matched you</p>
+          <div className="flex flex-wrap justify-center gap-3">
+            {reasons.map((reason) => (
+              <span key={reason} className="inline-flex items-center gap-1 text-xs font-bold text-slate-700 bg-white/70 px-2.5 py-1 rounded-full border border-slate-100 shadow-sm">
+                <Check size={12} className="text-emerald-500" /> {reason}
+              </span>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Profile confidence */}
+      <div className="mx-auto mt-6 max-w-[500px] text-center">
+        <div className="flex items-center justify-between text-xs font-bold text-[#637094]">
+          <span>Profile Confidence</span>
+          <span className="text-blue-600">{confidence}%</span>
+        </div>
+        <div className="mt-1.5 h-2 w-full rounded-full bg-slate-100 overflow-hidden shadow-inner">
+          <div className="h-full bg-blue-600 rounded-full animate-[confidenceFill_1s_ease-out_both]" style={{ width: `${confidence}%` }} />
+        </div>
+        <p className="mt-2 text-xs text-slate-400 font-semibold leading-relaxed">
+          "{store.confidenceMessage}"
+        </p>
+      </div>
+
+      <p className="mt-6 text-center text-xs font-medium text-slate-400 italic">
+        This profile isn't locked in. It grows and shifts as you continue adding experiences.
+      </p>
+
+      {/* Actions */}
+      <div className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2">
+        <button 
+          type="button" 
+          onClick={() => {
+            onClose()
+            navigate('/student/opportunities')
+          }} 
+          className="rounded-full bg-blue-600 px-5 py-3 text-sm font-bold text-white shadow-[0_14px_34px_rgba(37,99,235,0.26)] transition hover:bg-blue-700"
+        >
+          Explore Opportunities <ArrowRight className="ml-1 inline" size={15} />
         </button>
-        <button type="button" onClick={onProfile} className="rounded-full border border-blue-100 bg-white/75 px-5 py-3 text-sm font-bold text-blue-700 shadow-[0_10px_24px_rgba(37,99,235,0.08)] transition hover:bg-blue-50">
-          Save to my profile
+        <button 
+          type="button" 
+          onClick={() => {
+            onClose()
+            navigate('/student/career-animal')
+          }} 
+          className="rounded-full border border-blue-100 bg-white/75 px-5 py-3 text-sm font-bold text-blue-700 shadow-[0_10px_24px_rgba(37,99,235,0.08)] transition hover:bg-blue-50"
+        >
+          View Full Animal Profile
         </button>
       </div>
     </div>
   )
 }
-
