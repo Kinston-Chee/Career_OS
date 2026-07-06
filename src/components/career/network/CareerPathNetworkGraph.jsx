@@ -1,5 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 import ForceGraph2D from 'react-force-graph-2d'
+import { Sparkles } from 'lucide-react'
+import nodeGraphBg from '../../../assets/Node graph bg.png'
 
 const SKILL_COLOR = '#64748b' // slate-500 — neutral for all skills
 const SKILL_TEXT = '#475569'
@@ -23,7 +25,15 @@ function hexToRgba(hex, alpha = 1) {
  */
 function IndustryFilter({ industries, activeIndustry, onChange }) {
   return (
-    <label className="flex items-center gap-2 rounded-full border border-violet-200 bg-white/95 px-3 py-1.5 text-xs font-semibold text-violet-700 shadow-sm">
+    <label
+      className="flex items-center gap-2 rounded-full px-3 py-1.5 text-xs font-semibold text-violet-700"
+      style={{
+        background: 'rgba(255, 255, 255, 0.8)',
+        backdropFilter: 'blur(8px)',
+        WebkitBackdropFilter: 'blur(8px)',
+        border: '1px solid rgba(200, 210, 255, 0.5)',
+      }}
+    >
       <svg viewBox="0 0 24 24" className="h-3.5 w-3.5" fill="none" aria-hidden="true">
         <path
           d="M4 5h16l-6 8v6l-4-2v-4Z"
@@ -56,7 +66,17 @@ function IndustryFilter({ industries, activeIndustry, onChange }) {
  */
 function GraphLegend({ industries }) {
   return (
-    <div className="pointer-events-none absolute bottom-3 left-3 z-10 max-w-[220px] rounded-2xl border border-violet-100 bg-white/90 p-3 text-[11px] shadow-[0_10px_24px_rgba(88,63,188,0.12)] backdrop-blur-xl">
+    <div
+      className="pointer-events-none absolute bottom-3 left-3 z-10 max-w-[220px] p-3 text-[11px]"
+      style={{
+        background: 'rgba(255, 255, 255, 0.75)',
+        backdropFilter: 'blur(8px)',
+        WebkitBackdropFilter: 'blur(8px)',
+        border: '1px solid rgba(255, 255, 255, 0.5)',
+        borderRadius: '0.75rem',
+        boxShadow: '0 4px 16px rgba(0, 0, 0, 0.06)',
+      }}
+    >
       <p className="mb-2 text-[10px] font-bold uppercase tracking-wide text-slate-500">Legend</p>
 
       <div className="mb-2 space-y-1.5">
@@ -259,8 +279,26 @@ export default function CareerPathNetworkGraph({ network, selectedPathId, onSele
   }
 
   return (
-    <section className="overflow-hidden rounded-3xl border border-violet-100/80 bg-[radial-gradient(circle_at_center,rgba(124,58,237,0.12),transparent_34%),linear-gradient(135deg,#ffffff_0%,#fbfaff_48%,#f5f2ff_100%)] p-5 shadow-[0_18px_50px_rgba(88,63,188,0.1)]">
-      <header className="mb-4 flex flex-wrap items-start justify-between gap-3">
+    <section
+      className="relative overflow-hidden p-5"
+      style={{ borderRadius: '1.5rem', boxShadow: '0 8px 32px rgba(100, 130, 200, 0.1)' }}
+    >
+      <div
+        className="absolute inset-0 -z-20"
+        style={{ backgroundImage: `url(${nodeGraphBg})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
+      />
+      <div
+        className="absolute inset-0 -z-10"
+        style={{
+          background: 'rgba(255, 255, 255, 0.45)',
+          backdropFilter: 'blur(16px)',
+          WebkitBackdropFilter: 'blur(16px)',
+          border: '1px solid rgba(255, 255, 255, 0.6)',
+          borderRadius: '1.5rem',
+        }}
+      />
+
+      <header className="relative mb-4 flex flex-wrap items-start justify-between gap-3">
         <div>
           <div className="flex items-center gap-2">
             <h2 className="text-lg font-bold text-[#17124d]">Your Career Path Network</h2>
@@ -282,7 +320,7 @@ export default function CareerPathNetworkGraph({ network, selectedPathId, onSele
 
       <div
         ref={containerRef}
-        className="relative h-[560px] w-full overflow-hidden rounded-3xl border border-violet-100 bg-white/70"
+        className="relative h-[560px] w-full overflow-hidden rounded-3xl border border-violet-100/70"
       >
         <ForceGraph2D
           ref={fgRef}
@@ -316,7 +354,18 @@ export default function CareerPathNetworkGraph({ network, selectedPathId, onSele
 
         <GraphLegend industries={network.industries} />
 
-        <div className="absolute bottom-3 right-3 z-10 flex items-center gap-2 rounded-2xl border border-violet-100 bg-white/92 px-3 py-2 text-xs shadow-[0_10px_24px_rgba(88,63,188,0.12)]">
+        <div
+          className="absolute bottom-3 right-3 z-10 flex max-w-[280px] items-center gap-2 px-3 py-2 text-xs"
+          style={{
+            background: 'rgba(255, 255, 255, 0.75)',
+            backdropFilter: 'blur(8px)',
+            WebkitBackdropFilter: 'blur(8px)',
+            border: '1px solid rgba(255, 255, 255, 0.5)',
+            borderRadius: '0.75rem',
+            boxShadow: '0 4px 16px rgba(0, 0, 0, 0.06)',
+          }}
+        >
+          <Sparkles size={13} className="flex-shrink-0 text-violet-500" strokeWidth={2.2} />
           <span className="rounded-lg bg-violet-100 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-violet-700">
             AI Insight
           </span>

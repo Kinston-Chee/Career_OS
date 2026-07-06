@@ -24,6 +24,22 @@ CareerOS is not a resume builder, generic job board, LinkedIn clone, LMS, or uni
 
 Do not use CareerSync as a separate primary product name.
 
+### Round 2 Direction: AI Companion Is The Primary Interface
+
+Round 1 was dashboard-first: users navigated between modules to find information. Round 2 evolves CareerOS into an AI-first operating system built around this flow:
+
+> User -> AI Companion -> Recommended Action -> Dashboard (optional)
+
+Non-negotiable principles for any Round 2 work:
+
+- AI Companion is the primary interface, not dashboards.
+- Every insight must have a direct action — no insight without a next step.
+- Progressive disclosure — headline first, detail on demand.
+- Zero Query — the system surfaces what matters before the user asks.
+- NLP control layer — users can navigate and execute by typing natural language (see LLM Provider Rule below).
+- Do not break existing Round 1 routes. Add Round 2 as new routes/components alongside them so both can be demoed.
+- University Workspace has no approved Round 2 design yet — treat it as Round 1 until a direction is confirmed.
+
 ---
 
 ## 2. Technology and Prototype Constraints
@@ -45,7 +61,6 @@ Do not add:
 
 - backend infrastructure
 - production authentication
-- real AI pipelines
 - real syllabus parsing
 - payment systems
 - heavy UI libraries
@@ -53,6 +68,25 @@ Do not add:
 - CSS-in-JS
 
 Frontend clarity, believable workflows, and visual polish matter more than production completeness.
+
+### LLM Provider Rule (Round 2)
+
+Groq API (Llama 3, model `llama3-8b-8192`) is the only allowed LLM provider.
+
+- Do not use OpenAI or Anthropic APIs.
+- Do not install or call local LLM models.
+- Endpoint: `https://api.groq.com/openai/v1/chat/completions`.
+- API key lives in `.env` as `VITE_GROQ_API_KEY`; never hardcode it.
+
+### Real AI Is Required For Specific Flows (Round 2)
+
+Round 1 treated all AI as simulated. Round 2 requires genuine Groq LLM inference for:
+
+- NLP Navigation Layer: user free-text input -> Groq intent classification -> structured JSON (`{ intent, destination, action, prefill }`) -> frontend executes.
+- Career Memory "Add Experience" skill extraction: the LLM must actually read the user's text and return detected skills. Do not hardcode this step.
+- AI Verdict generation for employer candidate profiles (planned direction; implement with real inference once scoped).
+
+All other AI-like behavior (career path recommendations, market insight copy, event impact summaries, etc.) may remain mocked/simulated unless a task explicitly asks to make it real. When in doubt about whether a given AI surface should be mocked or real, ask before implementing.
 
 ---
 
@@ -320,6 +354,16 @@ Agents must:
 - keep legacy aliases until migration is explicitly approved
 - avoid removing routes without product-owner confirmation
 - avoid editing application code when the task is documentation-only
+
+### Ponytail Mode Rules
+
+When Ponytail is active in this project:
+
+- Prefer existing CareerOS components, utilities, CSS patterns, and routes before writing new code.
+- Make the smallest safe change.
+- Do not introduce new dependencies unless truly necessary.
+- Do not create new abstractions unless the existing structure cannot support the task cleanly.
+- Preserve the current CareerOS design system and product logic.
 
 If the requested change conflicts with current code or another documented product direction, report the conflict and ask for confirmation before making a broad change.
 

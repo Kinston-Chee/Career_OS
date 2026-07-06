@@ -1,0 +1,44 @@
+# Task completion documents
+.claude/completions/**
+
+# Session files
+.claude/sessions/**
+
+# Archived documentation
+docs/archive/**
+
+# Large reference docs — load on demand, not every session (see docs/INDEX.md)
+docs/MASTER_CONTEXT.md
+docs/CAREEROS_PRODUCT_REFERENCE.md
+docs/DATA_SCHEMA.md
+docs/PAGE_GUIDE.md
+docs/DEVELOPER_NOTES.md
+docs/ARCHITECTURE.md
+.claude/Careeros round2 project knowledge.md
+
+# User-facing docs (not needed during dev sessions — devs have CLAUDE.md)
+CHANGELOG.md
+README.md
+CONTRIBUTING.md
+GEMINI.md
+AGENTS.md
+.cursorrules
+.windsurfrules
+.clinerules
+.roomodes
+
+# Git
+.git/**
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log
+logs/**
+
+# OS
+.DS_Store
+
