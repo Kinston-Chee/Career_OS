@@ -117,7 +117,7 @@ export default function CareerIntelligencePage() {
 
       <div className="mx-auto max-w-[1480px] px-4 py-5 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-[320px_minmax(0,1fr)]">
-          <div className="min-w-0 lg:sticky lg:top-4 lg:self-start lg:h-[calc(100vh-7rem)]">
+          <div className="min-w-0 lg:sticky lg:top-4 lg:self-start lg:h-[min(calc(100vh-2rem),36rem)]">
             <CareerPathCompanionPanel
               message={COMPANION_MESSAGE}
               messages={chatMessages}
