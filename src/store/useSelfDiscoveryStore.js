@@ -31,6 +31,8 @@ function persistState(state) {
       confidenceMessage: state.confidenceMessage,
       completedAt: state.completedAt,
       evidenceLog: state.evidenceLog,
+      completedDeeperAt: state.completedDeeperAt,
+      workingStyleSpectrums: state.workingStyleSpectrums,
     }))
   } catch {
     // Silently fail if localStorage is unavailable
@@ -50,6 +52,8 @@ export const useSelfDiscoveryStore = create((set, get) => ({
   confidence: saved?.confidence ?? 0,
   confidenceMessage: saved?.confidenceMessage ?? '',
   completedAt: saved?.completedAt ?? null,
+  completedDeeperAt: saved?.completedDeeperAt ?? null,
+  workingStyleSpectrums: saved?.workingStyleSpectrums ?? null,
   evidenceLog: saved?.evidenceLog ?? [],
 
   // ── Computed ───────────────────────────────────────────────────────────
@@ -108,6 +112,28 @@ export const useSelfDiscoveryStore = create((set, get) => ({
     persistState({ ...get(), ...newState })
   },
 
+  completeDeeperAssessment: (spectrums) => {
+    const newState = {
+      completedDeeperAt: new Date().toISOString(),
+      workingStyleSpectrums: spectrums,
+      confidence: 40,
+      confidenceMessage: 'Deeper Working Style metrics calculated. Add experiences to increase confidence further.',
+    }
+    set(newState)
+    persistState({ ...get(), ...newState })
+  },
+
+  resetDeeperAssessment: () => {
+    const newState = {
+      completedDeeperAt: null,
+      workingStyleSpectrums: null,
+      confidence: 30,
+      confidenceMessage: 'Initial estimate calculated from onboarding responses.',
+    }
+    set(newState)
+    persistState({ ...get(), ...newState })
+  },
+
   /**
    * Clear assessment data to allow retaking.
    */
@@ -122,6 +148,8 @@ export const useSelfDiscoveryStore = create((set, get) => ({
       confidence: 0,
       confidenceMessage: '',
       completedAt: null,
+      completedDeeperAt: null,
+      workingStyleSpectrums: null,
       evidenceLog: [],
     }
     set(resetState)
