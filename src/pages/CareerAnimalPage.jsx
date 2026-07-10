@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
+  Activity,
   ArrowRight,
   Bot,
   Check,
@@ -19,6 +20,7 @@ import {
 } from 'lucide-react'
 import HomeTopNav from '../components/home/HomeTopNav'
 import CareerPathCompanionPanel from '../components/careerPath/CareerPathCompanionPanel'
+import { SelfDiscoveryFlow } from '../components/profile/SelfDiscoveryCard'
 import { candidateOverview, mockUser } from '../data/mockData'
 import { ANIMAL_CATEGORIES } from '../data/selfDiscoveryEngine'
 import { useSelfDiscoveryStore } from '../store/useSelfDiscoveryStore'
@@ -69,7 +71,124 @@ function DetailButton({ active, icon: Icon, title, subtitle, onClick }) {
   )
 }
 
-function DetailPanel({ activePanel, primary, emerging, paragraphs, strengthReasons, confidenceMessage }) {
+function DetailPanel({ activePanel, primary, emerging, paragraphs, strengthReasons, confidenceMessage, store, onStartDeeper }) {
+  if (activePanel === 'working-style') {
+    const spectrums = store.workingStyleSpectrums
+    if (store.completedDeeperAt && spectrums) {
+      return (
+        <section className="rounded-xl border border-[#e2eaf8] bg-white p-5 shadow-[0_8px_22px_rgba(44,76,142,0.07)]">
+          <p className="text-xs font-bold uppercase tracking-wide text-[#6366f1]">Working Style Spectrums</p>
+          <h2 className="mt-2 text-xl font-semibold text-[#11194a]">Detailed Level 2 Behavioral Analytics</h2>
+          <p className="mt-1 text-xs font-semibold text-slate-400">Measured across 40 tradeoff data points based on your scenario decisions.</p>
+          
+          <div className="mt-6 space-y-6 bg-[#f8fbff]/60 border border-slate-100 p-6 rounded-2xl">
+            {/* Spectrum 1: Planning vs Improvising */}
+            <div>
+              <div className="flex justify-between items-center mb-2">
+                <span className="text-xs font-bold text-[#11194a]">Planning vs Improvising</span>
+                <span className="text-[10px] font-black text-indigo-700 bg-indigo-50 border border-indigo-100 px-2 py-0.5 rounded-full">
+                  {spectrums.planningVsImprovising}% Planner
+                </span>
+              </div>
+              <div className="relative h-3.5 w-full bg-slate-200/50 rounded-full overflow-hidden border border-slate-100 p-0.5">
+                <div className="h-full bg-gradient-to-r from-emerald-500 to-indigo-500 rounded-full transition-all duration-1000 ease-out" style={{ width: `${spectrums.planningVsImprovising}%` }} />
+              </div>
+              <div className="flex justify-between items-center text-[10.5px] text-slate-400 font-extrabold mt-2">
+                <span>Methodical Planning</span>
+                <span>Adaptive Improvisation</span>
+              </div>
+            </div>
+
+            {/* Spectrum 2: Independent vs Collaborative */}
+            <div>
+              <div className="flex justify-between items-center mb-2">
+                <span className="text-xs font-bold text-[#11194a]">Independent vs Collaborative</span>
+                <span className="text-[10px] font-black text-indigo-700 bg-indigo-50 border border-indigo-100 px-2 py-0.5 rounded-full">
+                  {spectrums.independentVsCollaborative}% Collaborative
+                </span>
+              </div>
+              <div className="relative h-3.5 w-full bg-slate-200/50 rounded-full overflow-hidden border border-slate-100 p-0.5">
+                <div className="h-full bg-gradient-to-r from-emerald-500 to-indigo-500 rounded-full transition-all duration-1000 ease-out" style={{ width: `${spectrums.independentVsCollaborative}%` }} />
+              </div>
+              <div className="flex justify-between items-center text-[10.5px] text-slate-400 font-extrabold mt-2">
+                <span>Independent Focus</span>
+                <span>Synergistic Teamwork</span>
+              </div>
+            </div>
+
+            {/* Spectrum 3: Structured vs Flexible */}
+            <div>
+              <div className="flex justify-between items-center mb-2">
+                <span className="text-xs font-bold text-[#11194a]">Structured vs Flexible</span>
+                <span className="text-[10px] font-black text-indigo-700 bg-indigo-50 border border-indigo-100 px-2 py-0.5 rounded-full">
+                  {spectrums.structuredVsFlexible}% Structured
+                </span>
+              </div>
+              <div className="relative h-3.5 w-full bg-slate-200/50 rounded-full overflow-hidden border border-slate-100 p-0.5">
+                <div className="h-full bg-gradient-to-r from-emerald-500 to-indigo-500 rounded-full transition-all duration-1000 ease-out" style={{ width: `${spectrums.structuredVsFlexible}%` }} />
+              </div>
+              <div className="flex justify-between items-center text-[10.5px] text-slate-400 font-extrabold mt-2">
+                <span>Process-Oriented</span>
+                <span>Agile / Flexible</span>
+              </div>
+            </div>
+
+            {/* Spectrum 4: Fast Decisions vs Careful Analysis */}
+            <div>
+              <div className="flex justify-between items-center mb-2">
+                <span className="text-xs font-bold text-[#11194a]">Decision Style</span>
+                <span className="text-[10px] font-black text-indigo-700 bg-indigo-50 border border-indigo-100 px-2 py-0.5 rounded-full">
+                  {spectrums.fastDecisionsVsCarefulAnalysis}% Careful Analyst
+                </span>
+              </div>
+              <div className="relative h-3.5 w-full bg-slate-200/50 rounded-full overflow-hidden border border-slate-100 p-0.5">
+                <div className="h-full bg-gradient-to-r from-emerald-500 to-indigo-500 rounded-full transition-all duration-1000 ease-out" style={{ width: `${spectrums.fastDecisionsVsCarefulAnalysis}%` }} />
+              </div>
+              <div className="flex justify-between items-center text-[10.5px] text-slate-400 font-extrabold mt-2">
+                <span>Fast Decision Maker</span>
+                <span>Careful Analyst</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-6 flex justify-end">
+            <button
+              type="button"
+              onClick={() => {
+                store.resetDeeperAssessment()
+                onStartDeeper()
+              }}
+              className="inline-flex items-center gap-1.5 rounded-full border border-[#dfe8f7] bg-white px-4 py-2 text-xs font-bold text-[#35507d] transition hover:border-blue-300 hover:bg-blue-50 cursor-pointer shadow-sm"
+            >
+              <RefreshCw size={12} />
+              <span>Retake Working Style Onboarding</span>
+            </button>
+          </div>
+        </section>
+      )
+    } else {
+      return (
+        <section className="rounded-xl border border-dashed border-indigo-200 bg-gradient-to-br from-indigo-50/20 via-white to-indigo-50/10 p-6 shadow-sm text-center">
+          <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-indigo-50 text-[#6366f1] mb-4 border border-indigo-100">
+            <Sparkles size={22} className="stroke-[2.2] animate-pulse" />
+          </div>
+          <h3 className="text-[#11194a] text-lg font-bold">Unlock Detailed Working Style Analytics</h3>
+          <p className="mx-auto mt-2 max-w-md text-xs font-semibold text-[#5c688d] leading-relaxed">
+            Answer 40 quick tradeoff questions to measure how you balance planning, collaboration, process structure, and decision speed under pressure.
+          </p>
+          <button
+            type="button"
+            onClick={onStartDeeper}
+            className="mt-5 inline-flex items-center gap-1.5 rounded-full bg-[#6366f1] px-5 py-2.5 text-xs font-black text-white shadow-[0_8px_20px_rgba(99,102,241,0.25)] hover:bg-[#5356e2] transition cursor-pointer"
+          >
+            <span>Start Level 2 Assessment (40 questions)</span>
+            <ArrowRight size={13} className="stroke-[2.5]" />
+          </button>
+        </section>
+      )
+    }
+  }
+
   if (activePanel === 'strengths') {
     return (
       <section className="rounded-xl border border-[#e2eaf8] bg-white p-5 shadow-[0_8px_22px_rgba(44,76,142,0.07)]">
@@ -211,7 +330,9 @@ function CareerAnimalProfile({ store, readiness }) {
   const confidence = store.confidence || 30
   const strengthReasons = store.strengthReasons || []
   const categoryLabel = ANIMAL_CATEGORIES[primary.category]?.label || 'Leadership'
+  
   const [activePanel, setActivePanel] = useState('overview')
+  const [showDeeperFlow, setShowDeeperFlow] = useState(false)
   const [messages, setMessages] = useState([
     {
       id: 'intro',
@@ -219,7 +340,7 @@ function CareerAnimalProfile({ store, readiness }) {
       text: `I have an initial read on your work style: ${primary.name}, ${primary.archetype}. I will show the headline first. Ask me what you want to unpack next.`,
     },
   ])
-  const [chips, setChips] = useState(['Why this animal?', 'Show strengths', 'Show growth areas', 'Best environments', 'How it evolves'])
+  const [chips, setChips] = useState(['Why this animal?', 'Show strengths', 'Show growth areas', 'Working style', 'Best environments'])
   const [isTyping, setIsTyping] = useState(false)
 
   const panelReplies = {
@@ -234,6 +355,10 @@ function CareerAnimalProfile({ store, readiness }) {
     'Show growth areas': {
       panel: 'growth',
       text: `The useful growth edge is not to become a different person. It is to balance your natural style when the situation calls for it.`,
+    },
+    'Working style': {
+      panel: 'working-style',
+      text: `Your detailed Working Style spectrums measure your planning habits, collaboration style, adaptability, and decision-making framework. Let me open the visual spectrum charts.`,
     },
     'Best environments': {
       panel: 'environment',
@@ -253,7 +378,7 @@ function CareerAnimalProfile({ store, readiness }) {
     window.setTimeout(() => {
       setActivePanel(reply.panel)
       setMessages((current) => [...current, { id: makeId(), role: 'robot', text: reply.text }])
-      setChips(['Why this animal?', 'Show strengths', 'Show growth areas', 'Best environments', 'How it evolves'])
+      setChips(['Why this animal?', 'Show strengths', 'Show growth areas', 'Working style', 'Best environments'])
       setIsTyping(false)
     }, 850)
   }
@@ -264,7 +389,7 @@ function CareerAnimalProfile({ store, readiness }) {
 
       <div className="mx-auto max-w-[1480px] px-4 py-5 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-[300px_minmax(0,1fr)_320px]">
-          <div className="min-w-0 lg:h-[calc(100vh-7rem)]">
+          <div className="min-w-0 lg:sticky lg:top-[5.5rem] lg:h-[calc(100vh-7.5rem)]">
             <CareerPathCompanionPanel messages={messages} chips={chips} isTyping={isTyping} onChipClick={handleChipClick} />
           </div>
 
@@ -290,15 +415,22 @@ function CareerAnimalProfile({ store, readiness }) {
                       <h1 className="mt-3 text-3xl font-semibold tracking-[-0.01em] text-[#11194a]">{primary.name}</h1>
                       <p className="mt-1 text-sm font-semibold uppercase tracking-wide text-[#7382a1]">{primary.archetype}</p>
                     </div>
-                    <button type="button" onClick={() => navigate('/student/account', { state: { openAssessment: true } })} className="inline-flex items-center gap-2 rounded-full border border-blue-100 bg-white px-4 py-2 text-xs font-bold text-blue-700 shadow-sm hover:bg-blue-50">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        store.retakeAssessment()
+                        navigate('/student/account', { state: { openAssessment: true } })
+                      }}
+                      className="inline-flex items-center gap-2 rounded-full border border-blue-100 bg-white px-4 py-2 text-xs font-bold text-blue-700 shadow-sm hover:bg-blue-50"
+                    >
                       <RefreshCw size={14} /> Retake
                     </button>
                   </div>
                   <p className="mt-5 max-w-2xl text-sm font-medium leading-7 text-[#3a4669]">{primary.shortSummary}</p>
                   <div className="mt-5 grid gap-3 sm:grid-cols-3">
-                    <SignalCard icon={ShieldCheck} label="Confidence" value={`${confidence}%`} note="Initial estimate" />
+                    <SignalCard icon={ShieldCheck} label="Confidence" value={`${confidence}%`} note={store.completedDeeperAt ? "Level 2 complete" : "Initial estimate"} />
                     <SignalCard icon={Sparkles} label="Emerging" value={emerging?.name || 'Learning'} note={emerging?.archetype || 'Add more evidence'} />
-                    <SignalCard icon={Rocket} label="Next step" value="Add evidence" note="Career Memory sharpens this profile" />
+                    <SignalCard icon={Rocket} label="Next step" value={store.completedDeeperAt ? "Add experiences" : "Answer Level 2"} note={store.completedDeeperAt ? "Level 2 complete" : "Unlock style spectrums"} />
                   </div>
                 </div>
               </div>
@@ -311,6 +443,8 @@ function CareerAnimalProfile({ store, readiness }) {
               paragraphs={paragraphs}
               strengthReasons={strengthReasons}
               confidenceMessage={store.confidenceMessage}
+              store={store}
+              onStartDeeper={() => setShowDeeperFlow(true)}
             />
           </main>
 
@@ -320,6 +454,7 @@ function CareerAnimalProfile({ store, readiness }) {
               <p className="mt-1 text-xs font-medium leading-5 text-[#7382a1]">Open one layer at a time to keep the profile readable.</p>
               <div className="mt-4 space-y-2">
                 <DetailButton active={activePanel === 'overview'} icon={Bot} title="Companion read" subtitle="Headline interpretation" onClick={() => setActivePanel('overview')} />
+                <DetailButton active={activePanel === 'working-style'} icon={Activity} title="Working Style" subtitle="Planning & decision speed" onClick={() => setActivePanel('working-style')} />
                 <DetailButton active={activePanel === 'strengths'} icon={Star} title="Strengths" subtitle="Natural advantages" onClick={() => setActivePanel('strengths')} />
                 <DetailButton active={activePanel === 'growth'} icon={TrendingUp} title="Growth" subtitle="Useful adjustments" onClick={() => setActivePanel('growth')} />
                 <DetailButton active={activePanel === 'environment'} icon={Compass} title="Environments" subtitle="Roles and settings" onClick={() => setActivePanel('environment')} />
@@ -352,6 +487,13 @@ function CareerAnimalProfile({ store, readiness }) {
           </aside>
         </div>
       </div>
+
+      {showDeeperFlow && (
+        <SelfDiscoveryFlow 
+          onClose={() => setShowDeeperFlow(false)} 
+          initialPhase="deeperQuestions"
+        />
+      )}
     </div>
   )
 }
