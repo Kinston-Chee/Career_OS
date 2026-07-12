@@ -1,8 +1,10 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { useLocation } from 'react-router-dom'
-import { ArrowRight, CheckCircle2, MessageSquarePlus, PanelRightClose, PanelRightOpen, Search, Send, Sparkles } from 'lucide-react'
+import { ArrowRight, CheckCircle2, MessageCircle, MessageSquarePlus, PanelRightClose, PanelRightOpen, Search, Send, Sparkles, Target } from 'lucide-react'
 import HomeTopNav from '../components/home/HomeTopNav'
 import TypewriterText from '../components/ui/TypewriterText'
+import InterviewPracticeDashboard from '../components/interviewPractice/InterviewPracticeDashboard'
+import VoiceInterviewSession from '../components/interviewPractice/VoiceInterviewSession'
 import { candidateOverview, mockUser } from '../data/mockData'
 
 const STARTER_MESSAGE =
@@ -487,8 +489,6 @@ function DemoToast({ message }) {
 export default function AICompanionPage() {
   const readiness = candidateOverview.careerSnapshot.readiness
   const location = useLocation()
-  // Capture the handoff prompt once, on the first render. Later renders can
-  // freely mutate location.state without re-triggering the send.
   const [initialPrompt] = useState(() => location.state?.initialPrompt ?? null)
   const [messages, setMessages] = useState([{ id: 'start', role: 'robot', type: 'text', text: STARTER_MESSAGE }])
   const [draft, setDraft] = useState('')
@@ -498,6 +498,11 @@ export default function AICompanionPage() {
   const [activeChatId, setActiveChatId] = useState(NEW_CHAT_ID)
   const [historyQuery, setHistoryQuery] = useState('')
   const [isQuickActionsOpen, setIsQuickActionsOpen] = useState(true)
+
+  // ── Interview Practice mode ─────────────────────────────────────────
+  const [activeMode, setActiveMode] = useState('chat') // 'chat' | 'practice'
+  const [sessionConfig, setSessionConfig] = useState(null) // { mode, role, company }
+
   const scrollRef = useRef(null)
   const timersRef = useRef([])
   const toastRef = useRef(null)
@@ -648,17 +653,77 @@ export default function AICompanionPage() {
     setDraft('')
   }
 
+  const handleStartMode = (mode) => {
+    setSessionConfig({ mode, role: null, company: null })
+  }
+
+  const handleStartRole = (roleName) => {
+    const mockInterviewMode = { id: 'mock-interview', name: 'Mock Interview', emoji: '🎯', bgColor: 'bg-orange-100', description: '', tagLabel: 'Level 4', tagTone: '', progress: '', progressTone: '' }
+    setSessionConfig({ mode: mockInterviewMode, role: roleName, company: null })
+  }
+
+  const handleExitSession = () => setSessionConfig(null)
+
   return (
     <div className="min-h-screen bg-[#f6f9ff] text-[#121a3a]">
+      {/* Voice session overlay — sits above everything */}
+      {sessionConfig && (
+        <VoiceInterviewSession
+          mode={sessionConfig.mode}
+          role={sessionConfig.role}
+          company={sessionConfig.company}
+          onExit={handleExitSession}
+        />
+      )}
+
       <HomeTopNav user={mockUser} readiness={readiness} />
 
       <main className="mx-auto max-w-[1480px] px-4 py-5 sm:px-6 lg:px-8">
-        <header className="mb-5">
+        <header className="mb-4">
           <h1 className="text-2xl font-bold tracking-[-0.01em] text-[#11194a] sm:text-3xl">AI Companion</h1>
           <p className="mt-1 text-sm font-medium text-[#637094]">
             Ask CareerOS anything about your profile, applications, skills, or opportunities.
           </p>
         </header>
+
+        {/* ── Mode toggle ─────────────────────────────────────────── */}
+        <div className="mb-5 flex gap-2">
+          <button
+            type="button"
+            onClick={() => setActiveMode('chat')}
+            className={`inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold transition ${
+              activeMode === 'chat'
+                ? 'bg-blue-600 text-white shadow-sm'
+                : 'border border-gray-200 bg-white text-gray-500 hover:border-blue-200 hover:text-blue-600'
+            }`}
+          >
+            <MessageCircle size={15} strokeWidth={2.3} />
+            Chat
+          </button>
+          <button
+            type="button"
+            onClick={() => setActiveMode('practice')}
+            className={`inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold transition ${
+              activeMode === 'practice'
+                ? 'bg-blue-600 text-white shadow-sm'
+                : 'border border-gray-200 bg-white text-gray-500 hover:border-blue-200 hover:text-blue-600'
+            }`}
+          >
+            <Target size={15} strokeWidth={2.3} />
+            Interview Practice
+          </button>
+        </div>
+
+        {/* ── Interview Practice dashboard ─────────────────────────── */}
+        {activeMode === 'practice' && (
+          <InterviewPracticeDashboard
+            onStartMode={handleStartMode}
+            onStartRole={handleStartRole}
+          />
+        )}
+
+        {/* ── Chat mode (unchanged) ─────────────────────────────── */}
+        {activeMode === 'chat' && (
 
         <div
           className={`grid grid-cols-1 gap-6 ${
@@ -845,6 +910,7 @@ export default function AICompanionPage() {
             </aside>
           )}
         </div>
+        )}
       </main>
       <DemoToast message={toast} />
     </div>
