@@ -1,0 +1,22 @@
+# Secrets - never bake these into an image; inject at runtime instead
+.env
+agents/careeros_agent/.env
+
+# Local dev artifacts
+__pycache__/
+**/__pycache__/
+*.pyc
+local_data/
+media/
+agents/careeros_agent/.adk/
+
+# VCS / editor
+.git/
+.gitignore
+.vscode/
+.idea/
+
+# Experimental/standalone scripts not wired into the app (see Dockerfile notes)
+utils/test.py
+utils/candidate/pdf_extractor.py
+utils/candidate/linkedin_tools.py
