@@ -13,6 +13,8 @@
 - Restricted forum access to joined communities and added a locked pre-join state.
 - Hid the Open action entirely until a user joins the community.
 - Aligned the recommendation hero with Opportunities using the companion robot, typewriter response, and delayed card reveal.
+- Added dedicated Cybersecurity, Product Management, and UI/UX Design discussions instead of reusing fallback posts.
+- Added a Women in Tech community with technology-focused discussions.
 
 ## Validation
 
