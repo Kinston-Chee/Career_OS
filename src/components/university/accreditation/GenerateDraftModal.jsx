@@ -1,58 +1,75 @@
 import React, { useMemo, useState } from 'react'
 import { Check, Copy, Download, FileText } from 'lucide-react'
 import EmployerModal from '../../employer/EmployerModal'
-import { accreditationSummary, requirementGroups, evidenceByRequirement } from './accreditationData'
+import { getDisplayStatus, getGroupStats, STATUS_LABELS } from './accreditationData'
 
-function buildDraftText(submissionTitle) {
+function buildDraftText({ frameworkProfile, groups, stats, requestedItems, overrides, evidenceByRequirement }) {
   const lines = []
-  lines.push(`${submissionTitle.toUpperCase()} — DRAFT EVIDENCE PACK`)
-  lines.push('Heriot-Watt University Malaysia · School of Mathematical and Computer Sciences')
-  lines.push(`Prepared by: Dr. Evelyn Chen · Generated: ${new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}`)
+  lines.push(`${frameworkProfile.shortLabel.toUpperCase()} - EVIDENCE SUMMARY`)
+  lines.push(`${frameworkProfile.category} - ${frameworkProfile.scope}`)
+  lines.push(`Generated: ${new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}`)
   lines.push('')
-  lines.push(`Overall readiness: ${accreditationSummary.kpis[0].value} — ${accreditationSummary.kpis[1].value} of ${accreditationSummary.kpis[1].note.replace('Of ', '')} evidence points ready`)
+  lines.push(`Readiness: ${stats.readiness}% (${stats.ready} of ${stats.total} priority requirements ready)`)
+  lines.push(`In progress: ${stats.inProgress}; Missing: ${stats.missing}; Requested: ${stats.requested}`)
   lines.push('')
 
-  requirementGroups.forEach((group) => {
-    lines.push(`${group.index}. ${group.title.toUpperCase()} (${group.progress})`)
+  groups.forEach((group) => {
+    const groupStats = getGroupStats(group, requestedItems, overrides)
+    lines.push(`${group.index}. ${group.title.toUpperCase()} (${groupStats.ready}/${groupStats.total} ready)`)
     group.items.forEach((item) => {
+      const status = getDisplayStatus(item, requestedItems, overrides)
       const evidence = evidenceByRequirement[item.id]
-      const statusLabel = item.status === 'ready' ? 'Ready' : item.status === 'in-progress' ? 'In progress' : 'Missing'
-      lines.push(`   - ${item.name} [${statusLabel}]`)
+      lines.push(`   - ${item.name} [${STATUS_LABELS[status] ?? status}]`)
       if (evidence) {
-        evidence.sources.forEach((s) => {
-          lines.push(`       ${s.label}: ${s.title}`)
+        evidence.sources.forEach((source) => {
+          lines.push(`       ${source.label}: ${source.title}`)
         })
+      } else {
+        lines.push('       Evidence not mapped yet.')
       }
     })
     lines.push('')
   })
 
-  lines.push('This draft was auto-assembled from source-attributed evidence across Alumni Signal Intelligence, Curriculum-Market Alignment, Collaboration Marketplace, and Student Readiness. All figures are traceable to their originating page and update timestamp.')
+  lines.push('This draft is illustrative for the hackathon prototype. Official submissions still require staff review and framework-specific validation.')
   return lines.join('\n')
 }
 
-export default function GenerateDraftModal({ submissionTitle = 'QS World Rankings 2025', onClose, onToast }) {
+export default function GenerateDraftModal({
+  frameworkProfile,
+  groups,
+  stats,
+  requestedItems,
+  overrides,
+  evidenceByRequirement,
+  onClose,
+  onToast,
+}) {
   const [copied, setCopied] = useState(false)
-  const text = useMemo(() => buildDraftText(submissionTitle), [submissionTitle])
+  const text = useMemo(
+    () => buildDraftText({ frameworkProfile, groups, stats, requestedItems, overrides, evidenceByRequirement }),
+    [frameworkProfile, groups, stats, requestedItems, overrides, evidenceByRequirement],
+  )
 
   const handleCopy = async () => {
     try {
       await navigator.clipboard.writeText(text)
     } catch {
-      // Clipboard API unavailable — text is still visible for manual copy.
+      // Clipboard API unavailable; visible text remains copyable.
     }
     setCopied(true)
-    onToast?.('Draft pack copied to clipboard')
+    onToast?.('Evidence summary copied to clipboard')
     window.setTimeout(() => setCopied(false), 2000)
   }
 
   const handleDownload = () => {
-    onToast?.('Draft pack downloaded as PDF')
+    onToast?.('Evidence summary download prepared (mock)')
   }
 
   return (
     <EmployerModal
-      title={`Draft Evidence Pack — ${submissionTitle}`}
+      title={`Evidence Summary - ${frameworkProfile.shortLabel}`}
+      subtitle={`${frameworkProfile.category} - ${frameworkProfile.scope}`}
       icon={<FileText className="h-4 w-4" />}
       onClose={onClose}
       maxWidth="max-w-[640px]"
@@ -74,12 +91,14 @@ export default function GenerateDraftModal({ submissionTitle = 'QS World Ranking
             className="flex items-center gap-1.5 rounded-full bg-[#185FA5] px-4 py-2 text-sm font-semibold text-white hover:bg-[#134c87]"
           >
             <Download className="h-3.5 w-3.5" />
-            Download as PDF
+            Download summary
           </button>
         </div>
       }
     >
-      <p className="mb-3 text-xs text-gray-400">Sections mirror the Requirements Checklist categories — every line is source-attributed for committee and reviewer scrutiny.</p>
+      <p className="mb-3 text-xs text-gray-400">
+        This draft uses the currently selected framework and priority requirements only.
+      </p>
       <pre className="whitespace-pre-wrap rounded-xl bg-slate-50 p-4 text-[13px] leading-6 text-slate-800 ring-1 ring-slate-100">{text}</pre>
     </EmployerModal>
   )
