@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { Send } from 'lucide-react'
+import { Send, Sparkles } from 'lucide-react'
 import { careerMemoryDemo } from '../../data/mockData'
 import TypewriterText from '../ui/TypewriterText'
 
@@ -50,13 +50,25 @@ function UserBubble({ text }) {
   )
 }
 
-export default function CompanionChatPanel({ companion, onShowDraft, onConfirmDraft }) {
+// Props:
+//   onGenericChat        — async (prompt, history) => string
+//                          Called when the user hits "Send". Return the
+//                          LLM's reply text; it gets appended as a robot
+//                          bubble in the chat.
+//   onExtractExperience  — async (prompt) => boolean
+//                          Called when the user clicks the sparkles button
+//                          (or falls back to composer submit if
+//                          onGenericChat isn't provided). Should return
+//                          true if the extract-experience API succeeded
+//                          and the Add Experience modal opened.
+export default function CompanionChatPanel({ companion, onShowDraft, onConfirmDraft, onExtractExperience, onGenericChat }) {
   const [history, setHistory] = useState([{ id: makeId(), role: 'robot', text: companion.greeting }])
   const [chips, setChips] = useState(companion.chips)
   const [isTyping, setIsTyping] = useState(false)
   const [typingRobotId, setTypingRobotId] = useState(null)
   const [stage, setStage] = useState('idle')
   const [ended, setEnded] = useState(false)
+  const [draft, setDraft] = useState('')
 
   const scrollRef = useRef(null)
   const timerRef = useRef(null)
@@ -171,7 +183,7 @@ export default function CompanionChatPanel({ companion, onShowDraft, onConfirmDr
         <span className="text-xs font-medium text-[#7382a1]">Online</span>
       </div>
 
-      <div ref={scrollRef} className="flex-1 space-y-3 overflow-y-auto bg-gray-50 p-4">
+      <div ref={scrollRef} className="flex-1 space-y-3 overflow-y-auto bg-white p-4">
         {history.map((msg) => (
           msg.role === 'robot' ? (
             <RobotBubble
@@ -211,28 +223,137 @@ export default function CompanionChatPanel({ companion, onShowDraft, onConfirmDr
 
         {ended && !isTyping && (
           <p className="pt-1 text-center text-xs font-medium text-[#9aa6c3]">
-            ✨ End of demo · Type anything to continue
+            ✨ End of demo · Thanks for exploring
           </p>
         )}
       </div>
 
-      <div className="border-t border-[#e2eaf8] p-3">
-        <div className="flex items-center gap-2 rounded-full border border-[#dfe8f7] bg-gray-50 px-4 py-2">
+      {/* Composer — Send routes free-form text to the generic-chat API
+          (onGenericChat); the sparkles button routes the same draft to
+          the extract-experience API (onExtractExperience) and pops the
+          Add Experience modal pre-filled. Chip clicks continue to
+          advance the local demo state machine. */}
+      <form
+        onSubmit={async (event) => {
+          event.preventDefault()
+          const clean = draft.trim()
+          if (!clean || isTyping) return
+          setDraft('')
+
+          if (typeof onGenericChat === 'function') {
+            // ── GENERIC CHAT PATH ─────────────────────────────
+            // Snapshot the visible history BEFORE we mutate it so the
+            // parent's API call sees only the prior turns, not the
+            // user's brand-new bubble.
+            const historyForApi = history
+              .filter((m) => typeof m.text === 'string' && m.text.trim().length > 0)
+              .map((m) => ({
+                role: m.role === 'robot' ? 'assistant' : 'user',
+                content: m.text,
+              }))
+
+            appendMessage('user', clean)
+            setChips(null)
+            setIsTyping(true)
+            let reply = ''
+            try {
+              const result = await onGenericChat(clean, historyForApi)
+              reply = typeof result === 'string' ? result : (result?.reply ?? '')
+            } catch (error) {
+              reply = ''
+            }
+            setIsTyping(false)
+            appendMessage(
+              'robot',
+              reply.trim().length > 0
+                ? reply
+                : "Sorry — I couldn't reach my brain just now. Try again in a moment.",
+            )
+            return
+          }
+
+          if (typeof onExtractExperience === 'function') {
+            // ── EXTRACT-EXPERIENCE FALLBACK (when no chat API wired) ──
+            appendMessage('user', clean)
+            setChips(null)
+            setIsTyping(true)
+            let success = false
+            try {
+              const result = await onExtractExperience(clean)
+              success = result !== false
+            } catch (error) {
+              success = false
+            }
+            setIsTyping(false)
+            appendMessage(
+              'robot',
+              success
+                ? "Got it — I've drafted that. Check the pop-up to review and save."
+                : "Hmm, I couldn't quite catch that. Try describing it in a bit more detail.",
+            )
+            return
+          }
+
+          // Fallback for pages that wire neither API: pass through to
+          // the demo state machine.
+          handleChipClick(clean)
+        }}
+        className="flex items-center gap-2 border-t border-[#e2eaf8] p-3"
+      >
+        <div className="flex flex-1 items-center gap-1 rounded-full border border-[#dfe8f7] bg-white pl-3 pr-1 py-1 shadow-[inset_0_1px_0_rgba(255,255,255,0.85)] focus-within:border-blue-300 focus-within:ring-2 focus-within:ring-blue-100">
           <input
             type="text"
-            placeholder="Tell me about an experience..."
-            disabled={!ended}
-            className="flex-1 bg-transparent text-sm text-[#2c3656] placeholder:text-[#9aa6c3] focus:outline-none disabled:cursor-not-allowed"
+            value={draft}
+            onChange={(event) => setDraft(event.target.value)}
+            placeholder="Chat with me, or log an experience…"
+            className="flex-1 bg-transparent text-sm text-[#2c3656] placeholder:text-[#9aa6c3] focus:outline-none"
           />
+          {/* Sparkles = "log the current draft as an experience". Sits
+              beside Send so both API paths are one click away. Only shown
+              when the page has actually wired onExtractExperience. */}
+          {typeof onExtractExperience === 'function' && (
+            <button
+              type="button"
+              aria-label="Log as experience"
+              title="Log as experience"
+              disabled={!draft.trim() || isTyping}
+              onClick={async () => {
+                const clean = draft.trim()
+                if (!clean || isTyping) return
+                setDraft('')
+                appendMessage('user', clean)
+                setChips(null)
+                setIsTyping(true)
+                let success = false
+                try {
+                  const result = await onExtractExperience(clean)
+                  success = result !== false
+                } catch (error) {
+                  success = false
+                }
+                setIsTyping(false)
+                appendMessage(
+                  'robot',
+                  success
+                    ? "Got it — I've drafted that. Check the pop-up to review and save."
+                    : "Hmm, I couldn't quite catch that. Try describing it in a bit more detail.",
+                )
+              }}
+              className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full border border-blue-100 bg-white text-blue-600 transition hover:border-blue-300 hover:bg-blue-50 disabled:cursor-not-allowed disabled:opacity-40"
+            >
+              <Sparkles size={14} strokeWidth={2.4} />
+            </button>
+          )}
           <button
-            type="button"
-            disabled={!ended}
-            className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-blue-600 text-white transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
+            type="submit"
+            aria-label="Send message"
+            disabled={!draft.trim() || isTyping}
+            className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-blue-600 text-white shadow-[0_6px_14px_rgba(37,99,235,0.28)] transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-40"
           >
             <Send size={14} strokeWidth={2.4} />
           </button>
         </div>
-      </div>
+      </form>
     </aside>
   )
 }

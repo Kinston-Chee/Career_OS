@@ -9,6 +9,7 @@ import {
   FolderKanban,
   GraduationCap,
   Handshake,
+  ImagePlus,
   Link as LinkIcon,
   Plus,
   Sparkles,
@@ -16,6 +17,25 @@ import {
   Trophy,
   X,
 } from 'lucide-react'
+
+// Formatters for turning YYYY-MM-DD (native date-input value) into
+// human-readable "Jun 2024" and a combined range like "Jun 2024 – Present".
+const MONTH_SHORT = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+
+function formatIsoDate(iso) {
+  if (!iso) return ''
+  const [year, month] = iso.split('-')
+  const monthIdx = Number.parseInt(month, 10) - 1
+  if (Number.isNaN(monthIdx) || monthIdx < 0 || monthIdx > 11) return iso
+  return `${MONTH_SHORT[monthIdx]} ${year}`
+}
+
+function buildDateRangeLabel(startIso, endIso) {
+  const start = formatIsoDate(startIso)
+  if (!start) return ''
+  const end = endIso ? formatIsoDate(endIso) : 'Present'
+  return `${start} – ${end}`
+}
 
 // The six primary Career Memory categories the user can log an entry
 // under. Each one carries an icon, tone (used in accents), a friendly
@@ -141,36 +161,63 @@ const INPUT_CLASS =
   'w-full rounded-xl border border-white/70 bg-white/85 px-3.5 py-2.5 text-sm font-semibold text-[#2c3656] outline-none transition placeholder:text-[#9aa6c3] focus:border-blue-300 focus:bg-white focus:ring-4 focus:ring-blue-100'
 
 // ── Modal ────────────────────────────────────────────────────────────
-export default function AddExperienceModal({ open, onClose, onSubmit }) {
+//
+// `initialValues` — optional prefill (e.g. from the AI-extraction API).
+// Shape: { typeId, title, organisation, startDate, endDate, description,
+//          skills[], evidenceUrl }. Any field missing / undefined falls
+// back to the empty default so partial payloads are safe.
+export default function AddExperienceModal({ open, onClose, onSubmit, initialValues }) {
   const [typeId, setTypeId] = useState('experience')
   const [title, setTitle] = useState('')
   const [organisation, setOrganisation] = useState('')
-  const [dateRange, setDateRange] = useState('')
+  const [startDate, setStartDate] = useState('')
+  const [endDate, setEndDate] = useState('')
   const [description, setDescription] = useState('')
   const [skills, setSkills] = useState([])
   const [skillDraft, setSkillDraft] = useState('')
   const [evidenceUrl, setEvidenceUrl] = useState('')
+  // Picture upload is placeholder-only for now — the file never leaves the
+  // browser. We keep the File + a preview URL so the UI shows what was
+  // picked and lets the user swap or clear it.
+  const [imageFile, setImageFile] = useState(null)
+  const [imagePreview, setImagePreview] = useState(null)
   const [error, setError] = useState('')
   const firstFieldRef = useRef(null)
+  const fileInputRef = useRef(null)
 
   const activeType = EXPERIENCE_TYPES.find((t) => t.id === typeId) ?? EXPERIENCE_TYPES[0]
-  const isValid = title.trim().length > 0 && organisation.trim().length > 0 && dateRange.trim().length > 0
+  const isValid = title.trim().length > 0 && organisation.trim().length > 0 && startDate.length > 0
 
-  // Reset form when the modal reopens so previous drafts don't leak in.
+  // Reset (or prefill) the form when the modal opens. When `initialValues`
+  // is supplied — e.g. by the "Fill with AI" flow that hits our FastAPI
+  // endpoint — every state slot is seeded from it. Otherwise everything
+  // starts empty so an old draft never leaks in.
   useEffect(() => {
     if (!open) return
-    setTypeId('experience')
-    setTitle('')
-    setOrganisation('')
-    setDateRange('')
-    setDescription('')
-    setSkills([])
+    setTypeId(initialValues?.typeId ?? 'experience')
+    setTitle(initialValues?.title ?? '')
+    setOrganisation(initialValues?.organisation ?? '')
+    setStartDate(initialValues?.startDate ?? '')
+    setEndDate(initialValues?.endDate ?? '')
+    setDescription(initialValues?.description ?? '')
+    setSkills(Array.isArray(initialValues?.skills) ? initialValues.skills : [])
     setSkillDraft('')
-    setEvidenceUrl('')
+    setEvidenceUrl(initialValues?.evidenceUrl ?? '')
+    setImageFile(null)
+    setImagePreview((current) => {
+      if (current) URL.revokeObjectURL(current)
+      return null
+    })
     setError('')
+    if (fileInputRef.current) fileInputRef.current.value = ''
     const timer = window.setTimeout(() => firstFieldRef.current?.focus(), 60)
     return () => window.clearTimeout(timer)
-  }, [open])
+  }, [open, initialValues])
+
+  // Revoke any preview URL when the modal fully unmounts, to avoid leaks.
+  useEffect(() => () => {
+    if (imagePreview) URL.revokeObjectURL(imagePreview)
+  }, [imagePreview])
 
   // Close on Escape while open.
   useEffect(() => {
@@ -202,10 +249,33 @@ export default function AddExperienceModal({ open, onClose, onSubmit }) {
     }
   }
 
+  const handleImageChange = (event) => {
+    const file = event.target.files?.[0]
+    if (!file) return
+    setImageFile(file)
+    setImagePreview((current) => {
+      if (current) URL.revokeObjectURL(current)
+      return URL.createObjectURL(file)
+    })
+  }
+
+  const clearImage = () => {
+    setImagePreview((current) => {
+      if (current) URL.revokeObjectURL(current)
+      return null
+    })
+    setImageFile(null)
+    if (fileInputRef.current) fileInputRef.current.value = ''
+  }
+
   const handleSubmit = (event) => {
     event.preventDefault()
     if (!isValid) {
-      setError('Add a title, organisation, and date range to continue.')
+      setError('Add a title, organisation, and start date to continue.')
+      return
+    }
+    if (endDate && endDate < startDate) {
+      setError('End date must be on or after the start date.')
       return
     }
     // If the user still has an unadded chip in the draft, capture it.
@@ -218,13 +288,15 @@ export default function AddExperienceModal({ open, onClose, onSubmit }) {
       .map((word) => word[0]?.toUpperCase() ?? '')
       .join('') || title.trim()[0]?.toUpperCase() || 'M'
 
+    const rangeLabel = buildDateRangeLabel(startDate, endDate)
+
     const timelineEntry = {
       id: `mem-${Date.now()}`,
       logo: logoInitial,
       logoTone: activeType.logoTone,
       title: `${title.trim()} — ${organisation.trim()}`,
-      period: dateRange.trim(),
-      year: dateRange.trim(),
+      period: rangeLabel,
+      year: rangeLabel,
       tags: finalSkills.slice(0, 3),
       verified: false,
       signalStrength: 2,
@@ -232,11 +304,16 @@ export default function AddExperienceModal({ open, onClose, onSubmit }) {
         type: activeType.label,
         title: title.trim(),
         organisation: organisation.trim(),
-        dateRange: dateRange.trim(),
+        dateRange: rangeLabel,
+        startDate,
+        endDate: endDate || null,
         status: 'Self-reported',
         description: description.trim() || 'No description provided yet.',
         skills: finalSkills,
         evidence: evidenceUrl.trim() ? [evidenceUrl.trim()] : [],
+        // Placeholder: we don't persist the actual file — we just remember
+        // that the user picked one so the timeline could show a badge.
+        attachmentName: imageFile?.name ?? null,
         insight: 'AI will analyse this entry shortly and surface signals it adds to your profile.',
         actions: ['Add an outcome or metric', 'Attach a link or screenshot'],
       },
@@ -345,15 +422,41 @@ export default function AddExperienceModal({ open, onClose, onSubmit }) {
             </IconField>
           </div>
 
-          {/* ── Date range ───────────────────────────────── */}
-          <IconField icon={Calendar} label="Date range" hint="e.g. Jun–Aug 2024 or 2023–2024">
-            <input
-              value={dateRange}
-              onChange={(event) => setDateRange(event.target.value)}
-              placeholder="Jun – Aug 2024"
-              className={INPUT_CLASS}
-              required
-            />
+          {/* ── Date range (interactive calendars) ─────── */}
+          <IconField icon={Calendar} label="Date range" hint="Leave end empty for Present">
+            <div className="grid gap-2 sm:grid-cols-2">
+              <label className="block">
+                <span className="mb-1 block text-[11px] font-bold uppercase tracking-wide text-[#7382a1]">
+                  Start
+                </span>
+                <input
+                  type="date"
+                  value={startDate}
+                  onChange={(event) => setStartDate(event.target.value)}
+                  max={endDate || undefined}
+                  className={INPUT_CLASS}
+                  required
+                />
+              </label>
+              <label className="block">
+                <span className="mb-1 block text-[11px] font-bold uppercase tracking-wide text-[#7382a1]">
+                  End · optional
+                </span>
+                <input
+                  type="date"
+                  value={endDate}
+                  onChange={(event) => setEndDate(event.target.value)}
+                  min={startDate || undefined}
+                  className={INPUT_CLASS}
+                />
+              </label>
+            </div>
+            {startDate && (
+              <p className="mt-2 inline-flex items-center gap-1.5 rounded-full border border-blue-100 bg-blue-50/70 px-2.5 py-1 text-[11px] font-bold text-blue-700">
+                <Calendar size={11} strokeWidth={2.4} />
+                {buildDateRangeLabel(startDate, endDate)}
+              </p>
+            )}
           </IconField>
 
           {/* ── Description ─────────────────────────────── */}
@@ -413,6 +516,60 @@ export default function AddExperienceModal({ open, onClose, onSubmit }) {
               placeholder="https://github.com/… or Google Drive link"
               className={INPUT_CLASS}
             />
+          </IconField>
+
+          {/* ── Picture upload (placeholder UI only) ─────── */}
+          <IconField icon={ImagePlus} label="Attach a picture" hint="Optional · JPG or PNG">
+            <input
+              ref={fileInputRef}
+              id="add-experience-image"
+              type="file"
+              accept="image/*"
+              onChange={handleImageChange}
+              className="sr-only"
+            />
+            {imagePreview ? (
+              <div className="flex items-center gap-3 rounded-xl border border-blue-100 bg-blue-50/60 p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.8)]">
+                <img
+                  src={imagePreview}
+                  alt="Selected preview"
+                  className="h-16 w-16 flex-shrink-0 rounded-lg object-cover ring-1 ring-blue-100"
+                />
+                <div className="min-w-0 flex-1">
+                  <p className="truncate text-xs font-black text-[#11194a]">{imageFile?.name}</p>
+                  <p className="mt-0.5 text-[10px] font-semibold text-[#7382a1]">
+                    {imageFile ? `${Math.max(1, Math.round(imageFile.size / 1024))} KB` : ''} · Preview only, not saved
+                  </p>
+                  <label
+                    htmlFor="add-experience-image"
+                    className="mt-1 inline-block cursor-pointer text-[11px] font-bold text-blue-700 hover:text-blue-800"
+                  >
+                    Replace picture
+                  </label>
+                </div>
+                <button
+                  type="button"
+                  onClick={clearImage}
+                  className="rounded-full p-1.5 text-[#9aa6c3] transition hover:bg-blue-100 hover:text-blue-700"
+                  aria-label="Remove image"
+                >
+                  <X size={14} />
+                </button>
+              </div>
+            ) : (
+              <label
+                htmlFor="add-experience-image"
+                className="flex cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border-2 border-dashed border-blue-200 bg-white/60 px-4 py-6 text-center transition hover:border-blue-400 hover:bg-blue-50/50"
+              >
+                <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-blue-100/80 text-blue-600 shadow-[0_6px_16px_rgba(37,99,235,0.14)]">
+                  <ImagePlus size={18} strokeWidth={2.2} />
+                </span>
+                <span className="text-sm font-black text-[#11194a]">Click to upload a picture</span>
+                <span className="text-[11px] font-semibold text-[#7382a1]">
+                  PNG or JPG · Placeholder — no real upload yet
+                </span>
+              </label>
+            )}
           </IconField>
 
           {/* ── Footer ───────────────────────────────────── */}

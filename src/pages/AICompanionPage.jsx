@@ -191,7 +191,7 @@ function withConfig(response) {
 //     return {"type": "text", "text": "..."}
 
 // const COMPANION_API_BASE_URL = import.meta.env.VITE_COMPANION_API_BASE_URL ?? ''
-const COMPANION_API_BASE_URL = 'http://127.0.0.1:8000/'
+const COMPANION_API_BASE_URL = 'http://127.0.0.1:8001/'
 const COMPANION_CHAT_PATH = 'api/candidates/chat'
 const COMPANION_TIMEOUT_MS = 20000
 
@@ -302,7 +302,8 @@ async function fetchCompanionResponse(prompt, history = []) {
     // FastAPI returns the response object directly (not wrapped in
     // OpenAI-style `choices[]`). Normalise it into a UI-safe shape.
     const payload = await response.json()
-    return normaliseCompanionResponse(payload)
+    // const [text, data] = payload
+    return normaliseCompanionResponse(payload.reply)
   } catch (error) {
     // eslint-disable-next-line no-console
     console.warn('[AICompanionPage] Companion API call failed, falling back to mock:', error)
