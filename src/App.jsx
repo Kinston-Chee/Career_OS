@@ -9,6 +9,7 @@ import CandidateHomePage from './pages/CandidateHomePage'
 import CandidateInsightsPage from './pages/CandidateInsightsPage'
 import CandidateOverviewPage from './pages/CandidateOverviewPage'
 import CareerIntelligencePage from './pages/CareerIntelligencePage'
+import CommunitiesPage from './pages/CommunitiesPage'
 import CurriculumMarketAlignmentPage from './pages/CurriculumMarketAlignmentPage'
 import EmployerCreateEngagementPage from './pages/EmployerCreateEngagementPage'
 import Analytics from './pages/employer/Analytics'
@@ -21,6 +22,7 @@ import TalentDiscovery from './pages/employer/TalentDiscovery'
 import LandingPage from './pages/LandingPage'
 import JobMarketplacePage from './pages/JobMarketplacePage'
 import MemoryProfilePage from './pages/MemoryProfilePage'
+import MentorshipsPage from './pages/MentorshipsPage'
 import OpportunitiesPage from './pages/OpportunitiesPage'
 import PlaceholderPage from './pages/PlaceholderPage'
 import ProfilePage from './pages/ProfilePage'
@@ -53,6 +55,8 @@ export default function App() {
         <Route path="/student/intelligence" element={<CareerIntelligencePage />} />
         <Route path="/student/career-intelligence" element={<CareerIntelligencePage />} />
         <Route path="/student/opportunities" element={<OpportunitiesPage />} />
+        <Route path="/student/communities" element={<CommunitiesPage />} />
+        <Route path="/student/mentorships" element={<MentorshipsPage />} />
         <Route path="/student/ai-companion" element={<AICompanionPage />} />
         <Route path="/student/ai-assistant" element={<Navigate to="/student/ai-companion" replace />} />
         <Route path="/student/account" element={<ProfilePage />} />
@@ -64,7 +68,7 @@ export default function App() {
           <Route path="/student/applications" element={<ApplicationsPage />} />
           <Route
             path="/student/network"
-            element={<PlaceholderPage title="Network & Mentors" />}
+            element={<Navigate to="/student/communities" replace />}
           />
           <Route
             path="/student/learning"
@@ -134,6 +138,8 @@ export default function App() {
       <Route path="/intelligence" element={<Navigate to="/student/intelligence" replace />} />
       <Route path="/career-intelligence" element={<Navigate to="/student/intelligence" replace />} />
       <Route path="/opportunities" element={<Navigate to="/student/opportunities" replace />} />
+      <Route path="/communities" element={<Navigate to="/student/communities" replace />} />
+      <Route path="/mentorships" element={<Navigate to="/student/mentorships" replace />} />
       <Route path="/employer-view" element={<Navigate to="/employer/home" replace />} />
       <Route path="/university-hub" element={<Navigate to="/university/readiness" replace />} />
       <Route path="*" element={<Navigate to="/" replace />} />

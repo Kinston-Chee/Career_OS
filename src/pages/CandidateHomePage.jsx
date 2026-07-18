@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { ArrowRight, X } from 'lucide-react'
+import { HeartHandshake, X } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import HomeTopNav from '../components/home/HomeTopNav'
 import HeroCard from '../components/home/HeroCard'
@@ -49,7 +49,7 @@ const OPPORTUNITY_DETAILS = {
 function DemoToast({ message }) {
   if (!message) return null
   return (
-    <div className="fixed bottom-5 right-5 z-50 rounded-2xl border border-white/70 bg-[linear-gradient(135deg,rgba(255,255,255,0.9),rgba(239,246,255,0.7))] px-4 py-3 text-sm font-bold text-[#185FA5] shadow-[0_18px_44px_rgba(37,99,235,0.14),inset_0_1px_0_rgba(255,255,255,0.9)] backdrop-blur-xl ring-1 ring-blue-100/50">
+    <div className="fixed bottom-24 right-5 z-50 rounded-2xl border border-white/70 bg-[linear-gradient(135deg,rgba(255,255,255,0.9),rgba(239,246,255,0.7))] px-4 py-3 text-sm font-bold text-[#185FA5] shadow-[0_18px_44px_rgba(37,99,235,0.14),inset_0_1px_0_rgba(255,255,255,0.9)] backdrop-blur-xl ring-1 ring-blue-100/50">
       {message}
     </div>
   )
@@ -229,6 +229,19 @@ export default function CandidateHomePage() {
     ],
   })
 
+  const openMentorshipModal = () => setModal({
+    title: 'Grow with the right mentor',
+    body: 'Meet experienced professionals who can guide your next career step with practical advice, honest feedback, and real-world perspective.',
+    sections: [
+      { title: 'Personalised matches', text: 'CareerOS recommends mentors based on your goals, skills, and current gaps.' },
+      { title: 'Human guidance', text: 'Get support from people who have already navigated the path ahead of you.' },
+    ],
+    actions: [
+      { label: 'Maybe later', secondary: true, onClick: () => setModal(null) },
+      { label: 'Explore Mentorships', onClick: () => navigate('/student/mentorships') },
+    ],
+  })
+
   return (
     <div className="min-h-screen bg-[#f6f9ff] text-[#121a3a]">
       <HomeTopNav user={mockUser} readiness={readiness} />
@@ -277,6 +290,15 @@ export default function CandidateHomePage() {
       <DemoModal modal={modal} onClose={() => setModal(null)} />
       <DemoDrawer drawer={drawer} onClose={() => setDrawer(null)} />
       {showAssessment && <SelfDiscoveryFlow onClose={() => setShowAssessment(false)} />}
+      <button
+        type="button"
+        onClick={openMentorshipModal}
+        aria-label="Open Mentorships"
+        title="Mentorships"
+        className="fixed bottom-5 right-5 z-30 flex h-14 w-14 items-center justify-center rounded-full bg-blue-600 text-white shadow-[0_16px_38px_rgba(37,99,235,0.30)] transition hover:-translate-y-0.5 hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-200"
+      >
+        <HeartHandshake size={23} />
+      </button>
       <DemoToast message={toast} />
     </div>
   )

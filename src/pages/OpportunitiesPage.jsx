@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { X } from 'lucide-react'
 import HomeTopNav from '../components/home/HomeTopNav'
 import OpportunitiesHeader from '../components/opportunitiesHub/OpportunitiesHeader'
@@ -215,6 +215,7 @@ function InfoCard({ title, children }) {
 
 export default function OpportunitiesPage() {
   const location = useLocation()
+  const navigate = useNavigate()
   const readiness = candidateOverview.careerSnapshot.readiness
   const [activeTab, setActiveTab] = useState('All')
   const [listFilter, setListFilter] = useState('All')
@@ -367,7 +368,12 @@ export default function OpportunitiesPage() {
 
       {showWhyModal && <WhyThese3Modal sections={opportunitiesHub.whyThese3} onClose={() => setShowWhyModal(false)} />}
 
-      <OpportunityDetailsPanel opportunity={activeOpportunity} onClose={() => setActiveOpportunity(null)} onApplied={handleApplied} />
+      <OpportunityDetailsPanel
+        opportunity={activeOpportunity}
+        onClose={() => setActiveOpportunity(null)}
+        onApplied={handleApplied}
+        onApplyNow={(opportunity) => navigate('/student/intelligence', { state: { applyOpportunity: opportunity } })}
+      />
       {trackerInitialApplication && (
         <ApplicationTrackerModal
           applications={opportunityTracker}

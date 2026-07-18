@@ -1,0 +1,2 @@
+CREATE DATABASE careerdb;
+CREATE DATABASE careeros_ai;

@@ -7,6 +7,7 @@ const TABS = [
   { label: 'Career Memory', to: '/student/profile' },
   { label: 'Career Intelligence', to: '/student/intelligence' },
   { label: 'Opportunities', to: '/student/opportunities' },
+  { label: 'Communities', to: '/student/communities' },
   { label: 'AI Companion', to: '/student/ai-companion' },
 ]
 
