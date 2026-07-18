@@ -1,0 +1,26 @@
+# Web framework / server
+fastapi>=0.115,<1.0
+uvicorn[standard]>=0.32,<1.0
+python-multipart>=0.0.12   # required by FastAPI for UploadFile/Form (users.py picture upload)
+
+# Database / migrations
+sqlalchemy[asyncio]>=2.0,<3.0
+psycopg[binary,pool]>=3.2,<4.0   # matches "postgresql+psycopg" URL in database_url
+alembic>=1.13,<2.0
+
+# Settings / validation
+pydantic>=2.9,<3.0
+pydantic-settings>=2.6,<3.0
+python-dotenv>=1.0,<2.0   # used directly by agents/careeros_agent/agent.py
+
+# Auth
+pyjwt>=2.9,<3.0
+pwdlib[argon2]>=0.2,<1.0
+
+# Images
+pillow>=10.4,<11.0
+
+# careeros_agent (wired into routers/candidates.py -> /api/candidates/chat)
+google-adk>=1.0
+google-genai>=0.3
+litellm>=1.50
