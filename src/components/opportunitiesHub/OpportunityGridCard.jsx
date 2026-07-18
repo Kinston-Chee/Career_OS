@@ -1,5 +1,5 @@
 import React from 'react'
-import { ArrowRight, Bookmark, Check, MapPin } from 'lucide-react'
+import { ArrowRight, Bookmark, Check, MapPin, Users } from 'lucide-react'
 import internBg from '../../assets/Opportunity Intern bg.png'
 import competitionBg from '../../assets/Opportunity Competition bg.png'
 import jobBg from '../../assets/Opportunity Job bg.png'
@@ -46,9 +46,21 @@ const BG_IMAGES = {
   event: eventBg,
 }
 
+const CONNECTION_ACTIVITY = {
+  'opp-1': { count: 3, label: 'applied', initials: ['AL', 'NS', 'JW'] },
+  'opp-2': { count: 2, label: 'joined', initials: ['DT', 'AH'] },
+  'opp-3': { count: 4, label: 'applied', initials: ['FN', 'JL', 'AK'] },
+  'opp-4': { count: 5, label: 'registered', initials: ['CT', 'IR', 'SM'] },
+}
+
 export default function OpportunityGridCard({ opportunity, applied, saved, onViewDetails, onToggleSave }) {
   const bgImage = BG_IMAGES[opportunity.bgImageKey]
   const tone = CARD_TONES[opportunity.accentTone] ?? CARD_TONES.indigo
+  const connectionActivity = CONNECTION_ACTIVITY[opportunity.id] ?? {
+    count: 2,
+    label: opportunity.type === 'event' ? 'registered' : 'applied',
+    initials: ['AT', 'HR'],
+  }
 
   return (
     <article
@@ -90,6 +102,17 @@ export default function OpportunityGridCard({ opportunity, applied, saved, onVie
           Applied
         </span>
       )}
+
+      <div className={`absolute right-6 z-20 hidden w-[132px] flex-col items-end sm:flex ${applied ? 'top-16' : opportunity.eventTag ? 'top-[86px]' : 'top-[124px]'}`}>
+        <div className="flex -space-x-1.5">
+          {connectionActivity.initials.map((initials) => (
+            <span key={initials} className="flex h-7 w-7 items-center justify-center rounded-full border-2 border-white bg-blue-100 text-[9px] font-bold text-blue-700 shadow-sm">{initials}</span>
+          ))}
+        </div>
+        <span className="mt-1.5 inline-flex items-center gap-1 rounded-full border border-blue-100 bg-white/82 px-2.5 py-1 text-[10px] font-semibold text-[#52627f] shadow-sm backdrop-blur-sm">
+          <Users size={11} className="text-blue-600" /> {connectionActivity.count} connections {connectionActivity.label}
+        </span>
+      </div>
 
       <div className="relative z-10 flex h-full max-w-full flex-col sm:max-w-[58%]">
         <div className="flex items-start justify-between gap-4 sm:block">

@@ -1,23 +1,23 @@
-# Session Snapshot — 2026-06-30 20:40
+# Session Snapshot — 2026-07-12 17:48
 
 ## Files Changed
-- .claude/sessions/.claude-md-validated-2026-06-30
-- .claude/sessions/.ghost-checked-20260630
-- .claude/sessions/.snapshot-injected-2026-06-30
-- .claude/sessions/snapshot.md
 - .claude/sessions/token-log.md
 - src/App.jsx
-- src/components/employer/AIActionQueue.jsx
-- src/components/employer/AIBriefingCard.jsx
-- src/components/employer/AIOpportunityRadar.jsx
-- src/components/employer/CampusPipelineFunnel.jsx
+- src/components/careerMemory/AddExperienceModal.jsx
+- src/components/careerMemory/MemoryTimeline.jsx
+- src/components/home/HeroCard.jsx
+- src/data/mockData.js
+- src/pages/AICompanionPage.jsx
+- src/pages/CandidateHomePage.jsx
+- src/pages/CareerIntelligencePage.jsx
+- src/pages/MemoryProfilePage.jsx
 
 ## Recent Commits
-- 9c106bc Employer workplace evolution
-- 514e035 Candidate workplace enhancement
-- 3bfab53 Home page icon debug
-- b61b02d Candidate Workplace Evolution
-- 5c3dc66 Readme update
+- 14cb83e Merge branch 'claude/sleepy-colden-6683d8'
+- cb60d31 Redesign Candidate workspace frontend
+- c3704a2 Merge remote-tracking branch 'origin/main' into claude/sleepy-colden-6683d8
+- 002a4a7 Add companion-page redesign, Career Memory category view, and API placeholder
+- 4e03748 Merge branch 'main' of https://github.com/Kinston-Chee/Career_OS
 
 ## Token Estimate
 ~? tokens in auto-loaded files

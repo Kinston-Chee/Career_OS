@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom'
 import DetailsView from './DetailsView'
 import ApplyFlowView from './ApplyFlowView'
 
-export default function OpportunityDetailsPanel({ opportunity, onClose, onApplied }) {
-  const [panelState, setPanelState] = useState('details')
+export default function OpportunityDetailsPanel({ opportunity, onClose, onApplied, onApplyNow, initialView = 'details' }) {
+  const [panelState, setPanelState] = useState(initialView)
   const [applyStep, setApplyStep] = useState(1)
   const wasOpenRef = useRef(false)
   const navigate = useNavigate()
@@ -13,11 +13,11 @@ export default function OpportunityDetailsPanel({ opportunity, onClose, onApplie
   // Reset back to the details view every time the panel transitions from closed to open.
   useEffect(() => {
     if (isOpen && !wasOpenRef.current) {
-      setPanelState('details')
+      setPanelState(initialView)
       setApplyStep(1)
     }
     wasOpenRef.current = isOpen
-  }, [isOpen])
+  }, [initialView, isOpen])
 
   useEffect(() => {
     if (!isOpen) return undefined
@@ -50,7 +50,17 @@ export default function OpportunityDetailsPanel({ opportunity, onClose, onApplie
         }}
       >
         {opportunity && panelState === 'details' && (
-          <DetailsView opportunity={opportunity} onClose={onClose} onApplyNow={() => setPanelState('applying')} />
+          <DetailsView
+            opportunity={opportunity}
+            onClose={onClose}
+            onApplyNow={() => {
+              if (onApplyNow) {
+                onApplyNow(opportunity)
+                return
+              }
+              setPanelState('applying')
+            }}
+          />
         )}
 
         {opportunity && panelState === 'applying' && (
