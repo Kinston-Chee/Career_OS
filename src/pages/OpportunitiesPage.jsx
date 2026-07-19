@@ -286,7 +286,8 @@ export default function OpportunitiesPage() {
 
   const handleViewDetails = (id) => {
     const detail = opportunityDetails[id]
-    if (detail) setActiveOpportunity(detail)
+    const summary = [...opportunitiesHub.cards, ...opportunitiesHub.heroPicks].find((item) => item.id === id)
+    if (detail) setActiveOpportunity({ ...detail, sdgs: summary?.sdgs ?? detail.sdgs ?? [] })
   }
 
   return (

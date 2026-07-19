@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { HeartHandshake, X } from 'lucide-react'
+import { ArrowRight, X } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import HomeTopNav from '../components/home/HomeTopNav'
 import HeroCard from '../components/home/HeroCard'
@@ -10,6 +10,7 @@ import QuickActions from '../components/home/QuickActions'
 import RecentActivity from '../components/home/RecentActivity'
 import RightSidebar from '../components/home/RightSidebar'
 import { candidateHome, candidateOverview, mockUser } from '../data/mockData'
+import mentorshipWidgetBg from '../assets/Mentorship Widget bg.png'
 
 const OPPORTUNITY_DETAILS = {
   'home-opp-1': {
@@ -294,10 +295,18 @@ export default function CandidateHomePage() {
         type="button"
         onClick={openMentorshipModal}
         aria-label="Open Mentorships"
-        title="Mentorships"
-        className="fixed bottom-5 right-5 z-30 flex h-14 w-14 items-center justify-center rounded-full bg-blue-600 text-white shadow-[0_16px_38px_rgba(37,99,235,0.30)] transition hover:-translate-y-0.5 hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-200"
+        className="group fixed bottom-4 right-4 z-30 flex min-h-[184px] w-[196px] flex-col overflow-hidden rounded-xl border border-blue-200/80 bg-white/95 p-4 pt-5 text-left shadow-[0_16px_38px_rgba(37,99,235,0.16)] backdrop-blur-xl transition duration-200 hover:-translate-y-0.5 hover:border-blue-300 hover:shadow-[0_20px_44px_rgba(37,99,235,0.22)] focus:outline-none focus:ring-4 focus:ring-blue-200 sm:w-[218px]"
       >
-        <HeartHandshake size={23} />
+        <span className="absolute inset-x-0 top-0 h-1 bg-blue-600" aria-hidden="true" />
+        <img src={mentorshipWidgetBg} alt="" aria-hidden="true" className="pointer-events-none absolute -right-2 bottom-8 h-[138px] w-[116px] object-contain object-bottom opacity-[0.16]" />
+        <span className="relative z-10 block text-[10px] font-bold uppercase tracking-wide text-blue-600">CareerOS Mentorship</span>
+        <span className="relative z-10 mt-1.5 block text-base font-bold leading-5 text-[#11194a]">Find your mentor</span>
+        <span className="relative z-10 mt-2 block text-xs font-medium leading-[18px] text-[#637094]">
+          Get practical guidance from experienced people matched to your career goals.
+        </span>
+        <span className="relative z-10 mt-auto flex w-full items-center justify-between rounded-lg bg-blue-600 px-3 py-2 text-xs font-bold text-white shadow-[0_8px_18px_rgba(37,99,235,0.20)] transition group-hover:bg-blue-700">
+          Explore mentorships <ArrowRight size={14} className="transition-transform group-hover:translate-x-0.5" />
+        </span>
       </button>
       <DemoToast message={toast} />
     </div>

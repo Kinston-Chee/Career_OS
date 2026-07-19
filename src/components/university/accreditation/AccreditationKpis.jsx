@@ -12,6 +12,11 @@ const TONES = {
     iconClass: 'bg-orange-50 text-orange-500 ring-orange-100',
     valueClass: 'text-orange-500',
   },
+  amber: {
+    Icon: Clock3,
+    iconClass: 'bg-amber-50 text-amber-600 ring-amber-100',
+    valueClass: 'text-amber-600',
+  },
   red: {
     Icon: AlertTriangle,
     iconClass: 'bg-red-50 text-red-500 ring-red-100',
@@ -21,7 +26,7 @@ const TONES = {
 
 export default function AccreditationKpis({ kpis }) {
   return (
-    <section className="grid grid-cols-4 gap-3">
+    <section className="grid grid-cols-5 gap-3">
       {kpis.map((kpi) => {
         const tone = TONES[kpi.tone] || TONES.green
         const Icon = kpi.id === 'ready' ? Check : tone.Icon
