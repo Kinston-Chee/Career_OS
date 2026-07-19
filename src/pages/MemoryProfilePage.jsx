@@ -6,6 +6,9 @@ import MemoryTimeline from '../components/careerMemory/MemoryTimeline'
 import AISignalsPanel from '../components/careerMemory/AISignalsPanel'
 import GapsPanel from '../components/careerMemory/GapsPanel'
 import AddExperienceModal from '../components/careerMemory/AddExperienceModal'
+import SkillGapAnalysis from '../components/careerMemory/SkillGapAnalysis'
+import { fetchExperienceDraft } from '../services/careerMemoryApi'
+import { chatWithCompanion } from '../services/companionChatApi'
 import { candidateOverview, careerMemoryDemo, careerMemoryView, mockUser } from '../data/mockData'
 
 const MEMORY_DETAILS = {
@@ -192,6 +195,11 @@ export default function MemoryProfilePage() {
   const [editing, setEditing] = useState(false)
   const [toast, setToast] = useState('')
   const [isAddOpen, setIsAddOpen] = useState(false)
+  // Prefill for the AddExperienceModal. Set by the AI-fill flow so the
+  // modal opens with API-returned values already in place; null means an
+  // empty form.
+  const [addInitialValues, setAddInitialValues] = useState(null)
+  const [isFetchingDraft, setIsFetchingDraft] = useState(false)
   const toastRef = useRef(null)
 
   useEffect(() => () => window.clearTimeout(toastRef.current), [])
@@ -231,6 +239,78 @@ export default function MemoryProfilePage() {
     showToast('Experience added to Career Memory')
   }
 
+  // Open an empty AddExperienceModal.
+  const openBlankAddModal = () => {
+    setAddInitialValues(null)
+    setIsAddOpen(true)
+  }
+
+  // Ask the FastAPI backend to draft an experience from a free-form
+  // prompt (typed into the CompanionChatPanel composer), then pop the
+  // AddExperienceModal open with the response already filled in. Falls
+  // back to a mock draft when the API isn't reachable (see
+  // `src/services/careerMemoryApi.js`). Returns true on success so the
+  // chatbox can render an appropriate acknowledgement.
+  const handleExtractExperience = async (prompt) => {
+    if (isFetchingDraft) return false
+    setIsFetchingDraft(true)
+    showToast('Drafting from AI…')
+    try {
+      const { draft, source } = await fetchExperienceDraft(prompt ?? '')
+      setAddInitialValues(draft)
+      setIsAddOpen(true)
+      showToast(source === 'api' ? 'AI draft ready — review and save' : 'Loaded demo draft — review and save')
+      return true
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error('[MemoryProfilePage] extract-experience failed:', error)
+      showToast('Could not fetch AI draft. Try again.')
+      return false
+    } finally {
+      setIsFetchingDraft(false)
+    }
+  }
+
+  // Whenever the modal closes, drop the prefill so the next "Add
+  // Experience" click starts fresh.
+  const handleAddModalClose = () => {
+    setIsAddOpen(false)
+    setAddInitialValues(null)
+  }
+
+  // Generic LLM chat for the CompanionChatPanel's Send button. Receives
+  // the user's prompt and the OpenAI-style history array the panel
+  // built. Returns the assistant reply text; on failure returns an
+  // empty string so the panel shows its fallback message.
+  const handleGenericChat = async (prompt, history) => {
+    try {
+      const { reply, data_response } = await chatWithCompanion(prompt, history)
+      console.log(data_response)
+      if (data_response != null) {
+      const extracted_info = data_response.experience_info_agent
+      setIsAddOpen(false)
+      setAddInitialValues({
+        typeId:       extracted_info.category?.toLowerCase() ?? 'experience',
+        title:        extracted_info.title ?? 'Default title',
+        organisation: extracted_info.organisation ?? 'HWUM',
+        startDate:    extracted_info.start_date ?? '',
+        endDate:      extracted_info.end_date ?? '',
+        description:  extracted_info.details ?? 'This is default details',
+        skills:       extracted_info.skills_used ?? [],
+        evidenceUrl:  extracted_info.evidence_link ?? '',
+      })
+      setIsAddOpen(true)
+      console.log('experience saved!')
+     }
+
+      return reply
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error('[MemoryProfilePage] chat failed:', error)
+      return ''
+    }
+  }
+
   const draftTimelineEntry = {
     ...careerMemoryDemo.draftEntry,
     title: `${draftDetails.organisation} - ${draftDetails.title}`,
@@ -262,6 +342,8 @@ export default function MemoryProfilePage() {
                 companion={careerMemoryView.companion}
                 onShowDraft={() => setDraftPhase('typing')}
                 onConfirmDraft={() => setDraftPhase('confirming')}
+                onExtractExperience={handleExtractExperience}
+                onGenericChat={handleGenericChat}
               />
             </div>
           </div>
@@ -275,13 +357,27 @@ export default function MemoryProfilePage() {
               onOpenMemory={(entry) => openMemory(entry)}
               onEditMemory={(entry) => openMemory(entry, true)}
               onEditDraft={() => openMemory(draftMemory, true)}
-              onAddExperience={() => setIsAddOpen(true)}
+              onAddExperience={openBlankAddModal}
             />
+
+            {/* Skill-gap analysis sits below the experience timeline. Uses
+                its own demo data + local state for target role / industry. */}
+            <div className="mt-6">
+              <SkillGapAnalysis />
+            </div>
           </div>
 
-          <div className="min-w-0 space-y-4">
-            <AISignalsPanel signals={careerMemoryView.aiSignals} leadershipBoost={leadershipBoost} />
-            <GapsPanel gaps={careerMemoryView.gaps} />
+          {/* Grid placeholder — reserves the 320px column so the layout
+              stays put. The actual signals + gaps rail is position: fixed
+              inside, so it never scrolls with the page. Uses the same
+              max()-based right offset the left companion panel uses on
+              the left so both rails align with the centered container on
+              wide viewports. */}
+          <div className="min-w-0">
+            <div className="space-y-4 lg:fixed lg:top-20 lg:z-10 lg:w-[320px] lg:right-[max(2rem,calc((100vw-1480px)/2+2rem))]">
+              <AISignalsPanel signals={careerMemoryView.aiSignals} leadershipBoost={leadershipBoost} />
+              <GapsPanel gaps={careerMemoryView.gaps} />
+            </div>
           </div>
         </div>
       </div>
@@ -298,7 +394,8 @@ export default function MemoryProfilePage() {
       )}
       <AddExperienceModal
         open={isAddOpen}
-        onClose={() => setIsAddOpen(false)}
+        initialValues={addInitialValues}
+        onClose={handleAddModalClose}
         onSubmit={handleAddExperience}
       />
       <DemoToast message={toast} />

@@ -27,6 +27,8 @@ import OpportunitiesPage from './pages/OpportunitiesPage'
 import PlaceholderPage from './pages/PlaceholderPage'
 import ProfilePage from './pages/ProfilePage'
 import CareerAnimalPage from './pages/CareerAnimalPage'
+import SkillDevelopmentPage from './pages/SkillDevelopmentPage'
+import SkillDetailPage from './pages/SkillDetailPage'
 import ProtectedRoute from './components/session/ProtectedRoute'
 import SocietyCorporateMarketplacePage from './pages/SocietyCorporateMarketplacePage'
 import StudentReadinessOverviewPage from './pages/StudentReadinessOverviewPage'
@@ -57,6 +59,8 @@ export default function App() {
         <Route path="/student/opportunities" element={<OpportunitiesPage />} />
         <Route path="/student/communities" element={<CommunitiesPage />} />
         <Route path="/student/mentorships" element={<MentorshipsPage />} />
+        <Route path="/student/skill-development" element={<SkillDevelopmentPage />} />
+        <Route path="/student/skill-development/:skillId" element={<SkillDetailPage />} />
         <Route path="/student/ai-companion" element={<AICompanionPage />} />
         <Route path="/student/ai-assistant" element={<Navigate to="/student/ai-companion" replace />} />
         <Route path="/student/account" element={<ProfilePage />} />

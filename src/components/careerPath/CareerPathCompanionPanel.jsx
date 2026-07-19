@@ -51,6 +51,7 @@ export default function CareerPathCompanionPanel({ message, messages, chips, isT
   const scrollRef = useRef(null)
   const lastRobotIdRef = useRef(null)
   const [typingId, setTypingId] = useState(chatMessages.find((msg) => msg.role === 'robot')?.id ?? null)
+  const [draft, setDraft] = useState('')
 
   useEffect(() => {
     const lastRobot = [...chatMessages].reverse().find((msg) => msg.role === 'robot')
@@ -74,7 +75,7 @@ export default function CareerPathCompanionPanel({ message, messages, chips, isT
         <span className="text-xs font-medium text-[#7382a1]">Online</span>
       </div>
 
-      <div ref={scrollRef} className="flex-1 space-y-3 overflow-y-auto bg-gray-50 p-4">
+      <div ref={scrollRef} className="flex-1 space-y-3 overflow-y-auto bg-white p-4">
         {chatMessages.map((msg, index) => (
           msg.role === 'user'
             ? <UserBubble key={msg.id} text={msg.text} />
@@ -107,21 +108,37 @@ export default function CareerPathCompanionPanel({ message, messages, chips, isT
         )}
       </div>
 
-      <div className="border-t border-[#e2eaf8] p-3">
-        <div className="flex items-center gap-2 rounded-full border border-[#dfe8f7] bg-gray-50 px-4 py-2">
+      {/* Composer — free-form messages are routed through onChipClick so
+          the parent page (CareerIntelligencePage) can respond to them
+          using its existing fallback branch for unrecognised chips. */}
+      <form
+        onSubmit={(event) => {
+          event.preventDefault()
+          const clean = draft.trim()
+          if (!clean || isTyping) return
+          setDraft('')
+          onChipClick?.(clean)
+        }}
+        className="flex items-center gap-2 border-t border-[#e2eaf8] p-3"
+      >
+        <div className="flex flex-1 items-center gap-2 rounded-full border border-[#dfe8f7] bg-white px-4 py-2 shadow-[inset_0_1px_0_rgba(255,255,255,0.85)] focus-within:border-blue-300 focus-within:ring-2 focus-within:ring-blue-100">
           <input
             type="text"
-            placeholder="Ask me about any role..."
+            value={draft}
+            onChange={(event) => setDraft(event.target.value)}
+            placeholder="Ask me about any role…"
             className="flex-1 bg-transparent text-sm text-[#2c3656] placeholder:text-[#9aa6c3] focus:outline-none"
           />
           <button
-            type="button"
-            className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-blue-600 text-white transition hover:bg-blue-700"
+            type="submit"
+            aria-label="Send message"
+            disabled={!draft.trim() || isTyping}
+            className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-blue-600 text-white shadow-[0_6px_14px_rgba(37,99,235,0.28)] transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-40"
           >
             <Send size={14} strokeWidth={2.4} />
           </button>
         </div>
-      </div>
+      </form>
     </aside>
   )
 }
