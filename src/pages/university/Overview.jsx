@@ -5,6 +5,7 @@ import UniversityNav from '../../components/university/UniversityNav'
 import KpiRow from '../../components/university/KpiRow'
 import AILeadershipInbox from '../../components/university/AILeadershipInbox'
 import SummaryCardsRow from '../../components/university/SummaryCardsRow'
+import UniversityHomeSwitcher from '../../components/university/UniversityHomeSwitcher'
 import { universityUser } from '../../data/universityMockData'
 import { NLP_DEMO_QUERIES, matchNlpQuery } from '../../utils/universityNlpQueries'
 
@@ -116,7 +117,8 @@ export default function Overview() {
         <div className="relative z-10 mx-auto max-w-[1480px] space-y-5 px-6 py-6">
           {/* View switcher tab */}
           <div className="flex justify-end">
-            <div className="flex overflow-hidden rounded-lg border border-[#D8E0F0] bg-white/80 p-0.5 shadow-sm">
+            <UniversityHomeSwitcher current="briefing" />
+            <div className="hidden">
               <button
                 type="button"
                 className="rounded-md bg-[#155EE8] px-4 py-1.5 text-xs font-bold text-white shadow-sm"

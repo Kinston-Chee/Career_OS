@@ -6,6 +6,7 @@ import {
   CheckCircle2, Edit3, Send, RotateCcw, ChevronDown, ChevronUp, Clock, FileText,
 } from 'lucide-react'
 import UniversityNav from '../../components/university/UniversityNav'
+import UniversityHomeSwitcher from '../../components/university/UniversityHomeSwitcher'
 import AgentChatDrawer from '../../components/university/aiOffice/AgentChatDrawer'
 import DecisionRoomModal from '../../components/university/aiOffice/DecisionRoomModal'
 import { AGENTS, DECISION_ROOM } from '../../components/university/aiOffice/agentConfig'
@@ -16,8 +17,8 @@ const ROOM_META = {
   'student-success': {
     number: 1, icon: UserCheck, color: '#155EE8', time: '8:30 AM',
     bullets: [
-      { text: '12 students flagged this week.', alert: false },
-      { text: '3 need urgent follow-up.', alert: true },
+      { text: '34 students at employability risk.', alert: true },
+      { text: 'Intervention queue is active.', alert: false },
     ],
   },
   'decision-room': {
@@ -30,34 +31,34 @@ const ROOM_META = {
   'curriculum': {
     number: 3, icon: GraduationCap, color: '#155EE8', time: '8:26 AM',
     bullets: [
-      { text: 'GenAI coverage is 31% below market demand.', alert: true },
-      { text: '18 modules reviewed this cycle.', alert: false },
+      { text: '2 programs losing market relevance.', alert: true },
+      { text: 'Curriculum-market gaps need review.', alert: false },
     ],
   },
   'alumni': {
     number: 4, icon: Users, color: '#155EE8', time: '8:22 AM',
     bullets: [
-      { text: 'Q2 cohort outcomes refreshed.', alert: false },
-      { text: '47 employers linked.', alert: false },
+      { text: 'Graduate employability rate is 78%.', alert: false },
+      { text: 'Up 5% versus last year.', alert: false },
     ],
   },
   'partnership': {
     number: 5, icon: Handshake, color: '#155EE8', time: '8:20 AM',
     bullets: [
-      { text: '2 proposals awaiting sign-off.', alert: true },
-      { text: '5 live projects this quarter.', alert: false },
+      { text: '13 active partnerships.', alert: false },
+      { text: '4 high-value partners tracked.', alert: false },
     ],
   },
   'accreditation': {
     number: 6, icon: Shield, color: '#155EE8', time: '8:18 AM',
     bullets: [
-      { text: '3 evidence items are still missing.', alert: true },
-      { text: 'Request sent to Dr. Ahmad.', alert: false },
+      { text: 'Accreditation readiness is 82%.', alert: false },
+      { text: 'Evidence packs ready for review.', alert: false },
     ],
   },
 }
 
-const QUICK_ACTIONS = [
+export const QUICK_ACTIONS = [
   { label: 'Review Accreditation', icon: BookOpen,       route: '/university/accreditation' },
   { label: 'Open Decision Room',   icon: Building2,      action: 'decision-room' },
   { label: 'Curriculum Gaps',      icon: GraduationCap,  route: '/university/curriculum-alignment' },
@@ -65,7 +66,7 @@ const QUICK_ACTIONS = [
 ]
 
 // ─── Room card — chat bubble floating above open office image ─────────────────
-function RoomCard({ dept, onChat, onDecisionRoom }) {
+export function RoomCard({ dept, onChat, onDecisionRoom, compact = false }) {
   const meta  = ROOM_META[dept.id]
   const Icon  = meta.icon
   const isCenter = dept.isCenter
@@ -104,11 +105,11 @@ function RoomCard({ dept, onChat, onDecisionRoom }) {
       </div>
 
       {/* ── Office image — open, no card wrapper ── */}
-      <div className="flex flex-1 items-center justify-center pt-3">
+      <div className={`flex flex-1 items-center justify-center ${compact ? 'px-4 pb-4 pt-5' : 'pt-3'}`}>
         <img
           src={dept.image}
           alt={dept.name}
-          className="max-h-[260px] w-full object-contain drop-shadow-xl transition-transform duration-300 group-hover:scale-[1.05]"
+          className={`${compact ? 'max-h-[160px]' : 'max-h-[260px]'} w-full object-contain drop-shadow-xl transition-transform duration-300 group-hover:scale-[1.05]`}
         />
       </div>
     </div>
@@ -159,6 +160,49 @@ const DEPT_INBOX = [
   },
 ]
 
+const ALIGNED_DEPT_INBOX = [
+  {
+    deptId: 'curriculum',
+    time: '8:26 AM',
+    text: '2 programs are losing market relevance, with GenAI and cloud coverage driving the curriculum gap.',
+    link: 'View curriculum gaps',
+    to: '/university/curriculum-alignment',
+    source: 'Curriculum Analysis - syllabus mapping + market demand signals',
+    pill: 'Critical',
+    pillTone: 'red',
+  },
+  {
+    deptId: 'student-success',
+    time: '8:30 AM',
+    text: '34 students are at employability risk and need intervention before the next readiness review.',
+    link: 'View at-risk cohort',
+    to: '/university/student-readiness',
+    source: 'Student Success Office - academic scores + Career Memory completeness',
+    pill: 'Time sensitive',
+    pillTone: 'orange',
+  },
+  {
+    deptId: 'partnership',
+    time: '8:20 AM',
+    text: '13 active partnerships are live, with 4 high-value partners including TalentBank.',
+    link: 'Review partnership',
+    to: '/university/collaboration',
+    source: 'Partnership Management - partnership hiring conversion records',
+    pill: 'Opportunity',
+    pillTone: 'green',
+  },
+  {
+    deptId: 'accreditation',
+    time: '8:18 AM',
+    text: 'Accreditation readiness is 82%, with evidence packs ready for review.',
+    link: 'Go to Accreditation Hub',
+    to: '/university/accreditation',
+    source: 'Accreditation Office - evidence pack completeness tracker',
+    pill: 'Deadline',
+    pillTone: 'purple',
+  },
+]
+
 const PILL_TONES = {
   red:    'bg-red-50 text-red-700',
   orange: 'bg-orange-50 text-orange-700',
@@ -174,7 +218,7 @@ const ICON_BG_TONES = {
 }
 
 // ─── Dept Attention Inbox ─────────────────────────────────────────────────────
-function DeptInbox({ onNavigate }) {
+export function DeptInbox({ onNavigate }) {
   return (
     <section className="rounded-2xl border border-gray-100 bg-white p-5 shadow-md">
       <div className="mb-1 flex items-center justify-between gap-2">
@@ -184,12 +228,12 @@ function DeptInbox({ onNavigate }) {
           <span className="text-xs text-gray-400">Updated 8:30 AM</span>
         </div>
         <span className="rounded-full bg-purple-50 px-2.5 py-0.5 text-[11px] font-medium text-purple-700">
-          {DEPT_INBOX.length} items need attention
+          {ALIGNED_DEPT_INBOX.length} items need attention
         </span>
       </div>
 
       <div className="divide-y divide-gray-50">
-        {DEPT_INBOX.map((item, i) => {
+        {ALIGNED_DEPT_INBOX.map((item, i) => {
           const meta = ROOM_META[item.deptId]
           const DeptIcon = meta.icon
           const deptName = AGENTS.find(a => a.id === item.deptId)?.name ?? 'Department'
@@ -296,7 +340,7 @@ const DEADLINE_TONES = {
 }
 
 // ─── Pending Actions Panel ────────────────────────────────────────────────────
-function PendingActionsPanel() {
+export function PendingActionsPanel() {
   const [expanded, setExpanded] = useState(null)
   const [done, setDone]         = useState({})      // id → doneLabel
   const [editVals, setEditVals] = useState(
@@ -436,7 +480,7 @@ function PendingActionsPanel() {
 }
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
-const ALL_ROOMS = [
+export const ALL_ROOMS = [
   AGENTS[0],    // Student Success
   DECISION_ROOM,
   AGENTS[1],    // Curriculum
@@ -473,7 +517,8 @@ export default function UniversityAIOffice() {
                 Click any room to chat · Click Central Decision Room to open a multi-agent meeting
               </p>
             </div>
-            <div className="flex overflow-hidden rounded-lg border border-[#D8E0F0] bg-white/80 p-0.5 shadow-sm">
+            <UniversityHomeSwitcher current="office" />
+            <div className="hidden">
               <button type="button" onClick={() => navigate('/university/overview')}
                 className="rounded-md px-4 py-1.5 text-xs font-semibold text-[#415174] hover:bg-blue-50">
                 📋 Briefing
