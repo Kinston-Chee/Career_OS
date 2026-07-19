@@ -1,9 +1,10 @@
 import React from 'react'
-import { ArrowRight, Bookmark, Check, MapPin, Users } from 'lucide-react'
+import { ArrowRight, Bookmark, Check, Earth, MapPin, Users } from 'lucide-react'
 import internBg from '../../assets/Opportunity Intern bg.png'
 import competitionBg from '../../assets/Opportunity Competition bg.png'
 import jobBg from '../../assets/Opportunity Job bg.png'
 import eventBg from '../../assets/Opportunity Event bg.png'
+import talkBg from '../../assets/Opportunity Talk bg.png'
 
 const LOGO_TONES = {
   indigo: 'bg-indigo-600 text-white',
@@ -44,6 +45,7 @@ const BG_IMAGES = {
   competition: competitionBg,
   job: jobBg,
   event: eventBg,
+  talk: talkBg,
 }
 
 const CONNECTION_ACTIVITY = {
@@ -51,11 +53,39 @@ const CONNECTION_ACTIVITY = {
   'opp-2': { count: 2, label: 'joined', initials: ['DT', 'AH'] },
   'opp-3': { count: 4, label: 'applied', initials: ['FN', 'JL', 'AK'] },
   'opp-4': { count: 5, label: 'registered', initials: ['CT', 'IR', 'SM'] },
+  'opp-5': { count: 4, label: 'registered', initials: ['NA', 'JL', 'RK'] },
+  'opp-6': { count: 3, label: 'registered', initials: ['AM', 'SY', 'LT'] },
+  'opp-7': { count: 2, label: 'registered', initials: ['HW', 'FI'] },
+  'opp-8': { count: 5, label: 'registered', initials: ['SN', 'MP', 'AT'] },
+}
+
+function SDGDeadlineBadges({ sdgs, compact = false }) {
+  if (!sdgs?.length) return null
+
+  return (
+    <div className={`flex flex-col gap-1 ${compact ? 'items-end' : 'items-start'}`}>
+      <span className="inline-flex items-center gap-1 text-[9px] font-bold uppercase text-[#7382a1]">
+        <Earth size={10} className="text-blue-600" /> Supports
+      </span>
+      {sdgs.slice(0, 2).map((sdg) => (
+        <span
+          key={sdg.number}
+          title={`SDG ${sdg.number}: ${sdg.title}`}
+          className="inline-flex items-center gap-1 rounded-md border border-white/80 bg-white/82 px-1.5 py-1 text-[9px] font-semibold text-[#405071] shadow-sm backdrop-blur-sm"
+        >
+          <span className="h-2 w-2 rounded-sm" style={{ backgroundColor: sdg.color }} />
+          <strong className="font-bold">SDG {sdg.number}</strong>
+          <span className={compact ? 'sr-only' : ''}>{sdg.title}</span>
+        </span>
+      ))}
+    </div>
+  )
 }
 
 export default function OpportunityGridCard({ opportunity, applied, saved, onViewDetails, onToggleSave }) {
   const bgImage = BG_IMAGES[opportunity.bgImageKey]
   const tone = CARD_TONES[opportunity.accentTone] ?? CARD_TONES.indigo
+  const imageClass = opportunity.bgImageKey === 'talk' ? 'right-0 h-[180px] w-[220px]' : tone.image
   const connectionActivity = CONNECTION_ACTIVITY[opportunity.id] ?? {
     count: 2,
     label: opportunity.type === 'event' ? 'registered' : 'applied',
@@ -64,7 +94,7 @@ export default function OpportunityGridCard({ opportunity, applied, saved, onVie
 
   return (
     <article
-      className={`relative flex h-[272px] flex-col overflow-hidden rounded-2xl border border-[#dfe8f7] bg-white/95 p-7 transition duration-200 ${
+      className={`relative flex h-[312px] flex-col overflow-hidden rounded-2xl border border-[#dfe8f7] bg-white/95 p-7 transition duration-200 ${
         applied
           ? 'ring-2 ring-emerald-200'
           : 'hover:-translate-y-0.5 hover:border-blue-200 hover:shadow-[0_8px_14px_rgba(44,76,142,0.08)]'
@@ -78,18 +108,21 @@ export default function OpportunityGridCard({ opportunity, applied, saved, onVie
             src={bgImage}
             alt=""
             aria-hidden="true"
-            className={`pointer-events-none absolute bottom-0 hidden object-contain object-bottom opacity-95 sm:block ${tone.image}`}
+            className={`pointer-events-none absolute bottom-0 hidden object-contain object-bottom opacity-95 sm:block ${imageClass}`}
           />
           <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-white/90 via-white/55 to-white/0" />
         </>
       )}
 
       {!applied && (
-        <span className="absolute right-6 top-6 z-20 hidden rounded-lg bg-orange-50 px-3 py-2 text-right text-xs font-semibold leading-tight text-orange-600 sm:block">
-          Deadline
-          <br />
-          {opportunity.deadline}
-        </span>
+        <div className="absolute right-6 top-6 z-20 hidden items-start gap-2 sm:flex">
+          <SDGDeadlineBadges sdgs={opportunity.sdgs} />
+          <span className="rounded-lg bg-orange-50 px-3 py-2 text-right text-xs font-semibold leading-tight text-orange-600">
+            Deadline
+            <br />
+            {opportunity.deadline}
+          </span>
+        </div>
       )}
       {!applied && !opportunity.eventTag && (
         <span className={`absolute right-6 top-[86px] z-20 hidden rounded-md px-3 py-1.5 text-xs font-semibold sm:block ${tone.match}`}>
@@ -98,9 +131,12 @@ export default function OpportunityGridCard({ opportunity, applied, saved, onVie
       )}
 
       {applied && (
-        <span className="absolute right-6 top-6 z-20 rounded-full bg-emerald-600 px-2.5 py-0.5 text-[11px] font-bold text-white">
-          Applied
-        </span>
+        <div className="absolute right-6 top-6 z-20 hidden items-start gap-2 sm:flex">
+          <SDGDeadlineBadges sdgs={opportunity.sdgs} />
+          <span className="rounded-full bg-emerald-600 px-2.5 py-0.5 text-[11px] font-bold text-white">
+            Applied
+          </span>
+        </div>
       )}
 
       <div className={`absolute right-6 z-20 hidden w-[132px] flex-col items-end sm:flex ${applied ? 'top-16' : opportunity.eventTag ? 'top-[86px]' : 'top-[124px]'}`}>
@@ -114,46 +150,49 @@ export default function OpportunityGridCard({ opportunity, applied, saved, onVie
         </span>
       </div>
 
-      <div className="relative z-10 flex h-full max-w-full flex-col sm:max-w-[58%]">
-        <div className="flex items-start justify-between gap-4 sm:block">
-          <div className="flex items-center gap-4">
+      <div className="relative z-10 flex h-full min-h-0 max-w-full flex-col sm:max-w-[58%]">
+        <div className="flex min-h-[72px] flex-shrink-0 items-start justify-between gap-3 sm:block sm:h-[72px]">
+          <div className="flex min-w-0 flex-1 items-center gap-4">
             <span className={`flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-full text-base font-semibold ${LOGO_TONES[opportunity.logoTone] ?? LOGO_TONES.indigo}`}>
               {opportunity.logo}
             </span>
-            <div>
-              <p className="text-base font-semibold leading-snug text-[#11194a]">{opportunity.title}</p>
-              <p className="mt-1 text-sm font-medium text-[#647598]">{opportunity.org}</p>
+            <div className="min-w-0">
+              <p title={opportunity.title} className="line-clamp-2 text-base font-semibold leading-snug text-[#11194a]">{opportunity.title}</p>
+              <p title={opportunity.org} className="mt-1 line-clamp-2 text-sm font-medium leading-snug text-[#647598]">{opportunity.org}</p>
             </div>
           </div>
 
-          <span className="flex-shrink-0 rounded-lg bg-orange-50 px-3 py-2 text-right text-xs font-semibold leading-tight text-orange-600 sm:hidden">
-            Deadline
-            <br />
-            {opportunity.deadline}
+          <div className="flex flex-shrink-0 items-start gap-1.5 sm:hidden">
+            <SDGDeadlineBadges sdgs={opportunity.sdgs} compact />
+            <span className="rounded-lg bg-orange-50 px-3 py-2 text-right text-xs font-semibold leading-tight text-orange-600">
+              Deadline
+              <br />
+              {opportunity.deadline}
+            </span>
+          </div>
+        </div>
+
+        <div className="mt-4 min-w-0 flex-shrink-0">
+          <span title={opportunity.location} className="flex min-w-0 items-center gap-1.5 text-sm font-medium text-[#647598]">
+            <MapPin size={15} className="flex-shrink-0" /> <span className="truncate">{opportunity.location}</span>
           </span>
         </div>
 
-        <div className="mt-7">
-          <span className="flex items-center gap-1.5 text-sm font-medium text-[#647598]">
-            <MapPin size={15} /> {opportunity.location}
-          </span>
-        </div>
-
-        <div className="mt-3 flex flex-wrap gap-1.5">
+        <div className="mt-3 flex min-h-[54px] flex-shrink-0 flex-wrap content-start gap-1.5 overflow-hidden">
           {opportunity.metaPill && (
-            <span className={`rounded-md px-2.5 py-1 text-xs font-semibold ${tone.chip}`}>{opportunity.metaPill}</span>
+            <span className={`flex-shrink-0 whitespace-nowrap rounded-md px-2.5 py-1 text-xs font-semibold ${tone.chip}`}>{opportunity.metaPill}</span>
           )}
           {opportunity.eventTag && (
-            <span className="rounded-md bg-violet-50 px-2.5 py-1 text-xs font-semibold text-violet-700">{opportunity.eventTag}</span>
+            <span className="flex-shrink-0 whitespace-nowrap rounded-md bg-violet-50 px-2.5 py-1 text-xs font-semibold text-violet-700">{opportunity.eventTag}</span>
           )}
           {opportunity.tags.map((tag) => (
-            <span key={tag} className={`rounded-md px-2.5 py-1 text-xs font-medium ${tone.chip}`}>
+            <span key={tag} title={tag} className={`flex-shrink-0 whitespace-nowrap rounded-md px-2.5 py-1 text-xs font-medium ${tone.chip}`}>
               {tag}
             </span>
           ))}
         </div>
 
-        <div className="mt-auto flex gap-3 pt-6">
+        <div className="mt-auto flex flex-shrink-0 gap-3 pt-5">
           {applied ? (
             <button
               type="button"
