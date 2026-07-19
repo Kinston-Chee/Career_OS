@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Calendar, ChevronDown, ChevronUp, MapPin, Users, X } from 'lucide-react'
+import { Calendar, ChevronDown, ChevronUp, Earth, MapPin, Users, X } from 'lucide-react'
 
 const LOGO_TONES = {
   indigo: 'bg-indigo-600 text-white',
@@ -89,11 +89,27 @@ export default function DetailsView({ opportunity, onClose, onApplyNow }) {
       </div>
 
       <div className="flex-1 space-y-5 overflow-y-auto p-5">
-        {opportunity.matchPercent != null && (
-          <span className="inline-flex w-fit rounded-full bg-emerald-100 px-3 py-1 text-xs font-bold text-emerald-700">
-            {opportunity.matchPercent}% match
-          </span>
-        )}
+        <div className="flex flex-wrap items-center gap-2">
+          {opportunity.matchPercent != null && (
+            <span className="inline-flex w-fit rounded-full bg-emerald-100 px-3 py-1 text-xs font-bold text-emerald-700">
+              {opportunity.matchPercent}% match
+            </span>
+          )}
+          {opportunity.sdgs?.length > 0 && (
+            <>
+              <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase text-[#7382a1]">
+                <Earth size={11} className="text-blue-600" /> Supports
+              </span>
+              {opportunity.sdgs.slice(0, 2).map((sdg) => (
+                <span key={sdg.number} title={`SDG ${sdg.number}: ${sdg.title}`} className="inline-flex items-center gap-1.5 rounded-md border border-[#e2eaf8] bg-white px-2 py-1 text-[10px] font-semibold text-[#405071] shadow-sm">
+                  <span className="h-2.5 w-2.5 rounded-sm" style={{ backgroundColor: sdg.color }} />
+                  <strong className="font-bold">SDG {sdg.number}</strong>
+                  <span>{sdg.title}</span>
+                </span>
+              ))}
+            </>
+          )}
+        </div>
 
         <div>
           <h3 className="text-xs font-bold uppercase tracking-wide text-[#9aa6c3]">About</h3>
@@ -178,6 +194,7 @@ export default function DetailsView({ opportunity, onClose, onApplyNow }) {
             {showPeople ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
           </button>
         </div>
+
       </div>
 
       <div className="border-t border-[#e2eaf8]/70 p-5">

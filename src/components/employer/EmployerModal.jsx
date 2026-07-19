@@ -4,7 +4,7 @@ import { X } from 'lucide-react'
 // Shared modal shell for the Employer Workspace demo (manager brief, schedule
 // interview, compose message, export summary). Mirrors the glassmorphism
 // system used across the workspace. Mock only — no backend calls.
-export default function EmployerModal({ title, icon, onClose, children, maxWidth = 'max-w-[560px]', footer }) {
+export default function EmployerModal({ title, subtitle, icon, onClose, children, maxWidth = 'max-w-[560px]', footer }) {
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/25 p-4 backdrop-blur-sm transition-opacity duration-200"
@@ -21,7 +21,10 @@ export default function EmployerModal({ title, icon, onClose, children, maxWidth
                 {icon}
               </span>
             ) : null}
-            <h2 className="text-base font-bold text-gray-900">{title}</h2>
+            <div>
+              <h2 className="text-base font-bold text-gray-900">{title}</h2>
+              {subtitle ? <p className="mt-0.5 text-xs font-medium text-slate-500">{subtitle}</p> : null}
+            </div>
           </div>
           <button
             type="button"

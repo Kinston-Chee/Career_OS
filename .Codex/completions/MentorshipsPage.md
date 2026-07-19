@@ -23,3 +23,9 @@
 ## Validation
 
 - Ran `npm.cmd run build` successfully.
+## Home Widget Update
+
+- Replaced the circular icon-only mentorship launcher with a persistent bottom-right widget.
+- Added a concise mentorship description and a clear Explore mentorships CTA while preserving the existing modal flow.
+- Reshaped the launcher into a taller 196-218px-wide widget with a compact vertical hierarchy and dedicated CTA bar to reduce content obstruction while scrolling.
+- Added a custom transparent mentorship wallpaper showing a supportive one-to-one conversation, blended subtly behind the widget content.
