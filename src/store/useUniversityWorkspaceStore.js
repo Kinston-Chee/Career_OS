@@ -10,10 +10,10 @@ export const useUniversityWorkspaceStore = create((set) => ({
   evidencePackGaps: new Set(),
 
   // Student Readiness intervention queue — decremented when a row reaches "Completed".
-  interventionsInProgress: 12,
+  interventionsInProgress: 15,
 
   // Collaboration Marketplace — incremented when a new collaboration is created.
-  activePartnershipsCount: 12,
+  activePartnershipsCount: 13,
 
   // Accreditation Hub requirement overrides: { [requirementId]: true }
   accreditationOverrides: {},

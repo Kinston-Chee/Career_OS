@@ -7,7 +7,7 @@ export const universityUser = {
   institution: 'Heriot-Watt University Malaysia',
   initials: 'EC',
   greeting: 'Good morning, Dr. Chen',
-  briefingDate: 'Thursday, 15 May 2025',
+  briefingDate: 'Saturday, 19 July 2026',
 }
 
 export const universityNavTabs = [
@@ -22,7 +22,7 @@ export const universityNavTabs = [
 export const kpis = [
   { id: 'programs-at-risk', icon: 'warning', tone: 'red', label: 'Programs at risk', value: '2', note: 'Losing market relevance', noteTone: 'muted' },
   { id: 'students-at-risk', icon: 'people', tone: 'orange', label: 'Students at employability risk', value: '34', note: 'Need intervention', noteTone: 'muted' },
-  { id: 'partnerships', icon: 'handshake', tone: 'blue', label: 'Active partnerships', value: '12', note: '3 high-value, ready to scale', noteTone: 'muted' },
+  { id: 'partnerships', icon: 'handshake', tone: 'blue', label: 'Active partnerships', value: '13', note: '4 high-value, TalentBank onboarded', noteTone: 'muted' },
   { id: 'employability', icon: 'graduation', tone: 'green', label: 'Graduate employability rate', value: '78%', note: '▲ 5% vs last year', noteTone: 'green' },
   { id: 'accreditation', icon: 'shield', tone: 'purple', label: 'Accreditation readiness', value: '82%', note: 'Evidence packs ready', noteTone: 'muted' },
 ]
@@ -62,15 +62,15 @@ export const leadershipInbox = [
     source: 'Source: Collaboration Marketplace · partnership hiring conversion records',
   },
   {
-    id: 'qs-deadline',
+    id: 'mqa-deadline',
     icon: 'shield',
     tone: 'purple',
-    text: 'QS submission deadline in 6 weeks — 3 of 5 employability evidence packs ready',
+    text: 'MQA self-review in 5 months — CS5001 GenAI module amendment ready to file after Dean approval',
     link: 'Go to Accreditation Hub',
     pill: 'Deadline',
     pillTone: 'purple',
     to: '/university/accreditation',
-    source: 'Source: Accreditation Hub · evidence pack completeness tracker',
+    source: 'Source: Accreditation Hub · MQA evidence pack + programme amendment tracker',
   },
 ]
 

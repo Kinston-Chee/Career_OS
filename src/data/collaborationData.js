@@ -3,11 +3,11 @@
 
 export const summaryBanner = {
   text:
-    "Your top 3 partners (Grab, Shopee, Deloitte) account for 54% of hiring conversions but also 42% of graduate concentration risk. I've identified 3 high-potential new partners to diversify your portfolio.",
+    "TalentBank onboarded as a new co-design partner (RM 180K, GenAI module) — bringing active partnerships to 13. Your top 3 partners (Grab, Shopee, Deloitte) still account for 54% of hiring conversions. Grab's 10 new GenAI internship slots are confirmed for Semester 6.",
 }
 
 export const kpis = [
-  { id: 'active-partnerships', icon: 'handshake', tone: 'blue', label: 'Active partnerships', value: '12', note: '3 high-value', noteTone: 'muted' },
+  { id: 'active-partnerships', icon: 'handshake', tone: 'blue', label: 'Active partnerships', value: '13', note: '4 high-value · TalentBank new', noteTone: 'muted' },
   { id: 'avg-conversion', icon: 'trend', tone: 'green', label: 'Avg hiring conversion', value: '18%', note: '▲ 4% vs last year', noteTone: 'green' },
   { id: 'events', icon: 'calendar', tone: 'blue', label: 'Events this semester', value: '8', note: '4.6x avg ROI', noteTone: 'muted' },
   { id: 'concentration', icon: 'warning', tone: 'orange', label: 'Concentration risk', value: '42%', note: 'In top 4 employers', noteTone: 'muted', valueTone: 'orange' },
@@ -28,6 +28,23 @@ export const partnerships = [
     healthTone: 'green',
     events: 8,
     hires: 12,
+    highlight: '10 GenAI internship slots confirmed for Semester 6 intake',
+  },
+  {
+    id: 'talentbank',
+    name: 'TalentBank',
+    initial: 'T',
+    tone: 'bg-blue-700',
+    since: '2026',
+    internshipConversion: 0,
+    hiringRate: 0,
+    eventRoi: 'N/A',
+    relationshipHealth: 78,
+    healthLabel: 'New',
+    healthTone: 'purple',
+    events: 0,
+    hires: 0,
+    highlight: 'RM 180,000 GenAI co-design partnership activated Jul 2026',
   },
   {
     id: 'shopee',
@@ -76,7 +93,7 @@ export const partnerships = [
   },
 ]
 
-export const totalPartnershipsCount = 12
+export const totalPartnershipsCount = 13
 
 export const recommendedPartners = [
   {
@@ -150,6 +167,16 @@ export const partnershipHistory = {
       { date: 'May 2025', label: 'Relationship under review — growing but early-stage' },
     ],
     feedback: '"Still early days, but the students we\'ve hosted have been well-prepared." — Maybank, Graduate Programs',
+  },
+  talentbank: {
+    timeline: [
+      { date: 'Jul 2026', label: 'Joint Research Agreement signed — RM 180,000, 24 months' },
+      { date: 'Jul 2026', label: 'GenAI Systems module co-design workshop scheduled (Week 1)' },
+      { date: 'Aug 2026', label: 'Module spec to be finalised and submitted to Faculty Academic Board' },
+      { date: 'Sem 5, 2026', label: 'CS5001 GenAI Systems elective launches — industry-co-designed content' },
+      { date: 'Sem 6, 2027', label: 'First cohort to enter Grab practicum slots (10 students per intake)' },
+    ],
+    feedback: '"Heriot-Watt is the first university partner willing to co-design curriculum with us rather than just sending students. This is the model we want to scale." — TalentBank, Head of University Relations',
   },
 }
 

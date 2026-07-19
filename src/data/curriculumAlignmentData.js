@@ -69,16 +69,16 @@ export const gapEvidence = {
   },
   'Generative AI / LLMs': {
     curriculum: {
-      coveragePct: 12,
+      coveragePct: 13,
       coveredIn: 'Covered in: CS410 (1 week, elective only)',
-      missing: 'Missing: prompt engineering, RAG pipelines, LLM evaluation',
+      missing: 'Missing: prompt engineering, RAG pipelines, LLM evaluation, agentic workflows',
     },
     marketDemand: {
-      demandPct: 71,
-      trend: [22, 31, 42, 53, 63, 71],
+      demandPct: 44,
+      trend: [10, 16, 24, 31, 38, 44],
       trendStart: '6 months ago',
       trendEnd: 'Now',
-      detail: 'of Software/Data postings in KL now mention LLM or GenAI tooling',
+      detail: 'of graduate-level roles in KL now require GenAI / LLM proficiency as a baseline requirement (Google and Grab confirmed in July 2026 intake feedback)',
     },
     alumniFeedback: {
       quote: 'Every team I interviewed with asked about LLM integration — I had to learn it all from YouTube.',
@@ -149,12 +149,12 @@ export const roadmaps = {
     ],
   },
   'Generative AI / LLMs': {
-    closingStatement: 'This roadmap would close the gap from 12% to an estimated 80% coverage within 3 semesters.',
+    closingStatement: 'This roadmap would close the gap from 13% to an estimated 80% coverage within 3 semesters. TalentBank co-design partnership (approved July 2026) accelerates the foundation build.',
     stages: [
-      { id: 1, tone: 'green', title: 'Quick Wins', timeframe: '2–4 weeks', action: 'Add prompt engineering primer to CS410', lift: '+12%' },
-      { id: 2, tone: 'blue', title: 'Foundation Build', timeframe: '1 semester', action: 'New elective: Applied LLM Systems', lift: '+28%' },
-      { id: 3, tone: 'purple', title: 'Capability Deepen', timeframe: '2 semesters', action: 'Partner with an AI lab for a capstone RAG project', lift: '+28%' },
-      { id: 4, tone: 'teal', title: 'Sustain & Scale', timeframe: 'Ongoing', action: 'Quarterly curriculum refresh tracking model releases', lift: 'maintained' },
+      { id: 1, tone: 'green', title: 'Quick Wins', timeframe: 'Jul–Aug 2026', action: 'Add prompt engineering primer to CS410 while CS5001 spec is finalized', lift: '+12%' },
+      { id: 2, tone: 'blue', title: 'Foundation Build', timeframe: 'Semester 5, 2026', action: 'Launch CS5001 GenAI Systems elective — co-designed with TalentBank (RM 180K partnership)', lift: '+28%' },
+      { id: 3, tone: 'purple', title: 'Capability Deepen', timeframe: '2 semesters', action: 'Semester 6 practicum: 10 students in Grab GenAI internship slots per intake', lift: '+28%' },
+      { id: 4, tone: 'teal', title: 'Sustain & Scale', timeframe: 'Ongoing', action: 'Quarterly curriculum refresh; TalentBank advisory sessions each semester', lift: 'maintained' },
     ],
   },
   MLOps: {

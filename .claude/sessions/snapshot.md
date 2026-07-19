@@ -1,23 +1,23 @@
-# Session Snapshot — 2026-07-18 17:05
+# Session Snapshot — 2026-07-19 16:43
 
 ## Files Changed
-- .Codex/completions/CommunitiesPage.md
-- .claude/sessions/snapshot.md
 - .claude/sessions/token-log.md
-- src/components/employer/EmployerModal.jsx
-- src/components/university/accreditation/EvidenceBuilder.jsx
-- src/components/university/accreditation/RequirementsChecklist.jsx
-- src/components/university/accreditation/SubmissionTimeline.jsx
-- src/components/university/accreditation/accreditationData.js
-- src/pages/CommunitiesPage.jsx
-- src/pages/university/AccreditationHub.jsx
+- src/App.jsx
+- src/assets/University/Accreditatioin officer.png
+- src/assets/University/Alumni analyst.png
+- src/assets/University/Central Decision room.png
+- src/assets/University/Curriculum analyst.png
+- src/assets/University/Partnership manager.png
+- src/assets/University/Student success officer.png
+- src/components/university/aiOffice/AgentChatDrawer.jsx
+- src/components/university/aiOffice/DecisionRoomModal.jsx
 
 ## Recent Commits
-- bbf8467 communities update
-- 4c96f8a Added backend system
-- a3de45b Added Human Elements in app: 1. Mentorships icon in Home page 2. Communities page (discussion forums) 3. Quick apply to jobs in Career Intelligence
-- d7be34a Interview pratice feature
-- 14cb83e Merge branch 'claude/sleepy-colden-6683d8'
+- e46eefc Enhance university AI office
+- b39282a Add new frontend design for candidate workspace
+- 21990f5 Merge branch 'claude/sleepy-colden-6683d8' Add new frontend design for candidate workspace
+- 077ed21 Merge remote-tracking branch 'origin/main' into claude/sleepy-colden-6683d8
+- 802c9f0 Add Skill Development Page
 
 ## Token Estimate
 ~? tokens in auto-loaded files

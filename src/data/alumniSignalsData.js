@@ -3,7 +3,7 @@
 
 export const summaryBanner = {
   text:
-    'The 2023 curriculum update adding cloud fundamentals correlates with a 14% faster time-to-first-role for that cohort. GenAI skills have emerged as a new critical gap — recent graduates report a steep learning curve in LLM deployment.',
+    'The 2023 curriculum update adding cloud fundamentals correlates with a 14% faster time-to-first-role for that cohort. GenAI is now the #1 skill gap in Q2 2026 alumni feedback — 74% flagged it. A co-designed module (CS5001) with TalentBank is now in development.',
 }
 
 export const kpis = [
@@ -123,6 +123,7 @@ export const employerConcentration = {
 
 export const feedbackLoop = {
   rows: [
+    { id: 'genai', icon: 'brain', stat: '74% flagged GenAI / LLM integration as their single biggest skill gap in Q2 2026 survey', linkedTo: 'Generative AI / LLMs gap', gapId: 'genai-llms' },
     { id: 'cloud', icon: 'cloud', stat: '68% wish they had more Cloud Deployment exposure', linkedTo: 'Cloud Computing gap', gapId: 'cloud-computing' },
     { id: 'powerbi', icon: 'chart', stat: '54% cite Power BI as a skill gap discovered on the job', linkedTo: 'Data Visualization gap', gapId: 'data-viz' },
     { id: 'mlops', icon: 'brain', stat: '41% report steep MLOps learning curve in first role', linkedTo: 'MLOps gap', gapId: 'mlops' },
