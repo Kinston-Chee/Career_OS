@@ -13,6 +13,7 @@ from contextlib import asynccontextmanager
 from app.database import engine, AsyncSessionLocal, Base
 import routers.users as users
 import routers.candidates as candidates 
+import routers.employer as employer
 
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -44,7 +45,7 @@ app.add_middleware(
 
 app.include_router(users.router, prefix='/api/users', tags=['users'])
 app.include_router(candidates.router, prefix='/api/candidates', tags=['candidate'])
-
+app.include_router(employer.router, prefix='/api/employer', tags=['employer'])
 
 
 

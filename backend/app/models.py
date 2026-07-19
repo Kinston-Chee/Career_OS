@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from datetime import UTC, datetime, date
 
-from sqlalchemy import DateTime, ForeignKey, Integer, String, Text, Enum, Date, ARRAY
+from sqlalchemy import DateTime, ForeignKey, Integer, String, Text, Enum, Date, ARRAY, Float
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.dialects.postgresql import UUID
 import uuid
@@ -158,12 +158,25 @@ class JobPosting(Base):
     maxSalary: Mapped[int] = mapped_column(Integer, nullable=True)
     application_num : Mapped[int] = mapped_column(Integer, nullable=False, default=0)
     view_num: Mapped[int] = mapped_column(Integer, nullable=False, default=0)
+    
+    avg_match : Mapped[float] = mapped_column(Float, nullable=True) 
+    
+    # 1. The foreign key column that stores the ID of the top candidate
+    top_candidate_id: Mapped[uuid.UUID | None] = mapped_column(
+        ForeignKey("candidate.id"), nullable=True
+    )
+
+    # 2. The relationship object to access the Candidate instance directly
+    top_candidate: Mapped[Candidate| None] = relationship(
+        "Candidate", foreign_keys=[top_candidate_id]
+    )
+    
     createdAt: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), # datatype
         default=lambda: datetime.now(UTC),
     )
     expiredAt:  Mapped[datetime] = mapped_column(
-        DateTime(timezone=True),
+        Date,
         nullable=False,
     )
     

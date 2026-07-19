@@ -81,6 +81,14 @@ class ChatRequest(BaseModel):
 class Token(BaseModel):
     access_token : str 
     token_type:str
+    
+    
+class JobPostCreate(BaseModel):
+    title: str = Field(min_length=1, max_length=50)   
+    detail: str = Field(min_length=1, max_length=2000)
+    minSalary: int
+    maxSalary: int
+    expiredAt:  date
 
 class PostBase(BaseModel):
     # shared between creating and returning a post 
