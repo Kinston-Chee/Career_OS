@@ -100,10 +100,7 @@ function RoomCard({ dept, onChat, onDecisionRoom }) {
         </div>
 
         {/* Arrow pointing down toward office image */}
-        <div className="absolute -bottom-[9px] left-1/2 -translate-x-1/2">
-          <div className="relative h-0 w-0 border-l-[9px] border-r-[9px] border-t-[9px] border-l-transparent border-r-transparent border-t-[#E8EEF8]" />
-          <div className="absolute -top-[10px] left-1/2 h-0 w-0 -translate-x-1/2 border-l-[8px] border-r-[8px] border-t-[8px] border-l-transparent border-r-transparent border-t-white" />
-        </div>
+        <div className="absolute -bottom-[7px] left-1/2 h-3.5 w-3.5 -translate-x-1/2 rotate-45 border-b border-r border-[#E8EEF8] bg-white" />
       </div>
 
       {/* ── Office image — open, no card wrapper ── */}
