@@ -6,6 +6,7 @@ const TABS = [
   { label: 'Home', to: '/student/home' },
   { label: 'Career Memory', to: '/student/profile' },
   { label: 'Career Intelligence', to: '/student/intelligence' },
+  { label: 'Skill Development', to: '/student/skill-development' },
   { label: 'Opportunities', to: '/student/opportunities' },
   { label: 'Communities', to: '/student/communities' },
   { label: 'AI Companion', to: '/student/ai-companion' },

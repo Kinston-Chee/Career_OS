@@ -367,9 +367,17 @@ export default function MemoryProfilePage() {
             </div>
           </div>
 
-          <div className="min-w-0 space-y-4">
-            <AISignalsPanel signals={careerMemoryView.aiSignals} leadershipBoost={leadershipBoost} />
-            <GapsPanel gaps={careerMemoryView.gaps} />
+          {/* Grid placeholder — reserves the 320px column so the layout
+              stays put. The actual signals + gaps rail is position: fixed
+              inside, so it never scrolls with the page. Uses the same
+              max()-based right offset the left companion panel uses on
+              the left so both rails align with the centered container on
+              wide viewports. */}
+          <div className="min-w-0">
+            <div className="space-y-4 lg:fixed lg:top-20 lg:z-10 lg:w-[320px] lg:right-[max(2rem,calc((100vw-1480px)/2+2rem))]">
+              <AISignalsPanel signals={careerMemoryView.aiSignals} leadershipBoost={leadershipBoost} />
+              <GapsPanel gaps={careerMemoryView.gaps} />
+            </div>
           </div>
         </div>
       </div>
