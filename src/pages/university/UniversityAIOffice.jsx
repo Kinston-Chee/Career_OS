@@ -81,20 +81,20 @@ function RoomCard({ dept, onChat, onDecisionRoom }) {
         ${isCenter ? 'border-[#155EE8]/40 ring-2 ring-[#155EE8]/20' : 'border-[#E8EEF8]'}`}
       >
         {/* Header row */}
-        <div className="mb-2 flex items-center justify-between gap-2">
-          <div className="flex items-center gap-1.5">
-            <Icon className="h-3.5 w-3.5 shrink-0 text-[#155EE8]" />
-            <p className="text-[12px] font-bold text-[#1B2545]">{dept.name}</p>
+        <div className="mb-2.5 flex items-center justify-between gap-2">
+          <div className="flex items-center gap-2">
+            <Icon className="h-4 w-4 shrink-0 text-[#155EE8]" />
+            <p className="text-sm font-bold text-[#1B2545]">{dept.name}</p>
           </div>
-          <span className="shrink-0 text-[10px] font-medium text-[#B0BADA]">{meta.time}</span>
+          <span className="shrink-0 text-xs font-medium text-[#B0BADA]">{meta.time}</span>
         </div>
 
         {/* Bullet updates */}
-        <div className="space-y-1">
+        <div className="space-y-1.5">
           {meta.bullets.map((b, i) => (
-            <div key={i} className="flex items-start gap-1.5">
-              <span className={`mt-[5px] h-1.5 w-1.5 shrink-0 rounded-full ${b.alert ? 'bg-orange-400' : 'bg-emerald-400'}`} />
-              <p className="text-[11px] font-medium leading-[1.4] text-[#50607E]">{b.text}</p>
+            <div key={i} className="flex items-start gap-2">
+              <span className={`mt-[6px] h-2 w-2 shrink-0 rounded-full ${b.alert ? 'bg-orange-400' : 'bg-emerald-400'}`} />
+              <p className="text-xs font-medium leading-[1.5] text-[#50607E]">{b.text}</p>
             </div>
           ))}
         </div>
