@@ -114,6 +114,24 @@ export default function Overview() {
       <UniversityNav />
       <main className="min-w-0 flex-1 overflow-y-auto">
         <div className="relative z-10 mx-auto max-w-[1480px] space-y-5 px-6 py-6">
+          {/* View switcher tab */}
+          <div className="flex justify-end">
+            <div className="flex overflow-hidden rounded-lg border border-[#D8E0F0] bg-white/80 p-0.5 shadow-sm">
+              <button
+                type="button"
+                className="rounded-md bg-[#155EE8] px-4 py-1.5 text-xs font-bold text-white shadow-sm"
+              >
+                📋 Briefing
+              </button>
+              <button
+                type="button"
+                onClick={() => navigate('/university/ai-office')}
+                className="rounded-md px-4 py-1.5 text-xs font-semibold text-[#415174] hover:bg-blue-50"
+              >
+                🏢 AI Office
+              </button>
+            </div>
+          </div>
           <PageHeader
             query={query}
             onQueryChange={setQuery}

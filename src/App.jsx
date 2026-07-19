@@ -38,6 +38,7 @@ import StudentReadiness from './pages/university/StudentReadiness'
 import AlumniSignalIntelligence from './pages/university/AlumniSignalIntelligence'
 import CollaborationMarketplace from './pages/university/CollaborationMarketplace'
 import AccreditationHub from './pages/university/AccreditationHub'
+import UniversityAIOffice from './pages/university/UniversityAIOffice'
 import WorkspacePlaceholderPage from './pages/WorkspacePlaceholderPage'
 
 export default function App() {
@@ -115,6 +116,7 @@ export default function App() {
         <Route path="/university/alumni-signals" element={<AlumniSignalIntelligence />} />
         <Route path="/university/collaboration" element={<CollaborationMarketplace />} />
         <Route path="/university/accreditation" element={<AccreditationHub />} />
+        <Route path="/university/ai-office" element={<UniversityAIOffice />} />
 
         <Route element={<AppLayout workspace="university" />}>
           <Route path="/university/readiness" element={<StudentReadinessOverviewPage />} />
