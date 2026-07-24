@@ -1,6 +1,7 @@
 import React from 'react'
-import { Sparkles } from 'lucide-react'
-import { ALL_SKILLS, ALL_UNIVERSITIES } from '../../../data/engagementsData'
+import { Globe2, Sparkles } from 'lucide-react'
+import { ALL_SKILLS, ALL_UNIVERSITIES, SDG_CATALOG } from '../../../data/engagementsData'
+import SdgBadge from '../shared/SdgBadge'
 
 function Field({ label, children }) {
   return (
@@ -114,6 +115,33 @@ export default function WizardStep3Details({ formData, onChange, onContinue }) {
 
           <Field label="Prizes / incentives">
             <input type="text" value={formData.prizes} onChange={setField('prizes')} className={inputClass} />
+          </Field>
+
+          <Field label="Aligned UN Sustainable Development Goals">
+            <div className="rounded-lg border border-blue-100 bg-blue-50/40 p-3">
+              <p className="mb-2.5 flex items-center gap-1.5 text-[11px] font-medium text-[#185FA5]">
+                <Globe2 className="h-3.5 w-3.5" />
+                AI matched these SDGs to your event — click to add or remove
+              </p>
+              <div className="flex flex-wrap gap-1.5">
+                {SDG_CATALOG.map((sdg) => {
+                  const selected = (formData.sdgGoals || []).includes(sdg.number)
+                  return (
+                    <SdgBadge
+                      key={sdg.number}
+                      goal={sdg}
+                      size="sm"
+                      selected={selected}
+                      onClick={(n) => {
+                        const current = formData.sdgGoals || []
+                        const next = current.includes(n) ? current.filter((x) => x !== n) : [...current, n]
+                        onChange({ ...formData, sdgGoals: next })
+                      }}
+                    />
+                  )
+                })}
+              </div>
+            </div>
           </Field>
         </div>
 

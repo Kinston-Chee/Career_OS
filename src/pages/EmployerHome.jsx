@@ -1,15 +1,32 @@
 import React, { useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Command, Sparkles } from 'lucide-react'
+import {
+  ArrowRight,
+  BarChart3,
+  Bot,
+  Building2,
+  Calendar,
+  Command,
+  Search,
+  Sparkles,
+  Users,
+} from 'lucide-react'
 import EmployerNav from '../components/employer/EmployerNav'
-import AIBriefingCard from '../components/employer/AIBriefingCard'
-import AIActionQueue from '../components/employer/AIActionQueue'
-import MetricsPillRow from '../components/employer/MetricsPillRow'
-import TopCandidatesCard from '../components/employer/TopCandidatesCard'
-import CampusPipelineFunnel from '../components/employer/CampusPipelineFunnel'
-import AIOpportunityRadar from '../components/employer/AIOpportunityRadar'
+import EmployerKpiRow from '../components/employer/EmployerKpiRow'
+import EmployerAIInbox from '../components/employer/EmployerAIInbox'
+import EmployerSummaryCardsRow from '../components/employer/EmployerSummaryCardsRow'
+import EmployerOperatingRooms from '../components/employer/EmployerOperatingRooms'
+import EmployerPendingActions from '../components/employer/EmployerPendingActions'
 import { employerUser } from '../data/employerMockData'
 import { NLP_DEMO_QUERIES, matchNlpQuery } from '../utils/employerNlpQueries'
+import robotImg from '../assets/career-os-robot.png'
+
+const QUICK_ACTIONS = [
+  { label: 'Find Top Talent', icon: Search, route: '/employer/talent-discovery' },
+  { label: 'Review Candidates', icon: Users, route: '/employer/candidates' },
+  { label: 'Launch Engagement', icon: Calendar, route: '/employer/posting' },
+  { label: 'Open Analytics', icon: BarChart3, route: '/employer/analytics' },
+]
 
 function DemoToast({ message }) {
   if (!message) return null
@@ -20,65 +37,9 @@ function DemoToast({ message }) {
   )
 }
 
-function PageHeader({ query, onQueryChange, onSubmit, showSuggestions, onFocus, onBlur, onPickSuggestion }) {
-  return (
-    <div className="employer-home-header relative z-40 flex flex-wrap items-center justify-between gap-4">
-      <div>
-        <h1 className="flex items-center gap-2 text-2xl font-semibold text-slate-950">
-          <span className="employer-home-header-icon" aria-hidden="true">
-            <Sparkles className="h-4 w-4" />
-          </span>
-          {employerUser.greeting}
-        </h1>
-        <p className="mt-1 text-sm text-slate-500">Here&rsquo;s your AI briefing for {employerUser.briefingDate}</p>
-      </div>
-
-      <div className="relative z-40 w-full max-w-xl">
-        <Sparkles className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[#185FA5]" />
-        <input
-          type="text"
-          value={query}
-          onChange={(e) => onQueryChange(e.target.value)}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter') onSubmit(query)
-          }}
-          onFocus={onFocus}
-          onBlur={onBlur}
-          placeholder="Find me software engineering interns from Taylor's or APU available after June..."
-          className="employer-home-command h-11 w-full pl-11 pr-16 text-sm text-slate-700 outline-none placeholder:text-slate-400"
-        />
-        <span className="absolute right-3 top-1/2 flex -translate-y-1/2 items-center gap-0.5 rounded-md bg-white/70 px-1.5 py-0.5 text-[10px] font-medium text-slate-400 ring-1 ring-slate-200/70">
-          <Command className="h-3 w-3" /> K
-        </span>
-
-        {showSuggestions ? (
-          <div className="employer-glass-card absolute left-0 right-0 top-full z-40 mt-1.5 overflow-hidden rounded-2xl border border-white/80 bg-white/95 py-1.5 shadow-2xl backdrop-blur-2xl">
-            <p className="px-3.5 pb-1 pt-1 text-[10px] font-semibold uppercase tracking-wide text-slate-400">Try asking</p>
-            {NLP_DEMO_QUERIES.map((q) => (
-              <button
-                key={q.id}
-                type="button"
-                onMouseDown={(e) => {
-                  e.preventDefault()
-                  onPickSuggestion(q)
-                }}
-                className="flex w-full items-start gap-2 px-3.5 py-2 text-left text-xs text-slate-600 hover:bg-blue-50/70 hover:text-[#185FA5]"
-              >
-                <Sparkles className="mt-0.5 h-3 w-3 shrink-0 text-[#185FA5]" />
-                {q.label}
-              </button>
-            ))}
-          </div>
-        ) : null}
-      </div>
-    </div>
-  )
-}
-
 export default function EmployerHome() {
   const navigate = useNavigate()
   const [query, setQuery] = useState('')
-  const [showSuggestions, setShowSuggestions] = useState(false)
   const [toast, setToast] = useState('')
   const toastRef = useRef(null)
 
@@ -88,53 +49,114 @@ export default function EmployerHome() {
     toastRef.current = window.setTimeout(() => setToast(''), 3000)
   }
 
-  const runQuery = (text) => {
-    const matched = matchNlpQuery(text)
+  const runQuery = () => {
+    const matched = matchNlpQuery(query)
     if (matched) {
       showToast(matched.toast)
       navigate(matched.to)
-    } else if (text.trim()) {
-      showToast("Try one of the suggested searches — this demo recognizes a few example queries")
+    } else if (query.trim()) {
+      showToast('Try: find software engineering interns from Taylor\'s available after June')
     }
-    setShowSuggestions(false)
   }
 
-  const pickSuggestion = (q) => {
-    setQuery(q.label)
-    showToast(q.toast)
-    navigate(q.to)
-    setShowSuggestions(false)
+  const handleQuickAction = (a) => {
+    if (a.route) navigate(a.route)
   }
+
+  const handleNavigate = (to) => navigate(to)
 
   return (
-    <div className="employer-home-page flex h-screen w-screen flex-col overflow-hidden">
+    <div
+      className="employer-home-page flex h-screen w-screen flex-col overflow-hidden text-[#111B3F]"
+      style={{ background: 'linear-gradient(160deg, #F6F9FF 0%, #EEF4FF 48%, #F8FBFF 100%)' }}
+    >
       <EmployerNav variant="glass" />
       <main className="min-w-0 flex-1 overflow-y-auto">
-        <div className="relative z-10 mx-auto max-w-[1480px] space-y-5 px-6 py-6">
-          <PageHeader
-            query={query}
-            onQueryChange={setQuery}
-            onSubmit={runQuery}
-            showSuggestions={showSuggestions}
-            onFocus={() => setShowSuggestions(true)}
-            onBlur={() => window.setTimeout(() => setShowSuggestions(false), 120)}
-            onPickSuggestion={pickSuggestion}
-          />
-
-          <div className="grid grid-cols-1 gap-5 lg:grid-cols-[1fr_320px]">
-            <AIBriefingCard />
-            <AIActionQueue />
+        <div className="mx-auto max-w-[1480px] space-y-5 px-6 py-5">
+          <div className="flex items-start justify-between gap-4">
+            <div>
+              <h1 className="flex items-center gap-2 text-2xl font-semibold text-slate-950">
+                <span className="employer-home-header-icon" aria-hidden="true">
+                  <Bot className="h-4 w-4" />
+                </span>
+                Employer AI Office Home
+              </h1>
+              <p className="mt-1 text-sm font-medium text-slate-500">
+                Morning briefing, talent operating rooms, and approvals in one workspace.
+              </p>
+            </div>
           </div>
 
-          <MetricsPillRow />
+          <section className="grid grid-cols-1 gap-4 lg:grid-cols-[1.15fr_0.85fr]">
+            <div className="rounded-2xl border border-white/70 bg-white/85 p-5 shadow-[0_10px_30px_rgba(24,95,165,0.08)] backdrop-blur-sm">
+              <div className="flex items-center gap-4">
+                <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-[#EEF2FB]">
+                  <img src={robotImg} alt="" className="h-12 w-12 object-contain" />
+                </div>
+                <div className="min-w-0 flex-1">
+                  <p className="text-sm font-bold text-[#1B2545]">{employerUser.greeting}.</p>
+                  <p className="mt-1 text-xs font-medium leading-5 text-[#50607E]">
+                    5 top candidates need action, 2 roles at risk, 3 shortlists likely to accept if contacted today, and 3 approvals await your sign-off.
+                  </p>
+                </div>
+              </div>
 
-          <div className="grid grid-cols-1 gap-5 lg:grid-cols-[2fr_1.6fr_1.3fr]">
-            <TopCandidatesCard />
-            <CampusPipelineFunnel />
-            <AIOpportunityRadar />
-          </div>
+              <div className="mt-4 flex items-center gap-3">
+                <div className="relative min-w-0 flex-1">
+                  <Sparkles className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[#185FA5]" />
+                  <input
+                    value={query}
+                    onChange={(e) => setQuery(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') runQuery()
+                    }}
+                    placeholder={NLP_DEMO_QUERIES[0]?.label || 'Find high-fit candidates for open roles…'}
+                    className="employer-home-command h-11 w-full pl-11 pr-20 text-sm text-slate-700 outline-none placeholder:text-slate-400"
+                  />
+                  <span className="absolute right-3 top-1/2 flex -translate-y-1/2 items-center gap-1 rounded-md bg-white/70 px-1.5 py-0.5 text-[10px] font-medium text-slate-400 ring-1 ring-slate-200/70">
+                    <Command className="h-3 w-3" /> Enter
+                  </span>
+                </div>
+                <button type="button" onClick={runQuery} className="employer-primary-button flex items-center gap-2 px-5 py-3 text-sm">
+                  Ask AI
+                  <ArrowRight className="h-4 w-4" />
+                </button>
+              </div>
+            </div>
+
+            <div className="rounded-2xl border border-white/70 bg-white/80 p-5 shadow-[0_10px_30px_rgba(24,95,165,0.08)] backdrop-blur-sm">
+              <p className="text-sm font-bold text-[#1B2545]">Quick actions</p>
+              <div className="mt-3 grid grid-cols-2 gap-2">
+                {QUICK_ACTIONS.map((action) => {
+                  const Icon = action.icon
+                  return (
+                    <button
+                      key={action.label}
+                      type="button"
+                      onClick={() => handleQuickAction(action)}
+                      className="flex items-center gap-2 rounded-xl border border-[#D8E0F0] bg-white/80 px-3 py-3 text-left text-xs font-bold text-[#26304D] transition hover:border-blue-300 hover:bg-blue-50 hover:text-[#155EE8]"
+                    >
+                      <Icon className="h-3.5 w-3.5 shrink-0" />
+                      {action.label}
+                    </button>
+                  )
+                })}
+              </div>
+            </div>
+          </section>
+
+          <EmployerKpiRow />
+
+          <section className="grid grid-cols-1 gap-4 lg:grid-cols-[1.25fr_0.75fr]">
+            <EmployerOperatingRooms />
+            <EmployerAIInbox />
+          </section>
+
+          <EmployerPendingActions />
+          <EmployerSummaryCardsRow onNavigate={handleNavigate} />
         </div>
       </main>
+
       <DemoToast message={toast} />
     </div>
   )

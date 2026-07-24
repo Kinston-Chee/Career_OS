@@ -24,6 +24,7 @@ import JobMarketplacePage from './pages/JobMarketplacePage'
 import MemoryProfilePage from './pages/MemoryProfilePage'
 import MentorshipsPage from './pages/MentorshipsPage'
 import OpportunitiesPage from './pages/OpportunitiesPage'
+import OpportunityCategoryPage from './pages/OpportunityCategoryPage'
 import PlaceholderPage from './pages/PlaceholderPage'
 import ProfilePage from './pages/ProfilePage'
 import CareerAnimalPage from './pages/CareerAnimalPage'
@@ -59,6 +60,7 @@ export default function App() {
         <Route path="/student/intelligence" element={<CareerIntelligencePage />} />
         <Route path="/student/career-intelligence" element={<CareerIntelligencePage />} />
         <Route path="/student/opportunities" element={<OpportunitiesPage />} />
+        <Route path="/student/opportunities/:categoryId" element={<OpportunityCategoryPage />} />
         <Route path="/student/communities" element={<CommunitiesPage />} />
         <Route path="/student/mentorships" element={<MentorshipsPage />} />
         <Route path="/student/skill-development" element={<SkillDevelopmentPage />} />
@@ -111,14 +113,12 @@ export default function App() {
       <Route element={<ProtectedRoute role="university" />}>
         {/* Round 2 AI-first pages — own top-nav layout, kept outside AppLayout's sidebar shell. */}
         <Route path="/university" element={<Navigate to="/university/overview" replace />} />
-        <Route path="/university/overview" element={<UniversityOverview />} />
+        <Route path="/university/overview" element={<UniversityAIHome />} />
         <Route path="/university/student-readiness" element={<StudentReadiness />} />
         <Route path="/university/curriculum-alignment" element={<CurriculumMarketAlignment />} />
         <Route path="/university/alumni-signals" element={<AlumniSignalIntelligence />} />
         <Route path="/university/collaboration" element={<CollaborationMarketplace />} />
         <Route path="/university/accreditation" element={<AccreditationHub />} />
-        <Route path="/university/ai-office" element={<UniversityAIOffice />} />
-        <Route path="/university/ai-office-home" element={<UniversityAIHome />} />
 
         <Route element={<AppLayout workspace="university" />}>
           <Route path="/university/readiness" element={<StudentReadinessOverviewPage />} />

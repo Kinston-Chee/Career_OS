@@ -3,6 +3,7 @@ import {
   BarChart3,
   Bot,
   Building2,
+  Globe2,
   Megaphone,
   Search,
   Sparkles,
@@ -16,6 +17,7 @@ import {
   alternativeEngagementTypes,
   campusIntelligence,
 } from '../../../data/engagementsData'
+import SdgBadge, { SdgBadgeGroup } from '../shared/SdgBadge'
 
 const REASON_ICONS = { people: Users, trend: TrendingUp, sparkle: Sparkles, target: Target }
 const ALT_ICONS = { search: Search, megaphone: Megaphone, zap: Zap }
@@ -86,6 +88,16 @@ function RecommendationCard({ onAccept, onShowOther }) {
             </div>
           ))}
         </div>
+
+        {aiRecommendation.sdgGoals?.length ? (
+          <div className="mt-4 rounded-lg border border-blue-100 bg-white/70 p-3">
+            <p className="mb-2 flex items-center gap-1.5 text-[11px] font-semibold text-gray-600">
+              <Globe2 className="h-3.5 w-3.5 text-[#185FA5]" />
+              Aligned UN Sustainable Development Goals
+            </p>
+            <SdgBadgeGroup goals={aiRecommendation.sdgGoals} size="md" />
+          </div>
+        ) : null}
 
         <div className="mt-4 flex flex-wrap items-center gap-3">
           <button type="button" onClick={onAccept} className="rounded-full bg-[#185FA5] px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#134c87]">

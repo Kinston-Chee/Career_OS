@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { CheckCircle2, Pencil, X } from 'lucide-react'
+import { Building2, Calendar, CheckCircle2, FileText, ListChecks, Paperclip, Pencil, Sparkles, Tag as TagIcon, X } from 'lucide-react'
 import HomeTopNav from '../components/home/HomeTopNav'
 import CompanionChatPanel from '../components/careerMemory/CompanionChatPanel'
 import MemoryTimeline from '../components/careerMemory/MemoryTimeline'
@@ -87,55 +87,213 @@ function DemoToast({ message }) {
   )
 }
 
-function CareerMemoryDetailModal({ memory, editing, onClose, onEdit, onCancelEdit, onSave }) {
-  const [form, setForm] = useState(memory.details)
+const DETAIL_INPUT_CLASS =
+  'w-full rounded-xl border border-white/70 bg-white/85 px-3.5 py-2.5 text-sm font-semibold text-[#2c3656] outline-none transition placeholder:text-[#9aa6c3] focus:border-blue-300 focus:bg-white focus:ring-4 focus:ring-blue-100'
 
-  useEffect(() => setForm(memory.details), [memory])
+function ensureArray(value) {
+  if (Array.isArray(value)) return value
+  if (typeof value === 'string' && value.trim()) {
+    return value.split(/[\n,]/).map((s) => s.trim()).filter(Boolean)
+  }
+  return []
+}
+
+function ChipInput({ items, draft, onDraftChange, onAdd, onRemove, placeholder }) {
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter' || event.key === ',') {
+      event.preventDefault()
+      onAdd(draft)
+    } else if (event.key === 'Backspace' && !draft && items.length > 0) {
+      onRemove(items[items.length - 1])
+    }
+  }
+  return (
+    <div className="flex flex-wrap items-center gap-1.5 rounded-xl border border-white/70 bg-white/85 px-3 py-2 transition focus-within:border-blue-300 focus-within:bg-white focus-within:ring-4 focus-within:ring-blue-100">
+      {items.map((item) => (
+        <span key={item} className="inline-flex items-center gap-1 rounded-full border border-blue-100 bg-blue-50/85 px-2.5 py-1 text-xs font-bold text-blue-700">
+          {item}
+          <button type="button" onClick={() => onRemove(item)} className="rounded-full p-0.5 text-blue-500 transition hover:bg-blue-100 hover:text-blue-700" aria-label={`Remove ${item}`}>
+            <X size={11} strokeWidth={2.6} />
+          </button>
+        </span>
+      ))}
+      <input
+        value={draft}
+        onChange={(event) => {
+          const value = event.target.value
+          if (value.endsWith(',')) onAdd(value)
+          else onDraftChange(value)
+        }}
+        onKeyDown={handleKeyDown}
+        onBlur={() => draft.trim() && onAdd(draft)}
+        placeholder={items.length === 0 ? placeholder : ''}
+        className="flex-1 min-w-[8rem] bg-transparent text-sm font-semibold text-[#2c3656] outline-none placeholder:text-[#9aa6c3]"
+      />
+    </div>
+  )
+}
+
+function CareerMemoryDetailModal({ memory, editing, onClose, onEdit, onCancelEdit, onSave }) {
+  const [form, setForm] = useState(() => ({
+    ...memory.details,
+    skills: ensureArray(memory.details.skills),
+    evidence: ensureArray(memory.details.evidence),
+    actions: ensureArray(memory.details.actions),
+  }))
+  const [skillDraft, setSkillDraft] = useState('')
+  const [evidenceDraft, setEvidenceDraft] = useState('')
+  const [actionDraft, setActionDraft] = useState('')
+
+  useEffect(() => {
+    setForm({
+      ...memory.details,
+      skills: ensureArray(memory.details.skills),
+      evidence: ensureArray(memory.details.evidence),
+      actions: ensureArray(memory.details.actions),
+    })
+    setSkillDraft('')
+    setEvidenceDraft('')
+    setActionDraft('')
+  }, [memory])
 
   const update = (field, value) => setForm((current) => ({ ...current, [field]: value }))
-  const inputClass = 'w-full rounded-2xl border border-white/70 bg-white/65 px-3 py-2 text-sm font-semibold text-[#263556] outline-none transition focus:border-blue-300 focus:bg-white/85'
+
+  const addChip = (field, draftSetter) => (raw) => {
+    const clean = raw.trim().replace(/,+$/, '')
+    if (!clean) return
+    setForm((current) => {
+      const list = ensureArray(current[field])
+      if (list.includes(clean)) return current
+      return { ...current, [field]: [...list, clean] }
+    })
+    draftSetter('')
+  }
+  const removeChip = (field) => (item) => {
+    setForm((current) => ({ ...current, [field]: ensureArray(current[field]).filter((s) => s !== item) }))
+  }
+
+  const handleSave = () => {
+    const finalSkills = skillDraft.trim() ? [...ensureArray(form.skills), skillDraft.trim()] : ensureArray(form.skills)
+    const finalEvidence = evidenceDraft.trim() ? [...ensureArray(form.evidence), evidenceDraft.trim()] : ensureArray(form.evidence)
+    const finalActions = actionDraft.trim() ? [...ensureArray(form.actions), actionDraft.trim()] : ensureArray(form.actions)
+    onSave({ ...form, skills: finalSkills, evidence: finalEvidence, actions: finalActions })
+  }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-slate-900/10 px-4 py-6 backdrop-blur-sm">
-      <section role="dialog" aria-modal="true" className="max-h-[92vh] w-full max-w-3xl overflow-y-auto rounded-[28px] border border-white/70 bg-[linear-gradient(135deg,rgba(255,255,255,0.88),rgba(239,246,255,0.68))] p-6 shadow-[0_24px_80px_rgba(15,23,42,0.14),inset_0_1px_0_rgba(255,255,255,0.9)] ring-1 ring-blue-100/50 backdrop-blur-2xl">
+    <div className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-slate-900/15 px-4 py-6 backdrop-blur-sm">
+      <section role="dialog" aria-modal="true" className="max-h-[92vh] w-full max-w-2xl overflow-y-auto rounded-[28px] border border-white/70 bg-[linear-gradient(135deg,rgba(255,255,255,0.92),rgba(239,246,255,0.74))] p-6 shadow-[0_28px_80px_rgba(15,23,42,0.18),inset_0_1px_0_rgba(255,255,255,0.9)] ring-1 ring-blue-100/50 backdrop-blur-2xl">
         <div className="flex items-start justify-between gap-4">
-          <div>
-            <div className="flex flex-wrap items-center gap-2">
-              <span className="rounded-full border border-blue-100 bg-blue-50/80 px-2.5 py-1 text-xs font-bold text-blue-700">{form.type}</span>
-              <span className="rounded-full border border-white/70 bg-white/65 px-2.5 py-1 text-xs font-bold text-[#637094]">{form.dateRange}</span>
-              <span className="inline-flex items-center gap-1 rounded-full border border-emerald-100 bg-emerald-50/80 px-2.5 py-1 text-xs font-bold text-emerald-700">
-                <CheckCircle2 size={12} /> {form.status}
-              </span>
+          <div className="flex items-start gap-3">
+            <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-600 to-indigo-600 text-white shadow-[0_10px_24px_rgba(37,99,235,0.28)]">
+              <Sparkles size={20} strokeWidth={2.2} />
+            </span>
+            <div className="min-w-0">
+              <h2 className="text-lg font-black text-[#11194a] sm:text-xl">{form.title}</h2>
+              <p className="mt-0.5 text-sm font-semibold text-[#637094]">{form.organisation}</p>
+              <div className="mt-2 flex flex-wrap items-center gap-1.5">
+                <span className="rounded-full border border-blue-100 bg-blue-50/80 px-2.5 py-1 text-[11px] font-bold text-blue-700">{form.type}</span>
+                <span className="rounded-full border border-white/70 bg-white/65 px-2.5 py-1 text-[11px] font-bold text-[#637094]">{form.dateRange}</span>
+                <span className="inline-flex items-center gap-1 rounded-full border border-emerald-100 bg-emerald-50/80 px-2.5 py-1 text-[11px] font-bold text-emerald-700">
+                  <CheckCircle2 size={11} /> {form.status}
+                </span>
+              </div>
             </div>
-            <h2 className="mt-3 text-xl font-black text-[#11194a]">{form.title}</h2>
-            <p className="mt-1 text-sm font-semibold text-[#637094]">{form.organisation}</p>
           </div>
-          <button type="button" onClick={onClose} className="rounded-full p-2 text-[#7382a1] transition hover:bg-blue-50 hover:text-blue-700">
+          <button type="button" onClick={onClose} className="rounded-full p-2 text-[#7382a1] transition hover:bg-blue-50 hover:text-blue-700" aria-label="Close">
             <X size={18} />
           </button>
         </div>
 
         {editing ? (
-          <div className="mt-5 grid gap-3 sm:grid-cols-2">
-            <label className="text-xs font-bold text-[#637094]">Title<input className={`${inputClass} mt-1`} value={form.title} onChange={(event) => update('title', event.target.value)} /></label>
-            <label className="text-xs font-bold text-[#637094]">Organisation<input className={`${inputClass} mt-1`} value={form.organisation} onChange={(event) => update('organisation', event.target.value)} /></label>
-            <label className="text-xs font-bold text-[#637094]">Date range<input className={`${inputClass} mt-1`} value={form.dateRange} onChange={(event) => update('dateRange', event.target.value)} /></label>
-            <label className="text-xs font-bold text-[#637094]">Status<input className={`${inputClass} mt-1`} value={form.status} onChange={(event) => update('status', event.target.value)} /></label>
-            <label className="sm:col-span-2 text-xs font-bold text-[#637094]">Description<textarea className={`${inputClass} mt-1 min-h-24 resize-none`} value={form.description} onChange={(event) => update('description', event.target.value)} /></label>
-            <label className="text-xs font-bold text-[#637094]">Skills<textarea className={`${inputClass} mt-1 min-h-24 resize-none`} value={Array.isArray(form.skills) ? form.skills.join(', ') : form.skills} onChange={(event) => update('skills', event.target.value)} /></label>
-            <label className="text-xs font-bold text-[#637094]">Evidence<textarea className={`${inputClass} mt-1 min-h-24 resize-none`} value={Array.isArray(form.evidence) ? form.evidence.join(', ') : form.evidence} onChange={(event) => update('evidence', event.target.value)} /></label>
+          <div className="mt-6 space-y-5">
+            <div className="grid gap-3 sm:grid-cols-2">
+              <DetailSection icon={Sparkles} title="Title / Role">
+                <input value={form.title} onChange={(event) => update('title', event.target.value)} placeholder="Vice President" className={DETAIL_INPUT_CLASS} />
+              </DetailSection>
+              <DetailSection icon={Building2} title="Organisation">
+                <input value={form.organisation} onChange={(event) => update('organisation', event.target.value)} placeholder="Company, university, or club" className={DETAIL_INPUT_CLASS} />
+              </DetailSection>
+            </div>
+
+            <div className="grid gap-3 sm:grid-cols-2">
+              <DetailSection icon={Calendar} title="Date range">
+                <input value={form.dateRange} onChange={(event) => update('dateRange', event.target.value)} placeholder="Jun 2024 – Present" className={DETAIL_INPUT_CLASS} />
+              </DetailSection>
+              <DetailSection icon={CheckCircle2} title="Status">
+                <input value={form.status} onChange={(event) => update('status', event.target.value)} placeholder="Self-reported" className={DETAIL_INPUT_CLASS} />
+              </DetailSection>
+            </div>
+
+            <DetailSection icon={FileText} title="Overview" hint="A few lines is fine">
+              <textarea
+                value={form.description}
+                onChange={(event) => update('description', event.target.value)}
+                placeholder="What you did, what you delivered, and any measurable outcome…"
+                rows={3}
+                className={`${DETAIL_INPUT_CLASS} resize-none`}
+              />
+            </DetailSection>
+
+            <DetailSection icon={TagIcon} title="Skills & signals" hint="Press Enter or comma to add">
+              <ChipInput
+                items={ensureArray(form.skills)}
+                draft={skillDraft}
+                onDraftChange={setSkillDraft}
+                onAdd={addChip('skills', setSkillDraft)}
+                onRemove={removeChip('skills')}
+                placeholder="Leadership, Event Management…"
+              />
+            </DetailSection>
+
+            <DetailSection icon={Paperclip} title="Evidence" hint="Press Enter or comma to add">
+              <ChipInput
+                items={ensureArray(form.evidence)}
+                draft={evidenceDraft}
+                onDraftChange={setEvidenceDraft}
+                onAdd={addChip('evidence', setEvidenceDraft)}
+                onRemove={removeChip('evidence')}
+                placeholder="Society appointment proof, event posters…"
+              />
+            </DetailSection>
+
+            <DetailSection icon={Sparkles} title="AI CareerOS insight" hint="Editable summary shown on the detail card">
+              <textarea
+                value={form.insight}
+                onChange={(event) => update('insight', event.target.value)}
+                placeholder="What signal this experience adds to your profile…"
+                rows={3}
+                className={`${DETAIL_INPUT_CLASS} resize-none`}
+              />
+            </DetailSection>
+
+            <DetailSection icon={ListChecks} title="Suggested actions" hint="Press Enter or comma to add">
+              <ChipInput
+                items={ensureArray(form.actions)}
+                draft={actionDraft}
+                onDraftChange={setActionDraft}
+                onAdd={addChip('actions', setActionDraft)}
+                onRemove={removeChip('actions')}
+                placeholder="Add impact numbers, attach photos…"
+              />
+            </DetailSection>
           </div>
         ) : (
-          <div className="mt-5 grid gap-3">
-            <DetailSection title="Overview">{form.description}</DetailSection>
-            <DetailSection title="Skills & signals">
+          <div className="mt-6 space-y-5">
+            <DetailSection icon={FileText} title="Overview">
+              <p className="rounded-xl border border-white/70 bg-white/85 px-3.5 py-2.5 text-sm font-medium leading-6 text-[#2c3656]">{form.description}</p>
+            </DetailSection>
+            <DetailSection icon={TagIcon} title="Skills & signals">
               <PillList items={form.skills} />
             </DetailSection>
-            <DetailSection title="Evidence">
+            <DetailSection icon={Paperclip} title="Evidence">
               <PillList items={form.evidence} muted />
             </DetailSection>
-            <DetailSection title="AI CareerOS insight">{form.insight}</DetailSection>
-            <DetailSection title="Suggested actions">
+            <DetailSection icon={Sparkles} title="AI CareerOS insight" hint="Generated from your profile">
+              <p className="rounded-xl border border-blue-100 bg-blue-50/60 px-3.5 py-2.5 text-sm font-medium leading-6 text-[#2c3656] shadow-[inset_0_1px_0_rgba(255,255,255,0.8)]">
+                {form.insight}
+              </p>
+            </DetailSection>
+            <DetailSection icon={ListChecks} title="Suggested actions">
               <PillList items={form.actions} muted />
             </DetailSection>
           </div>
@@ -147,10 +305,10 @@ function CareerMemoryDetailModal({ memory, editing, onClose, onEdit, onCancelEdi
               <button type="button" onClick={onCancelEdit} className="rounded-full border border-blue-100 bg-white/70 px-4 py-2 text-sm font-bold text-blue-700 transition hover:bg-blue-50">Cancel</button>
               <button
                 type="button"
-                onClick={() => onSave({ ...form, skills: splitList(String(form.skills)), evidence: splitList(String(form.evidence)) })}
-                className="rounded-full bg-blue-600 px-4 py-2 text-sm font-bold text-white shadow-[0_12px_30px_rgba(37,99,235,0.25)] transition hover:bg-blue-700"
+                onClick={handleSave}
+                className="inline-flex items-center gap-1.5 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 px-4 py-2 text-sm font-bold text-white shadow-[0_12px_30px_rgba(37,99,235,0.28)] transition hover:brightness-110"
               >
-                Save changes
+                <CheckCircle2 size={14} strokeWidth={2.4} /> Save changes
               </button>
             </>
           ) : (
@@ -164,20 +322,31 @@ function CareerMemoryDetailModal({ memory, editing, onClose, onEdit, onCancelEdi
   )
 }
 
-function DetailSection({ title, children }) {
+function DetailSection({ icon: Icon, title, hint, children }) {
   return (
-    <section className="rounded-2xl border border-white/70 bg-white/55 p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.75),0_8px_24px_rgba(37,99,235,0.06)]">
-      <h3 className="text-xs font-bold uppercase tracking-wide text-blue-600">{title}</h3>
-      <div className="mt-2 text-sm font-medium leading-6 text-[#3a4669]">{children}</div>
-    </section>
+    <div className="block">
+      <span className="mb-1.5 flex items-center gap-1.5 text-xs font-bold uppercase tracking-wide text-[#637094]">
+        {Icon ? <Icon size={13} className="text-blue-600" strokeWidth={2.4} /> : null}
+        {title}
+        {hint ? <span className="text-[10px] font-medium normal-case text-[#9aa6c3]">· {hint}</span> : null}
+      </span>
+      {children}
+    </div>
   )
 }
 
 function PillList({ items, muted = false }) {
   return (
-    <div className="flex flex-wrap gap-2">
+    <div className="flex flex-wrap gap-1.5">
       {items.map((item) => (
-        <span key={item} className={`rounded-full border px-2.5 py-1 text-xs font-bold ${muted ? 'border-slate-100 bg-white/70 text-[#637094]' : 'border-blue-100 bg-blue-50/80 text-blue-700'}`}>
+        <span
+          key={item}
+          className={`inline-flex items-center gap-1 rounded-full border px-2.5 py-1 text-xs font-bold ${
+            muted
+              ? 'border-white/70 bg-white/85 text-[#637094]'
+              : 'border-blue-100 bg-blue-50/85 text-blue-700'
+          }`}
+        >
           {item}
         </span>
       ))}

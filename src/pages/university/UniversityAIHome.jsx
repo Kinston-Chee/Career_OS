@@ -78,7 +78,6 @@ export default function UniversityAIHome() {
                 Morning briefing, operating rooms, and approvals in one workspace.
               </p>
             </div>
-            <UniversityHomeSwitcher current="combined" />
           </div>
 
           <section className="grid grid-cols-[1.15fr_0.85fr] gap-4">

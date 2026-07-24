@@ -508,8 +508,8 @@ export default function SkillDevelopmentPage() {
   const [currentCat, setCurrentCat] = useState('all')
   const [currentFilter, setCurrentFilter] = useState('all')
   const [sortBy, setSortBy] = useState('priority')
-  const [selectedSkillId, setSelectedSkillId] = useState(SKILLS[0].id)
-  const [detailOpen, setDetailOpen] = useState(true)
+  const [selectedSkillId, setSelectedSkillId] = useState(null)
+  const [detailOpen, setDetailOpen] = useState(false)
 
   const displayedSkills = useMemo(() => {
     let list = filterByCategory(currentCat)
@@ -561,10 +561,10 @@ export default function SkillDevelopmentPage() {
   const isRegularCategory = Boolean(activeMeta)
 
   return (
-    <div className="flex min-h-screen flex-col overflow-hidden bg-[#F0F2FF] text-[#111827]" style={{ fontFamily: 'Inter, sans-serif' }}>
+    <div className="fixed inset-0 flex flex-col overflow-hidden bg-[#F0F2FF] text-[#111827]" style={{ fontFamily: 'Inter, sans-serif' }}>
       <HomeTopNav user={mockUser} readiness={readiness} />
 
-      <div className="flex h-[calc(100vh-3.5rem)] min-h-0">
+      <div className="flex min-h-0 flex-1">
         <Sidebar
           currentCat={currentCat}
           onSelectCategory={(cat) => { setCurrentCat(cat); setCurrentFilter('all') }}
