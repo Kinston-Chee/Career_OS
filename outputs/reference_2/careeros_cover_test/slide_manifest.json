@@ -1,0 +1,12 @@
+{
+  "slides": [{
+    "slide": 1,
+    "single_page_pptx_path": "pages/careeros-cover.pptx",
+    "reference_path": "../photo_2026-07-24_23-49-52.jpg",
+    "render_path": "renders/cover/Slide1.PNG",
+    "generation_engine": {"tool": "pptxgenjs", "visual_fidelity_not_reduced": true},
+    "native_components": ["wordmark", "title", "subtitle", "descriptor", "four product pillars", "footer", "employer icon overlay"],
+    "image_assets": [{"path": "assets/careeros-glass-system.png", "role": "complex glass visual", "contains_primary_text": false}],
+    "page_execution": {"mode": "single_page", "page_status": "awaiting_user_approval", "user_confirmed": false, "made_before_next_slide": true}
+  }]
+}

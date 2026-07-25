@@ -1,0 +1,1148 @@
+{
+  "schema": "openai.presentation.layout/v4",
+  "unit": "px",
+  "slide": {
+    "aid": "sl/rubfah",
+    "id": "rubfah",
+    "slide": 10,
+    "layoutId": "be28fe86-fe0b-4685-b012-a18d6676df15",
+    "layoutName": "Title Slide",
+    "layoutType": "title",
+    "masterLayoutId": "5a4eb689-a7af-4938-8380-4b2dba7e92a0",
+    "masterLayoutName": "Master",
+    "backgroundColor": "#F8FAFF",
+    "frame": {
+      "left": 0,
+      "top": 0,
+      "width": 1280,
+      "height": 720
+    }
+  },
+  "theme": {
+    "colorSchemeName": "ChatGPT",
+    "colors": {
+      "accent1": "#156082",
+      "accent2": "#E97132",
+      "accent3": "#196B24",
+      "accent4": "#0F9ED5",
+      "accent5": "#A02B93",
+      "accent6": "#4EA72E",
+      "bg1": "#FFFFFF",
+      "bg2": "#000000",
+      "tx1": "#1F1F1F",
+      "tx2": "#FFFFFF",
+      "dk1": "#000000",
+      "lt1": "#FFFFFF",
+      "dk2": "#0E2841",
+      "lt2": "#E8E8E8",
+      "hlink": "#467886",
+      "folHlink": "#96607D"
+    },
+    "typefaces": [
+      "+mn-lt"
+    ]
+  },
+  "inheritedLayers": [
+    {
+      "scope": "layout",
+      "id": "be28fe86-fe0b-4685-b012-a18d6676df15",
+      "name": "Title Slide",
+      "type": "title",
+      "parentLayoutId": "5a4eb689-a7af-4938-8380-4b2dba7e92a0",
+      "elements": []
+    },
+    {
+      "scope": "master",
+      "id": "5a4eb689-a7af-4938-8380-4b2dba7e92a0",
+      "name": "Master",
+      "type": "master",
+      "elements": []
+    }
+  ],
+  "elements": [
+    {
+      "order": 1,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/mds7mh4j",
+      "id": "1",
+      "bbox": [
+        58,
+        34,
+        650,
+        22
+      ],
+      "geometry": "rect",
+      "text": "EMPLOYER • DECISION MODEL",
+      "textPreview": "EMPLOYER • DECISION MODEL",
+      "resolvedFontSize": 13,
+      "resolvedTextStyle": {
+        "fontSize": 13,
+        "typeface": "+mn-lt",
+        "color": "#2563EB",
+        "bold": true,
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "EMPLOYER • DECISION MODEL"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "EMPLOYER • DECISION MODEL",
+          "resolvedTextStyle": {
+            "fontSize": 13,
+            "color": "#2563EB",
+            "bold": true,
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "EMPLOYER • DECISION MODEL",
+              "fontSize": 13,
+              "color": "#2563EB",
+              "bold": true,
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 2,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/9gj6xwnu",
+      "id": "2",
+      "bbox": [
+        58,
+        66,
+        1160,
+        58
+      ],
+      "geometry": "rect",
+      "text": "Employers need evidence and history—not another candidate database.",
+      "textPreview": "Employers need evidence and history—not another candidate database.",
+      "resolvedFontSize": 36,
+      "resolvedTextStyle": {
+        "fontSize": 36,
+        "typeface": "+mn-lt",
+        "color": "#11194A",
+        "bold": true,
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Employers need evidence and history—not another candidate database."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Employers need evidence and history—not another candidate database.",
+          "resolvedTextStyle": {
+            "fontSize": 36,
+            "color": "#11194A",
+            "bold": true,
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Employers need evidence and history—not another candidate database.",
+              "fontSize": 36,
+              "color": "#11194A",
+              "bold": true,
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 3,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/ofaporm9",
+      "id": "3",
+      "bbox": [
+        1170,
+        39,
+        48,
+        20
+      ],
+      "geometry": "rect",
+      "text": "10",
+      "textPreview": "10",
+      "resolvedFontSize": 12,
+      "resolvedTextStyle": {
+        "fontSize": 12,
+        "typeface": "+mn-lt",
+        "color": "#74829B",
+        "bold": true,
+        "alignment": "right",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "10"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "10",
+          "resolvedTextStyle": {
+            "fontSize": 12,
+            "color": "#74829B",
+            "bold": true,
+            "alignment": "right"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "10",
+              "fontSize": 12,
+              "color": "#74829B",
+              "bold": true,
+              "alignment": "right"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 4,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/za1orm5s",
+      "id": "4",
+      "bbox": [
+        58,
+        160,
+        470,
+        430
+      ],
+      "geometry": "roundRect",
+      "fillColor": "#FFFFFF",
+      "lineColor": "#DCE6F5",
+      "lineWidth": 1
+    },
+    {
+      "order": 5,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/e987ih47",
+      "id": "5",
+      "bbox": [
+        88,
+        192,
+        360,
+        20
+      ],
+      "geometry": "rect",
+      "text": "THE CURRENT FAILURE",
+      "textPreview": "THE CURRENT FAILURE",
+      "resolvedFontSize": 13,
+      "resolvedTextStyle": {
+        "fontSize": 13,
+        "typeface": "+mn-lt",
+        "color": "#7C3AED",
+        "bold": true,
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "THE CURRENT FAILURE"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "THE CURRENT FAILURE",
+          "resolvedTextStyle": {
+            "fontSize": 13,
+            "color": "#7C3AED",
+            "bold": true,
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "THE CURRENT FAILURE",
+              "fontSize": 13,
+              "color": "#7C3AED",
+              "bold": true,
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 6,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/1cj6tcny",
+      "id": "6",
+      "bbox": [
+        88,
+        232,
+        390,
+        122
+      ],
+      "geometry": "rect",
+      "text": "Early-talent decisions are weakest when every search starts from CV claims and zero context.",
+      "textPreview": "Early-talent decisions are weakest when every search starts from CV claims and zero context.",
+      "resolvedFontSize": 30,
+      "resolvedTextStyle": {
+        "fontSize": 30,
+        "typeface": "+mn-lt",
+        "color": "#11194A",
+        "bold": true,
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 4,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Early-talent decisions are"
+          },
+          {
+            "index": 2,
+            "text": "weakest when every search"
+          },
+          {
+            "index": 3,
+            "text": "starts from CV claims and"
+          },
+          {
+            "index": 4,
+            "text": "zero context."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Early-talent decisions are weakest when every search starts from CV claims and zero context.",
+          "resolvedTextStyle": {
+            "fontSize": 30,
+            "color": "#11194A",
+            "bold": true,
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Early-talent decisions are weakest when every search starts from CV claims and zero context.",
+              "fontSize": 30,
+              "color": "#11194A",
+              "bold": true,
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 7,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/0bapk7md",
+      "id": "7",
+      "bbox": [
+        88,
+        392,
+        390,
+        70
+      ],
+      "geometry": "rect",
+      "text": "Similar claims • limited work history • lost event context • urgent sourcing",
+      "textPreview": "Similar claims • limited work history • lost event context • urgent sourcing",
+      "resolvedFontSize": 18,
+      "resolvedTextStyle": {
+        "fontSize": 18,
+        "typeface": "+mn-lt",
+        "color": "#52627F",
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 2,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Similar claims • limited work history • lost event"
+          },
+          {
+            "index": 2,
+            "text": "context • urgent sourcing"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Similar claims • limited work history • lost event context • urgent sourcing",
+          "resolvedTextStyle": {
+            "fontSize": 18,
+            "color": "#52627F",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Similar claims • limited work history • lost event context • urgent sourcing",
+              "fontSize": 18,
+              "color": "#52627F",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 8,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/rmhon25g",
+      "id": "8",
+      "bbox": [
+        570,
+        160,
+        652,
+        430
+      ],
+      "geometry": "roundRect",
+      "fillColor": "#EEF2FF",
+      "lineColor": "#D7E0FF",
+      "lineWidth": 1
+    },
+    {
+      "order": 9,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/ql8nex4b",
+      "id": "9",
+      "bbox": [
+        606,
+        194,
+        520,
+        20
+      ],
+      "geometry": "rect",
+      "text": "THE CAREEROS EMPLOYER MODEL",
+      "textPreview": "THE CAREEROS EMPLOYER MODEL",
+      "resolvedFontSize": 13,
+      "resolvedTextStyle": {
+        "fontSize": 13,
+        "typeface": "+mn-lt",
+        "color": "#2563EB",
+        "bold": true,
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "THE CAREEROS EMPLOYER MODEL"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "THE CAREEROS EMPLOYER MODEL",
+          "resolvedTextStyle": {
+            "fontSize": 13,
+            "color": "#2563EB",
+            "bold": true,
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "THE CAREEROS EMPLOYER MODEL",
+              "fontSize": 13,
+              "color": "#2563EB",
+              "bold": true,
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 10,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/sn2lkj29",
+      "id": "10",
+      "bbox": [
+        606,
+        238,
+        520,
+        42
+      ],
+      "geometry": "roundRect",
+      "fillColor": "#F8FAFF",
+      "lineColor": "#DCE6F5",
+      "lineWidth": 1
+    },
+    {
+      "order": 11,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/tob2do3u",
+      "id": "11",
+      "bbox": [
+        624,
+        249,
+        478,
+        20
+      ],
+      "geometry": "rect",
+      "text": "Need",
+      "textPreview": "Need",
+      "resolvedFontSize": 17,
+      "resolvedTextStyle": {
+        "fontSize": 17,
+        "typeface": "+mn-lt",
+        "color": "#11194A",
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Need"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Need",
+          "resolvedTextStyle": {
+            "fontSize": 17,
+            "color": "#11194A",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Need",
+              "fontSize": 17,
+              "color": "#11194A",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 12,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/6l03i9k3",
+      "id": "12",
+      "bbox": [
+        606,
+        299,
+        520,
+        42
+      ],
+      "geometry": "roundRect",
+      "fillColor": "#FFFFFF",
+      "lineColor": "#DCE6F5",
+      "lineWidth": 1
+    },
+    {
+      "order": 13,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/rmtkbelo",
+      "id": "13",
+      "bbox": [
+        624,
+        310,
+        478,
+        20
+      ],
+      "geometry": "rect",
+      "text": "Evidence-backed discovery",
+      "textPreview": "Evidence-backed discovery",
+      "resolvedFontSize": 17,
+      "resolvedTextStyle": {
+        "fontSize": 17,
+        "typeface": "+mn-lt",
+        "color": "#4F46E5",
+        "bold": true,
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Evidence-backed discovery"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Evidence-backed discovery",
+          "resolvedTextStyle": {
+            "fontSize": 17,
+            "color": "#4F46E5",
+            "bold": true,
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Evidence-backed discovery",
+              "fontSize": 17,
+              "color": "#4F46E5",
+              "bold": true,
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 14,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/4jilgz2x",
+      "id": "14",
+      "bbox": [
+        606,
+        360,
+        520,
+        42
+      ],
+      "geometry": "roundRect",
+      "fillColor": "#F8FAFF",
+      "lineColor": "#DCE6F5",
+      "lineWidth": 1
+    },
+    {
+      "order": 15,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/5kr2943i",
+      "id": "15",
+      "bbox": [
+        624,
+        371,
+        478,
+        20
+      ],
+      "geometry": "rect",
+      "text": "Targeted validation",
+      "textPreview": "Targeted validation",
+      "resolvedFontSize": 17,
+      "resolvedTextStyle": {
+        "fontSize": 17,
+        "typeface": "+mn-lt",
+        "color": "#11194A",
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Targeted validation"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Targeted validation",
+          "resolvedTextStyle": {
+            "fontSize": 17,
+            "color": "#11194A",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Targeted validation",
+              "fontSize": 17,
+              "color": "#11194A",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 16,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/ix03epk7",
+      "id": "16",
+      "bbox": [
+        606,
+        421,
+        520,
+        42
+      ],
+      "geometry": "roundRect",
+      "fillColor": "#F8FAFF",
+      "lineColor": "#DCE6F5",
+      "lineWidth": 1
+    },
+    {
+      "order": 17,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/ji9k7ulc",
+      "id": "17",
+      "bbox": [
+        624,
+        432,
+        478,
+        20
+      ],
+      "geometry": "rect",
+      "text": "Decision history",
+      "textPreview": "Decision history",
+      "resolvedFontSize": 17,
+      "resolvedTextStyle": {
+        "fontSize": 17,
+        "typeface": "+mn-lt",
+        "color": "#11194A",
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Decision history"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Decision history",
+          "resolvedTextStyle": {
+            "fontSize": 17,
+            "color": "#11194A",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Decision history",
+              "fontSize": 17,
+              "color": "#11194A",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 18,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/ofmls32h",
+      "id": "18",
+      "bbox": [
+        606,
+        482,
+        520,
+        42
+      ],
+      "geometry": "roundRect",
+      "fillColor": "#F8FAFF",
+      "lineColor": "#DCE6F5",
+      "lineWidth": 1
+    },
+    {
+      "order": 19,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/pgvml83m",
+      "id": "19",
+      "bbox": [
+        624,
+        493,
+        478,
+        20
+      ],
+      "geometry": "rect",
+      "text": "Reusable pipeline",
+      "textPreview": "Reusable pipeline",
+      "resolvedFontSize": 17,
+      "resolvedTextStyle": {
+        "fontSize": 17,
+        "typeface": "+mn-lt",
+        "color": "#11194A",
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Reusable pipeline"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Reusable pipeline",
+          "resolvedTextStyle": {
+            "fontSize": 17,
+            "color": "#11194A",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Reusable pipeline",
+              "fontSize": 17,
+              "color": "#11194A",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 20,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/xcr25ov6",
+      "id": "20",
+      "bbox": [
+        606,
+        548,
+        540,
+        28
+      ],
+      "geometry": "rect",
+      "text": "Behaviour change: ask what supports fit—and what must be validated.",
+      "textPreview": "Behaviour change: ask what supports fit—and what must be validated.",
+      "resolvedFontSize": 18,
+      "resolvedTextStyle": {
+        "fontSize": 18,
+        "typeface": "+mn-lt",
+        "color": "#2563EB",
+        "bold": true,
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 2,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Behaviour change: ask what supports fit—and what must be"
+          },
+          {
+            "index": 2,
+            "text": "validated."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Behaviour change: ask what supports fit—and what must be validated.",
+          "resolvedTextStyle": {
+            "fontSize": 18,
+            "color": "#2563EB",
+            "bold": true,
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Behaviour change: ask what supports fit—and what must be validated.",
+              "fontSize": 18,
+              "color": "#2563EB",
+              "bold": true,
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 21,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/wbilc3ul",
+      "id": "21",
+      "bbox": [
+        58,
+        685,
+        460,
+        16
+      ],
+      "geometry": "rect",
+      "text": "CareerOS • Talentbank AI Hackathon",
+      "textPreview": "CareerOS • Talentbank AI Hackathon",
+      "resolvedFontSize": 11,
+      "resolvedTextStyle": {
+        "fontSize": 11,
+        "typeface": "+mn-lt",
+        "color": "#74829B",
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "CareerOS • Talentbank AI Hackathon"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "CareerOS • Talentbank AI Hackathon",
+          "resolvedTextStyle": {
+            "fontSize": 11,
+            "color": "#74829B",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "CareerOS • Talentbank AI Hackathon",
+              "fontSize": 11,
+              "color": "#74829B",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 22,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/ba9k3yd0",
+      "id": "22",
+      "bbox": [
+        975,
+        676,
+        245,
+        25
+      ],
+      "geometry": "roundRect",
+      "fillColor": "#FEF3C7",
+      "lineColor": "#FEF3C7",
+      "lineWidth": 1
+    },
+    {
+      "order": 23,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/a903atcf",
+      "id": "23",
+      "bbox": [
+        987,
+        681,
+        221,
+        15
+      ],
+      "geometry": "rect",
+      "text": "Simulated candidate and match data",
+      "textPreview": "Simulated candidate and match data",
+      "resolvedFontSize": 11,
+      "resolvedTextStyle": {
+        "fontSize": 11,
+        "typeface": "+mn-lt",
+        "color": "#B45309",
+        "bold": true,
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Simulated candidate and match data"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Simulated candidate and match data",
+          "resolvedTextStyle": {
+            "fontSize": 11,
+            "color": "#B45309",
+            "bold": true,
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Simulated candidate and match data",
+              "fontSize": 11,
+              "color": "#B45309",
+              "bold": true,
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    }
+  ],
+  "composeRuns": []
+}

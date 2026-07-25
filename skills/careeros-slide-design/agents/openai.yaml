@@ -1,0 +1,4 @@
+interface:
+  display_name: "CareerOS Slide Design"
+  short_description: "Design readable CareerOS self-reading slides"
+  default_prompt: "Use $careeros-slide-design to define and apply the CareerOS visual system to an asynchronous pitch deck."

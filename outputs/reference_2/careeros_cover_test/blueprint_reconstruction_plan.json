@@ -1,0 +1,11 @@
+{
+  "slide": 1,
+  "blueprint_path": "../photo_2026-07-24_23-49-52.jpg",
+  "canvas_size": {"reference_px": [1260, 946], "ppt_inches": [10, 7.5]},
+  "surface_system": "Continuous blue-white cover with a glass-render visual on the right and editable information on the left.",
+  "layout_regions": {"wordmark": "top-left", "product_positioning": "left 46%", "complex_visual": "right 54%", "footer": "bottom"},
+  "native_rebuild_targets": ["CareerOS wordmark", "title", "positioning line", "descriptor", "four product pillars", "footer"],
+  "allowed_visual_assets": [{"path": "assets/careeros-glass-system.png", "reason": "Complex refraction and 3D glass lighting", "contains_primary_text": false}],
+  "complex_visual_scan": {"pictures_zero_is_not_goal": true, "complex_asset_present": true, "curve_trace_required": false},
+  "generation_engine": {"tool": "pptxgenjs", "visual_fidelity_not_reduced": true}
+}

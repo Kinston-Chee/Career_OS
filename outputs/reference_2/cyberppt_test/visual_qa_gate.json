@@ -1,0 +1,21 @@
+{
+  "slide": 1,
+  "blueprint_render_path": "../photo_2026-07-24_23-49-52.jpg",
+  "ppt_render_path": "renders/slide-01/Slide1.PNG",
+  "side_by_side_comparison_path": "qa/slide-01-side-by-side.png",
+  "visual_differences": [
+    {"severity": "Medium", "item": "complex visual crop", "note": "The original diffuse edge is represented by a rectangular crop."},
+    {"severity": "Low", "item": "typography", "note": "Microsoft YaHei and Arial approximate the photographed type."}
+  ],
+  "surface_system_match": true,
+  "main_chart_semantics_match": true,
+  "visual_semantics_preserved": true,
+  "editable_information_layer_pass": true,
+  "label_collision_pass": true,
+  "text_overflow_pass": true,
+  "container_overflow_pass": true,
+  "continuous_text_flow_pass": true,
+  "blueprint_background_not_used": true,
+  "deliverable_allowed": false,
+  "notes": ["Pending user approval; this is the required single-page CyberPPT checkpoint."]
+}

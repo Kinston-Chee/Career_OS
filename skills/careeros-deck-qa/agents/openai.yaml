@@ -1,0 +1,4 @@
+interface:
+  display_name: "CareerOS Deck QA"
+  short_description: "Verify CareerOS deck truth, layout, and coverage"
+  default_prompt: "Use $careeros-deck-qa to audit the CareerOS pitch deck for truth, readability, and rendering defects."
