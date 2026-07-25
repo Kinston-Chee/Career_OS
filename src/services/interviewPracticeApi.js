@@ -110,10 +110,16 @@ export async function startInterviewSession(state) {
         const errBody = await response.json()
         detail = typeof errBody?.detail === 'string' ? errBody.detail : ''
       } catch (_) { /* body not JSON — ignore */ }
+      // eslint-disable-next-line no-console
+      console.warn('[interviewPracticeApi] backend returned', response.status, detail)
+      // Demo fallback: proceed with a mock payload so the practice session
+      // can still run even when the backend is unavailable or errors.
       return {
-        source: 'error',
+        session_id: `mock_${Date.now()}`,
+        greeting: '',
+        first_question: '',
+        source: 'mock-fallback',
         error: detail || `Interview start failed (${response.status})`,
-        status: response.status,
         payload,
       }
     }
@@ -126,16 +132,19 @@ export async function startInterviewSession(state) {
       payload,
     }
   } catch (error) {
-    // Network failure, timeout (AbortController), CORS, etc. Do NOT silently
-    // fall back to a mock — the caller must know the backend rejected the
-    // request so it can keep the user on the setup form.
+    // Network failure, timeout (AbortController), CORS, etc. Fall back to
+    // a mock payload so the demo can always run the practice session even
+    // when the backend is not reachable.
     // eslint-disable-next-line no-console
-    console.warn('[interviewPracticeApi] start failed:', error)
+    console.warn('[interviewPracticeApi] start failed, using demo fallback:', error)
     const aborted = error?.name === 'AbortError'
     return {
-      source: 'error',
+      session_id: `mock_${Date.now()}`,
+      greeting: '',
+      first_question: '',
+      source: 'mock-fallback',
       error: aborted
-        ? 'Interviewer service timed out. Please try again.'
+        ? 'Interviewer service timed out.'
         : error?.message || 'Could not reach the interviewer service.',
       payload,
     }

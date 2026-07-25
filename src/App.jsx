@@ -69,11 +69,11 @@ export default function App() {
         <Route path="/student/ai-assistant" element={<Navigate to="/student/ai-companion" replace />} />
         <Route path="/student/account" element={<ProfilePage />} />
         <Route path="/student/career-animal" element={<CareerAnimalPage />} />
+        <Route path="/student/applications" element={<ApplicationsPage />} />
 
         <Route element={<AppLayout workspace="student" />}>
-          <Route path="/student" element={<Navigate to="/student/overview" replace />} />
+          <Route path="/student" element={<Navigate to="/student/home" replace />} />
           <Route path="/student/overview" element={<CandidateOverviewPage />} />
-          <Route path="/student/applications" element={<ApplicationsPage />} />
           <Route
             path="/student/network"
             element={<Navigate to="/student/communities" replace />}

@@ -1,6 +1,8 @@
 import React, { useMemo, useState } from 'react'
 import { Briefcase, ClipboardList, GripVertical, Mail, Mic, Target } from 'lucide-react'
+import HomeTopNav from '../components/home/HomeTopNav'
 import { useCareerStore } from '../store/useCareerStore'
+import { candidateOverview, mockUser } from '../data/mockData'
 
 const STAGES = ['Applied', 'Under Review', 'Interview', 'Assessment', 'Offer']
 const STAGE_COLORS = {
@@ -203,9 +205,12 @@ export default function ApplicationsPage() {
     handleDragEnd()
   }
 
+  const readiness = candidateOverview.careerSnapshot.readiness
+
   return (
-    <div className="min-h-full pb-2 text-[#11104a]">
-      <div className="space-y-6">
+    <div className="min-h-screen bg-[#f6f9ff] text-[#11104a]">
+      <HomeTopNav user={mockUser} readiness={readiness} />
+      <div className="mx-auto max-w-[1480px] space-y-6 px-4 py-6 sm:px-6 lg:px-8">
         <header>
           <p className="text-xs font-semibold uppercase tracking-wide text-violet-700">Candidate Workspace</p>
           <h1 className="mt-2 text-2xl font-semibold tracking-tight">Applications</h1>

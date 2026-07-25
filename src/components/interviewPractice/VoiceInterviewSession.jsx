@@ -356,6 +356,12 @@ export default function VoiceInterviewSession({ mode, role, company, onExit }) {
   const aiTimeoutRef = useRef(null)
   const userSpeakTimeoutRef = useRef(null)
   const transcriptRef = useRef(null)
+  // Mirror scriptIdx in a ref so aiSpeak / stopUserSpeak can read the current
+  // value without going through a state-updater callback (which React 19
+  // StrictMode invokes twice and would fire duplicate side effects).
+  const scriptIdxRef = useRef(0)
+  // Guard so aiSpeak can't be scheduled twice in a row.
+  const aiInFlightRef = useRef(false)
 
   const now = () => {
     const d = new Date()
@@ -422,39 +428,48 @@ export default function VoiceInterviewSession({ mode, role, company, onExit }) {
   }, [])
 
   const aiSpeak = () => {
-    setScriptIdx((idx) => {
-      if (idx >= script.length) {
-        endSessionInternal()
-        return idx
-      }
-      const entry = script[idx]
-      if (entry.role !== 'ai') {
-        // Should not happen after user speak; safeguard
-        return idx
-      }
-      setState(STATES.AI_SPEAKING)
-      setTyping(true)
-      const delay = 900 + entry.text.length * 12
-      aiTimeoutRef.current = window.setTimeout(() => {
-        setTyping(false)
-        pushMessage('ai', entry.text)
-        setExchangeCount((c) => c + 1)
-        // Advance script index past this AI entry
-        setScriptIdx((cur) => cur + 1)
-        // Move to user's gap
-        window.setTimeout(() => {
-          setState(STATES.GAP)
-          setShowGap(true)
-          setGapRemaining(gapSeconds)
-        }, 600)
-      }, delay)
-      return idx
-    })
+    // Guard: never let two AI turns queue up (StrictMode double-invoke or
+    // an accidental double-call would otherwise duplicate the message).
+    if (aiInFlightRef.current) return
+
+    const idx = scriptIdxRef.current
+    if (idx >= script.length) {
+      endSessionInternal()
+      return
+    }
+    const entry = script[idx]
+    if (entry.role !== 'ai') return
+
+    aiInFlightRef.current = true
+    setState(STATES.AI_SPEAKING)
+    setTyping(true)
+
+    const delay = 900 + entry.text.length * 12
+    window.clearTimeout(aiTimeoutRef.current)
+    aiTimeoutRef.current = window.setTimeout(() => {
+      setTyping(false)
+      pushMessage('ai', entry.text)
+      setExchangeCount((c) => c + 1)
+      // Advance the script cursor via both the ref (immediate) and state
+      // (for rendering/tracking); the ref keeps aiSpeak/stopUserSpeak
+      // deterministic across renders.
+      scriptIdxRef.current = idx + 1
+      setScriptIdx(idx + 1)
+      aiInFlightRef.current = false
+      // Move to user's gap
+      window.setTimeout(() => {
+        setState(STATES.GAP)
+        setShowGap(true)
+        setGapRemaining(gapSeconds)
+      }, 600)
+    }, delay)
   }
 
   const startSession = () => {
     setSessionRemaining(sessionSeconds)
     setScriptIdx(0)
+    scriptIdxRef.current = 0
+    aiInFlightRef.current = false
     setExchangeCount(0)
     setGapHistory([])
     setMessages([])
@@ -489,18 +504,18 @@ export default function VoiceInterviewSession({ mode, role, company, onExit }) {
   const stopUserSpeak = () => {
     window.clearTimeout(userSpeakTimeoutRef.current)
     setShowGap(false)
-    // Push next user script line if any
-    setScriptIdx((idx) => {
-      if (idx < script.length && script[idx].role === 'user') {
-        pushMessage('user', script[idx].text)
-        setExchangeCount((c) => c + 1)
-        window.setTimeout(() => aiSpeak(), 800)
-        return idx + 1
-      }
-      window.setTimeout(() => aiSpeak(), 800)
-      return idx
-    })
+    // Read the current script cursor from the ref, not from a state-updater
+    // callback — StrictMode invokes those twice which would push the user
+    // message and schedule aiSpeak twice.
+    const idx = scriptIdxRef.current
+    if (idx < script.length && script[idx].role === 'user') {
+      pushMessage('user', script[idx].text)
+      setExchangeCount((c) => c + 1)
+      scriptIdxRef.current = idx + 1
+      setScriptIdx(idx + 1)
+    }
     setState(STATES.AI_SPEAKING)
+    window.setTimeout(() => aiSpeak(), 800)
   }
 
   const togglePause = () => {
@@ -528,6 +543,8 @@ export default function VoiceInterviewSession({ mode, role, company, onExit }) {
     window.clearInterval(gapTimerRef.current)
     window.clearTimeout(aiTimeoutRef.current)
     window.clearTimeout(userSpeakTimeoutRef.current)
+    scriptIdxRef.current = 0
+    aiInFlightRef.current = false
     setState(STATES.IDLE)
     setSessionRemaining(sessionSeconds)
     setGapRemaining(gapSeconds)
