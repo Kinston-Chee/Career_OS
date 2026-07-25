@@ -1,0 +1,4 @@
+interface:
+  display_name: "CareerOS Deck Strategy"
+  short_description: "Shape the evidence-led CareerOS deck narrative"
+  default_prompt: "Use $careeros-deck-strategy to build a source-grounded narrative plan for the CareerOS asynchronous pitch deck."

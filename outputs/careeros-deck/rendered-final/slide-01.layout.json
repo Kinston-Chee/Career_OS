@@ -1,0 +1,757 @@
+{
+  "schema": "openai.presentation.layout/v4",
+  "unit": "px",
+  "slide": {
+    "aid": "sl/a6apgt",
+    "id": "a6apgt",
+    "slide": 1,
+    "layoutId": "247014e5-f903-436c-870f-da58deff48db",
+    "layoutName": "Title Slide",
+    "layoutType": "title",
+    "masterLayoutId": "566b2d90-8244-4bd6-90ab-dbbff2c098ff",
+    "masterLayoutName": "Master",
+    "backgroundColor": "#F8FAFF",
+    "frame": {
+      "left": 0,
+      "top": 0,
+      "width": 1280,
+      "height": 720
+    }
+  },
+  "theme": {
+    "colorSchemeName": "ChatGPT",
+    "colors": {
+      "accent1": "#156082",
+      "accent2": "#E97132",
+      "accent3": "#196B24",
+      "accent4": "#0F9ED5",
+      "accent5": "#A02B93",
+      "accent6": "#4EA72E",
+      "bg1": "#FFFFFF",
+      "bg2": "#000000",
+      "tx1": "#1F1F1F",
+      "tx2": "#FFFFFF",
+      "dk1": "#000000",
+      "lt1": "#FFFFFF",
+      "dk2": "#0E2841",
+      "lt2": "#E8E8E8",
+      "hlink": "#467886",
+      "folHlink": "#96607D"
+    },
+    "typefaces": [
+      "+mn-lt"
+    ]
+  },
+  "inheritedLayers": [
+    {
+      "scope": "layout",
+      "id": "247014e5-f903-436c-870f-da58deff48db",
+      "name": "Title Slide",
+      "type": "title",
+      "parentLayoutId": "566b2d90-8244-4bd6-90ab-dbbff2c098ff",
+      "elements": []
+    },
+    {
+      "scope": "master",
+      "id": "566b2d90-8244-4bd6-90ab-dbbff2c098ff",
+      "name": "Master",
+      "type": "master",
+      "elements": []
+    }
+  ],
+  "elements": [
+    {
+      "order": 1,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/x0za5ov6",
+      "id": "1",
+      "bbox": [
+        0,
+        0,
+        1280,
+        720
+      ],
+      "geometry": "roundRect",
+      "fillColor": "#F8FAFF",
+      "lineColor": "#F8FAFF",
+      "lineWidth": 1
+    },
+    {
+      "order": 2,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/ax8ratwf",
+      "id": "2",
+      "bbox": [
+        760,
+        -80,
+        580,
+        580
+      ],
+      "geometry": "roundRect",
+      "fillColor": "#EEF2FF",
+      "lineColor": "#EEF2FF",
+      "lineWidth": 1
+    },
+    {
+      "order": 3,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/vyhs3yd0",
+      "id": "3",
+      "bbox": [
+        910,
+        60,
+        350,
+        350
+      ],
+      "geometry": "roundRect",
+      "fillColor": "#EDE9FE",
+      "lineColor": "#EDE9FE",
+      "lineWidth": 1
+    },
+    {
+      "order": 4,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/k3a9g3eh",
+      "id": "4",
+      "bbox": [
+        70,
+        54,
+        280,
+        24
+      ],
+      "geometry": "rect",
+      "text": "CAREEROS",
+      "textPreview": "CAREEROS",
+      "resolvedFontSize": 14,
+      "resolvedTextStyle": {
+        "fontSize": 14,
+        "typeface": "+mn-lt",
+        "color": "#2563EB",
+        "bold": true,
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "CAREEROS"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "CAREEROS",
+          "resolvedTextStyle": {
+            "fontSize": 14,
+            "color": "#2563EB",
+            "bold": true,
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "CAREEROS",
+              "fontSize": 14,
+              "color": "#2563EB",
+              "bold": true,
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 5,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/54ja98v2",
+      "id": "5",
+      "bbox": [
+        70,
+        142,
+        720,
+        218
+      ],
+      "geometry": "rect",
+      "text": "Career potential is lost when evidence and action arrive too late.",
+      "textPreview": "Career potential is lost when evidence and action arrive too late.",
+      "resolvedFontSize": 52,
+      "resolvedTextStyle": {
+        "fontSize": 52,
+        "typeface": "+mn-lt",
+        "color": "#11194A",
+        "bold": true,
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 3,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Career potential is lost when"
+          },
+          {
+            "index": 2,
+            "text": "evidence and action arrive too"
+          },
+          {
+            "index": 3,
+            "text": "late."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Career potential is lost when evidence and action arrive too late.",
+          "resolvedTextStyle": {
+            "fontSize": 52,
+            "color": "#11194A",
+            "bold": true,
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Career potential is lost when evidence and action arrive too late.",
+              "fontSize": 52,
+              "color": "#11194A",
+              "bold": true,
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 6,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/i1sretwr",
+      "id": "6",
+      "bbox": [
+        72,
+        392,
+        670,
+        92
+      ],
+      "geometry": "rect",
+      "text": "CareerOS connects student evidence, employer demand, and university action so gaps can be addressed earlier.",
+      "textPreview": "CareerOS connects student evidence, employer demand, and university action so gaps can be addressed earlier.",
+      "resolvedFontSize": 23,
+      "resolvedTextStyle": {
+        "fontSize": 23,
+        "typeface": "+mn-lt",
+        "color": "#52627F",
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 2,
+        "lines": [
+          {
+            "index": 1,
+            "text": "CareerOS connects student evidence, employer demand, and"
+          },
+          {
+            "index": 2,
+            "text": "university action so gaps can be addressed earlier."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "CareerOS connects student evidence, employer demand, and university action so gaps can be addressed earlier.",
+          "resolvedTextStyle": {
+            "fontSize": 23,
+            "color": "#52627F",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "CareerOS connects student evidence, employer demand, and university action so gaps can be addressed earlier.",
+              "fontSize": 23,
+              "color": "#52627F",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 7,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/j21s7ydc",
+      "id": "7",
+      "bbox": [
+        812,
+        175,
+        250,
+        74
+      ],
+      "geometry": "roundRect",
+      "fillColor": "#FFFFFF",
+      "lineColor": "#DCE6F5",
+      "lineWidth": 1
+    },
+    {
+      "order": 8,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/s7atknet",
+      "id": "8",
+      "bbox": [
+        838,
+        198,
+        200,
+        22
+      ],
+      "geometry": "rect",
+      "text": "STUDENT",
+      "textPreview": "STUDENT",
+      "resolvedFontSize": 17,
+      "resolvedTextStyle": {
+        "fontSize": 17,
+        "typeface": "+mn-lt",
+        "color": "#4F46E5",
+        "bold": true,
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "STUDENT"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "STUDENT",
+          "resolvedTextStyle": {
+            "fontSize": 17,
+            "color": "#4F46E5",
+            "bold": true,
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "STUDENT",
+              "fontSize": 17,
+              "color": "#4F46E5",
+              "bold": true,
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 9,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/ts3ad8ve",
+      "id": "9",
+      "bbox": [
+        997,
+        291,
+        250,
+        74
+      ],
+      "geometry": "roundRect",
+      "fillColor": "#EAF1FF",
+      "lineColor": "#DCE6F5",
+      "lineWidth": 1
+    },
+    {
+      "order": 10,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/lgfaps3m",
+      "id": "10",
+      "bbox": [
+        1023,
+        314,
+        200,
+        22
+      ],
+      "geometry": "rect",
+      "text": "EMPLOYER",
+      "textPreview": "EMPLOYER",
+      "resolvedFontSize": 17,
+      "resolvedTextStyle": {
+        "fontSize": 17,
+        "typeface": "+mn-lt",
+        "color": "#2563EB",
+        "bold": true,
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "EMPLOYER"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "EMPLOYER",
+          "resolvedTextStyle": {
+            "fontSize": 17,
+            "color": "#2563EB",
+            "bold": true,
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "EMPLOYER",
+              "fontSize": 17,
+              "color": "#2563EB",
+              "bold": true,
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 11,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/kf69gn21",
+      "id": "11",
+      "bbox": [
+        812,
+        407,
+        250,
+        74
+      ],
+      "geometry": "roundRect",
+      "fillColor": "#FFFFFF",
+      "lineColor": "#DCE6F5",
+      "lineWidth": 1
+    },
+    {
+      "order": 12,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/zexsnilg",
+      "id": "12",
+      "bbox": [
+        838,
+        430,
+        200,
+        22
+      ],
+      "geometry": "rect",
+      "text": "UNIVERSITY",
+      "textPreview": "UNIVERSITY",
+      "resolvedFontSize": 17,
+      "resolvedTextStyle": {
+        "fontSize": 17,
+        "typeface": "+mn-lt",
+        "color": "#4F46E5",
+        "bold": true,
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "UNIVERSITY"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "UNIVERSITY",
+          "resolvedTextStyle": {
+            "fontSize": 17,
+            "color": "#4F46E5",
+            "bold": true,
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "UNIVERSITY",
+              "fontSize": 17,
+              "color": "#4F46E5",
+              "bold": true,
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 13,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/ydoredkv",
+      "id": "13",
+      "bbox": [
+        72,
+        566,
+        650,
+        30
+      ],
+      "geometry": "rect",
+      "text": "Signal → Evidence → Decision → Action → Learning",
+      "textPreview": "Signal → Evidence → Decision → Action → Learning",
+      "resolvedFontSize": 18,
+      "resolvedTextStyle": {
+        "fontSize": 18,
+        "typeface": "+mn-lt",
+        "color": "#4F46E5",
+        "bold": true,
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Signal → Evidence → Decision → Action → Learning"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Signal → Evidence → Decision → Action → Learning",
+          "resolvedTextStyle": {
+            "fontSize": 18,
+            "color": "#4F46E5",
+            "bold": true,
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Signal → Evidence → Decision → Action → Learning",
+              "fontSize": 18,
+              "color": "#4F46E5",
+              "bold": true,
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 14,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/t4zats3i",
+      "id": "14",
+      "bbox": [
+        72,
+        626,
+        245,
+        25
+      ],
+      "geometry": "roundRect",
+      "fillColor": "#E2E8F0",
+      "lineColor": "#E2E8F0",
+      "lineWidth": 1
+    },
+    {
+      "order": 15,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/83q9k72x",
+      "id": "15",
+      "bbox": [
+        84,
+        631,
+        221,
+        15
+      ],
+      "geometry": "rect",
+      "text": "Prototype • simulated intelligence",
+      "textPreview": "Prototype • simulated intelligence",
+      "resolvedFontSize": 11,
+      "resolvedTextStyle": {
+        "fontSize": 11,
+        "typeface": "+mn-lt",
+        "color": "#475569",
+        "bold": true,
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Prototype • simulated intelligence"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Prototype • simulated intelligence",
+          "resolvedTextStyle": {
+            "fontSize": 11,
+            "color": "#475569",
+            "bold": true,
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Prototype • simulated intelligence",
+              "fontSize": 11,
+              "color": "#475569",
+              "bold": true,
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 16,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/72xsr2lc",
+      "id": "16",
+      "bbox": [
+        945,
+        674,
+        275,
+        16
+      ],
+      "geometry": "rect",
+      "text": "Talentbank AI Hackathon • 2026",
+      "textPreview": "Talentbank AI Hackathon • 2026",
+      "resolvedFontSize": 12,
+      "resolvedTextStyle": {
+        "fontSize": 12,
+        "typeface": "+mn-lt",
+        "color": "#74829B",
+        "alignment": "right",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Talentbank AI Hackathon • 2026"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Talentbank AI Hackathon • 2026",
+          "resolvedTextStyle": {
+            "fontSize": 12,
+            "color": "#74829B",
+            "alignment": "right"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Talentbank AI Hackathon • 2026",
+              "fontSize": 12,
+              "color": "#74829B",
+              "alignment": "right"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    }
+  ],
+  "composeRuns": []
+}

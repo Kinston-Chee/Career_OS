@@ -1,0 +1,1080 @@
+{"kind":"deck","id":"pr/qqqbc6","name":"Deck"}
+{"kind":"layout","layoutId":"/ppt/slideMasters/slideMaster1.xml","name":"default-master","type":"master","placeholders":[{"name":"title","type":"title","textPreview":"Click to edit Master title style"},{"name":"body","type":"body","textPreview":"Click to edit Master text styles | Second level | Third level | Fourth level | Fifth level"},{"name":"dateTime","type":"dateTime","textPreview":"8/1/2011"},{"name":"footer","type":"footer"},{"name":"slideNumber","type":"slideNumber","textPreview":"‹#›"}]}
+{"kind":"layout","layoutId":"/ppt/slideLayouts/slideLayout1.xml","name":"Title Slide","type":"title","placeholders":[{"name":"title","type":"title","textPreview":"Click to edit Master title style"},{"name":"subtitle","type":"subtitle","textPreview":"Click to edit Master subtitle style"},{"name":"dateTime","type":"dateTime","textPreview":"8/1/2011"},{"name":"footer","type":"footer"},{"name":"slideNumber","type":"slideNumber","textPreview":"‹#›"}]}
+{"kind":"layout","layoutId":"/ppt/slideLayouts/slideLayout2.xml","name":"Title and Content","type":"obj","placeholders":[{"name":"title","type":"title","textPreview":"Click to edit Master title style"},{"name":"content placeholder 2","textPreview":"Click to edit Master text styles | Second level | Third level | Fourth level | Fifth level"},{"name":"dateTime","type":"dateTime","textPreview":"8/1/2011"},{"name":"footer","type":"footer"},{"name":"slideNumber","type":"slideNumber","textPreview":"‹#›"}]}
+{"kind":"layout","layoutId":"/ppt/slideLayouts/slideLayout3.xml","name":"Section Header","type":"secHead","placeholders":[{"name":"title","type":"title","textPreview":"Click to edit Master title style"},{"name":"body","type":"body","textPreview":"Click to edit Master text styles"},{"name":"dateTime","type":"dateTime","textPreview":"8/1/2011"},{"name":"footer","type":"footer"},{"name":"slideNumber","type":"slideNumber","textPreview":"‹#›"}]}
+{"kind":"layout","layoutId":"/ppt/slideLayouts/slideLayout4.xml","name":"Two Content","type":"twoObj","placeholders":[{"name":"title","type":"title","textPreview":"Click to edit Master title style"},{"name":"content placeholder 2","textPreview":"Click to edit Master text styles | Second level | Third level | Fourth level | Fifth level"},{"name":"content placeholder 3","textPreview":"Click to edit Master text styles | Second level | Third level | Fourth level | Fifth level"},{"name":"dateTime","type":"dateTime","textPreview":"8/1/2011"},{"name":"footer","type":"footer"},{"name":"slideNumber","type":"slideNumber","textPreview":"‹#›"}]}
+{"kind":"layout","layoutId":"/ppt/slideLayouts/slideLayout5.xml","name":"Comparison","type":"twoTxTwoObj","placeholders":[{"name":"title","type":"title","textPreview":"Click to edit Master title style"},{"name":"body","type":"body","textPreview":"Click to edit Master text styles"},{"name":"content placeholder 3","textPreview":"Click to edit Master text styles | Second level | Third level | Fourth level | Fifth level"},{"name":"body","type":"body","textPreview":"Click to edit Master text styles"},{"name":"content placeholder 5","textPreview":"Click to edit Master text styles | Second level | Third level | Fourth level | Fifth level"},{"name":"dateTime","type":"dateTime","textPreview":"8/1/2011"},{"name":"footer","type":"footer"},{"name":"slideNumber","type":"slideNumber","textPreview":"‹#›"}]}
+{"kind":"layout","layoutId":"/ppt/slideLayouts/slideLayout6.xml","name":"Title Only","type":"titleOnly"}
+{"kind":"layout","layoutId":"/ppt/slideLayouts/slideLayout7.xml","name":"Blank","type":"blank","placeholders":[{"name":"dateTime","type":"dateTime","textPreview":"8/1/2011"},{"name":"footer","type":"footer"},{"name":"slideNumber","type":"slideNumber","textPreview":"‹#›"}]}
+{"kind":"layout","layoutId":"/ppt/slideLayouts/slideLayout8.xml","name":"Content with Caption","type":"objTx","placeholders":[{"name":"title","type":"title","textPreview":"Click to edit Master title style"},{"name":"content placeholder 2","textPreview":"Click to edit Master text styles | Second level | Third level | Fourth level | Fifth level"},{"name":"body","type":"body","textPreview":"Click to edit Master text styles"},{"name":"dateTime","type":"dateTime","textPreview":"8/1/2011"},{"name":"footer","type":"footer"},{"name":"slideNumber","type":"slideNumber","textPreview":"‹#›"}]}
+{"kind":"layout","layoutId":"/ppt/slideLayouts/slideLayout9.xml","name":"Picture with Caption","type":"picTx","placeholders":[{"name":"title","type":"title","textPreview":"Click to edit Master title style"},{"name":"picture","type":"picture"},{"name":"body","type":"body","textPreview":"Click to edit Master text styles"},{"name":"dateTime","type":"dateTime","textPreview":"8/1/2011"},{"name":"footer","type":"footer"},{"name":"slideNumber","type":"slideNumber","textPreview":"‹#›"}]}
+{"kind":"layout","layoutId":"/ppt/slideLayouts/slideLayout10.xml","name":"Title and Vertical Text","type":"vertTx","placeholders":[{"name":"title","type":"title","textPreview":"Click to edit Master title style"},{"name":"body","type":"body","textPreview":"Click to edit Master text styles | Second level | Third level | Fourth level | Fifth level"},{"name":"dateTime","type":"dateTime","textPreview":"8/1/2011"},{"name":"footer","type":"footer"},{"name":"slideNumber","type":"slideNumber","textPreview":"‹#›"}]}
+{"kind":"layout","layoutId":"/ppt/slideLayouts/slideLayout11.xml","name":"Vertical Title and Text","type":"vertTitleAndTx","placeholders":[{"name":"title","type":"title","textPreview":"Click to edit Master title style"},{"name":"body","type":"body","textPreview":"Click to edit Master text styles | Second level | Third level | Fourth level | Fifth level"},{"name":"dateTime","type":"dateTime","textPreview":"8/1/2011"},{"name":"footer","type":"footer"},{"name":"slideNumber","type":"slideNumber","textPreview":"‹#›"}]}
+{"kind":"slide","id":"sl/y90nupkv","slide":1,"title":"Prototype · Simulated Intelligence","textShapes":3}
+{"kind":"shape","id":"sh/547294r6","slide":1,"name":"AutoShape 2","bbox":[0,0,1279.68,720]}
+{"kind":"shape","id":"sh/k3yl0zql","slide":1,"name":"AutoShape 3","bbox":[0,0,1279.68,720]}
+{"kind":"shape","id":"sh/65g3298r","slide":1,"name":"AutoShape 5","bbox":[0,0,1279.68,720]}
+{"kind":"shape","id":"sh/ts7md4r2","slide":1,"name":"AutoShape 6","bbox":[153.56,57.59,2,2]}
+{"kind":"shape","id":"sh/sryl4zqx","slide":1,"name":"AutoShape 7","bbox":[358.3,108,1.5,1.5]}
+{"kind":"shape","id":"sh/fu94fe98","slide":1,"name":"AutoShape 8","bbox":[575.86,43.19,2,2]}
+{"kind":"shape","id":"sh/utg3698n","slide":1,"name":"AutoShape 9","bbox":[793.4,129.59,1,1]}
+{"kind":"shape","id":"sh/wn6dc7eh","slide":1,"name":"AutoShape 10","bbox":[998.14,72,2.5,2.5]}
+{"kind":"shape","id":"sh/hofulsf2","slide":1,"name":"AutoShape 11","bbox":[1126.11,158.39,1.5,1.5]}
+{"kind":"shape","id":"sh/ul4vaxgb","slide":1,"name":"AutoShape 12","bbox":[703.82,36,1,1]}
+{"kind":"shape","id":"sh/vmdcj2xw","slide":1,"name":"AutoShape 13","bbox":[1177.3,86.39,2,2]}
+{"kind":"shape","id":"sh/4r6dg7et","slide":1,"name":"AutoShape 14","bbox":[486.27,180,1.5,1.5]}
+{"kind":"shape","id":"sh/5sfepcfe","slide":1,"name":"AutoShape 15","bbox":[921.36,21.59,1,1]}
+{"kind":"shape","id":"sh/ipovexwn","slide":1,"name":"AutoShape 16","bbox":[102.37,144,2,2]}
+{"kind":"shape","id":"sh/3qxwn2x8","slide":1,"name":"AutoShape 17","bbox":[665.43,201.59,1.5,1.5]}
+{"kind":"shape","id":"sh/sfqdkrep","slide":1,"name":"AutoShape 18","bbox":[230.33,100.8,1,1]}
+{"kind":"shape","id":"sh/dgzetcfa","slide":1,"name":"AutoShape 19","bbox":[1074.92,64.8,2,2]}
+{"kind":"shape","id":"sh/1cvuxc7e","slide":1,"name":"AutoShape 20","bbox":[870.17,230.39,1.5,1.5]}
+{"kind":"shape","id":"sh/0bmd476t","slide":1,"name":"AutoShape 21","bbox":[0,460,599.85,180]}
+{"kind":"shape","id":"sh/zadcv2p8","slide":1,"name":"AutoShape 22","bbox":[859.78,540,419.9,140]}
+{"kind":"shape","id":"sh/e94v2hon","slide":1,"name":"AutoShape 23","bbox":[299.92,180,399.9,100]}
+{"kind":"shape","id":"sh/90ve1w7q","slide":1,"name":"AutoShape 24","bbox":[0,600,1279.68,120]}
+{"kind":"shape","id":"sh/ozmd8r65","slide":1,"name":"AutoShape 25","bbox":[492.7,188.56,294.27,39]}
+{"kind":"shape","id":"sh/nydczmpk","slide":1,"name":"AutoShape 26","bbox":[515.7,201.06,14,14]}
+{"kind":"shape","id":"sh/mx4v6hoz","slide":1,"name":"AutoShape 27","bbox":[516.87,202.23,11.66,11.67]}
+{"kind":"textbox","id":"sh/p4bu5s76","slide":1,"name":"TextBox 28","text":"    \n Prototype · Simulated Intelligence ","textPreview":"|  Prototype · Simulated Intelligence","textChars":41,"textLines":2,"bbox":[537.69,199.56,249.28,16]}
+{"kind":"textbox","id":"sh/432dwn6l","slide":1,"name":"TextBox 29","text":"CareerOS: An AI-Powered\nCareer Operating System","textPreview":"CareerOS: An AI-Powered | Career Operating System","textChars":47,"textLines":2,"bbox":[109.65,267.56,1060.38,147.19]}
+{"kind":"shape","id":"sh/uxgjq907","slide":1,"name":"AutoShape 30","bbox":[607.85,442.75,63.98,1]}
+{"kind":"shape","id":"sh/vyp0je1s","slide":1,"name":"AutoShape 31","bbox":[431.14,471.75,417.4,59.69]}
+{"kind":"textbox","id":"sh/wzy1szid","slide":1,"name":"TextBox 32","text":"Career potential is lost when evidence and action arrive too late","textPreview":"Career potential is lost when evidence and action arrive too late","textChars":65,"textLines":1,"bbox":[447.64,486.75,384.4,29.69]}
+{"kind":"shape","id":"sh/h072l4jy","slide":1,"name":"AutoShape 33","bbox":[587.85,663.5,31.99,1]}
+{"kind":"shape","id":"sh/i1gje90j","slide":1,"name":"AutoShape 34","bbox":[631.84,656,16,16]}
+{"kind":"shape","id":"sh/j2pkne14","slide":1,"name":"AutoShape 35","bbox":[659.83,663.5,31.99,1]}
+{"kind":"image","id":"im/jih0bmhk","slide":1,"name":"Picture 4","bbox":[0,0,1279.68,720]}
+{"kind":"image","id":"im/ih8jih0z","slide":1,"name":"WatermarkAigc","bbox":[1134.67,673.33,125.33,26.67]}
+{"kind":"notes","id":"nt/y90nupkv","slide":1,"text":"CareerOS is an AI-assisted career operating system connecting student evidence, employer demand, and university action. The prototype demonstrates the core interaction model; intelligence and data remain partly simulated."}
+{"kind":"slide","id":"sl/hwbqtkby","slide":2,"title":"CONTENTS","textShapes":15}
+{"kind":"shape","id":"sh/9072xkry","slide":2,"name":"AutoShape 2","bbox":[0,0,1279.68,720]}
+{"kind":"shape","id":"sh/ozy1ofad","slide":2,"name":"AutoShape 3","bbox":[0,0,1279.68,720]}
+{"kind":"shape","id":"sh/b29kza94","slide":2,"name":"AutoShape 4","bbox":[0,0,1279.68,720]}
+{"kind":"shape","id":"sh/a10jqpsj","slide":2,"name":"AutoShape 5","bbox":[0,0,1279.68,720]}
+{"kind":"shape","id":"sh/x4r21kru","slide":2,"name":"AutoShape 6","bbox":[0,0,1279.68,720]}
+{"kind":"shape","id":"sh/w3i1sfa9","slide":2,"name":"AutoShape 7","bbox":[0,540,1279.68,180]}
+{"kind":"shape","id":"sh/r65knqtk","slide":2,"name":"AutoShape 8","bbox":[49.99,580,499.88,80]}
+{"kind":"shape","id":"sh/q5wjelsz","slide":2,"name":"AutoShape 9","bbox":[599.85,640,599.85,60]}
+{"kind":"textbox","id":"sh/ove9o7yd","slide":2,"name":"TextBox 10","text":"CONTENTS","textPreview":"CONTENTS","textChars":8,"textLines":1,"bbox":[47.99,265.11,291.93,16]}
+{"kind":"textbox","id":"sh/9wnqhczy","slide":2,"name":"TextBox 11","text":"Contents","textPreview":"Contents","textChars":8,"textLines":1,"bbox":[47.99,299.7,291.93,58]}
+{"kind":"shape","id":"sh/mtwrmxg7","slide":2,"name":"AutoShape 12","bbox":[47.99,379.5,47.99,2]}
+{"kind":"textbox","id":"sh/nu58f2hs","slide":2,"name":"TextBox 13","text":"An overview of the CareerOS architecture, three workspaces, value model, and validation path","textPreview":"An overview of the CareerOS architecture, three workspaces, value model, and validation path","textChars":92,"textLines":1,"bbox":[47.99,406.5,339.91,44.19]}
+{"kind":"shape","id":"sh/wjy9sry9","slide":2,"name":"AutoShape 14","bbox":[387.9,56,1,608]}
+{"kind":"shape","id":"sh/xk7qlczu","slide":2,"name":"AutoShape 15","bbox":[436.89,113,794.8,74]}
+{"kind":"shape","id":"sh/ahwrqhgj","slide":2,"name":"AutoShape 16","bbox":[463.88,132,35.99,36]}
+{"kind":"textbox","id":"sh/bip8jmho","slide":2,"name":"TextBox 17","text":"01","textPreview":"01","textChars":2,"textLines":1,"bbox":[474.08,142,25.79,16]}
+{"kind":"textbox","id":"sh/cnupgny5","slide":2,"name":"TextBox 18","text":"Core problem: evidence decay and delayed action","textPreview":"Core problem: evidence decay and delayed action","textChars":47,"textLines":1,"bbox":[519.87,139,284.93,22]}
+{"kind":"shape","id":"sh/do3q9szq","slide":2,"name":"AutoShape 19","bbox":[436.89,197,794.8,74]}
+{"kind":"shape","id":"sh/t8byxkn2","slide":2,"name":"AutoShape 20","bbox":[463.88,216,35.99,36]}
+{"kind":"textbox","id":"sh/s72xofmh","slide":2,"name":"TextBox 21","text":"02","textPreview":"02","textChars":2,"textLines":1,"bbox":[474.08,226,25.79,16]}
+{"kind":"textbox","id":"sh/76twva5c","slide":2,"name":"TextBox 22","text":"Student workspace: from fragmented experience to reusable evidence","textPreview":"Student workspace: from fragmented experience to reusable evidence","textChars":66,"textLines":1,"bbox":[519.87,223,324.92,22]}
+{"kind":"shape","id":"sh/65kfmpor","slide":2,"name":"AutoShape 23","bbox":[436.89,281,794.8,74]}
+{"kind":"shape","id":"sh/hcvy14ne","slide":2,"name":"AutoShape 24","bbox":[463.88,300,35.99,36]}
+{"kind":"textbox","id":"sh/gbmxszmt","slide":2,"name":"TextBox 25","text":"03","textPreview":"03","textChars":2,"textLines":1,"bbox":[474.08,310,25.79,16]}
+{"kind":"textbox","id":"sh/fadgzu58","slide":2,"name":"TextBox 26","text":"Employer workspace: from CV screening to evidence-led decisions","textPreview":"Employer workspace: from CV screening to evidence-led decisions","textChars":63,"textLines":1,"bbox":[519.87,307,344.91,22]}
+{"kind":"shape","id":"sh/u94fqp4n","slide":2,"name":"AutoShape 27","bbox":[436.89,365,794.8,74]}
+{"kind":"shape","id":"sh/p0vy54na","slide":2,"name":"AutoShape 28","bbox":[463.88,384,35.99,36]}
+{"kind":"textbox","id":"sh/4zmxwzmp","slide":2,"name":"TextBox 29","text":"04","textPreview":"04","textChars":2,"textLines":1,"bbox":[474.08,394,25.79,16]}
+{"kind":"textbox","id":"sh/mlgvq147","slide":2,"name":"TextBox 30","text":"University workspace: from delayed reporting to timely intervention","textPreview":"University workspace: from delayed reporting to timely intervention","textChars":67,"textLines":1,"bbox":[519.87,391,304.92,22]}
+{"kind":"shape","id":"sh/nmpcj6ls","slide":2,"name":"AutoShape 31","bbox":[436.89,449,794.8,74]}
+{"kind":"shape","id":"sh/onydsbmd","slide":2,"name":"AutoShape 32","bbox":[463.88,468,35.99,36]}
+{"kind":"textbox","id":"sh/9o7ulg3y","slide":2,"name":"TextBox 33","text":"05","textPreview":"05","textChars":2,"textLines":1,"bbox":[474.08,478,25.79,16]}
+{"kind":"textbox","id":"sh/a9gvulkj","slide":2,"name":"TextBox 34","text":"The three-sided loop and implementation truth","textPreview":"The three-sided loop and implementation truth","textChars":45,"textLines":1,"bbox":[519.87,475,184.95,22]}
+{"kind":"shape","id":"sh/ba9cn6l4","slide":2,"name":"AutoShape 35","bbox":[436.89,533,794.8,74]}
+{"kind":"shape","id":"sh/wbidwb29","slide":2,"name":"AutoShape 36","bbox":[463.88,552,35.99,36]}
+{"kind":"textbox","id":"sh/xcrupg3u","slide":2,"name":"TextBox 37","text":"06","textPreview":"06","textChars":2,"textLines":1,"bbox":[474.08,562,25.79,16]}
+{"kind":"textbox","id":"sh/id0vylkf","slide":2,"name":"TextBox 38","text":"Strategic value and validation path","textPreview":"Strategic value and validation path","textChars":35,"textLines":1,"bbox":[519.87,559,184.95,22]}
+{"kind":"notes","id":"nt/hwbqtkby","slide":2,"text":"The deck covers the shared problem, the student, employer, and university workspaces, the three-sided loop, implementation boundaries, Talentbank potential, and the recommended validation path."}
+{"kind":"slide","id":"sl/ofy9wn61","slide":3,"title":"CHAPTER 01","textShapes":3}
+{"kind":"shape","id":"sh/cza94vmx","slide":3,"name":"AutoShape 2","bbox":[0,0,1279.68,720]}
+{"kind":"shape","id":"sh/d0jax03i","slide":3,"name":"AutoShape 3","bbox":[0,0,1279.68,720]}
+{"kind":"shape","id":"sh/3ah8rqlg","slide":3,"name":"AutoShape 5","bbox":[0,0,1279.68,720]}
+{"kind":"shape","id":"sh/obq90bml","slide":3,"name":"AutoShape 6","bbox":[0,0,1279.68,720]}
+{"kind":"shape","id":"sh/pcjqtg36","slide":3,"name":"AutoShape 7","bbox":[0,440,799.8,200]}
+{"kind":"shape","id":"sh/m5cra54z","slide":3,"name":"AutoShape 8","bbox":[729.82,530,549.86,150]}
+{"kind":"shape","id":"sh/n6ls3alk","slide":3,"name":"AutoShape 9","bbox":[139.96,280,999.75,120]}
+{"kind":"shape","id":"sh/n2l4fq98","slide":3,"name":"AutoShape 10","bbox":[0,620,1279.68,100]}
+{"kind":"shape","id":"sh/m1c3mlsn","slide":3,"name":"AutoShape 11","bbox":[439.89,160,399.9,400]}
+{"kind":"shape","id":"sh/943mhgre","slide":3,"name":"AutoShape 12","bbox":[0,560,1279.68,160]}
+{"kind":"shape","id":"sh/83ulovat","slide":3,"name":"AutoShape 13","bbox":[0,560,1279.68,160]}
+{"kind":"shape","id":"sh/v6l4jq94","slide":3,"name":"AutoShape 14","bbox":[551.67,223.8,176.32,39]}
+{"kind":"textbox","id":"sh/a5c3ql8z","slide":3,"name":"TextBox 15","text":"CHAPTER 01","textPreview":"CHAPTER 01","textChars":10,"textLines":1,"bbox":[564.17,223.8,151.32,39]}
+{"kind":"textbox","id":"sh/x8nml0ra","slide":3,"name":"TextBox 16","text":"Core problem: evidence decay and delayed action","textPreview":"Core problem: evidence decay and delayed action","textChars":47,"textLines":1,"bbox":[123.97,298.8,1031.74,64.39]}
+{"kind":"shape","id":"sh/w7ulsvqp","slide":3,"name":"AutoShape 17","bbox":[599.85,395.19,79.98,1]}
+{"kind":"textbox","id":"sh/ja54na9g","slide":3,"name":"TextBox 18","text":"Different symptoms across students, employers, and universities point to one systemic failure: useful signals are fragmented, weakened, and remembered too late.","textPreview":"Different symptoms across students, employers, and universities point to one systemic failure: useful signals are fragmented, weakened, a...","textChars":160,"textLines":1,"bbox":[124.97,428.19,1029.74,68]}
+{"kind":"image","id":"im/tk36hgva","slide":3,"name":"Picture 4","bbox":[0,0,1279.68,720]}
+{"kind":"notes","id":"nt/ofy9wn61","slide":3,"text":"Students struggle to prove capability, employers repeatedly restart talent searches, and universities often see gaps too late. These symptoms share one structural cause."}
+{"kind":"slide","id":"sl/jyx0ra1s","slide":4,"title":"One evidence gap, three different pains","textShapes":20}
+{"kind":"shape","id":"sh/1cj2d8b6","slide":4,"name":"AutoShape 2","bbox":[0,0,1279.68,720]}
+{"kind":"shape","id":"sh/0ba143al","slide":4,"name":"AutoShape 3","bbox":[0,0,1279.68,720]}
+{"kind":"shape","id":"sh/rm1k7yt4","slide":4,"name":"AutoShape 4","bbox":[0,0,1279.68,720]}
+{"kind":"shape","id":"sh/ql8jytsj","slide":4,"name":"AutoShape 5","bbox":[0,0,1279.68,720]}
+{"kind":"shape","id":"sh/doj29oba","slide":4,"name":"AutoShape 6","bbox":[0,440,1279.68,280]}
+{"kind":"shape","id":"sh/sna103ap","slide":4,"name":"AutoShape 7","bbox":[99.97,470,599.85,200]}
+{"kind":"shape","id":"sh/3ihk3et8","slide":4,"name":"AutoShape 8","bbox":[729.82,490,399.9,150]}
+{"kind":"textbox","id":"sh/ih8ju9sn","slide":4,"name":"TextBox 9","text":"One evidence gap, three different pains","textPreview":"One evidence gap, three different pains","textChars":39,"textLines":1,"bbox":[47.99,48,1183.7,42]}
+{"kind":"shape","id":"sh/kbm987y5","slide":4,"name":"AutoShape 10","bbox":[47.99,105.69,1183.7,70.78]}
+{"kind":"textbox","id":"sh/5cva1cfq","slide":4,"name":"TextBox 11","text":"Students lack proof and direction. Employers restart each search from zero. Universities discover gaps after the best intervention window. These are different symptoms of the same failure: career signals are fragmented, weakly evidenced, and recalled only when a decision is due.","textPreview":"Students lack proof and direction. Employers restart each search from zero. Universities discover gaps after the best intervention window...","textChars":279,"textLines":1,"bbox":[66.98,121.69,1164.71,38.39]}
+{"kind":"shape","id":"sh/i94r6xgz","slide":4,"name":"AutoShape 12","bbox":[47.99,194.47,381.23,477.53]}
+{"kind":"shape","id":"sh/jadsz2xk","slide":4,"name":"AutoShape 13","bbox":[70.98,219.47,39.99,40]}
+{"kind":"shape","id":"sh/w72947yt","slide":4,"name":"AutoShape 14","bbox":[80.98,229.47,19.99,20]}
+{"kind":"shape","id":"sh/x8vaxsfe","slide":4,"name":"AutoShape 15","bbox":[87.64,231.97,6.67,6.67]}
+{"kind":"textbox","id":"sh/a5kr2xg3","slide":4,"name":"TextBox 16","text":"Student: Chris Lee's challenge","textPreview":"Student: Chris Lee's challenge","textChars":30,"textLines":1,"bbox":[120.97,228.47,216.1,22]}
+{"kind":"shape","id":"sh/v6tsv2xo","slide":4,"name":"AutoShape 17","bbox":[70.98,273.47,39.99,2]}
+{"kind":"textbox","id":"sh/g36tgryd","slide":4,"name":"TextBox 18","text":"01","textPreview":"01","textChars":2,"textLines":1,"bbox":[70.98,298.47,19.57,16]}
+{"kind":"textbox","id":"sh/h4fa9wfy","slide":4,"name":"TextBox 19","text":"A Year 3 Data Science student with projects and leadership experience, but the evidence is scattered across a CV, cloud storage, and memory. Each application requires rebuilding the story from scratch.","textPreview":"A Year 3 Data Science student with projects and leadership experience, but the evidence is scattered across a CV, cloud storage, and memo...","textChars":201,"textLines":1,"bbox":[98.55,297.47,309.77,119]}
+{"kind":"textbox","id":"sh/p0batw72","slide":4,"name":"TextBox 20","text":"02","textPreview":"02","textChars":2,"textLines":1,"bbox":[70.98,445.97,19.57,16]}
+{"kind":"textbox","id":"sh/oz29krqh","slide":4,"name":"TextBox 21","text":"Existing experience is difficult to connect to adjacent roles, creating degree anxiety and limiting visibility into cross-functional career paths.","textPreview":"Existing experience is difficult to connect to adjacent roles, creating degree anxiety and limiting visibility into cross-functional care...","textChars":146,"textLines":1,"bbox":[98.55,444.97,307.67,93.5]}
+{"kind":"shape","id":"sh/3ytsrmpw","slide":4,"name":"AutoShape 22","bbox":[70.98,610.5,335.24,1]}
+{"kind":"shape","id":"sh/2xkrih8b","slide":4,"name":"AutoShape 23","bbox":[70.98,634.25,6,6]}
+{"kind":"textbox","id":"sh/1wbapc7q","slide":4,"name":"TextBox 24","text":"Core pain: fragmented evidence · unclear direction","textPreview":"Core pain: fragmented evidence · unclear direction","textChars":50,"textLines":1,"bbox":[84.98,629.5,196.51,15]}
+{"kind":"shape","id":"sh/gv29g7q5","slide":4,"name":"AutoShape 25","bbox":[449.22,194.47,381.23,477.53]}
+{"kind":"shape","id":"sh/fu9sn2p0","slide":4,"name":"AutoShape 26","bbox":[472.21,219.47,39.99,40]}
+{"kind":"shape","id":"sh/et0reh8f","slide":4,"name":"AutoShape 27","bbox":[482.21,229.47,19.99,20]}
+{"kind":"textbox","id":"sh/tsrqlc7u","slide":4,"name":"TextBox 28","text":"Employer: restarting urgent hiring","textPreview":"Employer: restarting urgent hiring","textChars":34,"textLines":1,"bbox":[522.2,228.47,204.95,22]}
+{"kind":"shape","id":"sh/sri9s7q9","slide":4,"name":"AutoShape 29","bbox":[472.21,273.47,39.99,2]}
+{"kind":"textbox","id":"sh/ilwf69kv","slide":4,"name":"TextBox 30","text":"01","textPreview":"01","textChars":2,"textLines":1,"bbox":[472.21,298.47,19.57,16]}
+{"kind":"textbox","id":"sh/jm5gze1g","slide":4,"name":"TextBox 31","text":"When an urgent role opens, context from earlier events, challenges, and interviews has disappeared into spreadsheets and inboxes instead of becoming a reusable asset.","textPreview":"When an urgent role opens, context from earlier events, challenges, and interviews has disappeared into spreadsheets and inboxes instead ...","textChars":166,"textLines":1,"bbox":[499.78,297.47,307.67,93.5]}
+{"kind":"textbox","id":"sh/knex8j21","slide":4,"name":"TextBox 32","text":"02","textPreview":"02","textChars":2,"textLines":1,"bbox":[472.21,420.47,19.57,16]}
+{"kind":"textbox","id":"sh/5ony1oj6","slide":4,"name":"TextBox 33","text":"Recruiters restart from zero, rescreen similar CV claims, and cannot reuse previous relationships or evaluation history.","textPreview":"Recruiters restart from zero, rescreen similar CV claims, and cannot reuse previous relationships or evaluation history.","textChars":120,"textLines":1,"bbox":[499.78,419.47,307.67,93.5]}
+{"kind":"shape","id":"sh/axcf29kj","slide":4,"name":"AutoShape 34","bbox":[472.21,610.5,335.24,1]}
+{"kind":"shape","id":"sh/vy5gbe14","slide":4,"name":"AutoShape 35","bbox":[472.21,634.25,6,6]}
+{"kind":"textbox","id":"sh/wzex4z2p","slide":4,"name":"TextBox 36","text":"Core pain: context loss · repeated work","textPreview":"Core pain: context loss · repeated work","textChars":39,"textLines":1,"bbox":[486.21,629.5,183.52,15]}
+{"kind":"shape","id":"sh/xknyx4ja","slide":4,"name":"AutoShape 37","bbox":[850.44,194.47,381.23,477.53]}
+{"kind":"shape","id":"sh/mtcfypkn","slide":4,"name":"AutoShape 38","bbox":[873.44,219.47,39.99,40]}
+{"kind":"shape","id":"sh/nulw7u18","slide":4,"name":"AutoShape 39","bbox":[883.44,229.47,19.99,20]}
+{"kind":"shape","id":"sh/fm5c3q54","slide":4,"name":"AutoShape 40","bbox":[883.44,229.47,19.99,20]}
+{"kind":"shape","id":"sh/elwba54j","slide":4,"name":"AutoShape 41","bbox":[883.44,229.47,19.99,20]}
+{"kind":"textbox","id":"sh/18nu50nu","slide":4,"name":"TextBox 42","text":"University: intervention arrives late","textPreview":"University: intervention arrives late","textChars":37,"textLines":1,"bbox":[923.43,228.47,164.96,22]}
+{"kind":"shape","id":"sh/0netcvm9","slide":4,"name":"AutoShape 43","bbox":[873.44,273.47,39.99,2]}
+{"kind":"textbox","id":"sh/rilczq5s","slide":4,"name":"TextBox 44","text":"01","textPreview":"01","textChars":2,"textLines":1,"bbox":[873.44,298.47,19.57,16]}
+{"kind":"textbox","id":"sh/qhcb6l47","slide":4,"name":"TextBox 45","text":"Readiness and curriculum-market gaps often surface in annual reports, after the current cohort has missed the best intervention window.","textPreview":"Readiness and curriculum-market gaps often surface in annual reports, after the current cohort has missed the best intervention window.","textChars":135,"textLines":1,"bbox":[901.01,297.47,307.67,93.5]}
+{"kind":"textbox","id":"sh/dknu10ny","slide":4,"name":"TextBox 46","text":"02","textPreview":"02","textChars":2,"textLines":1,"bbox":[873.44,420.47,19.57,16]}
+{"kind":"textbox","id":"sh/sjut8vmd","slide":4,"name":"TextBox 47","text":"Leaders own graduate outcomes but lack cross-functional signals and action workflows across academic, careers, and faculty teams.","textPreview":"Leaders own graduate outcomes but lack cross-functional signals and action workflows across academic, careers, and faculty teams.","textChars":129,"textLines":1,"bbox":[901.01,419.47,307.67,93.5]}
+{"kind":"shape","id":"sh/3elcv65w","slide":4,"name":"AutoShape 48","bbox":[873.44,610.5,335.24,1]}
+{"kind":"shape","id":"sh/idcb2lob","slide":4,"name":"AutoShape 49","bbox":[873.44,634.25,6,6]}
+{"kind":"textbox","id":"sh/8jq9c72t","slide":4,"name":"TextBox 50","text":"Core pain: delayed data · fragmented ownership","textPreview":"Core pain: delayed data · fragmented ownership","textChars":46,"textLines":1,"bbox":[887.43,629.5,183.52,15]}
+{"kind":"notes","id":"nt/jyx0ra1s","slide":4,"text":"Chris Lee is a Year 3 Data Science student with useful experience but fragmented proof. Employers lose prior candidate context, while universities miss the best intervention window."}
+{"kind":"slide","id":"sl/i107q5of","slide":5,"title":"Existing tools optimise transactions—not continuity between them","textShapes":14}
+{"kind":"shape","id":"sh/dgbulwnm","slide":5,"name":"AutoShape 2","bbox":[0,0,1279.68,720]}
+{"kind":"shape","id":"sh/cf2tcr61","slide":5,"name":"AutoShape 3","bbox":[0,0,1279.68,720]}
+{"kind":"shape","id":"sh/z2tcnm5s","slide":5,"name":"AutoShape 4","bbox":[0,0,1279.68,720]}
+{"kind":"shape","id":"sh/yhkbe1o7","slide":5,"name":"AutoShape 5","bbox":[0,570,599.85,150]}
+{"kind":"shape","id":"sh/l4bupwny","slide":5,"name":"AutoShape 6","bbox":[839.79,80,439.89,140]}
+{"kind":"textbox","id":"sh/032tgr6d","slide":5,"name":"TextBox 7","text":"Existing tools optimise transactions—not continuity between them","textPreview":"Existing tools optimise transactions—not continuity between them","textChars":64,"textLines":1,"bbox":[39.99,41,1199.7,44]}
+{"kind":"shape","id":"sh/n6dcr65o","slide":5,"name":"AutoShape 8","bbox":[39.99,100,1199.7,91.59]}
+{"kind":"shape","id":"sh/m5kbi1oj","slide":5,"name":"AutoShape 9","bbox":[64.98,121,19.99,20]}
+{"kind":"shape","id":"sh/w32dkbuh","slide":5,"name":"AutoShape 10","bbox":[65.89,121.91,18.18,18.18]}
+{"kind":"shape","id":"sh/x4vedgvm","slide":5,"name":"AutoShape 11","bbox":[74.07,134.18,1.82,1.82]}
+{"kind":"textbox","id":"sh/ahkvi1cb","slide":5,"name":"TextBox 12","text":"Job platforms, ATSs, student systems, and reporting tools optimise individual transactions. None preserves context between them: activity becomes a CV claim, participation becomes attendance, feedback stays in an inbox, and outcomes arrive in delayed reports.","textPreview":"Job platforms, ATSs, student systems, and reporting tools optimise individual transactions. None preserves context between them: activity...","textChars":259,"textLines":1,"bbox":[96.98,121,1118.39,48.8]}
+{"kind":"shape","id":"sh/v2twb6dw","slide":5,"name":"AutoShape 13","bbox":[39.99,207.59,1199.7,1]}
+{"kind":"shape","id":"sh/k7mxovud","slide":5,"name":"AutoShape 14","bbox":[39.99,222.59,593.85,222.7]}
+{"kind":"shape","id":"sh/58vehgvy","slide":5,"name":"AutoShape 15","bbox":[64.98,243.59,31.99,32]}
+{"kind":"textbox","id":"sh/i54fmlc7","slide":5,"name":"TextBox 16","text":"01","textPreview":"01","textChars":2,"textLines":1,"bbox":[73.75,251.84,23.23,15]}
+{"kind":"textbox","id":"sh/j6dwfqds","slide":5,"name":"TextBox 17","text":"Experience loses process evidence","textPreview":"Experience loses process evidence","textChars":33,"textLines":1,"bbox":[106.97,248.89,184.95,20]}
+{"kind":"textbox","id":"sh/sb6xsvu9","slide":5,"name":"TextBox 18","text":"A rich experience becomes one CV line, losing process evidence, skill links, and verification context. Each application starts again instead of building on prior capability.","textPreview":"A rich experience becomes one CV line, losing process evidence, skill links, and verification context. Each application starts again inst...","textChars":173,"textLines":1,"bbox":[64.98,288.59,568.86,66.5]}
+{"kind":"shape","id":"sh/tcfel0vu","slide":5,"name":"AutoShape 19","bbox":[645.84,222.59,593.85,222.7]}
+{"kind":"shape","id":"sh/hgrmpwj2","slide":5,"name":"AutoShape 20","bbox":[670.83,243.59,31.99,32]}
+{"kind":"textbox","id":"sh/gfi5grih","slide":5,"name":"TextBox 21","text":"02","textPreview":"02","textChars":2,"textLines":1,"bbox":[679.6,251.84,23.23,15]}
+{"kind":"textbox","id":"sh/fe94nm1w","slide":5,"name":"TextBox 22","text":"Talent signals decay after events","textPreview":"Talent signals decay after events","textChars":33,"textLines":1,"bbox":[712.82,248.89,166.96,20]}
+{"kind":"textbox","id":"sh/ud0ne10b","slide":5,"name":"TextBox 23","text":"Employer events leave attendance records, not searchable evidence of performance. Promising candidates disappear into disconnected data.","textPreview":"Employer events leave attendance records, not searchable evidence of performance. Promising candidates disappear into disconnected data.","textChars":136,"textLines":1,"bbox":[670.83,288.59,568.86,66.5]}
+{"kind":"shape","id":"sh/pkr6tgjy","slide":5,"name":"AutoShape 24","bbox":[39.99,457.3,593.85,222.7]}
+{"kind":"shape","id":"sh/4ji5kbid","slide":5,"name":"AutoShape 25","bbox":[64.98,478.3,31.99,32]}
+{"kind":"textbox","id":"sh/3i94r61s","slide":5,"name":"TextBox 26","text":"03","textPreview":"03","textChars":2,"textLines":1,"bbox":[73.75,486.55,23.23,15]}
+{"kind":"textbox","id":"sh/2h0ni107","slide":5,"name":"TextBox 27","text":"Past decisions cannot be retrieved","textPreview":"Past decisions cannot be retrieved","textChars":34,"textLines":1,"bbox":[106.97,483.59,166.96,20]}
+{"kind":"textbox","id":"sh/5o7mhcju","slide":5,"name":"TextBox 28","text":"Interview feedback remains in an ATS or email. When a candidate returns, earlier reasoning and unanswered questions are difficult to recover.","textPreview":"Interview feedback remains in an ATS or email. When a candidate returns, earlier reasoning and unanswered questions are difficult to reco...","textChars":141,"textLines":1,"bbox":[64.98,523.3,568.86,66.5]}
+{"kind":"shape","id":"sh/kny587i9","slide":5,"name":"AutoShape 29","bbox":[645.84,457.3,593.85,222.7]}
+{"kind":"shape","id":"sh/atcjidg7","slide":5,"name":"AutoShape 30","bbox":[670.83,478.3,31.99,32]}
+{"kind":"textbox","id":"sh/vu5kbihc","slide":5,"name":"TextBox 31","text":"04","textPreview":"04","textChars":2,"textLines":1,"bbox":[679.6,486.55,23.23,15]}
+{"kind":"textbox","id":"sh/wve1knyx","slide":5,"name":"TextBox 32","text":"Outcome insight arrives too late","textPreview":"Outcome insight arrives too late","textChars":32,"textLines":1,"bbox":[712.82,483.59,148.96,20]}
+{"kind":"textbox","id":"sh/xwn2dszi","slide":5,"name":"TextBox 33","text":"Graduate outcomes appear in annual or semester reports. By the time leaders see the gap, the current cohort can no longer benefit.","textPreview":"Graduate outcomes appear in annual or semester reports. By the time leaders see the gap, the current cohort can no longer benefit.","textChars":130,"textLines":1,"bbox":[670.83,523.3,568.86,66.5]}
+{"kind":"notes","id":"nt/i107q5of","slide":5,"text":"Current systems optimise individual transactions. CareerOS preserves context between them instead of replacing the source systems."}
+{"kind":"slide","id":"sl/x8f69ofe","slide":6,"title":"Core Operating Model","textShapes":19}
+{"kind":"shape","id":"sh/yhg7epsj","slide":6,"name":"AutoShape 2","bbox":[0,0,1279.68,720]}
+{"kind":"shape","id":"sh/zi98nu94","slide":6,"name":"AutoShape 3","bbox":[0,0,1279.68,720]}
+{"kind":"shape","id":"sh/87ipkzal","slide":6,"name":"AutoShape 4","bbox":[0,0,1279.68,720]}
+{"kind":"shape","id":"sh/98rqt4r6","slide":6,"name":"AutoShape 5","bbox":[0,0,1279.68,720]}
+{"kind":"shape","id":"sh/ml07i9sv","slide":6,"name":"AutoShape 6","bbox":[0,520,1279.68,200]}
+{"kind":"shape","id":"sh/7m98ru9g","slide":6,"name":"AutoShape 7","bbox":[339.91,540,599.85,120]}
+{"kind":"shape","id":"sh/oryp8fah","slide":6,"name":"AutoShape 8","bbox":[31.99,32,191.86,33.5]}
+{"kind":"shape","id":"sh/pc76hkr2","slide":6,"name":"AutoShape 9","bbox":[48.99,41.75,14,14]}
+{"kind":"shape","id":"sh/h4bupgn6","slide":6,"name":"AutoShape 10","bbox":[50.15,42.92,11.66,11.67]}
+{"kind":"textbox","id":"sh/w32twb6l","slide":6,"name":"TextBox 11","text":"Core Operating Model","textPreview":"Core Operating Model","textChars":20,"textLines":1,"bbox":[68.98,41,140.87,15]}
+{"kind":"textbox","id":"sh/v2tcn650","slide":6,"name":"TextBox 12","text":"CareerOS turns fragmented signals into earlier decisions","textPreview":"CareerOS turns fragmented signals into earlier decisions","textChars":56,"textLines":1,"bbox":[31.99,74.5,1215.7,38]}
+{"kind":"shape","id":"sh/u1kbu1ov","slide":6,"name":"AutoShape 13","bbox":[31.99,126.3,47.99,3]}
+{"kind":"shape","id":"sh/5svutgni","slide":6,"name":"AutoShape 14","bbox":[31.99,145.3,1215.7,91.59]}
+{"kind":"shape","id":"sh/47mt0b6x","slide":6,"name":"AutoShape 15","bbox":[31.99,145.3,1,91.59]}
+{"kind":"textbox","id":"sh/j6dcr65c","slide":6,"name":"TextBox 16","text":"Signal → Evidence → Decision → Action → Learning. CareerOS is not another job platform; it preserves student evidence, employer decision history, and university insight between critical moments.","textPreview":"Signal → Evidence → Decision → Action → Learning. CareerOS is not another job platform; it preserves student evidence, employer decision ...","textChars":194,"textLines":1,"bbox":[58.99,166.3,1220.69,48.8]}
+{"kind":"shape","id":"sh/i54bylor","slide":6,"name":"AutoShape 17","bbox":[31.99,252.89,599.85,283.5]}
+{"kind":"shape","id":"sh/twfux0ne","slide":6,"name":"AutoShape 18","bbox":[56.99,277.89,39.99,40]}
+{"kind":"textbox","id":"sh/svmt4v6t","slide":6,"name":"TextBox 19","text":"01","textPreview":"01","textChars":2,"textLines":1,"bbox":[68.08,288.89,28.9,17]}
+{"kind":"shape","id":"sh/cbe5g3ih","slide":6,"name":"AutoShape 20","bbox":[112.97,277.89,43.99,44]}
+{"kind":"shape","id":"sh/dcnm98zm","slide":6,"name":"AutoShape 21","bbox":[124.97,289.89,19.99,20]}
+{"kind":"textbox","id":"sh/qpwnet0b","slide":6,"name":"TextBox 22","text":"Student: structured evidence","textPreview":"Student: structured evidence","textChars":28,"textLines":1,"bbox":[56.99,339.89,549.86,22]}
+{"kind":"textbox","id":"sh/bq547yhw","slide":6,"name":"TextBox 23","text":"Projects, internships, leadership, and learning become structured Career Memory evidence with skill links and context—not static CV claims.","textPreview":"Projects, internships, leadership, and learning become structured Career Memory evidence with skill links and context—not static CV claims.","textChars":139,"textLines":1,"bbox":[56.99,379.89,574.86,68]}
+{"kind":"shape","id":"sh/0fy5k3id","slide":6,"name":"AutoShape 24","bbox":[56.99,468.39,549.86,43]}
+{"kind":"textbox","id":"sh/lg76d8zy","slide":6,"name":"TextBox 25","text":"Core output","textPreview":"Core output","textChars":11,"textLines":1,"bbox":[71.98,482.14,54.99,15]}
+{"kind":"shape","id":"sh/ydgnit07","slide":6,"name":"AutoShape 26","bbox":[130.41,483.39,14,14]}
+{"kind":"textbox","id":"sh/zep4byhs","slide":6,"name":"TextBox 27","text":"Dynamic skill map + evidence confidence","textPreview":"Dynamic skill map + evidence confidence","textChars":39,"textLines":1,"bbox":[150.85,482.14,160.79,15]}
+{"kind":"shape","id":"sh/gju58ji9","slide":6,"name":"AutoShape 28","bbox":[647.84,252.89,599.85,283.5]}
+{"kind":"shape","id":"sh/1k3mhozu","slide":6,"name":"AutoShape 29","bbox":[672.83,277.89,39.99,40]}
+{"kind":"textbox","id":"sh/jet8nm1c","slide":6,"name":"TextBox 30","text":"02","textPreview":"02","textChars":2,"textLines":1,"bbox":[683.92,288.89,28.9,17]}
+{"kind":"shape","id":"sh/idk7ehkr","slide":6,"name":"AutoShape 31","bbox":[728.82,277.89,43.99,44]}
+{"kind":"shape","id":"sh/50bqpcj2","slide":6,"name":"AutoShape 32","bbox":[740.81,289.89,19.99,20]}
+{"kind":"textbox","id":"sh/4f2pgr2h","slide":6,"name":"TextBox 33","text":"Employer: explainable screening","textPreview":"Employer: explainable screening","textChars":31,"textLines":1,"bbox":[672.83,339.89,549.86,22]}
+{"kind":"textbox","id":"sh/va98j210","slide":6,"name":"TextBox 34","text":"Discovery begins with evidence. Match rationale, unresolved gaps, and decision history move with the candidate for more explainable review.","textPreview":"Discovery begins with evidence. Match rationale, unresolved gaps, and decision history move with the candidate for more explainable review.","textChars":139,"textLines":1,"bbox":[672.83,379.89,574.86,68]}
+{"kind":"shape","id":"sh/u907axkf","slide":6,"name":"AutoShape 35","bbox":[672.83,468.39,549.86,43]}
+{"kind":"textbox","id":"sh/hcrqlcj6","slide":6,"name":"TextBox 36","text":"Core output","textPreview":"Core output","textChars":11,"textLines":1,"bbox":[687.83,482.14,54.99,15]}
+{"kind":"shape","id":"sh/wbipc72l","slide":6,"name":"AutoShape 37","bbox":[746.26,483.39,14,14]}
+{"kind":"textbox","id":"sh/7698f214","slide":6,"name":"TextBox 38","text":"Transparent fit narrative + decision history","textPreview":"Transparent fit narrative + decision history","textChars":44,"textLines":1,"bbox":[766.7,482.14,160.79,15]}
+{"kind":"shape","id":"sh/m5076xkj","slide":6,"name":"AutoShape 39","bbox":[31.99,552.39,599.85,167.61]}
+{"kind":"shape","id":"sh/2dkbalg3","slide":6,"name":"AutoShape 40","bbox":[56.99,577.39,39.99,40]}
+{"kind":"textbox","id":"sh/netcjqxo","slide":6,"name":"TextBox 41","text":"03","textPreview":"03","textChars":2,"textLines":1,"bbox":[68.08,588.39,28.9,17]}
+{"kind":"shape","id":"sh/of2tcvy9","slide":6,"name":"AutoShape 42","bbox":[112.97,577.39,43.99,44]}
+{"kind":"shape","id":"sh/pgbul0fu","slide":6,"name":"AutoShape 43","bbox":[124.97,589.39,19.99,20]}
+{"kind":"textbox","id":"sh/ep0b6lg7","slide":6,"name":"TextBox 44","text":"University: timely intervention","textPreview":"University: timely intervention","textChars":31,"textLines":1,"bbox":[56.99,639.39,549.86,22]}
+{"kind":"textbox","id":"sh/fq9cfqxc","slide":6,"name":"TextBox 45","text":"Assign readiness gaps to an owner and deadline.","textPreview":"Assign readiness gaps to an owner and deadline.","textChars":47,"textLines":1,"bbox":[56.99,679.39,574.86,40.61]}
+{"kind":"shape","id":"sh/0r2t8vyx","slide":6,"name":"AutoShape 46","bbox":[647.84,552.39,599.85,167.61]}
+{"kind":"shape","id":"sh/1sbuh0fi","slide":6,"name":"AutoShape 47","bbox":[672.83,577.39,39.99,40]}
+{"kind":"textbox","id":"sh/ql0b21gv","slide":6,"name":"TextBox 48","text":"04","textPreview":"04","textChars":2,"textLines":1,"bbox":[683.92,588.39,28.9,17]}
+{"kind":"shape","id":"sh/rm9sb6xg","slide":6,"name":"AutoShape 49","bbox":[728.82,577.39,43.99,44]}
+{"kind":"shape","id":"sh/9gfeh4zy","slide":6,"name":"AutoShape 50","bbox":[740.81,589.39,19.99,20]}
+{"kind":"textbox","id":"sh/8f6x8jid","slide":6,"name":"TextBox 51","text":"Prototype proof and future path","textPreview":"Prototype proof and future path","textChars":31,"textLines":1,"bbox":[672.83,639.39,549.86,22]}
+{"kind":"textbox","id":"sh/7exwfehs","slide":6,"name":"TextBox 52","text":"Three workspaces are demonstrated; the shared evidence network is future-facing.","textPreview":"Three workspaces are demonstrated; the shared evidence network is future-facing.","textChars":80,"textLines":1,"bbox":[672.83,679.39,574.86,40.61]}
+{"kind":"notes","id":"nt/x8f69ofe","slide":6,"text":"The operating model is Signal → Evidence → Decision → Action → Learning. The prototype demonstrates the three workspaces and selected local handoffs; the shared network remains future-facing."}
+{"kind":"slide","id":"sl/gnmp4jqx","slide":7,"title":"CHAPTER 02","textShapes":3}
+{"kind":"shape","id":"sh/cb2tkvap","slide":7,"name":"AutoShape 2","bbox":[0,0,1279.68,720]}
+{"kind":"shape","id":"sh/ydkbm5sv","slide":7,"name":"AutoShape 4","bbox":[0,0,1279.68,720]}
+{"kind":"shape","id":"sh/zedcfa9g","slide":7,"name":"AutoShape 5","bbox":[179.96,60,3,3]}
+{"kind":"shape","id":"sh/kzmdova1","slide":7,"name":"AutoShape 6","bbox":[519.87,140,2,2]}
+{"kind":"shape","id":"sh/l0vuh0rm","slide":7,"name":"AutoShape 7","bbox":[899.78,90,3,3]}
+{"kind":"shape","id":"sh/eh0ba1sr","slide":7,"name":"AutoShape 8","bbox":[1099.72,200,2,2]}
+{"kind":"shape","id":"sh/fi9c369c","slide":7,"name":"AutoShape 9","bbox":[79.98,350,2,2]}
+{"kind":"shape","id":"sh/baxkjqlk","slide":7,"name":"AutoShape 10","bbox":[749.81,580,3,3]}
+{"kind":"shape","id":"sh/a9ojq5kz","slide":7,"name":"AutoShape 11","bbox":[349.91,650,2,2]}
+{"kind":"shape","id":"sh/xcz2l03q","slide":7,"name":"AutoShape 12","bbox":[1049.74,420,2,2]}
+{"kind":"shape","id":"sh/cbq1sv25","slide":7,"name":"AutoShape 13","bbox":[299.92,160,2,2]}
+{"kind":"shape","id":"sh/n6x0fqlo","slide":7,"name":"AutoShape 14","bbox":[599.85,500,2,2]}
+{"kind":"shape","id":"sh/25ojml43","slide":7,"name":"AutoShape 15","bbox":[0,480,599.85,180]}
+{"kind":"shape","id":"sh/p8fih03e","slide":7,"name":"AutoShape 16","bbox":[839.79,520,439.89,150]}
+{"kind":"shape","id":"sh/o761ov2t","slide":7,"name":"AutoShape 17","bbox":[546.68,222.95,186.31,39]}
+{"kind":"textbox","id":"sh/f2d0b6lc","slide":7,"name":"TextBox 18","text":"CHAPTER 02","textPreview":"CHAPTER 02","textChars":10,"textLines":1,"bbox":[561.17,222.95,157.32,39]}
+{"kind":"textbox","id":"sh/eh4jil4r","slide":7,"name":"TextBox 19","text":"Student workspace: experience becomes evidence","textPreview":"Student workspace: experience becomes evidence","textChars":46,"textLines":1,"bbox":[103.97,301.95,1071.73,62.09]}
+{"kind":"shape","id":"sh/id4ju1oz","slide":7,"name":"AutoShape 20","bbox":[599.85,396.05,79.98,1]}
+{"kind":"textbox","id":"sh/jedkn654","slide":7,"name":"TextBox 21","text":"Career Memory turns “I did this” into “Here is what it proves,” giving students reusable evidence at each important career moment.","textPreview":"Career Memory turns “I did this” into “Here is what it proves,” giving students reusable evidence at each important career moment.","textChars":130,"textLines":1,"bbox":[230.39,429.05,818.9,68]}
+{"kind":"image","id":"im/vat4ne5o","slide":7,"name":"Picture 3","bbox":[0,0,1279.68,720]}
+{"kind":"notes","id":"nt/gnmp4jqx","slide":7,"text":"The student workspace turns experience into evidence that can be reused at important career moments."}
+{"kind":"slide","id":"sl/fu1gfa1s","slide":8,"title":"Career Memory: turn “I did this” into “Here is what it proves”","textShapes":15}
+{"kind":"shape","id":"sh/18byd4zy","slide":8,"name":"AutoShape 2","bbox":[0,0,1279.68,720]}
+{"kind":"shape","id":"sh/g72x4zyd","slide":8,"name":"AutoShape 3","bbox":[0,0,1279.68,720]}
+{"kind":"shape","id":"sh/ri9g7uhw","slide":8,"name":"AutoShape 4","bbox":[0,0,1279.68,720]}
+{"kind":"shape","id":"sh/6h0fypgb","slide":8,"name":"AutoShape 5","bbox":[0,500,1279.68,220]}
+{"kind":"shape","id":"sh/tkby9kzm","slide":8,"name":"AutoShape 6","bbox":[0,520,599.85,160]}
+{"kind":"shape","id":"sh/sjix0zy1","slide":8,"name":"AutoShape 7","bbox":[839.79,580,439.89,120]}
+{"kind":"textbox","id":"sh/je9g3ahk","slide":8,"name":"TextBox 8","text":"Career Memory: turn “I did this” into “Here is what it proves”","textPreview":"Career Memory: turn “I did this” into “Here is what it proves”","textChars":62,"textLines":1,"bbox":[47.99,48,1183.7,47]}
+{"kind":"shape","id":"sh/id0fu50z","slide":8,"name":"AutoShape 9","bbox":[47.99,116.3,1183.7,81.19]}
+{"kind":"textbox","id":"sh/o7ydoret","slide":8,"name":"TextBox 10","text":"Each experience becomes a reusable asset with skill links, context, and evidence status—not merely a line on a CV.","textPreview":"Each experience becomes a reusable asset with skill links, context, and evidence status—not merely a line on a CV.","textChars":114,"textLines":1,"bbox":[70.98,135.3,1160.71,42.59]}
+{"kind":"shape","id":"sh/98rehwve","slide":8,"name":"AutoShape 11","bbox":[47.99,221.48,439.89,293.47]}
+{"kind":"textbox","id":"sh/n6pwfmd8","slide":8,"name":"TextBox 13","text":"Capture evidence when an experience happens instead of reconstructing it later","textPreview":"Capture evidence when an experience happens instead of reconstructing it later","textChars":78,"textLines":1,"bbox":[47.99,523.95,439.89,14]}
+{"kind":"shape","id":"sh/0jydkreh","slide":8,"name":"AutoShape 14","bbox":[511.87,221.48,719.82,99.13]}
+{"kind":"shape","id":"sh/1k7edwv2","slide":8,"name":"AutoShape 15","bbox":[534.87,240.48,35.99,36]}
+{"kind":"textbox","id":"sh/ehgvihwr","slide":8,"name":"TextBox 16","text":"01","textPreview":"01","textChars":2,"textLines":1,"bbox":[544.52,249.23,26.34,17]}
+{"kind":"textbox","id":"sh/zipwbmdc","slide":8,"name":"TextBox 17","text":"Capture evidence immediately","textPreview":"Capture evidence immediately","textChars":28,"textLines":1,"bbox":[586.85,242.48,621.84,22]}
+{"kind":"textbox","id":"sh/kfixwbe1","slide":8,"name":"TextBox 18","text":"Preserve evidence from projects, internships, leadership, and learning while the context is still fresh.","textPreview":"Preserve evidence from projects, internships, leadership, and learning while the context is still fresh.","textChars":104,"textLines":1,"bbox":[586.85,275.48,621.84,40.25]}
+{"kind":"shape","id":"sh/lgbepgvm","slide":8,"name":"AutoShape 19","bbox":[511.87,332.61,719.82,99.13]}
+{"kind":"shape","id":"sh/tw7e9gnq","slide":8,"name":"AutoShape 20","bbox":[534.87,351.61,35.99,36]}
+{"kind":"textbox","id":"sh/svydgb65","slide":8,"name":"TextBox 21","text":"02","textPreview":"02","textChars":2,"textLines":1,"bbox":[544.52,360.36,26.34,17]}
+{"kind":"textbox","id":"sh/7u5w765k","slide":8,"name":"TextBox 22","text":"Connect evidence to skills","textPreview":"Connect evidence to skills","textChars":26,"textLines":1,"bbox":[586.85,353.61,621.84,22]}
+{"kind":"textbox","id":"sh/6twve1oz","slide":8,"name":"TextBox 23","text":"Link each experience to relevant skills, role requirements, and context so students understand what it demonstrates.","textPreview":"Link each experience to relevant skills, role requirements, and context so students understand what it demonstrates.","textChars":116,"textLines":1,"bbox":[586.85,386.61,621.84,40.25]}
+{"kind":"shape","id":"sh/5sne5wne","slide":8,"name":"AutoShape 24","bbox":[511.87,443.73,719.82,99.13]}
+{"kind":"shape","id":"sh/kredcr6t","slide":8,"name":"AutoShape 25","bbox":[534.87,462.73,35.99,36]}
+{"kind":"textbox","id":"sh/jq5w365o","slide":8,"name":"TextBox 26","text":"03","textPreview":"03","textChars":2,"textLines":1,"bbox":[544.52,471.48,26.34,17]}
+{"kind":"textbox","id":"sh/i5wva1o3","slide":8,"name":"TextBox 27","text":"Expose missing proof","textPreview":"Expose missing proof","textChars":20,"textLines":1,"bbox":[586.85,464.73,599.85,22]}
+{"kind":"textbox","id":"sh/x4ne1wni","slide":8,"name":"TextBox 28","text":"Reveal proof gaps and guide focused improvement.","textPreview":"Reveal proof gaps and guide focused improvement.","textChars":48,"textLines":1,"bbox":[586.85,497.73,603.85,17]}
+{"kind":"shape","id":"sh/w3ed8r6x","slide":8,"name":"AutoShape 29","bbox":[511.87,554.86,719.82,99.13]}
+{"kind":"shape","id":"sh/m9sb2x4v","slide":8,"name":"AutoShape 30","bbox":[534.87,573.86,35.99,36]}
+{"kind":"textbox","id":"sh/na1sb2lg","slide":8,"name":"TextBox 31","text":"04","textPreview":"04","textChars":2,"textLines":1,"bbox":[544.52,582.61,26.34,17]}
+{"kind":"textbox","id":"sh/8bat47ml","slide":8,"name":"TextBox 32","text":"Change the behaviour","textPreview":"Change the behaviour","textChars":20,"textLines":1,"bbox":[586.85,575.86,561.17,22]}
+{"kind":"textbox","id":"sh/9w3uds36","slide":8,"name":"TextBox 33","text":"Reuse an evidence record instead of rebuilding every application.","textPreview":"Reuse an evidence record instead of rebuilding every application.","textChars":65,"textLines":1,"bbox":[586.85,608.86,565.17,17]}
+{"kind":"shape","id":"sh/y5sbed4j","slide":8,"name":"AutoShape 34","bbox":[609.85,670,59.99,2]}
+{"kind":"image","id":"im/gnudcr65","slide":8,"name":"Picture 12","bbox":[48.99,222.48,437.89,291.47]}
+{"kind":"notes","id":"nt/fu1gfa1s","slide":8,"text":"Career Memory captures evidence while context is fresh, links it to skills, and exposes missing proof. Students reuse accumulated evidence instead of rebuilding a CV from memory."}
+{"kind":"slide","id":"sl/udsvah03","slide":9,"title":"CAREER INTELLIGENCE","textShapes":13}
+{"kind":"shape","id":"sh/1cfmhgne","slide":9,"name":"AutoShape 2","bbox":[0,0,1279.68,720]}
+{"kind":"shape","id":"sh/0b65obm9","slide":9,"name":"AutoShape 3","bbox":[0,0,1279.68,720]}
+{"kind":"shape","id":"sh/nex4jq5k","slide":9,"name":"AutoShape 4","bbox":[0,0,1279.68,720]}
+{"kind":"shape","id":"sh/mdonql4z","slide":9,"name":"AutoShape 5","bbox":[0,460,1279.68,260]}
+{"kind":"shape","id":"sh/9gzml0nq","slide":9,"name":"AutoShape 6","bbox":[47.99,55.5,6,6]}
+{"kind":"textbox","id":"sh/ofq5svm5","slide":9,"name":"TextBox 7","text":"CAREER INTELLIGENCE","textPreview":"CAREER INTELLIGENCE","textChars":19,"textLines":1,"bbox":[65.98,50,215.21,16]}
+{"kind":"textbox","id":"sh/bih4na5w","slide":9,"name":"TextBox 8","text":"A degree is a starting signal—not a career boundary","textPreview":"A degree is a starting signal—not a career boundary","textChars":51,"textLines":1,"bbox":[47.99,81,1183.7,47]}
+{"kind":"textbox","id":"sh/ah8nu54b","slide":9,"name":"TextBox 9","text":"Connect existing evidence to an explorable career network instead of a single degree-defined track.","textPreview":"Connect existing evidence to an explorable career network instead of a single degree-defined track.","textChars":99,"textLines":1,"bbox":[47.99,145.3,979.75,25]}
+{"kind":"shape","id":"sh/oza1gfyh","slide":9,"name":"AutoShape 10","bbox":[47.99,194.3,719.82,110.42]}
+{"kind":"shape","id":"sh/p0ji9kf2","slide":9,"name":"AutoShape 11","bbox":[68.98,215.3,35.99,36]}
+{"kind":"shape","id":"sh/2xsjepgb","slide":9,"name":"AutoShape 12","bbox":[84.73,231.05,4.5,4.5]}
+{"kind":"shape","id":"sh/3y107axw","slide":9,"name":"AutoShape 13","bbox":[85.85,226.17,2.25,2.25]}
+{"kind":"shape","id":"sh/cnu1kzyd","slide":9,"name":"AutoShape 14","bbox":[91.1,229.17,2.25,2.25]}
+{"kind":"shape","id":"sh/do3id4fy","slide":9,"name":"AutoShape 15","bbox":[91.1,235.17,2.25,2.25]}
+{"kind":"shape","id":"sh/qlcjipgn","slide":9,"name":"AutoShape 16","bbox":[85.85,238.17,2.25,2.25]}
+{"kind":"shape","id":"sh/bml0buxs","slide":9,"name":"AutoShape 17","bbox":[80.6,235.17,2.25,2.25]}
+{"kind":"shape","id":"sh/0ru1ozyp","slide":9,"name":"AutoShape 18","bbox":[80.6,229.17,2.25,2.25]}
+{"kind":"shape","id":"sh/lsn2h4fa","slide":9,"name":"AutoShape 19","bbox":[86.18,228.42,1.6,2.63]}
+{"kind":"shape","id":"sh/98ji147e","slide":9,"name":"AutoShape 20","bbox":[88.93,230.81,2.17,1.6]}
+{"kind":"shape","id":"sh/87a18zqt","slide":9,"name":"AutoShape 21","bbox":[88.93,234.18,2.17,1.6]}
+{"kind":"shape","id":"sh/76h0zup8","slide":9,"name":"AutoShape 22","bbox":[86.18,235.55,1.6,2.63]}
+{"kind":"shape","id":"sh/ml8j6p8n","slide":9,"name":"AutoShape 23","bbox":[82.85,234.18,2.17,1.6]}
+{"kind":"shape","id":"sh/hcji5o7a","slide":9,"name":"AutoShape 24","bbox":[82.85,230.81,2.17,1.6]}
+{"kind":"textbox","id":"sh/wba1cjqp","slide":9,"name":"TextBox 25","text":"Interactive career network","textPreview":"Interactive career network","textChars":26,"textLines":1,"bbox":[120.97,216.3,625.84,25]}
+{"kind":"textbox","id":"sh/va103ep4","slide":9,"name":"TextBox 26","text":"Show adjacent roles that connect to current evidence, with illustrative fit, demand, and salary context.","textPreview":"Show adjacent roles that connect to current evidence, with illustrative fit, demand, and salary context.","textChars":104,"textLines":1,"bbox":[120.97,251.8,627.84,41.8]}
+{"kind":"shape","id":"sh/u9sja98z","slide":9,"name":"AutoShape 27","bbox":[47.99,316.72,719.82,110.42]}
+{"kind":"shape","id":"sh/xgzitk76","slide":9,"name":"AutoShape 28","bbox":[68.98,337.72,35.99,36]}
+{"kind":"shape","id":"sh/cf6h0fql","slide":9,"name":"AutoShape 29","bbox":[77.98,346.72,18,18]}
+{"kind":"shape","id":"sh/2l4faloj","slide":9,"name":"AutoShape 30","bbox":[77.98,346.72,18,18]}
+{"kind":"shape","id":"sh/nmdg3q54","slide":9,"name":"AutoShape 31","bbox":[82.85,347.84,2.25,2.25]}
+{"kind":"shape","id":"sh/onmxcv69","slide":9,"name":"AutoShape 32","bbox":[88.85,361.34,2.25,2.25]}
+{"kind":"textbox","id":"sh/pofy50nu","slide":9,"name":"TextBox 33","text":"Transferable skill recognition","textPreview":"Transferable skill recognition","textChars":30,"textLines":1,"bbox":[120.97,338.72,625.84,25]}
+{"kind":"textbox","id":"sh/apofe5of","slide":9,"name":"TextBox 34","text":"Identify skills that transfer into new paths so students can see the cross-role value of what they already know.","textPreview":"Identify skills that transfer into new paths so students can see the cross-role value of what they already know.","textChars":112,"textLines":1,"bbox":[120.97,374.22,625.84,41.8]}
+{"kind":"shape","id":"sh/bqxg7q50","slide":9,"name":"AutoShape 35","bbox":[47.99,439.14,719.82,110.42]}
+{"kind":"shape","id":"sh/cr6xgv6l","slide":9,"name":"AutoShape 36","bbox":[68.98,460.14,35.99,36]}
+{"kind":"shape","id":"sh/xcfy90n6","slide":9,"name":"AutoShape 37","bbox":[77.98,469.14,18,18]}
+{"kind":"textbox","id":"sh/qtkf21ob","slide":9,"name":"TextBox 38","text":"Prioritised skill gaps","textPreview":"Prioritised skill gaps","textChars":22,"textLines":1,"bbox":[120.97,461.14,625.84,25]}
+{"kind":"textbox","id":"sh/rutwv65w","slide":9,"name":"TextBox 39","text":"Highlight the most important gap for a target path and connect it to a bounded learning or practice step.","textPreview":"Highlight the most important gap for a target path and connect it to a bounded learning or practice step.","textChars":105,"textLines":1,"bbox":[120.97,496.64,627.84,41.8]}
+{"kind":"shape","id":"sh/7y14jyd8","slide":9,"name":"AutoShape 40","bbox":[47.99,561.56,719.82,110.42]}
+{"kind":"shape","id":"sh/mdsnatcn","slide":9,"name":"AutoShape 41","bbox":[68.98,582.56,35.99,36]}
+{"kind":"shape","id":"sh/903ml8be","slide":9,"name":"AutoShape 42","bbox":[77.98,591.56,18,18]}
+{"kind":"shape","id":"sh/8zu5c3ut","slide":9,"name":"AutoShape 43","bbox":[84.73,594.56,9.75,7.51]}
+{"kind":"textbox","id":"sh/v2l4nitk","slide":9,"name":"TextBox 44","text":"Designed impact","textPreview":"Designed impact","textChars":15,"textLines":1,"bbox":[120.97,583.56,591.85,25]}
+{"kind":"textbox","id":"sh/u1cnedcz","slide":9,"name":"TextBox 45","text":"Clearer career choices and less degree lock-in, based on evidence rather than assumptions.","textPreview":"Clearer career choices and less degree lock-in, based on evidence rather than assumptions.","textChars":90,"textLines":1,"bbox":[120.97,619.06,595.85,17]}
+{"kind":"shape","id":"sh/w3u5g3u5","slide":9,"name":"AutoShape 47","bbox":[791.8,508.44,439.89,163.56]}
+{"kind":"shape","id":"sh/j6l4ritg","slide":9,"name":"AutoShape 48","bbox":[816.8,526.03,14,14]}
+{"kind":"shape","id":"sh/i5cnidcv","slide":9,"name":"AutoShape 49","bbox":[822.04,537.86,3.5,2]}
+{"kind":"textbox","id":"sh/0bel8na9","slide":9,"name":"TextBox 50","text":"KEY INSIGHT","textPreview":"KEY INSIGHT","textChars":11,"textLines":1,"bbox":[838.79,526.03,98.58,14]}
+{"kind":"textbox","id":"sh/1wnm1sru","slide":9,"name":"TextBox 51","text":"Career Graph connects current evidence to adjacent roles, transferable skills, illustrative fit, demand, and salary context—moving the student from one job title to a network of possible paths.","textPreview":"Career Graph connects current evidence to adjacent roles, transferable skills, illustrative fit, demand, and salary context—moving the st...","textChars":193,"textLines":1,"bbox":[816.8,558.03,414.9,93.78]}
+{"kind":"image","id":"im/tsby5g3q","slide":9,"name":"Picture 46","bbox":[791.8,194.3,439.89,294.14]}
+{"kind":"notes","id":"nt/udsvah03","slide":9,"text":"Career Intelligence connects a Data Science student's existing evidence to adjacent roles, transferable skills, and priority gaps. The recommendations and market context are illustrative."}
+{"kind":"slide","id":"sl/m90b6t0r","slide":10,"title":"Guidance matters only when it becomes a visible action","textShapes":10}
+{"kind":"shape","id":"sh/xc3mho32","slide":10,"name":"AutoShape 2","bbox":[0,0,1279.68,720]}
+{"kind":"shape","id":"sh/cbu58j2h","slide":10,"name":"AutoShape 3","bbox":[0,0,1279.68,720]}
+{"kind":"shape","id":"sh/zelojyl8","slide":10,"name":"AutoShape 4","bbox":[0,0,1279.68,720]}
+{"kind":"shape","id":"sh/ydcnatkn","slide":10,"name":"AutoShape 5","bbox":[209.95,35,2,2]}
+{"kind":"shape","id":"sh/l036l83y","slide":10,"name":"AutoShape 6","bbox":[869.78,58,3,3]}
+{"kind":"shape","id":"sh/kzu5c32t","slide":10,"name":"AutoShape 7","bbox":[1139.71,95,2,2]}
+{"kind":"shape","id":"sh/725onyl4","slide":10,"name":"AutoShape 8","bbox":[519.87,155,2,2]}
+{"kind":"shape","id":"sh/m1cnetkj","slide":10,"name":"AutoShape 9","bbox":[679.83,22,1,1]}
+{"kind":"shape","id":"sh/s7yt4b21","slide":10,"name":"AutoShape 10","bbox":[359.91,125,2,2]}
+{"kind":"shape","id":"sh/d87uxg3m","slide":10,"name":"AutoShape 11","bbox":[1049.74,72,1,1]}
+{"kind":"shape","id":"sh/q5gb21kb","slide":10,"name":"AutoShape 12","bbox":[0,540,1279.68,180]}
+{"kind":"textbox","id":"sh/r6pcv6lw","slide":10,"name":"TextBox 13","text":"Guidance matters only when it becomes a visible action","textPreview":"Guidance matters only when it becomes a visible action","textChars":54,"textLines":1,"bbox":[39.99,41,1199.7,41]}
+{"kind":"shape","id":"sh/0bit8b2d","slide":10,"name":"AutoShape 14","bbox":[39.99,97.19,1199.7,123.45]}
+{"kind":"shape","id":"sh/1cru1g3y","slide":10,"name":"AutoShape 15","bbox":[54.99,111.19,3,95.45]}
+{"kind":"textbox","id":"sh/e9gb61k7","slide":10,"name":"TextBox 16","text":"Evidence-aware opportunities","textPreview":"Evidence-aware opportunities","textChars":28,"textLines":1,"bbox":[67.98,109.19,761.7,19]}
+{"kind":"textbox","id":"sh/fapcz6ls","slide":10,"name":"TextBox 17","text":"Show roles and activities that match current evidence, explain why they fit, and identify what proof is still missing.","textPreview":"Show roles and activities that match current evidence, explain why they fit, and identify what proof is still missing.","textChars":118,"textLines":1,"bbox":[67.98,136.28,765.7,16]}
+{"kind":"shape","id":"sh/ozitcv29","slide":10,"name":"AutoShape 18","bbox":[39.99,228.64,1199.7,123.45]}
+{"kind":"shape","id":"sh/p0ru503u","slide":10,"name":"AutoShape 19","bbox":[54.99,242.64,3,95.45]}
+{"kind":"textbox","id":"sh/xwnupgvy","slide":10,"name":"TextBox 20","text":"AI Companion intent routing","textPreview":"AI Companion intent routing","textChars":27,"textLines":1,"bbox":[67.98,240.64,709.78,19]}
+{"kind":"textbox","id":"sh/wvetgbud","slide":10,"name":"TextBox 21","text":"A question such as “I want a data analytics internship” routes the student to relevant evidence, opportunities, or preparation.","textPreview":"A question such as “I want a data analytics internship” routes the student to relevant evidence, opportunities, or preparation.","textChars":127,"textLines":1,"bbox":[67.98,267.73,713.77,16]}
+{"kind":"shape","id":"sh/bu5cnqd8","slide":10,"name":"AutoShape 22","bbox":[39.99,360.09,1199.7,123.45]}
+{"kind":"shape","id":"sh/atwbelcn","slide":10,"name":"AutoShape 23","bbox":[54.99,374.09,3,95.45]}
+{"kind":"textbox","id":"sh/lk7ut0va","slide":10,"name":"TextBox 24","text":"Context-aware interview practice","textPreview":"Context-aware interview practice","textChars":32,"textLines":1,"bbox":[67.98,372.09,713.82,19]}
+{"kind":"textbox","id":"sh/kjytkvup","slide":10,"name":"TextBox 25","text":"Generate role-relevant questions from the student's application context and provide structured rehearsal feedback.","textPreview":"Generate role-relevant questions from the student's application context and provide structured rehearsal feedback.","textChars":114,"textLines":1,"bbox":[67.98,399.19,717.82,16]}
+{"kind":"shape","id":"sh/jypcrqd4","slide":10,"name":"AutoShape 26","bbox":[39.99,491.55,1199.7,123.45]}
+{"kind":"shape","id":"sh/yxgbilcj","slide":10,"name":"AutoShape 27","bbox":[54.99,505.55,3,95.45]}
+{"kind":"textbox","id":"sh/1o3ahwvq","slide":10,"name":"TextBox 28","text":"Behaviour change: advice becomes commitment","textPreview":"Behaviour change: advice becomes commitment","textChars":43,"textLines":1,"bbox":[67.98,503.55,485.83,19]}
+{"kind":"textbox","id":"sh/0nut8rul","slide":10,"name":"TextBox 29","text":"Each guidance moment ends with a specific, trackable next step—not “you should consider.”","textPreview":"Each guidance moment ends with a specific, trackable next step—not “you should consider.”","textChars":89,"textLines":1,"bbox":[67.98,530.64,489.83,16]}
+{"kind":"shape","id":"sh/q9srixs3","slide":10,"name":"AutoShape 30","bbox":[39.99,627,1199.7,53]}
+{"kind":"textbox","id":"sh/ru18r2to","slide":10,"name":"TextBox 31","text":"CareerOS turns passive guidance into an action commitment by connecting every recommendation to a concrete next step.","textPreview":"CareerOS turns passive guidance into an action commitment by connecting every recommendation to a concrete next step.","textChars":117,"textLines":1,"bbox":[60.98,643,1157.71,20]}
+{"kind":"notes","id":"nt/m90b6t0r","slide":10,"text":"CareerOS connects guidance to a concrete next action. Opportunities, the AI Companion, and interview practice help the student move from uncertainty to preparation."}
+{"kind":"slide","id":"sl/jetc3ut0","slide":11,"title":"Community creates progress between applications","textShapes":14}
+{"kind":"shape","id":"sh/xcryxg7y","slide":11,"name":"AutoShape 2","bbox":[0,0,1279.68,720]}
+{"kind":"shape","id":"sh/wbih4b6d","slide":11,"name":"AutoShape 3","bbox":[0,540,499.88,120]}
+{"kind":"shape","id":"sh/n69grmpw","slide":11,"name":"AutoShape 4","bbox":[939.77,80,339.92,90]}
+{"kind":"textbox","id":"sh/250zy18b","slide":11,"name":"TextBox 5","text":"Community creates progress between applications","textPreview":"Community creates progress between applications","textChars":47,"textLines":1,"bbox":[55.99,45,1167.71,44]}
+{"kind":"shape","id":"sh/98rytw72","slide":11,"name":"AutoShape 6","bbox":[55.99,104,1167.71,1]}
+{"kind":"textbox","id":"sh/o7ih0r6h","slide":11,"name":"TextBox 7","text":"Community, mentorship, and learning provide constructive support when students face rejection, uncertainty, or a skill gap. New participation can also become future Career Memory evidence.","textPreview":"Community, mentorship, and learning provide constructive support when students face rejection, uncertainty, or a skill gap. New participa...","textChars":188,"textLines":1,"bbox":[55.99,122,1223.69,47.89]}
+{"kind":"shape","id":"sh/72t03qp0","slide":11,"name":"AutoShape 8","bbox":[55.99,186.78,279.93,497.22]}
+{"kind":"shape","id":"sh/61kzalof","slide":11,"name":"AutoShape 9","bbox":[80.98,215.78,43.99,44]}
+{"kind":"shape","id":"sh/ofqtgnyt","slide":11,"name":"AutoShape 10","bbox":[91.98,226.78,21.99,22]}
+{"kind":"shape","id":"sh/9gza9sze","slide":11,"name":"AutoShape 11","bbox":[91.98,226.78,21.99,22]}
+{"kind":"shape","id":"sh/mdobedg3","slide":11,"name":"AutoShape 12","bbox":[96.56,229.53,7.33,7.33]}
+{"kind":"textbox","id":"sh/nehs7iho","slide":11,"name":"TextBox 13","text":"Community belonging","textPreview":"Community belonging","textChars":19,"textLines":1,"bbox":[138.97,224.58,93.98,25]}
+{"kind":"shape","id":"sh/0b6tc3yx","slide":11,"name":"AutoShape 14","bbox":[80.98,277.78,39.99,2]}
+{"kind":"textbox","id":"sh/1cfa58zi","slide":11,"name":"TextBox 15","text":"Path-based communities help students see peer stories, receive CV and portfolio feedback, and turn isolation into connection and action.","textPreview":"Path-based communities help students see peer stories, receive CV and portfolio feedback, and turn isolation into connection and action.","textChars":136,"textLines":1,"bbox":[80.98,299.78,254.94,192.34]}
+{"kind":"shape","id":"sh/epobatgr","slide":11,"name":"AutoShape 16","bbox":[80.98,642.25,6,6]}
+{"kind":"textbox","id":"sh/zaxs3yhc","slide":11,"name":"TextBox 17","text":"Emotional support through connection","textPreview":"Emotional support through connection","textChars":36,"textLines":1,"bbox":[94.98,637.5,215.95,15]}
+{"kind":"shape","id":"sh/cn6t83y1","slide":11,"name":"AutoShape 18","bbox":[351.91,186.78,279.93,497.22]}
+{"kind":"shape","id":"sh/dofa18z6","slide":11,"name":"AutoShape 19","bbox":[376.91,215.78,43.99,44]}
+{"kind":"shape","id":"sh/tsnip0ny","slide":11,"name":"AutoShape 20","bbox":[387.9,226.78,21.99,22]}
+{"kind":"shape","id":"sh/87ehgv6d","slide":11,"name":"AutoShape 21","bbox":[395.23,229.53,7.33,7.33]}
+{"kind":"textbox","id":"sh/7650nq5s","slide":11,"name":"TextBox 22","text":"Mentor guidance","textPreview":"Mentor guidance","textChars":15,"textLines":1,"bbox":[434.89,224.58,93.98,25]}
+{"kind":"shape","id":"sh/65wzelo7","slide":11,"name":"AutoShape 23","bbox":[376.91,277.78,39.99,2]}
+{"kind":"textbox","id":"sh/l43ilgn2","slide":11,"name":"TextBox 24","text":"Alumni and industry mentors add human guidance at moments when students need direction beyond an algorithmic recommendation.","textPreview":"Alumni and industry mentors add human guidance at moments when students need direction beyond an algorithmic recommendation.","textChars":124,"textLines":1,"bbox":[376.91,299.78,254.94,192.34]}
+{"kind":"shape","id":"sh/k3uhcb6h","slide":11,"name":"AutoShape 25","bbox":[376.91,642.25,6,6]}
+{"kind":"textbox","id":"sh/j2lgjq5w","slide":11,"name":"TextBox 26","text":"Human support beyond algorithms","textPreview":"Human support beyond algorithms","textChars":31,"textLines":1,"bbox":[390.9,637.5,215.95,15]}
+{"kind":"shape","id":"sh/y1czalob","slide":11,"name":"AutoShape 27","bbox":[647.84,186.78,279.93,497.22]}
+{"kind":"shape","id":"sh/p07ixkn6","slide":11,"name":"AutoShape 28","bbox":[672.83,215.78,43.99,44]}
+{"kind":"shape","id":"sh/4zyhofml","slide":11,"name":"AutoShape 29","bbox":[683.83,226.78,21.99,22]}
+{"kind":"shape","id":"sh/m58fih43","slide":11,"name":"AutoShape 30","bbox":[699.41,230.45,5.5,5.5]}
+{"kind":"shape","id":"sh/n61wbmlo","slide":11,"name":"AutoShape 31","bbox":[684.75,239.61,5.5,5.5]}
+{"kind":"textbox","id":"sh/o7axk7m9","slide":11,"name":"TextBox 32","text":"Evidence feedback loop","textPreview":"Evidence feedback loop","textChars":22,"textLines":1,"bbox":[730.82,224.58,93.98,25]}
+{"kind":"shape","id":"sh/98jedc3u","slide":11,"name":"AutoShape 33","bbox":[672.83,277.78,39.99,2]}
+{"kind":"textbox","id":"sh/eh8fex47","slide":11,"name":"TextBox 34","text":"Community and learning activity can return to Career Memory as new evidence, so support also builds a reusable career asset.","textPreview":"Community and learning activity can return to Career Memory as new evidence, so support also builds a reusable career asset.","textChars":124,"textLines":1,"bbox":[672.83,299.78,254.94,192.34]}
+{"kind":"shape","id":"sh/z2hw72lc","slide":11,"name":"AutoShape 35","bbox":[672.83,642.25,6,6]}
+{"kind":"textbox","id":"sh/03qxg7mx","slide":11,"name":"TextBox 36","text":"Support that also builds evidence","textPreview":"Support that also builds evidence","textChars":33,"textLines":1,"bbox":[686.83,637.5,215.95,15]}
+{"kind":"shape","id":"sh/14ze9c3i","slide":11,"name":"AutoShape 37","bbox":[943.76,186.78,279.93,497.22]}
+{"kind":"shape","id":"sh/ydcfq1kb","slide":11,"name":"AutoShape 38","bbox":[968.76,215.78,43.99,44]}
+{"kind":"shape","id":"sh/jylwj6lw","slide":11,"name":"AutoShape 39","bbox":[981.59,233.2,18.33,9.17]}
+{"kind":"shape","id":"sh/3qhsfypc","slide":11,"name":"AutoShape 40","bbox":[994.42,233.2,5.5,5.5]}
+{"kind":"textbox","id":"sh/ip8bmtor","slide":11,"name":"TextBox 41","text":"Relationship shift","textPreview":"Relationship shift","textChars":18,"textLines":1,"bbox":[1026.74,224.58,93.98,25]}
+{"kind":"shape","id":"sh/5sjah872","slide":11,"name":"AutoShape 42","bbox":[968.76,277.78,39.99,2]}
+{"kind":"textbox","id":"sh/4rato36h","slide":11,"name":"TextBox 43","text":"The platform is useful during setbacks and exploration—not only when a vacancy appears—shifting value from episodic use to continuous development.","textPreview":"The platform is useful during setbacks and exploration—not only when a vacancy appears—shifting value from episodic use to continuous dev...","textChars":146,"textLines":1,"bbox":[968.76,299.78,254.94,192.34]}
+{"kind":"shape","id":"sh/v2hsbyp0","slide":11,"name":"AutoShape 44","bbox":[968.76,642.25,6,6]}
+{"kind":"textbox","id":"sh/u18bit8f","slide":11,"name":"TextBox 45","text":"From transactional tool to career companion","textPreview":"From transactional tool to career companion","textChars":43,"textLines":1,"bbox":[982.75,637.5,215.95,15]}
+{"kind":"notes","id":"nt/jetc3ut0","slide":11,"text":"Community, mentorship, and learning provide reasons to return between applications. These flows are designed to support continued progress; retention has not been measured."}
+{"kind":"slide","id":"sl/8f2psfyx","slide":12,"title":"CHAPTER 03","textShapes":3}
+{"kind":"shape","id":"sh/1gbm9s3a","slide":12,"name":"AutoShape 2","bbox":[0,0,1279.68,720]}
+{"kind":"shape","id":"sh/0f2lgnmp","slide":12,"name":"AutoShape 3","bbox":[0,0,1279.68,720]}
+{"kind":"shape","id":"sh/q903ad4n","slide":12,"name":"AutoShape 5","bbox":[0,0,1279.68,720]}
+{"kind":"shape","id":"sh/dcbm583y","slide":12,"name":"AutoShape 6","bbox":[153.56,57.59,2,2]}
+{"kind":"shape","id":"sh/sb2lcnmd","slide":12,"name":"AutoShape 7","bbox":[358.3,36,1.5,1.5]}
+{"kind":"shape","id":"sh/b6d4f2lc","slide":12,"name":"AutoShape 8","bbox":[575.86,86.39,2,2]}
+{"kind":"shape","id":"sh/a543mx4r","slide":12,"name":"AutoShape 9","bbox":[793.4,21.59,1,1]}
+{"kind":"shape","id":"sh/wvupgz6t","slide":12,"name":"AutoShape 10","bbox":[998.14,64.8,2.5,2.5]}
+{"kind":"shape","id":"sh/xw3q94ne","slide":12,"name":"AutoShape 11","bbox":[1126.11,108,1.5,1.5]}
+{"kind":"shape","id":"sh/atc7epon","slide":12,"name":"AutoShape 12","bbox":[230.33,129.59,1,1]}
+{"kind":"shape","id":"sh/bulo7u58","slide":12,"name":"AutoShape 13","bbox":[665.43,43.19,2,2]}
+{"kind":"shape","id":"sh/orapcf6h","slide":12,"name":"AutoShape 14","bbox":[447.89,158.39,1.5,1.5]}
+{"kind":"shape","id":"sh/9sj65kn2","slide":12,"name":"AutoShape 15","bbox":[895.78,144,1,1]}
+{"kind":"shape","id":"sh/mps7a5or","slide":12,"name":"AutoShape 16","bbox":[1177.3,100.8,2,2]}
+{"kind":"shape","id":"sh/nq1o3a5w","slide":12,"name":"AutoShape 17","bbox":[102.37,180,1.5,1.5]}
+{"kind":"shape","id":"sh/0nap8f6l","slide":12,"name":"AutoShape 18","bbox":[511.87,28.8,1,1]}
+{"kind":"shape","id":"sh/1oj61kn6","slide":12,"name":"AutoShape 19","bbox":[742.21,115.19,2,2]}
+{"kind":"shape","id":"sh/hkbm5wzu","slide":12,"name":"AutoShape 20","bbox":[63.98,72,1.5,1.5]}
+{"kind":"shape","id":"sh/gj25cry9","slide":12,"name":"AutoShape 21","bbox":[1049.33,201.59,1,1]}
+{"kind":"shape","id":"sh/fit436ho","slide":12,"name":"AutoShape 22","bbox":[1215.7,14.39,2,2]}
+{"kind":"shape","id":"sh/uh0na1g3","slide":12,"name":"AutoShape 23","bbox":[281.52,230.39,1.5,1.5]}
+{"kind":"shape","id":"sh/tgrm1wzy","slide":12,"name":"AutoShape 24","bbox":[934.16,50.39,1,1]}
+{"kind":"shape","id":"sh/sfi58ryd","slide":12,"name":"AutoShape 25","bbox":[614.24,172.8,2,2]}
+{"kind":"shape","id":"sh/7u94zmhs","slide":12,"name":"AutoShape 26","bbox":[0,500,599.85,120]}
+{"kind":"shape","id":"sh/6t0n6hg7","slide":12,"name":"AutoShape 27","bbox":[839.79,480,439.89,100]}
+{"kind":"shape","id":"sh/dcv6dgz2","slide":12,"name":"AutoShape 28","bbox":[199.95,380,399.9,80]}
+{"kind":"shape","id":"sh/cbm5kbyh","slide":12,"name":"AutoShape 29","bbox":[489.88,200,299.92,300]}
+{"kind":"shape","id":"sh/alwbitsn","slide":12,"name":"AutoShape 30","bbox":[0,540,1279.68,180]}
+{"kind":"shape","id":"sh/bm5sryt8","slide":12,"name":"AutoShape 31","bbox":[0,540,1279.68,180]}
+{"kind":"shape","id":"sh/wnetkjat","slide":12,"name":"AutoShape 32","bbox":[0,660,1279.68,60]}
+{"kind":"shape","id":"sh/xonutobe","slide":12,"name":"AutoShape 33","bbox":[544.68,201.61,190.31,39]}
+{"kind":"shape","id":"sh/mhcbe9sr","slide":12,"name":"AutoShape 34","bbox":[573.67,218.11,6,6]}
+{"kind":"textbox","id":"sh/nilsnetc","slide":12,"name":"TextBox 35","text":"CHAPTER 03","textPreview":"CHAPTER 03","textChars":10,"textLines":1,"bbox":[589.67,212.61,120.33,16]}
+{"kind":"textbox","id":"sh/ojutgjah","slide":12,"name":"TextBox 36","text":"Employer workspace: from CV screening to evidence-led decisions","textPreview":"Employer workspace: from CV screening to evidence-led decisions","textChars":63,"textLines":1,"bbox":[107.97,276.61,1063.73,119.59]}
+{"kind":"shape","id":"sh/9k3apob2","slide":12,"name":"AutoShape 37","bbox":[599.85,428.2,79.98,1]}
+{"kind":"textbox","id":"sh/6dgbqdsv","slide":12,"name":"TextBox 38","text":"Employers need evidence and decision history—not another candidate database. CareerOS preserves the value of each talent interaction for the next hiring decision.","textPreview":"Employers need evidence and decision history—not another candidate database. CareerOS preserves the value of each talent interaction for ...","textChars":162,"textLines":1,"bbox":[146.71,457.2,986.27,61.19]}
+{"kind":"image","id":"im/8zulk7u1","slide":12,"name":"Picture 4","bbox":[0,0,1279.68,720]}
+{"kind":"notes","id":"nt/8f2psfyx","slide":12,"text":"The employer workspace preserves the value of previous talent interactions so each new hiring need does not restart from zero."}
+{"kind":"slide","id":"sl/hgzapcr6","slide":13,"title":"Employer decision model: explainable screening built on evidence","textShapes":14}
+{"kind":"shape","id":"sh/q50nydsj","slide":13,"name":"AutoShape 2","bbox":[0,0,1279.68,720]}
+{"kind":"shape","id":"sh/bq9orito","slide":13,"name":"AutoShape 3","bbox":[1132.72,36,2,2]}
+{"kind":"shape","id":"sh/o3i5w3ad","slide":13,"name":"AutoShape 4","bbox":[966.76,88,3,3]}
+{"kind":"shape","id":"sh/p4r6p8by","slide":13,"name":"AutoShape 5","bbox":[1089.73,640,2,2]}
+{"kind":"shape","id":"sh/21gnuts7","slide":13,"name":"AutoShape 6","bbox":[389.9,55,2,2]}
+{"kind":"shape","id":"sh/32ponyts","slide":13,"name":"AutoShape 7","bbox":[0,510,519.87,210]}
+{"kind":"textbox","id":"sh/gzy5s3a1","slide":13,"name":"TextBox 8","text":"Employer decision model: explainable screening built on evidence","textPreview":"Employer decision model: explainable screening built on evidence","textChars":64,"textLines":1,"bbox":[47.99,49,1183.7,44]}
+{"kind":"shape","id":"sh/1076lobm","slide":13,"name":"AutoShape 9","bbox":[47.99,108,1183.7,129]}
+{"kind":"textbox","id":"sh/hcfy9k3u","slide":13,"name":"TextBox 10","text":"CareerOS reframes hiring from “CV claims + zero context” into Need → Evidence-backed discovery → Targeted validation → Decision history → Reusable pipeline. Screening rationale and unresolved gaps become reusable knowledge.","textPreview":"CareerOS reframes hiring from “CV claims + zero context” into Need → Evidence-backed discovery → Targeted validation → Decision history →...","textChars":223,"textLines":1,"bbox":[72.98,127,1206.7,91]}
+{"kind":"shape","id":"sh/gb6x0zm9","slide":13,"name":"AutoShape 11","bbox":[47.99,259,583.85,198.5]}
+{"kind":"shape","id":"sh/vaxg7ulo","slide":13,"name":"AutoShape 12","bbox":[72.98,282.89,37.57,27]}
+{"kind":"textbox","id":"sh/u9ofyp43","slide":13,"name":"TextBox 13","text":"01","textPreview":"01","textChars":2,"textLines":1,"bbox":[83.98,287.89,26.57,16]}
+{"kind":"textbox","id":"sh/t8fy5k3i","slide":13,"name":"TextBox 14","text":"Need-led matching","textPreview":"Need-led matching","textChars":17,"textLines":1,"bbox":[122.55,282,149.96,27]}
+{"kind":"textbox","id":"sh/876xwfmx","slide":13,"name":"TextBox 15","text":"Begin with a specific hiring need and compare it with structured evidence such as projects, challenges, and skill status—not keywords alone.","textPreview":"Begin with a specific hiring need and compare it with structured evidence such as projects, challenges, and skill status—not keywords alone.","textChars":140,"textLines":1,"bbox":[72.98,326.8,558.86,42.59]}
+{"kind":"shape","id":"sh/7mdg3als","slide":13,"name":"AutoShape 16","bbox":[647.84,259,583.85,198.5]}
+{"kind":"shape","id":"sh/6l4fu547","slide":13,"name":"AutoShape 17","bbox":[672.83,282.89,37.57,27]}
+{"kind":"textbox","id":"sh/lkvy103m","slide":13,"name":"TextBox 18","text":"02","textPreview":"02","textChars":2,"textLines":1,"bbox":[683.83,287.89,26.57,16]}
+{"kind":"textbox","id":"sh/kjmxsfm1","slide":13,"name":"TextBox 19","text":"Gap-led validation","textPreview":"Gap-led validation","textChars":18,"textLines":1,"bbox":[722.4,282,149.96,27]}
+{"kind":"textbox","id":"sh/cnqh8fux","slide":13,"name":"TextBox 20","text":"Show evidence supporting fit and the gaps that still require validation, so interviews can focus on the right questions.","textPreview":"Show evidence supporting fit and the gaps that still require validation, so interviews can focus on the right questions.","textChars":120,"textLines":1,"bbox":[672.83,326.8,558.86,42.59]}
+{"kind":"shape","id":"sh/xozyhkbi","slide":13,"name":"AutoShape 21","bbox":[47.99,473.5,583.85,198.5]}
+{"kind":"shape","id":"sh/q18f65cr","slide":13,"name":"AutoShape 22","bbox":[72.98,497.39,37.57,27]}
+{"kind":"textbox","id":"sh/bmhgfatc","slide":13,"name":"TextBox 23","text":"03","textPreview":"03","textChars":2,"textLines":1,"bbox":[83.98,502.39,26.57,16]}
+{"kind":"textbox","id":"sh/oz6x4vul","slide":13,"name":"TextBox 24","text":"Preserved decision history","textPreview":"Preserved decision history","textChars":26,"textLines":1,"bbox":[122.55,496.5,149.96,27]}
+{"kind":"textbox","id":"sh/p0zyd0b6","slide":13,"name":"TextBox 25","text":"Keep why a candidate advanced or was passed, plus unresolved questions, so later reviews and handoffs retain context.","textPreview":"Keep why a candidate advanced or was passed, plus unresolved questions, so later reviews and handoffs retain context.","textChars":117,"textLines":1,"bbox":[72.98,541.3,558.86,42.59]}
+{"kind":"shape","id":"sh/2xof2lcv","slide":13,"name":"AutoShape 26","bbox":[647.84,473.5,583.85,198.5]}
+{"kind":"shape","id":"sh/3yxgbqdg","slide":13,"name":"AutoShape 27","bbox":[672.83,497.39,37.57,27]}
+{"kind":"textbox","id":"sh/8vahgzu5","slide":13,"name":"TextBox 28","text":"04","textPreview":"04","textChars":2,"textLines":1,"bbox":[683.83,502.39,26.57,16]}
+{"kind":"textbox","id":"sh/9wjyp4bq","slide":13,"name":"TextBox 29","text":"Behaviour shift","textPreview":"Behaviour shift","textChars":15,"textLines":1,"bbox":[722.4,496.5,149.96,27]}
+{"kind":"textbox","id":"sh/jqlkfyds","slide":13,"name":"TextBox 30","text":"Move from “Does this CV look right?” to “What evidence supports fit, and what must we validate?”","textPreview":"Move from “Does this CV look right?” to “What evidence supports fit, and what must we validate?”","textChars":96,"textLines":1,"bbox":[672.83,541.3,558.86,42.59]}
+{"kind":"notes","id":"nt/hgzapcr6","slide":13,"text":"The employer model begins with a hiring need, uses evidence-backed discovery, targets unresolved gaps, preserves decision history, and builds a reusable pipeline."}
+{"kind":"slide","id":"sl/6lsnupw7","slide":14,"title":"Talent Discovery: explain the evidence and the uncertainty","textShapes":14}
+{"kind":"shape","id":"sh/xc7eds76","slide":14,"name":"AutoShape 2","bbox":[0,0,1279.68,720]}
+{"kind":"shape","id":"sh/wbydknq1","slide":14,"name":"AutoShape 3","bbox":[0,0,1279.68,720]}
+{"kind":"shape","id":"sh/jepwf2pc","slide":14,"name":"AutoShape 4","bbox":[0,0,1279.68,720]}
+{"kind":"shape","id":"sh/idgvmx8r","slide":14,"name":"AutoShape 5","bbox":[0,0,1279.68,720]}
+{"kind":"shape","id":"sh/5grehs7i","slide":14,"name":"AutoShape 6","bbox":[0,0,1279.68,720]}
+{"kind":"shape","id":"sh/kfidonqx","slide":14,"name":"AutoShape 7","bbox":[0,0,1279.68,720]}
+{"kind":"shape","id":"sh/zi5c3y98","slide":14,"name":"AutoShape 8","bbox":[0,460,519.87,160]}
+{"kind":"shape","id":"sh/ehwvat8n","slide":14,"name":"AutoShape 9","bbox":[999.75,380,279.93,140]}
+{"kind":"shape","id":"sh/c3e1gjyd","slide":14,"name":"AutoShape 10","bbox":[399.9,0,599.85,120]}
+{"kind":"shape","id":"sh/x4ni9ofy","slide":14,"name":"AutoShape 11","bbox":[0,500,1279.68,220]}
+{"kind":"shape","id":"sh/a1wze9g7","slide":14,"name":"AutoShape 12","bbox":[0,500,1279.68,220]}
+{"kind":"shape","id":"sh/b2507exs","slide":14,"name":"AutoShape 13","bbox":[0,670,1279.68,50]}
+{"kind":"textbox","id":"sh/kre1k3y9","slide":14,"name":"TextBox 14","text":"Talent Discovery: explain the evidence and the uncertainty","textPreview":"Talent Discovery: explain the evidence and the uncertainty","textChars":58,"textLines":1,"bbox":[47.99,48,1183.7,47]}
+{"kind":"textbox","id":"sh/ls7idofu","slide":14,"name":"TextBox 15","text":"Talent Discovery presents an evidence narrative—not just a score. It surfaces evidence, observed behaviour, identified gaps, and suggested validation questions.","textPreview":"Talent Discovery presents an evidence narrative—not just a score. It surfaces evidence, observed behaviour, identified gaps, and suggeste...","textChars":160,"textLines":1,"bbox":[47.99,118.3,1231.69,93.19]}
+{"kind":"shape","id":"sh/y5wjitgj","slide":14,"name":"AutoShape 16","bbox":[47.99,234.58,1183.7,1]}
+{"kind":"shape","id":"sh/z650byxo","slide":14,"name":"AutoShape 17","bbox":[47.99,251.58,583.85,202.2]}
+{"kind":"shape","id":"sh/0buh8zy5","slide":14,"name":"AutoShape 18","bbox":[74.98,276.58,39.99,40]}
+{"kind":"shape","id":"sh/1w3i14fq","slide":14,"name":"AutoShape 19","bbox":[84.98,286.58,19.99,20]}
+{"kind":"shape","id":"sh/hsvy50re","slide":14,"name":"AutoShape 20","bbox":[84.98,286.58,19.99,20]}
+{"kind":"shape","id":"sh/grmxwvqt","slide":14,"name":"AutoShape 21","bbox":[96.98,288.58,6,6]}
+{"kind":"textbox","id":"sh/fqdg3q98","slide":14,"name":"TextBox 22","text":"01","textPreview":"01","textChars":2,"textLines":1,"bbox":[128.97,288.08,22.57,16]}
+{"kind":"textbox","id":"sh/up4fal83","slide":14,"name":"TextBox 23","text":"Evidence and observed behaviour","textPreview":"Evidence and observed behaviour","textChars":31,"textLines":1,"bbox":[74.98,331.58,529.87,25]}
+{"kind":"textbox","id":"sh/pwvy90rq","slide":14,"name":"TextBox 24","text":"Show projects, challenge performance, and skill status so recruiters can see why a candidate appears relevant.","textPreview":"Show projects, challenge performance, and skill status so recruiters can see why a candidate appears relevant.","textChars":110,"textLines":1,"bbox":[74.98,372.08,556.86,42.59]}
+{"kind":"shape","id":"sh/4vmh0vq5","slide":14,"name":"AutoShape 25","bbox":[647.84,251.58,583.85,202.2]}
+{"kind":"shape","id":"sh/3udg7q9k","slide":14,"name":"AutoShape 26","bbox":[674.83,276.58,39.99,40]}
+{"kind":"shape","id":"sh/2t4fyl8z","slide":14,"name":"AutoShape 27","bbox":[684.83,286.58,19.99,20]}
+{"kind":"shape","id":"sh/d0fydk7m","slide":14,"name":"AutoShape 28","bbox":[684.83,286.58,19.99,20]}
+{"kind":"shape","id":"sh/cz6h4fq1","slide":14,"name":"AutoShape 29","bbox":[687.83,289.58,10,10]}
+{"kind":"textbox","id":"sh/atg3idk7","slide":14,"name":"TextBox 30","text":"02","textPreview":"02","textChars":2,"textLines":1,"bbox":[728.82,288.08,22.57,16]}
+{"kind":"textbox","id":"sh/bup4rils","slide":14,"name":"TextBox 31","text":"Gap labels and validation prompts","textPreview":"Gap labels and validation prompts","textChars":33,"textLines":1,"bbox":[674.83,331.58,529.87,25]}
+{"kind":"textbox","id":"sh/cvylkn2d","slide":14,"name":"TextBox 32","text":"Identify strengths and gaps, then suggest focused questions for the dimensions that still need confirmation.","textPreview":"Identify strengths and gaps, then suggest focused questions for the dimensions that still need confirmation.","textChars":108,"textLines":1,"bbox":[674.83,372.08,556.86,42.59]}
+{"kind":"shape","id":"sh/xw7mts3y","slide":14,"name":"AutoShape 33","bbox":[47.99,469.78,583.85,202.22]}
+{"kind":"shape","id":"sh/yxgnmxkj","slide":14,"name":"AutoShape 34","bbox":[74.98,494.78,39.99,40]}
+{"kind":"shape","id":"sh/jyp4fil4","slide":14,"name":"AutoShape 35","bbox":[84.98,504.78,19.99,20]}
+{"kind":"shape","id":"sh/kzy5on2p","slide":14,"name":"AutoShape 36","bbox":[86.98,512.78,4,4]}
+{"kind":"shape","id":"sh/lkrmhsju","slide":14,"name":"AutoShape 37","bbox":[92.98,512.78,4,4]}
+{"kind":"shape","id":"sh/6l0nqxkf","slide":14,"name":"AutoShape 38","bbox":[98.98,512.78,4,4]}
+{"kind":"textbox","id":"sh/7m94j210","slide":14,"name":"TextBox 39","text":"03","textPreview":"03","textChars":2,"textLines":1,"bbox":[128.97,506.28,22.57,16]}
+{"kind":"textbox","id":"sh/fi5432t4","slide":14,"name":"TextBox 40","text":"Career Memory narrative","textPreview":"Career Memory narrative","textChars":23,"textLines":1,"bbox":[74.98,549.78,529.87,25]}
+{"kind":"textbox","id":"sh/uhw3axcj","slide":14,"name":"TextBox 41","text":"Show how evidence accumulated over time, the latest activity, and areas of continuing development.","textPreview":"Show how evidence accumulated over time, the latest activity, and areas of continuing development.","textChars":98,"textLines":1,"bbox":[74.98,590.28,556.86,42.59]}
+{"kind":"shape","id":"sh/h4nm5sba","slide":14,"name":"AutoShape 42","bbox":[647.84,469.78,583.85,202.22]}
+{"kind":"shape","id":"sh/gjelc7up","slide":14,"name":"AutoShape 43","bbox":[674.83,494.78,39.99,40]}
+{"kind":"shape","id":"sh/365472tg","slide":14,"name":"AutoShape 44","bbox":[687.83,508.78,14,11]}
+{"kind":"shape","id":"sh/25w3excv","slide":14,"name":"AutoShape 45","bbox":[698.83,508.78,3,3]}
+{"kind":"textbox","id":"sh/p87m9cb6","slide":14,"name":"TextBox 46","text":"04","textPreview":"04","textChars":2,"textLines":1,"bbox":[728.82,506.28,22.57,16]}
+{"kind":"textbox","id":"sh/47y5g7u1","slide":14,"name":"TextBox 47","text":"Accountable screening","textPreview":"Accountable screening","textChars":21,"textLines":1,"bbox":[674.83,549.78,529.87,25]}
+{"kind":"textbox","id":"sh/jal4vidw","slide":14,"name":"TextBox 48","text":"Let the team trace the evidence behind each decision and learn which signals should be investigated further.","textPreview":"Let the team trace the evidence behind each decision and learn which signals should be investigated further.","textChars":108,"textLines":1,"bbox":[674.83,590.28,556.86,42.59]}
+{"kind":"notes","id":"nt/6lsnupw7","slide":14,"text":"Talent Discovery presents evidence, observed behaviour, gaps, and validation questions rather than treating a score as the final answer."}
+{"kind":"slide","id":"sl/vaxsvy10","slide":15,"title":"Candidate workflow: preserve why someone moved—not only where they are","textShapes":14}
+{"kind":"shape","id":"sh/547mhg3m","slide":15,"name":"AutoShape 2","bbox":[0,0,1279.68,720]}
+{"kind":"shape","id":"sh/k3y5ov21","slide":15,"name":"AutoShape 3","bbox":[0,0,1279.68,720]}
+{"kind":"shape","id":"sh/76p4jqls","slide":15,"name":"AutoShape 4","bbox":[0,0,1279.68,720]}
+{"kind":"shape","id":"sh/65gnqlk7","slide":15,"name":"AutoShape 5","bbox":[879.78,0,399.9,200]}
+{"kind":"shape","id":"sh/t87ml0ji","slide":15,"name":"AutoShape 6","bbox":[0,500,599.85,180]}
+{"kind":"shape","id":"sh/s7y5sv2x","slide":15,"name":"AutoShape 7","bbox":[999.75,100,199.95,200]}
+{"kind":"textbox","id":"sh/na5476l8","slide":15,"name":"TextBox 8","text":"Candidate workflow: preserve why someone moved—not only where they are","textPreview":"Candidate workflow: preserve why someone moved—not only where they are","textChars":70,"textLines":1,"bbox":[47.99,49,1183.7,41]}
+{"kind":"shape","id":"sh/m9c3e1kn","slide":15,"name":"AutoShape 9","bbox":[47.99,111.19,1179.71,86.78]}
+{"kind":"textbox","id":"sh/wrm9kvep","slide":15,"name":"TextBox 10","text":"Shortlist and pass rationale, identified gaps, and validation questions move with the candidate through stages and team handoffs.","textPreview":"Shortlist and pass rationale, identified gaps, and validation questions move with the candidate through stages and team handoffs.","textChars":129,"textLines":1,"bbox":[72.98,132.19,1206.7,43.39]}
+{"kind":"shape","id":"sh/hsvat0fa","slide":15,"name":"AutoShape 11","bbox":[47.99,217.97,583.85,219.02]}
+{"kind":"shape","id":"sh/upkrilwj","slide":15,"name":"AutoShape 12","bbox":[68.98,238.97,35.99,36]}
+{"kind":"textbox","id":"sh/vqdsrqx4","slide":15,"name":"TextBox 13","text":"01","textPreview":"01","textChars":2,"textLines":1,"bbox":[78.64,247.72,26.34,17]}
+{"kind":"textbox","id":"sh/4vm9ovel","slide":15,"name":"TextBox 14","text":"Structured decision context","textPreview":"Structured decision context","textChars":27,"textLines":1,"bbox":[116.97,243.67,181.95,25]}
+{"kind":"textbox","id":"sh/5wvax0f6","slide":15,"name":"TextBox 15","text":"Attach clear rationale and validation questions to each shortlist or pass decision so the next reviewer receives the context.","textPreview":"Attach clear rationale and validation questions to each shortlist or pass decision so the next reviewer receives the context.","textChars":125,"textLines":1,"bbox":[68.98,290.97,562.86,43.39]}
+{"kind":"shape","id":"sh/it4rm5wv","slide":15,"name":"AutoShape 16","bbox":[647.84,217.97,583.85,219.02]}
+{"kind":"shape","id":"sh/judsvqxg","slide":15,"name":"AutoShape 17","bbox":[668.83,238.97,35.99,36]}
+{"kind":"textbox","id":"sh/0z29cbyh","slide":15,"name":"TextBox 18","text":"02","textPreview":"02","textChars":2,"textLines":1,"bbox":[678.49,247.72,26.34,17]}
+{"kind":"textbox","id":"sh/l0bqlgf2","slide":15,"name":"TextBox 19","text":"Knowledge across team handoffs","textPreview":"Knowledge across team handoffs","textChars":30,"textLines":1,"bbox":[716.82,243.67,181.95,25]}
+{"kind":"textbox","id":"sh/1kjyt83e","slide":15,"name":"TextBox 20","text":"A new reviewer can retrieve the candidate's evaluation history, previous decisions, and unresolved gaps.","textPreview":"A new reviewer can retrieve the candidate's evaluation history, previous decisions, and unresolved gaps.","textChars":104,"textLines":1,"bbox":[668.83,290.97,562.86,43.39]}
+{"kind":"shape","id":"sh/gjax03m9","slide":15,"name":"AutoShape 21","bbox":[47.99,452.98,583.85,219.02]}
+{"kind":"shape","id":"sh/fi1grylo","slide":15,"name":"AutoShape 22","bbox":[68.98,473.98,35.99,36]}
+{"kind":"textbox","id":"sh/ehsfyt43","slide":15,"name":"TextBox 23","text":"03","textPreview":"03","textChars":2,"textLines":1,"bbox":[78.64,482.73,26.34,17]}
+{"kind":"textbox","id":"sh/p8jyx83q","slide":15,"name":"TextBox 24","text":"Pipeline-wide visibility","textPreview":"Pipeline-wide visibility","textChars":24,"textLines":1,"bbox":[116.97,478.69,172.24,25]}
+{"kind":"textbox","id":"sh/o7ah4nm5","slide":15,"name":"TextBox 25","text":"Show candidate stage and decision status together so managers can identify stalled cases and required actions.","textPreview":"Show candidate stage and decision status together so managers can identify stalled cases and required actions.","textChars":110,"textLines":1,"bbox":[68.98,525.98,562.86,43.39]}
+{"kind":"shape","id":"sh/361gvilk","slide":15,"name":"AutoShape 26","bbox":[647.84,452.98,583.85,219.02]}
+{"kind":"shape","id":"sh/25sf2d4z","slide":15,"name":"AutoShape 27","bbox":[668.83,473.98,35.99,36]}
+{"kind":"textbox","id":"sh/dc3y1s3m","slide":15,"name":"TextBox 28","text":"04","textPreview":"04","textChars":2,"textLines":1,"bbox":[678.49,482.73,26.34,17]}
+{"kind":"textbox","id":"sh/cbuh8nmh","slide":15,"name":"TextBox 29","text":"ATS integration path","textPreview":"ATS integration path","textChars":20,"textLines":1,"bbox":[716.82,478.69,157.12,25]}
+{"kind":"textbox","id":"sh/uh4v2pkj","slide":15,"name":"TextBox 30","text":"ATS integration is future-facing. The current prototype demonstrates the workflow using local state.","textPreview":"ATS integration is future-facing. The current prototype demonstrates the workflow using local state.","textChars":100,"textLines":1,"bbox":[668.83,525.98,562.86,43.39]}
+{"kind":"notes","id":"nt/vaxsvy10","slide":15,"text":"Candidate rationale moves through stages and team handoffs. This reduces repeated review and keeps collective judgment from disappearing."}
+{"kind":"slide","id":"sl/gny5sjyp","slide":16,"title":"CORE MECHANISM","textShapes":15}
+{"kind":"shape","id":"sh/8z2h8bq1","slide":16,"name":"AutoShape 2","bbox":[0,0,1279.68,720]}
+{"kind":"shape","id":"sh/9kby1g7m","slide":16,"name":"AutoShape 3","bbox":[0,0,1279.68,720]}
+{"kind":"shape","id":"sh/ytkf2h8j","slide":16,"name":"AutoShape 4","bbox":[0,0,1279.68,720]}
+{"kind":"shape","id":"sh/zutgvm94","slide":16,"name":"AutoShape 5","bbox":[0,440,1279.68,280]}
+{"kind":"shape","id":"sh/kv2h4rqp","slide":16,"name":"AutoShape 6","bbox":[239.94,540,799.8,120]}
+{"kind":"textbox","id":"sh/lwbyxwra","slide":16,"name":"TextBox 7","text":"CORE MECHANISM","textPreview":"CORE MECHANISM","textChars":14,"textLines":1,"bbox":[47.99,50,1183.7,16]}
+{"kind":"textbox","id":"sh/ip4zel83","slide":16,"name":"TextBox 8","text":"Reusable relationships: past interactions become renewable talent assets","textPreview":"Reusable relationships: past interactions become renewable talent assets","textChars":72,"textLines":1,"bbox":[47.99,78,1183.7,44]}
+{"kind":"shape","id":"sh/3qdg7qpo","slide":16,"name":"AutoShape 9","bbox":[47.99,147,1183.7,94.78]}
+{"kind":"shape","id":"sh/fm1gzq5o","slide":16,"name":"AutoShape 10","bbox":[76.98,168,31.99,32]}
+{"kind":"shape","id":"sh/e1sf65o3","slide":16,"name":"AutoShape 11","bbox":[84.98,176,16,16]}
+{"kind":"shape","id":"sh/1ojy10ne","slide":16,"name":"AutoShape 12","bbox":[84.98,176,16,16]}
+{"kind":"shape","id":"sh/gnax8v6t","slide":16,"name":"AutoShape 13","bbox":[86.31,177.33,13.33,13.33]}
+{"kind":"textbox","id":"sh/nqlg3a5k","slide":16,"name":"TextBox 14","text":"Previous challenges, campus events, internships, and interviews become searchable relationship context. New hiring can start with warm evidence instead of a cold search.","textPreview":"Previous challenges, campus events, internships, and interviews become searchable relationship context. New hiring can start with warm ev...","textChars":169,"textLines":1,"bbox":[124.97,172,1077.73,43.39]}
+{"kind":"shape","id":"sh/2pcfa5oz","slide":16,"name":"AutoShape 15","bbox":[47.99,265.78,581.85,205.11]}
+{"kind":"shape","id":"sh/ps3y5knq","slide":16,"name":"AutoShape 16","bbox":[74.98,288.78,35.99,36]}
+{"kind":"textbox","id":"sh/oruhcf65","slide":16,"name":"TextBox 17","text":"01","textPreview":"01","textChars":2,"textLines":1,"bbox":[84.07,297.78,26.9,17]}
+{"kind":"textbox","id":"sh/bulg7u5g","slide":16,"name":"TextBox 18","text":"Structured talent pipeline","textPreview":"Structured talent pipeline","textChars":26,"textLines":1,"bbox":[122.97,295.78,144.96,22]}
+{"kind":"textbox","id":"sh/atczepob","slide":16,"name":"TextBox 19","text":"Organise past participants, attendees, and candidate context into a searchable pipeline for later hiring needs.","textPreview":"Organise past participants, attendees, and candidate context into a searchable pipeline for later hiring needs.","textChars":111,"textLines":1,"bbox":[74.98,339.78,554.86,41]}
+{"kind":"shape","id":"sh/mpgj6t8j","slide":16,"name":"AutoShape 20","bbox":[649.84,265.78,581.85,205.11]}
+{"kind":"shape","id":"sh/7qp0zepo","slide":16,"name":"AutoShape 21","bbox":[676.83,288.78,35.99,36]}
+{"kind":"textbox","id":"sh/8by18jq9","slide":16,"name":"TextBox 22","text":"02","textPreview":"02","textChars":2,"textLines":1,"bbox":[685.92,297.78,26.9,17]}
+{"kind":"textbox","id":"sh/9c7i1o7u","slide":16,"name":"TextBox 23","text":"Evidence-based warm discovery","textPreview":"Evidence-based warm discovery","textChars":29,"textLines":1,"bbox":[724.82,295.78,260.93,22]}
+{"kind":"textbox","id":"sh/ylwj2987","slide":16,"name":"TextBox 24","text":"Use prior interaction evidence—such as challenge performance or event participation—rather than relying only on self-reported CV claims.","textPreview":"Use prior interaction evidence—such as challenge performance or event participation—rather than relying only on self-reported CV claims.","textChars":136,"textLines":1,"bbox":[676.83,339.78,554.86,65]}
+{"kind":"shape","id":"sh/zm50veps","slide":16,"name":"AutoShape 25","bbox":[47.99,490.89,581.85,181.11]}
+{"kind":"shape","id":"sh/kne14jqd","slide":16,"name":"AutoShape 26","bbox":[74.98,513.89,35.99,36]}
+{"kind":"textbox","id":"sh/lo7ixo7y","slide":16,"name":"TextBox 27","text":"03","textPreview":"03","textChars":2,"textLines":1,"bbox":[84.07,522.89,26.9,17]}
+{"kind":"textbox","id":"sh/ih0jedob","slide":16,"name":"TextBox 28","text":"Reactivating past relationships","textPreview":"Reactivating past relationships","textChars":31,"textLines":1,"bbox":[122.97,520.89,164.96,22]}
+{"kind":"textbox","id":"sh/ji9k7ypw","slide":16,"name":"TextBox 29","text":"Prepare contextual re-engagement messages that connect a previous interaction with a new opportunity. Outreach remains simulated.","textPreview":"Prepare contextual re-engagement messages that connect a previous interaction with a new opportunity. Outreach remains simulated.","textChars":129,"textLines":1,"bbox":[74.98,564.89,554.86,41]}
+{"kind":"shape","id":"sh/tcbmdcre","slide":16,"name":"AutoShape 30","bbox":[649.84,490.89,581.85,181.11]}
+{"kind":"shape","id":"sh/sb2l47at","slide":16,"name":"AutoShape 31","bbox":[676.83,513.89,35.99,36]}
+{"kind":"textbox","id":"sh/rat4b298","slide":16,"name":"TextBox 32","text":"04","textPreview":"04","textChars":2,"textLines":1,"bbox":[685.92,522.89,26.9,17]}
+{"kind":"textbox","id":"sh/69k32xsn","slide":16,"name":"TextBox 33","text":"Accumulating relationship value","textPreview":"Accumulating relationship value","textChars":31,"textLines":1,"bbox":[724.82,520.89,124.97,22]}
+{"kind":"textbox","id":"sh/58bm9sr2","slide":16,"name":"TextBox 34","text":"Each interaction adds reusable context and decision history to the employer's talent pipeline.","textPreview":"Each interaction adds reusable context and decision history to the employer's talent pipeline.","textChars":94,"textLines":1,"bbox":[676.83,564.89,554.86,41]}
+{"kind":"notes","id":"nt/gny5sjyp","slide":16,"text":"Campus Pipeline turns past challenges, events, internships, and interviews into searchable relationship context for later opportunities. Outreach remains simulated."}
+{"kind":"slide","id":"sl/14bup87q","slide":17,"title":"CHAPTER 04","textShapes":3}
+{"kind":"shape","id":"sh/1c7e50ni","slide":17,"name":"AutoShape 2","bbox":[0,0,1279.68,720]}
+{"kind":"shape","id":"sh/gbedwfmx","slide":17,"name":"AutoShape 3","bbox":[0,0,1279.68,720]}
+{"kind":"shape","id":"sh/6lwvql4v","slide":17,"name":"AutoShape 5","bbox":[0,0,1279.68,720]}
+{"kind":"shape","id":"sh/t8ne10n6","slide":17,"name":"AutoShape 6","bbox":[0,468,1279.68,180]}
+{"kind":"shape","id":"sh/snedsvml","slide":17,"name":"AutoShape 7","bbox":[907.77,108,371.91,200]}
+{"kind":"shape","id":"sh/jilcvq54","slide":17,"name":"AutoShape 8","bbox":[532.68,256.95,31.99,1]}
+{"kind":"textbox","id":"sh/ihcvml4j","slide":17,"name":"TextBox 9","text":"CHAPTER 04","textPreview":"CHAPTER 04","textChars":10,"textLines":1,"bbox":[576.67,248.95,130.33,16]}
+{"kind":"shape","id":"sh/4by9or6l","slide":17,"name":"AutoShape 10","bbox":[714.99,256.95,31.99,1]}
+{"kind":"textbox","id":"sh/pc7qhwn6","slide":17,"name":"TextBox 11","text":"University workspace: signals become interventions","textPreview":"University workspace: signals become interventions","textChars":50,"textLines":1,"bbox":[117.47,295.95,1044.74,62.09]}
+{"kind":"shape","id":"sh/29grm1of","slide":17,"name":"AutoShape 12","bbox":[599.85,378.05,79.98,1]}
+{"kind":"textbox","id":"sh/3ap8fm50","slide":17,"name":"TextBox 13","text":"Universities need time to act—detect gaps while they can still be addressed, then assign interventions with an owner and deadline.","textPreview":"Universities need time to act—detect gaps while they can still be addressed, then assign interventions with an owner and deadline.","textChars":130,"textLines":1,"bbox":[124.97,407.05,1029.74,66]}
+{"kind":"shape","id":"sh/gnepkr69","slide":17,"name":"AutoShape 14","bbox":[579.86,670,119.97,2]}
+{"kind":"image","id":"im/a1kzel0j","slide":17,"name":"Picture 4","bbox":[0,0,1279.68,720]}
+{"kind":"notes","id":"nt/14bup87q","slide":17,"text":"The university workspace is designed to create time for action before annual reporting makes intervention too late."}
+{"kind":"slide","id":"sl/y5wne50z","slide":18,"title":"CareerOS · Student Readiness","textShapes":11}
+{"kind":"shape","id":"sh/wrelszu9","slide":18,"name":"AutoShape 2","bbox":[0,0,1279.68,720]}
+{"kind":"shape","id":"sh/hsn2l4bu","slide":18,"name":"AutoShape 3","bbox":[0,0,1279.68,720]}
+{"kind":"shape","id":"sh/itw3upcf","slide":18,"name":"AutoShape 4","bbox":[0,0,1279.68,720]}
+{"kind":"shape","id":"sh/je5knut0","slide":18,"name":"AutoShape 5","bbox":[0,580,599.85,140]}
+{"kind":"shape","id":"sh/4felwzu5","slide":18,"name":"AutoShape 6","bbox":[859.78,560,419.9,140]}
+{"kind":"shape","id":"sh/5gnmp4bq","slide":18,"name":"AutoShape 7","bbox":[299.92,200,399.9,100]}
+{"kind":"textbox","id":"sh/6hw3y9sb","slide":18,"name":"TextBox 8","text":"CareerOS · Student Readiness","textPreview":"CareerOS · Student Readiness","textChars":28,"textLines":1,"bbox":[47.99,50,1183.7,15]}
+{"kind":"textbox","id":"sh/rip4retw","slide":18,"name":"TextBox 9","text":"Student readiness: every risk signal needs an intervention owner","textPreview":"Student readiness: every risk signal needs an intervention owner","textChars":64,"textLines":1,"bbox":[47.99,75.5,1183.7,47]}
+{"kind":"shape","id":"sh/fapkr6pw","slide":18,"name":"AutoShape 10","bbox":[47.99,143.8,581.85,359.92]}
+{"kind":"shape","id":"sh/upg3i18r","slide":18,"name":"AutoShape 11","bbox":[78.98,172.8,35.99,36]}
+{"kind":"textbox","id":"sh/1cr2tg72","slide":18,"name":"TextBox 12","text":"01","textPreview":"01","textChars":2,"textLines":1,"bbox":[88.63,181.55,26.34,17]}
+{"kind":"textbox","id":"sh/gbylkbqh","slide":18,"name":"TextBox 13","text":"University decision model","textPreview":"University decision model","textChars":25,"textLines":1,"bbox":[126.97,176.39,149.96,27]}
+{"kind":"shape","id":"sh/7mpknmp0","slide":18,"name":"AutoShape 14","bbox":[78.98,228.8,519.87,1]}
+{"kind":"shape","id":"sh/6lg3e18f","slide":18,"name":"AutoShape 15","bbox":[78.98,249.8,6,56.09]}
+{"kind":"textbox","id":"sh/to72pw76","slide":18,"name":"TextBox 16","text":"Five steps: detect a readiness gap → assign an owner → intervene → collect evidence → review and adjust.","textPreview":"Five steps: detect a readiness gap → assign an owner → intervene → collect evidence → review and adjust.","textChars":104,"textLines":1,"bbox":[96.98,253.8,501.87,47.05]}
+{"kind":"shape","id":"sh/snylgrql","slide":18,"name":"AutoShape 17","bbox":[78.98,325.89,6,56.09]}
+{"kind":"textbox","id":"sh/bi94zqp4","slide":18,"name":"TextBox 18","text":"Run two time horizons in parallel: immediate support for current students and a governed roadmap for longer-term curriculum reform.","textPreview":"Run two time horizons in parallel: immediate support for current students and a governed roadmap for longer-term curriculum reform.","textChars":131,"textLines":1,"bbox":[96.98,329.89,501.87,47.05]}
+{"kind":"shape","id":"sh/qh03ql8j","slide":18,"name":"AutoShape 19","bbox":[649.84,143.8,581.85,359.92]}
+{"kind":"shape","id":"sh/md4nipsr","slide":18,"name":"AutoShape 20","bbox":[680.83,172.8,35.99,36]}
+{"kind":"textbox","id":"sh/nedoru9c","slide":18,"name":"TextBox 21","text":"02","textPreview":"02","textChars":2,"textLines":1,"bbox":[690.48,181.55,26.34,17]}
+{"kind":"textbox","id":"sh/8zm5kzax","slide":18,"name":"TextBox 22","text":"Student Readiness workflow","textPreview":"Student Readiness workflow","textChars":26,"textLines":1,"bbox":[728.82,176.39,293.97,27]}
+{"kind":"shape","id":"sh/90v6t4ri","slide":18,"name":"AutoShape 23","bbox":[680.83,228.8,519.87,1]}
+{"kind":"shape","id":"sh/a14nm9s3","slide":18,"name":"AutoShape 24","bbox":[680.83,249.8,6,56.09]}
+{"kind":"textbox","id":"sh/v2xovu9o","slide":18,"name":"TextBox 25","text":"Separate academic and employability signals and support cohort drill-down to locate concentrated risk.","textPreview":"Separate academic and employability signals and support cohort drill-down to locate concentrated risk.","textChars":102,"textLines":1,"bbox":[698.83,253.8,501.87,47.05]}
+{"kind":"shape","id":"sh/w36poza9","slide":18,"name":"AutoShape 26","bbox":[680.83,325.89,6,56.09]}
+{"kind":"textbox","id":"sh/x4f6x4re","slide":18,"name":"TextBox 27","text":"Connect each signal to an owner, deadline, intervention, and status—moving from knowing there is a problem to knowing who is acting.","textPreview":"Connect each signal to an owner, deadline, intervention, and status—moving from knowing there is a problem to knowing who is acting.","textChars":132,"textLines":1,"bbox":[698.83,329.89,502.92,47.05]}
+{"kind":"shape","id":"sh/q5kna5sz","slide":18,"name":"AutoShape 28","bbox":[47.99,523.72,1183.7,148.28]}
+{"kind":"shape","id":"sh/b6toja94","slide":18,"name":"AutoShape 29","bbox":[80.81,550.55,18.33,18.33]}
+{"kind":"shape","id":"sh/t0zqp8bm","slide":18,"name":"AutoShape 30","bbox":[89.08,556.05,1.8,3.67]}
+{"kind":"shape","id":"sh/szq9g3uh","slide":18,"name":"AutoShape 31","bbox":[89.08,562.49,1.8,1.8]}
+{"kind":"textbox","id":"sh/7yh8nytw","slide":18,"name":"TextBox 32","text":"CareerOS uses Detect → Assign → Intervene → Evidence → Review to turn delayed reporting into an accountable action framework, with consent, access, and fairness safeguards required for production.","textPreview":"CareerOS uses Detect → Assign → Intervene → Evidence → Review to turn delayed reporting into an accountable action framework, with consen...","textChars":196,"textLines":1,"bbox":[116.97,550.72,1083.73,93.19]}
+{"kind":"notes","id":"nt/y5wne50z","slide":18,"text":"Student Readiness separates academic and employability signals, supports cohort drill-down, and assigns an owner, deadline, intervention, and status. Production use requires strong governance safeguards."}
+{"kind":"slide","id":"sl/nid43ytk","slide":19,"title":"Curriculum–market alignment: help now and reform properly","textShapes":18}
+{"kind":"shape","id":"sh/9gb6xgbi","slide":19,"name":"AutoShape 2","bbox":[0,0,1279.68,720]}
+{"kind":"shape","id":"sh/8v2pobax","slide":19,"name":"AutoShape 3","bbox":[0,0,1279.68,720]}
+{"kind":"shape","id":"sh/vitozqt8","slide":19,"name":"AutoShape 4","bbox":[0,0,1279.68,720]}
+{"kind":"shape","id":"sh/ahk7qls3","slide":19,"name":"AutoShape 5","bbox":[179.96,45,2,2]}
+{"kind":"shape","id":"sh/xkbq10be","slide":19,"name":"AutoShape 6","bbox":[519.87,85,2,2]}
+{"kind":"shape","id":"sh/wj2psvat","slide":19,"name":"AutoShape 7","bbox":[869.78,30,2,2]}
+{"kind":"shape","id":"sh/jmd83atk","slide":19,"name":"AutoShape 8","bbox":[1079.73,65,1,1]}
+{"kind":"shape","id":"sh/il47u5sz","slide":19,"name":"AutoShape 9","bbox":[339.91,58,2,2]}
+{"kind":"shape","id":"sh/cri1gnql","slide":19,"name":"AutoShape 10","bbox":[1179.71,100,2,2]}
+{"kind":"shape","id":"sh/dsri9sr6","slide":19,"name":"AutoShape 11","bbox":[689.83,42,1,1]}
+{"kind":"shape","id":"sh/qpgjex8f","slide":19,"name":"AutoShape 12","bbox":[179.96,390,699.82,180]}
+{"kind":"shape","id":"sh/rqp07290","slide":19,"name":"AutoShape 13","bbox":[749.81,200,449.89,140]}
+{"kind":"textbox","id":"sh/0vi1k7qx","slide":19,"name":"TextBox 14","text":"Curriculum–market alignment: help now and reform properly","textPreview":"Curriculum–market alignment: help now and reform properly","textChars":57,"textLines":1,"bbox":[47.99,49,1183.7,44]}
+{"kind":"shape","id":"sh/1gridcr2","slide":19,"name":"AutoShape 15","bbox":[47.99,108,1183.7,132.28]}
+{"kind":"textbox","id":"sh/et0jix8r","slide":19,"name":"TextBox 16","text":"CareerOS uses two clocks. Immediate interventions support current students before graduation; a longer-term evidence trail supports governed curriculum reform.","textPreview":"CareerOS uses two clocks. Immediate interventions support current students before graduation; a longer-term evidence trail supports gover...","textChars":159,"textLines":1,"bbox":[70.98,127,1208.7,93.19]}
+{"kind":"shape","id":"sh/zu90b29c","slide":19,"name":"AutoShape 17","bbox":[47.99,262.28,581.85,409.72]}
+{"kind":"shape","id":"sh/oj21o7qt","slide":19,"name":"AutoShape 18","bbox":[82.71,295.81,24.53,24.53]}
+{"kind":"shape","id":"sh/9kb2hcre","slide":19,"name":"AutoShape 19","bbox":[94.23,300.61,1.5,7.47]}
+{"kind":"shape","id":"sh/x07i1cji","slide":19,"name":"AutoShape 20","bbox":[94.98,308.08,5.87,1.6]}
+{"kind":"shape","id":"sh/wfy1s7ix","slide":19,"name":"AutoShape 21","bbox":[93.38,306.48,3.2,3.2]}
+{"kind":"textbox","id":"sh/vep0z21c","slide":19,"name":"TextBox 22","text":"Immediate clock","textPreview":"Immediate clock","textChars":15,"textLines":1,"bbox":[122.97,292.28,118.97,31]}
+{"kind":"textbox","id":"sh/adgjqx0r","slide":19,"name":"TextBox 23","text":"Instant Response","textPreview":"Instant Response","textChars":16,"textLines":1,"bbox":[78.98,334.88,519.87,17]}
+{"kind":"shape","id":"sh/54ri5wje","slide":19,"name":"AutoShape 24","bbox":[78.98,373.38,519.87,1]}
+{"kind":"shape","id":"sh/k3y1wri9","slide":19,"name":"AutoShape 25","bbox":[78.98,394.37,23.99,24]}
+{"kind":"textbox","id":"sh/j2p03m1o","slide":19,"name":"TextBox 26","text":"1","textPreview":"1","textChars":1,"textLines":1,"bbox":[87.35,398.63,15.62,15]}
+{"kind":"textbox","id":"sh/i1gjuh03","slide":19,"name":"TextBox 27","text":"Use workshops, bootcamps, employer challenges, or mentoring to address a current gap before formal curriculum approval is complete.","textPreview":"Use workshops, bootcamps, employer challenges, or mentoring to address a current gap before formal curriculum approval is complete.","textChars":131,"textLines":1,"bbox":[118.97,396.38,479.88,47.89]}
+{"kind":"shape","id":"sh/l8nitsja","slide":19,"name":"AutoShape 28","bbox":[78.98,468.16,23.99,24]}
+{"kind":"textbox","id":"sh/07ehknip","slide":19,"name":"TextBox 29","text":"2","textPreview":"2","textChars":1,"textLines":1,"bbox":[87.35,472.41,15.62,15]}
+{"kind":"textbox","id":"sh/qdsfutgn","slide":19,"name":"TextBox 30","text":"Behaviour shift: market intelligence becomes a prioritised response plan instead of a footnote in an annual report.","textPreview":"Behaviour shift: market intelligence becomes a prioritised response plan instead of a footnote in an annual report.","textChars":115,"textLines":1,"bbox":[118.97,470.16,479.88,47.89]}
+{"kind":"shape","id":"sh/belg3yh8","slide":19,"name":"AutoShape 31","bbox":[78.98,543.94,519.87,1]}
+{"kind":"shape","id":"sh/cfuxw3yt","slide":19,"name":"AutoShape 32","bbox":[78.98,566.19,19.99,20]}
+{"kind":"shape","id":"sh/dg3y58zy","slide":19,"name":"AutoShape 33","bbox":[79.98,567.19,18,18]}
+{"kind":"textbox","id":"sh/yhcfydgj","slide":19,"name":"TextBox 34","text":"Illustrative response window: 2–8 weeks","textPreview":"Illustrative response window: 2–8 weeks","textChars":39,"textLines":1,"bbox":[110.97,566.94,115.66,17]}
+{"kind":"shape","id":"sh/zilg7yh4","slide":19,"name":"AutoShape 35","bbox":[78.98,600.69,19.99,20]}
+{"kind":"shape","id":"sh/0jux03yp","slide":19,"name":"AutoShape 36","bbox":[86.98,609.69,4,4]}
+{"kind":"textbox","id":"sh/lk3y98za","slide":19,"name":"TextBox 37","text":"Audience: current students","textPreview":"Audience: current students","textChars":26,"textLines":1,"bbox":[110.97,601.44,138.97,17]}
+{"kind":"shape","id":"sh/ul8fm9gf","slide":19,"name":"AutoShape 38","bbox":[649.84,262.28,581.85,409.72]}
+{"kind":"shape","id":"sh/fm1wveh0","slide":19,"name":"AutoShape 39","bbox":[680.83,292.08,31.99,32]}
+{"kind":"shape","id":"sh/v694365c","slide":19,"name":"AutoShape 40","bbox":[690.43,305.19,8.53,1.5]}
+{"kind":"shape","id":"sh/a503a1o7","slide":19,"name":"AutoShape 41","bbox":[690.43,309.46,8.53,1.5]}
+{"kind":"shape","id":"sh/x8rm5gni","slide":19,"name":"AutoShape 42","bbox":[690.43,313.73,5.33,1.5]}
+{"kind":"textbox","id":"sh/w7i5cbmx","slide":19,"name":"TextBox 43","text":"Long-term clock","textPreview":"Long-term clock","textChars":15,"textLines":1,"bbox":[724.82,292.28,118.97,31]}
+{"kind":"textbox","id":"sh/ju947q5o","slide":19,"name":"TextBox 44","text":"Long-term Reform","textPreview":"Long-term Reform","textChars":16,"textLines":1,"bbox":[680.83,334.88,519.87,17]}
+{"kind":"shape","id":"sh/it0nel43","slide":19,"name":"AutoShape 45","bbox":[680.83,373.38,519.87,1]}
+{"kind":"shape","id":"sh/5wrm9gnu","slide":19,"name":"AutoShape 46","bbox":[680.83,394.37,23.99,24]}
+{"kind":"textbox","id":"sh/kvi5gbm9","slide":19,"name":"TextBox 47","text":"1","textPreview":"1","textChars":1,"textLines":1,"bbox":[689.2,398.63,15.62,15]}
+{"kind":"textbox","id":"sh/7yt4bq5k","slide":19,"name":"TextBox 48","text":"Trace a curriculum gap to employer feedback, alumni evidence, role trends, coverage assessment, and outcome signals.","textPreview":"Trace a curriculum gap to employer feedback, alumni evidence, role trends, coverage assessment, and outcome signals.","textChars":116,"textLines":1,"bbox":[720.82,396.38,479.88,76.78]}
+{"kind":"shape","id":"sh/6xknil4z","slide":19,"name":"AutoShape 49","bbox":[680.83,497.05,23.99,24]}
+{"kind":"textbox","id":"sh/432l8v2d","slide":19,"name":"TextBox 50","text":"2","textPreview":"2","textChars":1,"textLines":1,"bbox":[689.2,501.3,15.62,15]}
+{"kind":"textbox","id":"sh/p4vm103y","slide":19,"name":"TextBox 51","text":"Prepare a structured evidence pack and reform roadmap instead of rebuilding the case for change from zero.","textPreview":"Prepare a structured evidence pack and reform roadmap instead of rebuilding the case for change from zero.","textChars":106,"textLines":1,"bbox":[720.82,499.05,479.88,47.89]}
+{"kind":"shape","id":"sh/21k36lk7","slide":19,"name":"AutoShape 52","bbox":[680.83,572.83,519.87,1]}
+{"kind":"shape","id":"sh/32t4zqls","slide":19,"name":"AutoShape 53","bbox":[680.83,595.08,19.99,20]}
+{"kind":"shape","id":"sh/gz2l4v2h","slide":19,"name":"AutoShape 54","bbox":[681.83,596.08,18,18]}
+{"kind":"textbox","id":"sh/h0bmx03m","slide":19,"name":"TextBox 55","text":"Illustrative preparation window: 6–18 months","textPreview":"Illustrative preparation window: 6–18 months","textChars":44,"textLines":1,"bbox":[712.82,595.83,139,17]}
+{"kind":"shape","id":"sh/uxk32lkb","slide":19,"name":"AutoShape 56","bbox":[686.83,637.08,8,1]}
+{"kind":"shape","id":"sh/fytkvqlw","slide":19,"name":"AutoShape 57","bbox":[686.83,641.08,4,1]}
+{"kind":"textbox","id":"sh/svil0b25","slide":19,"name":"TextBox 58","text":"Output: evidence pack and roadmap","textPreview":"Output: evidence pack and roadmap","textChars":33,"textLines":1,"bbox":[712.82,630.33,183.95,17]}
+{"kind":"notes","id":"nt/nid43ytk","slide":19,"text":"Curriculum–market alignment uses two clocks: immediate support for the current cohort and a longer-term evidence trail for governed curriculum reform."}
+{"kind":"slide","id":"sl/zyxsni5k","slide":20,"title":"Turn alumni signals into action and reuse accreditation evidence","textShapes":10}
+{"kind":"shape","id":"sh/qpwjmh8n","slide":20,"name":"AutoShape 2","bbox":[0,0,1279.68,720]}
+{"kind":"shape","id":"sh/rq50vmp8","slide":20,"name":"AutoShape 3","bbox":[0,0,1279.68,720]}
+{"kind":"shape","id":"sh/4nu1krqh","slide":20,"name":"AutoShape 4","bbox":[0,0,1279.68,720]}
+{"kind":"shape","id":"sh/po3itc72","slide":20,"name":"AutoShape 5","bbox":[191.95,57.59,2,2]}
+{"kind":"shape","id":"sh/2lczih8r","slide":20,"name":"AutoShape 6","bbox":[537.46,86.39,2,2]}
+{"kind":"shape","id":"sh/3ml0rmpw","slide":20,"name":"AutoShape 7","bbox":[870.17,36,2,2]}
+{"kind":"shape","id":"sh/gjuhg7ql","slide":20,"name":"AutoShape 8","bbox":[1087.73,129.59,2,2]}
+{"kind":"shape","id":"sh/hk3ipcr6","slide":20,"name":"AutoShape 9","bbox":[383.9,180,2,2]}
+{"kind":"shape","id":"sh/dkfmp4zy","slide":20,"name":"AutoShape 10","bbox":[703.82,21.59,2,2]}
+{"kind":"shape","id":"sh/cj65wzyd","slide":20,"name":"AutoShape 11","bbox":[959.76,108,2,2]}
+{"kind":"shape","id":"sh/rid4nuhs","slide":20,"name":"AutoShape 12","bbox":[127.97,158.39,2,2]}
+{"kind":"shape","id":"sh/qh4nupg7","slide":20,"name":"AutoShape 13","bbox":[1177.3,57.59,2,2]}
+{"kind":"shape","id":"sh/pwvmlkzm","slide":20,"name":"AutoShape 14","bbox":[639.84,216,2,2]}
+{"kind":"shape","id":"sh/4vm5sfy1","slide":20,"name":"AutoShape 15","bbox":[0,484,499.88,200]}
+{"kind":"shape","id":"sh/3ud4juhg","slide":20,"name":"AutoShape 16","bbox":[918.16,72,361.52,150]}
+{"kind":"textbox","id":"sh/2t4nqpgb","slide":20,"name":"TextBox 17","text":"Turn alumni signals into action and reuse accreditation evidence","textPreview":"Turn alumni signals into action and reuse accreditation evidence","textChars":64,"textLines":1,"bbox":[47.99,48,1183.7,47]}
+{"kind":"shape","id":"sh/hsvmhkzq","slide":20,"name":"AutoShape 18","bbox":[47.99,116.3,1183.7,140.28]}
+{"kind":"textbox","id":"sh/grm5ofy5","slide":20,"name":"TextBox 19","text":"Alumni Signal Intelligence routes patterns into investigation, curriculum action, or partnership design. The Accreditation Hub organises reusable evidence so institutions do not rebuild it for every deadline.","textPreview":"Alumni Signal Intelligence routes patterns into investigation, curriculum action, or partnership design. The Accreditation Hub organises ...","textChars":208,"textLines":1,"bbox":[72.98,139.3,1206.7,93.19]}
+{"kind":"shape","id":"sh/8b654f61","slide":20,"name":"AutoShape 20","bbox":[47.99,280.58,579.86,391.42]}
+{"kind":"shape","id":"sh/tcz6dk7m","slide":20,"name":"AutoShape 21","bbox":[80.98,313.58,35.99,36]}
+{"kind":"textbox","id":"sh/69on25ov","slide":20,"name":"TextBox 22","text":"01","textPreview":"01","textChars":2,"textLines":1,"bbox":[91.18,323.08,25.79,16]}
+{"kind":"textbox","id":"sh/7ax4bapg","slide":20,"name":"TextBox 23","text":"Alumni signal intelligence","textPreview":"Alumni signal intelligence","textChars":26,"textLines":1,"bbox":[130.97,315.98,162.96,30]}
+{"kind":"shape","id":"sh/k7650f6p","slide":20,"name":"AutoShape 24","bbox":[80.98,371.58,513.87,1]}
+{"kind":"shape","id":"sh/l8fm907a","slide":20,"name":"AutoShape 25","bbox":[80.98,402.58,6,6]}
+{"kind":"textbox","id":"sh/y5ony58z","slide":20,"name":"TextBox 26","text":"Use alumni pathways and industry feedback to trigger investigation, curriculum recommendations, or partnership design—not just another report.","textPreview":"Use alumni pathways and industry feedback to trigger investigation, curriculum recommendations, or partnership design—not just another re...","textChars":142,"textLines":1,"bbox":[98.98,398.58,496.88,47.05]}
+{"kind":"shape","id":"sh/j6x47ap4","slide":20,"name":"AutoShape 27","bbox":[80.98,476.67,6,6]}
+{"kind":"textbox","id":"sh/43q5cz69","slide":20,"name":"TextBox 28","text":"Design collaboration around a named gap and preserve participation evidence in the institution's action record.","textPreview":"Design collaboration around a named gap and preserve participation evidence in the institution's action record.","textChars":111,"textLines":1,"bbox":[98.98,472.67,496.88,47.05]}
+{"kind":"shape","id":"sh/54j6l47e","slide":20,"name":"AutoShape 29","bbox":[651.84,280.58,579.86,391.42]}
+{"kind":"shape","id":"sh/za50r2ds","slide":20,"name":"AutoShape 30","bbox":[684.83,313.58,35.99,36]}
+{"kind":"textbox","id":"sh/e9wzyxcn","slide":20,"name":"TextBox 31","text":"02","textPreview":"02","textChars":2,"textLines":1,"bbox":[695.03,323.08,25.79,16]}
+{"kind":"textbox","id":"sh/1cnitsvy","slide":20,"name":"TextBox 32","text":"Accreditation evidence reuse","textPreview":"Accreditation evidence reuse","textChars":28,"textLines":1,"bbox":[734.82,315.98,162.96,30]}
+{"kind":"shape","id":"sh/0beh07ud","slide":20,"name":"AutoShape 33","bbox":[684.83,371.58,513.87,1]}
+{"kind":"shape","id":"sh/ny50v2d4","slide":20,"name":"AutoShape 34","bbox":[684.83,402.58,6,6]}
+{"kind":"textbox","id":"sh/mdwz2xcj","slide":20,"name":"TextBox 35","text":"Organise requirements, evidence sources, owners, periods, completeness, missing items, and next actions in one hub.","textPreview":"Organise requirements, evidence sources, owners, periods, completeness, missing items, and next actions in one hub.","textChars":115,"textLines":1,"bbox":[702.82,398.58,495.88,47.05]}
+{"kind":"shape","id":"sh/907ixcva","slide":20,"name":"AutoShape 36","bbox":[684.83,476.67,6,6]}
+{"kind":"textbox","id":"sh/8zeh47up","slide":20,"name":"TextBox 37","text":"Reuse curriculum, readiness, alumni, and partnership evidence across frameworks. Any operational savings remain unmeasured.","textPreview":"Reuse curriculum, readiness, alumni, and partnership evidence across frameworks. Any operational savings remain unmeasured.","textChars":123,"textLines":1,"bbox":[702.82,472.67,496.88,47.05]}
+{"kind":"notes","id":"nt/zyxsni5k","slide":20,"text":"Alumni Signal Intelligence routes patterns into investigation or action. The Accreditation Hub organises reusable evidence across requirements and deadlines."}
+{"kind":"slide","id":"sl/m1wvqtk3","slide":21,"title":"CHAPTER 05","textShapes":3}
+{"kind":"shape","id":"sh/1gbmxs7a","slide":21,"name":"AutoShape 2","bbox":[0,0,1279.68,720]}
+{"kind":"shape","id":"sh/0f2lon6p","slide":21,"name":"AutoShape 3","bbox":[0,0,1279.68,720]}
+{"kind":"shape","id":"sh/qp03yt8n","slide":21,"name":"AutoShape 5","bbox":[0,0,1279.68,720]}
+{"kind":"shape","id":"sh/dcb2t87y","slide":21,"name":"AutoShape 6","bbox":[0,600,519.87,120]}
+{"kind":"shape","id":"sh/sb2lk36t","slide":21,"name":"AutoShape 7","bbox":[939.77,60,339.92,140]}
+{"kind":"textbox","id":"sh/b6d432pc","slide":21,"name":"TextBox 8","text":"CHAPTER 05","textPreview":"CHAPTER 05","textChars":10,"textLines":1,"bbox":[566.67,221.7,665.02,16]}
+{"kind":"shape","id":"sh/al43uxor","slide":21,"name":"AutoShape 9","bbox":[599.85,272.7,79.98,1]}
+{"kind":"textbox","id":"sh/4jax4nqd","slide":21,"name":"TextBox 10","text":"The three-sided loop and implementation truth","textPreview":"The three-sided loop and implementation truth","textChars":45,"textLines":1,"bbox":[208.95,301.7,861.78,64.39]}
+{"kind":"shape","id":"sh/5kjydsri","slide":21,"name":"AutoShape 11","bbox":[599.85,402.09,79.98,1]}
+{"kind":"textbox","id":"sh/ixsf2d87","slide":21,"name":"TextBox 12","text":"CareerOS creates its strongest value when evidence survives workspace handoffs—while remaining explicit about prototype boundaries and future requirements.","textPreview":"CareerOS creates its strongest value when evidence survives workspace handoffs—while remaining explicit about prototype boundaries and fu...","textChars":155,"textLines":1,"bbox":[161.7,439.09,956.28,61.19]}
+{"kind":"image","id":"im/47itwfuh","slide":21,"name":"Picture 4","bbox":[0,0,1279.68,720]}
+{"kind":"notes","id":"nt/m1wvqtk3","slide":21,"text":"CareerOS creates its strongest value when evidence survives handoffs between the three workspaces, while the current prototype remains explicit about its boundaries."}
+{"kind":"slide","id":"sl/5onypobq","slide":22,"title":"The three-sided loop: evidence survives the workspace handoff","textShapes":12}
+{"kind":"shape","id":"sh/6987itcr","slide":22,"name":"AutoShape 2","bbox":[0,0,1279.68,720]}
+{"kind":"shape","id":"sh/7a18rydc","slide":22,"name":"AutoShape 3","bbox":[0,0,1279.68,720]}
+{"kind":"shape","id":"sh/k7qpgjul","slide":22,"name":"AutoShape 4","bbox":[0,520,1279.68,200]}
+{"kind":"shape","id":"sh/58zqpov6","slide":22,"name":"AutoShape 5","bbox":[0,520,1279.68,200]}
+{"kind":"shape","id":"sh/il87etcv","slide":22,"name":"AutoShape 6","bbox":[119.97,32,2,2]}
+{"kind":"shape","id":"sh/jmh8nyd0","slide":22,"name":"AutoShape 7","bbox":[339.91,58,1.5,1.5]}
+{"kind":"shape","id":"sh/43u9snu5","slide":22,"name":"AutoShape 8","bbox":[559.86,24,2,2]}
+{"kind":"shape","id":"sh/p43q1sva","slide":22,"name":"AutoShape 9","bbox":[779.8,72,1.5,1.5]}
+{"kind":"shape","id":"sh/p4z6tcri","slide":22,"name":"AutoShape 10","bbox":[979.75,40,2,2]}
+{"kind":"shape","id":"sh/436507qx","slide":22,"name":"AutoShape 11","bbox":[1119.72,18,1.5,1.5]}
+{"kind":"shape","id":"sh/3ixor29c","slide":22,"name":"AutoShape 12","bbox":[199.95,88,1,1]}
+{"kind":"shape","id":"sh/2honyx8r","slide":22,"name":"AutoShape 13","bbox":[659.83,55,1,1]}
+{"kind":"shape","id":"sh/hgf6pcr6","slide":22,"name":"AutoShape 14","bbox":[1049.74,95,1,1]}
+{"kind":"shape","id":"sh/gf65w7ql","slide":22,"name":"AutoShape 15","bbox":[0,580,499.88,80]}
+{"kind":"shape","id":"sh/fexon290","slide":22,"name":"AutoShape 16","bbox":[869.78,610,409.9,70]}
+{"kind":"textbox","id":"sh/udonux8v","slide":22,"name":"TextBox 17","text":"The three-sided loop: evidence survives the workspace handoff","textPreview":"The three-sided loop: evidence survives the workspace handoff","textChars":61,"textLines":1,"bbox":[47.99,48,1183.7,49]}
+{"kind":"shape","id":"sh/1cj61w7q","slide":22,"name":"AutoShape 18","bbox":[47.99,118.59,1183.7,54.75]}
+{"kind":"textbox","id":"sh/0bap8rq5","slide":22,"name":"TextBox 19","text":"CareerOS gains value when evidence crosses workspace boundaries. The prototype demonstrates selected local handoffs; real-time cross-organisation propagation is future-facing.","textPreview":"CareerOS gains value when evidence crosses workspace boundaries. The prototype demonstrates selected local handoffs; real-time cross-orga...","textChars":175,"textLines":1,"bbox":[70.98,136.59,1137.72,17]}
+{"kind":"shape","id":"sh/krihkz2d","slide":22,"name":"AutoShape 20","bbox":[47.99,197.34,357.24,404.16]}
+{"kind":"shape","id":"sh/lsrit4jy","slide":22,"name":"AutoShape 21","bbox":[70.98,226.34,35.99,36]}
+{"kind":"shape","id":"sh/yp0zipk7","slide":22,"name":"AutoShape 22","bbox":[79.98,235.34,18,18]}
+{"kind":"textbox","id":"sh/jq90ru1s","slide":22,"name":"TextBox 23","text":"01","textPreview":"01","textChars":2,"textLines":1,"bbox":[116.97,237.34,19.35,14]}
+{"kind":"textbox","id":"sh/wnihgf2h","slide":22,"name":"TextBox 24","text":"Employer defines a challenge","textPreview":"Employer defines a challenge","textChars":28,"textLines":1,"bbox":[70.98,279.34,311.25,27]}
+{"kind":"textbox","id":"sh/xoripkj2","slide":22,"name":"TextBox 25","text":"An employer defines an evidence-producing challenge or workshop. Student participation becomes structured Career Memory evidence.","textPreview":"An employer defines an evidence-producing challenge or workshop. Student participation becomes structured Career Memory evidence.","textChars":129,"textLines":1,"bbox":[70.98,326.34,334.24,76.78]}
+{"kind":"shape","id":"sh/al0zepkb","slide":22,"name":"AutoShape 26","bbox":[421.22,398.67,18,1.5]}
+{"kind":"shape","id":"sh/bm9gnu1w","slide":22,"name":"AutoShape 27","bbox":[461.21,197.34,357.24,404.16]}
+{"kind":"shape","id":"sh/ozyhcf25","slide":22,"name":"AutoShape 28","bbox":[484.21,226.34,35.99,36]}
+{"kind":"shape","id":"sh/907ylkjq","slide":22,"name":"AutoShape 29","bbox":[495.45,237.59,12,12]}
+{"kind":"shape","id":"sh/rup0va5s","slide":22,"name":"AutoShape 30","bbox":[505.69,247.83,3.26,3.26]}
+{"kind":"textbox","id":"sh/qtwz2547","slide":22,"name":"TextBox 31","text":"02","textPreview":"02","textChars":2,"textLines":1,"bbox":[530.2,237.34,19.35,14]}
+{"kind":"textbox","id":"sh/dw7ixkni","slide":22,"name":"TextBox 32","text":"Employer reuses the evidence","textPreview":"Employer reuses the evidence","textChars":28,"textLines":1,"bbox":[484.21,279.34,311.25,27]}
+{"kind":"textbox","id":"sh/cvy14fmx","slide":22,"name":"TextBox 33","text":"Later hiring can retrieve challenge evidence as richer context than a CV claim, shifting from cold search to warm discovery.","textPreview":"Later hiring can retrieve challenge evidence as richer context than a CV claim, shifting from cold search to warm discovery.","textChars":124,"textLines":1,"bbox":[484.21,326.34,334.24,76.78]}
+{"kind":"shape","id":"sh/zyp0za5o","slide":22,"name":"AutoShape 34","bbox":[834.45,398.67,18,1.5]}
+{"kind":"shape","id":"sh/exgj6p43","slide":22,"name":"AutoShape 35","bbox":[874.44,197.34,357.24,404.16]}
+{"kind":"shape","id":"sh/1k7i1knu","slide":22,"name":"AutoShape 36","bbox":[897.43,226.34,35.99,36]}
+{"kind":"shape","id":"sh/0jy18fm9","slide":22,"name":"AutoShape 37","bbox":[906.43,235.34,18,18]}
+{"kind":"shape","id":"sh/nm903u5k","slide":22,"name":"AutoShape 38","bbox":[906.43,235.34,18,18]}
+{"kind":"textbox","id":"sh/ml0jap4f","slide":22,"name":"TextBox 39","text":"03","textPreview":"03","textChars":2,"textLines":1,"bbox":[943.42,237.34,19.35,14]}
+{"kind":"textbox","id":"sh/65836tcb","slide":22,"name":"TextBox 40","text":"University detects a gap","textPreview":"University detects a gap","textChars":24,"textLines":1,"bbox":[897.43,279.34,311.25,27]}
+{"kind":"textbox","id":"sh/7qhkzytw","slide":22,"name":"TextBox 41","text":"Employer demand and student performance signals can inform an immediate intervention and a longer-term curriculum evidence pack.","textPreview":"Employer demand and student performance signals can inform an immediate intervention and a longer-term curriculum evidence pack.","textChars":128,"textLines":1,"bbox":[897.43,326.34,334.24,76.78]}
+{"kind":"shape","id":"sh/8rql83uh","slide":22,"name":"AutoShape 42","bbox":[47.99,629,567.86,1]}
+{"kind":"shape","id":"sh/tsz218b2","slide":22,"name":"AutoShape 43","bbox":[631.84,621.5,16,16]}
+{"kind":"shape","id":"sh/ut83adcn","slide":22,"name":"AutoShape 44","bbox":[633.18,622.83,13.33,13.33]}
+{"kind":"shape","id":"sh/vuhk3it8","slide":22,"name":"AutoShape 45","bbox":[633.18,628.75,13.33,1.5]}
+{"kind":"shape","id":"sh/gvqlcnud","slide":22,"name":"AutoShape 46","bbox":[663.83,629,567.86,1]}
+{"kind":"shape","id":"sh/hwz258by","slide":22,"name":"AutoShape 47","bbox":[238.44,651.75,18,18]}
+{"kind":"shape","id":"sh/ax4jy9c3","slide":22,"name":"AutoShape 48","bbox":[238.44,651.75,18,18]}
+{"kind":"textbox","id":"sh/byxkreto","slide":22,"name":"TextBox 49","text":"Solid handoffs are demonstrated locally. A permissioned, real-time cross-organisation evidence network remains a future goal.","textPreview":"Solid handoffs are demonstrated locally. A permissioned, real-time cross-organisation evidence network remains a future goal.","textChars":125,"textLines":1,"bbox":[268.43,651.5,746.81,17]}
+{"kind":"shape","id":"sh/ds36xcv6","slide":22,"name":"AutoShape 50","bbox":[1023.24,651.75,18,18]}
+{"kind":"shape","id":"sh/sru54rel","slide":22,"name":"AutoShape 51","bbox":[1023.24,651.75,18,18]}
+{"kind":"notes","id":"nt/5onypobq","slide":22,"text":"An employer challenge can generate student evidence, support later warm discovery, and inform a university intervention. Local handoffs are demonstrated; cross-organisation propagation is future-facing."}
+{"kind":"slide","id":"sl/c7uhcr6t","slide":23,"title":"The prototype proves product logic—not adoption","textShapes":20}
+{"kind":"shape","id":"sh/90vqdczq","slide":23,"name":"AutoShape 2","bbox":[0,0,1279.68,720]}
+{"kind":"shape","id":"sh/8zm9k7y5","slide":23,"name":"AutoShape 3","bbox":[0,0,1279.68,720]}
+{"kind":"shape","id":"sh/v2d8fmhw","slide":23,"name":"AutoShape 4","bbox":[0,0,1279.68,720]}
+{"kind":"shape","id":"sh/a14rmhgb","slide":23,"name":"AutoShape 5","bbox":[0,480,599.85,180]}
+{"kind":"shape","id":"sh/xovqhcz2","slide":23,"name":"AutoShape 6","bbox":[859.78,100,419.9,140]}
+{"kind":"textbox","id":"sh/w3m9o7yh","slide":23,"name":"TextBox 7","text":"The prototype proves product logic—not adoption","textPreview":"The prototype proves product logic—not adoption","textChars":47,"textLines":1,"bbox":[47.99,49,1183.7,42]}
+{"kind":"shape","id":"sh/jqd8jmhs","slide":23,"name":"AutoShape 8","bbox":[47.99,117.59,1183.7,106]}
+{"kind":"shape","id":"sh/ip4rqhgn","slide":23,"name":"AutoShape 9","bbox":[72.98,146.59,8,8]}
+{"kind":"textbox","id":"sh/sby90zm1","slide":23,"name":"TextBox 10","text":"CareerOS is a polished multi-workspace prototype demonstrating core UI and local workflows. Intelligence and operational effects are simulated. We claim no customers, partnerships, adoption, measured outcomes, ROI, or AI accuracy.","textPreview":"CareerOS is a polished multi-workspace prototype demonstrating core UI and local workflows. Intelligence and operational effects are simu...","textChars":230,"textLines":1,"bbox":[96.98,143.59,1109.72,54]}
+{"kind":"shape","id":"sh/tc7at436","slide":23,"name":"AutoShape 11","bbox":[47.99,243.59,1183.7,1]}
+{"kind":"shape","id":"sh/69gry94v","slide":23,"name":"AutoShape 12","bbox":[47.99,264.59,378.58,407.41]}
+{"kind":"shape","id":"sh/rapsrelg","slide":23,"name":"AutoShape 13","bbox":[76.98,297.19,47.99,48]}
+{"kind":"textbox","id":"sh/0fi94jmx","slide":23,"name":"TextBox 14","text":"01","textPreview":"01","textChars":2,"textLines":1,"bbox":[90.96,310.69,34.01,20]}
+{"kind":"textbox","id":"sh/1graxo3i","slide":23,"name":"TextBox 15","text":"Demonstrated","textPreview":"Demonstrated","textChars":12,"textLines":1,"bbox":[140.96,293.59,93.91,30]}
+{"kind":"textbox","id":"sh/edgr294r","slide":23,"name":"TextBox 16","text":"Demonstrated","textPreview":"Demonstrated","textChars":12,"textLines":1,"bbox":[140.96,328.78,97.91,16]}
+{"kind":"shape","id":"sh/fepsvelc","slide":23,"name":"AutoShape 17","bbox":[76.98,368.78,320.59,1]}
+{"kind":"shape","id":"sh/oji9832t","slide":23,"name":"AutoShape 18","bbox":[76.98,389.78,320.59,32]}
+{"kind":"shape","id":"sh/p4ra1o3e","slide":23,"name":"AutoShape 19","bbox":[89.98,399.78,12,12]}
+{"kind":"shape","id":"sh/x0nalovi","slide":23,"name":"AutoShape 20","bbox":[90.98,400.78,10,10]}
+{"kind":"textbox","id":"sh/wze9cjud","slide":23,"name":"TextBox 21","text":"Working prototype interactions","textPreview":"Working prototype interactions","textChars":30,"textLines":1,"bbox":[107.97,398.78,289.6,32]}
+{"kind":"textbox","id":"sh/by58jeds","slide":23,"name":"TextBox 22","text":"Inspectable interfaces and local workflows across three workspaces, including Career Memory, Talent Discovery, and Student Readiness.","textPreview":"Inspectable interfaces and local workflows across three workspaces, including Career Memory, Talent Discovery, and Student Readiness.","textChars":133,"textLines":1,"bbox":[76.98,441.78,349.58,134.56]}
+{"kind":"shape","id":"sh/axwratc7","slide":23,"name":"AutoShape 23","bbox":[76.98,605,320.59,1]}
+{"kind":"shape","id":"sh/l47ap8vu","slide":23,"name":"AutoShape 24","bbox":[76.98,625.5,14,14]}
+{"kind":"shape","id":"sh/k3y9g3u9","slide":23,"name":"AutoShape 25","bbox":[77.98,626.5,12,12]}
+{"kind":"textbox","id":"sh/j2psnydo","slide":23,"name":"TextBox 26","text":"Prototype interactions ready","textPreview":"Prototype interactions ready","textChars":28,"textLines":1,"bbox":[98.98,624,298.6,21]}
+{"kind":"shape","id":"sh/y1gretc3","slide":23,"name":"AutoShape 27","bbox":[450.56,264.59,378.58,407.41]}
+{"kind":"shape","id":"sh/183qd4vq","slide":23,"name":"AutoShape 28","bbox":[479.55,297.19,47.99,48]}
+{"kind":"textbox","id":"sh/07u94ze5","slide":23,"name":"TextBox 29","text":"02","textPreview":"02","textChars":2,"textLines":1,"bbox":[493.53,310.69,34.01,20]}
+{"kind":"textbox","id":"sh/qds7e5sn","slide":23,"name":"TextBox 30","text":"Simulated","textPreview":"Simulated","textChars":9,"textLines":1,"bbox":[543.54,293.59,66.75,30]}
+{"kind":"textbox","id":"sh/re1onat8","slide":23,"name":"TextBox 31","text":"Simulated","textPreview":"Simulated","textChars":9,"textLines":1,"bbox":[543.54,328.78,70.75,16]}
+{"kind":"shape","id":"sh/szapgfat","slide":23,"name":"AutoShape 32","bbox":[479.55,368.78,320.59,1]}
+{"kind":"shape","id":"sh/d0j6pkbe","slide":23,"name":"AutoShape 33","bbox":[479.55,389.78,320.59,32]}
+{"kind":"shape","id":"sh/e1s7ipsz","slide":23,"name":"AutoShape 34","bbox":[492.55,399.78,12,12]}
+{"kind":"shape","id":"sh/f2lorutk","slide":23,"name":"AutoShape 35","bbox":[493.55,400.78,10,10]}
+{"kind":"textbox","id":"sh/03upkfa5","slide":23,"name":"TextBox 36","text":"Illustrative intelligence","textPreview":"Illustrative intelligence","textChars":25,"textLines":1,"bbox":[510.54,398.78,289.6,32]}
+{"kind":"textbox","id":"sh/1436tkba","slide":23,"name":"TextBox 37","text":"AI reasoning, matching, analytics, and operational-effect data use scripted or simulated logic to explain product intent—not validated performance.","textPreview":"AI reasoning, matching, analytics, and operational-effect data use scripted or simulated logic to explain product intent—not validated pe...","textChars":147,"textLines":1,"bbox":[479.55,441.78,349.58,134.56]}
+{"kind":"shape","id":"sh/u58n6lcv","slide":23,"name":"AutoShape 38","bbox":[479.55,605,320.59,1]}
+{"kind":"shape","id":"sh/v6hofqt0","slide":23,"name":"AutoShape 39","bbox":[479.55,625.5,14,14]}
+{"kind":"shape","id":"sh/bqpcnihs","slide":23,"name":"AutoShape 40","bbox":[480.55,626.5,12,12]}
+{"kind":"textbox","id":"sh/apgvud07","slide":23,"name":"TextBox 41","text":"Models require training and validation","textPreview":"Models require training and validation","textChars":38,"textLines":1,"bbox":[501.55,624,298.6,21]}
+{"kind":"shape","id":"sh/xs7upszy","slide":23,"name":"AutoShape 42","bbox":[853.13,264.59,378.58,407.41]}
+{"kind":"shape","id":"sh/wrydwnid","slide":23,"name":"AutoShape 43","bbox":[882.12,297.19,47.99,48]}
+{"kind":"textbox","id":"sh/ju9wr2ho","slide":23,"name":"TextBox 44","text":"03","textPreview":"03","textChars":2,"textLines":1,"bbox":[896.1,310.69,34.01,20]}
+{"kind":"textbox","id":"sh/yt0vyx0j","slide":23,"name":"TextBox 45","text":"Future","textPreview":"Future","textChars":6,"textLines":1,"bbox":[946.11,293.59,58.99,30]}
+{"kind":"textbox","id":"sh/lwretszu","slide":23,"name":"TextBox 46","text":"Future","textPreview":"Future","textChars":6,"textLines":1,"bbox":[946.11,328.78,51.99,16]}
+{"kind":"shape","id":"sh/kvid07i9","slide":23,"name":"AutoShape 47","bbox":[882.12,368.78,320.59,1]}
+{"kind":"shape","id":"sh/7i9wv2h0","slide":23,"name":"AutoShape 48","bbox":[882.12,389.78,320.59,32]}
+{"kind":"shape","id":"sh/6h0v2x0f","slide":23,"name":"AutoShape 49","bbox":[896.12,400.78,10,10]}
+{"kind":"shape","id":"sh/4n2ds7et","slide":23,"name":"AutoShape 50","bbox":[899.12,403.78,4,4]}
+{"kind":"textbox","id":"sh/5obulcfy","slide":23,"name":"TextBox 51","text":"Production deployment","textPreview":"Production deployment","textChars":21,"textLines":1,"bbox":[913.12,398.78,289.6,32]}
+{"kind":"textbox","id":"sh/ilkbqxwn","slide":23,"name":"TextBox 52","text":"Production trust, integrations, persistence, permissions, security, and cross-organisation operation require implementation and validation.","textPreview":"Production trust, integrations, persistence, permissions, security, and cross-organisation operation require implementation and validation.","textChars":139,"textLines":1,"bbox":[882.12,441.78,349.58,105.67]}
+{"kind":"shape","id":"sh/3mtcj2x8","slide":23,"name":"AutoShape 53","bbox":[882.12,605,320.59,1]}
+{"kind":"shape","id":"sh/gjito7eh","slide":23,"name":"AutoShape 54","bbox":[882.12,625.5,14,14]}
+{"kind":"shape","id":"sh/hkbuhcf2","slide":23,"name":"AutoShape 55","bbox":[883.12,626.5,12,12]}
+{"kind":"textbox","id":"sh/ux0bmxwb","slide":23,"name":"TextBox 56","text":"Future roadmap","textPreview":"Future roadmap","textChars":14,"textLines":1,"bbox":[904.12,624,298.6,21]}
+{"kind":"notes","id":"nt/c7uhcr6t","slide":23,"text":"The current product is a polished multi-workspace prototype. It does not demonstrate customers, adoption, measured outcomes, ROI, or validated AI accuracy."}
+{"kind":"slide","id":"sl/7qto7e10","slide":24,"title":"University AI Office: prepared decisions—not another dashboard","textShapes":14}
+{"kind":"shape","id":"sh/1sfqxsv6","slide":24,"name":"AutoShape 2","bbox":[0,0,1279.68,720]}
+{"kind":"shape","id":"sh/0r6p4nul","slide":24,"name":"AutoShape 3","bbox":[0,0,1279.68,720]}
+{"kind":"shape","id":"sh/nux8zidc","slide":24,"name":"AutoShape 4","bbox":[0,0,1279.68,720]}
+{"kind":"shape","id":"sh/2to76dcr","slide":24,"name":"AutoShape 5","bbox":[153.56,57.59,2,2]}
+{"kind":"shape","id":"sh/9wzq1svi","slide":24,"name":"AutoShape 6","bbox":[358.3,36,1.5,1.5]}
+{"kind":"shape","id":"sh/ov6p8nux","slide":24,"name":"AutoShape 7","bbox":[575.86,108,2,2]}
+{"kind":"shape","id":"sh/3ydonyd8","slide":24,"name":"AutoShape 8","bbox":[793.4,72,1,1]}
+{"kind":"shape","id":"sh/ix47utcn","slide":24,"name":"AutoShape 9","bbox":[998.14,21.59,2,2]}
+{"kind":"shape","id":"sh/8veh8ril","slide":24,"name":"AutoShape 10","bbox":[1126.11,129.59,1.5,1.5]}
+{"kind":"shape","id":"sh/9wni1wjq","slide":24,"name":"AutoShape 11","bbox":[63.98,158.39,1,1]}
+{"kind":"shape","id":"sh/mtwz6h0f","slide":24,"name":"AutoShape 12","bbox":[447.89,86.39,2,2]}
+{"kind":"shape","id":"sh/nu50zm10","slide":24,"name":"AutoShape 13","bbox":[703.82,50.39,1.5,1.5]}
+{"kind":"shape","id":"sh/wzyhcrih","slide":24,"name":"AutoShape 14","bbox":[921.36,180,1,1]}
+{"kind":"shape","id":"sh/x07i5wj2","slide":24,"name":"AutoShape 15","bbox":[1177.3,144,2,2]}
+{"kind":"shape","id":"sh/axgza10b","slide":24,"name":"AutoShape 16","bbox":[230.33,201.59,1,1]}
+{"kind":"shape","id":"sh/vyp03m1w","slide":24,"name":"AutoShape 17","bbox":[639.84,230.39,1.5,1.5]}
+{"kind":"shape","id":"sh/c3uh07id","slide":24,"name":"AutoShape 18","bbox":[537.46,14.39,2,2]}
+{"kind":"shape","id":"sh/d43itcjy","slide":24,"name":"AutoShape 19","bbox":[1049.33,100.8,1,1]}
+{"kind":"shape","id":"sh/t8v6h47a","slide":24,"name":"AutoShape 20","bbox":[0,540,499.88,120]}
+{"kind":"shape","id":"sh/s72p8z6p","slide":24,"name":"AutoShape 21","bbox":[929.77,590,349.91,100]}
+{"kind":"shape","id":"sh/rmtofup4","slide":24,"name":"AutoShape 22","bbox":[0,540,1279.68,180]}
+{"kind":"shape","id":"sh/6lk76poz","slide":24,"name":"AutoShape 23","bbox":[0,540,1279.68,180]}
+{"kind":"textbox","id":"sh/1cv6l47m","slide":24,"name":"TextBox 24","text":"University AI Office: prepared decisions—not another dashboard","textPreview":"University AI Office: prepared decisions—not another dashboard","textChars":62,"textLines":1,"bbox":[47.99,49,1183.7,44]}
+{"kind":"shape","id":"sh/gbmpcz61","slide":24,"name":"AutoShape 25","bbox":[47.99,110,1183.7,96]}
+{"kind":"shape","id":"sh/fadojepg","slide":24,"name":"AutoShape 26","bbox":[64.98,129,19.99,20]}
+{"kind":"shape","id":"sh/e947a9ov","slide":24,"name":"AutoShape 27","bbox":[65.98,130,18,18]}
+{"kind":"textbox","id":"sh/pgf6po7i","slide":24,"name":"TextBox 28","text":"The University AI Office routes strategic goals to Student Success, Curriculum, Alumni, Partnerships, and Accreditation roles. It prepares context, trade-offs, and actions for human approval; it is not an autonomous AI workforce.","textPreview":"The University AI Office routes strategic goals to Student Success, Curriculum, Alumni, Partnerships, and Accreditation roles. It prepare...","textChars":229,"textLines":1,"bbox":[96.98,131,1117.72,53]}
+{"kind":"shape","id":"sh/of6pgj6x","slide":24,"name":"AutoShape 29","bbox":[47.99,222,583.85,229.75]}
+{"kind":"shape","id":"sh/mlg3al4f","slide":24,"name":"AutoShape 30","bbox":[68.98,243,31.99,32]}
+{"kind":"textbox","id":"sh/nmp4jq50","slide":24,"name":"TextBox 31","text":"01","textPreview":"01","textChars":2,"textLines":1,"bbox":[77.18,250.5,23.79,16]}
+{"kind":"textbox","id":"sh/8nylcvml","slide":24,"name":"TextBox 32","text":"Goal routing","textPreview":"Goal routing","textChars":12,"textLines":1,"bbox":[112.97,248,124.97,22]}
+{"kind":"textbox","id":"sh/9o7mlgn6","slide":24,"name":"TextBox 33","text":"Route institutional goals to the relevant functional roles so each team sees the signals, recommendations, and ownership relevant to its work.","textPreview":"Route institutional goals to the relevant functional roles so each team sees the signals, recommendations, and ownership relevant to its ...","textChars":142,"textLines":1,"bbox":[68.98,291,562.86,68]}
+{"kind":"shape","id":"sh/ap03el4r","slide":24,"name":"AutoShape 34","bbox":[647.84,222,583.85,229.75]}
+{"kind":"shape","id":"sh/vq94nq5w","slide":24,"name":"AutoShape 35","bbox":[668.83,243,31.99,32]}
+{"kind":"textbox","id":"sh/wrilgvmh","slide":24,"name":"TextBox 36","text":"02","textPreview":"02","textChars":2,"textLines":1,"bbox":[677.03,250.5,23.79,16]}
+{"kind":"textbox","id":"sh/xsrmp0n2","slide":24,"name":"TextBox 37","text":"Decision context","textPreview":"Decision context","textChars":16,"textLines":1,"bbox":[712.82,248,144.96,22]}
+{"kind":"textbox","id":"sh/it03i54n","slide":24,"name":"TextBox 38","text":"Each proposal includes source context, trend interpretation, trade-offs, and a prepared action—reducing the distance from data to decision.","textPreview":"Each proposal includes source context, trend interpretation, trade-offs, and a prepared action—reducing the distance from data to decision.","textChars":139,"textLines":1,"bbox":[668.83,291,562.86,68]}
+{"kind":"shape","id":"sh/je94ra58","slide":24,"name":"AutoShape 39","bbox":[47.99,467.75,583.85,204.25]}
+{"kind":"shape","id":"sh/ra54bqxc","slide":24,"name":"AutoShape 40","bbox":[68.98,488.75,31.99,32]}
+{"kind":"textbox","id":"sh/q9w325wr","slide":24,"name":"TextBox 41","text":"03","textPreview":"03","textChars":2,"textLines":1,"bbox":[77.18,496.25,23.79,16]}
+{"kind":"textbox","id":"sh/dc7md0fi","slide":24,"name":"TextBox 42","text":"Human approval","textPreview":"Human approval","textChars":14,"textLines":1,"bbox":[112.97,493.75,124.97,22]}
+{"kind":"textbox","id":"sh/sbyl4vex","slide":24,"name":"TextBox 43","text":"AI-assisted recommendations require human approval before execution, keeping consequential decisions under human control.","textPreview":"AI-assisted recommendations require human approval before execution, keeping consequential decisions under human control.","textChars":121,"textLines":1,"bbox":[68.98,536.75,562.86,42.5]}
+{"kind":"shape","id":"sh/fyp4fax8","slide":24,"name":"AutoShape 44","bbox":[647.84,467.75,583.85,204.25]}
+{"kind":"shape","id":"sh/edg365w3","slide":24,"name":"AutoShape 45","bbox":[668.83,488.75,31.99,32]}
+{"kind":"textbox","id":"sh/107mhkfe","slide":24,"name":"TextBox 46","text":"04","textPreview":"04","textChars":2,"textLines":1,"bbox":[677.03,496.25,23.79,16]}
+{"kind":"textbox","id":"sh/0zyl8fet","slide":24,"name":"TextBox 47","text":"Current interaction model","textPreview":"Current interaction model","textChars":25,"textLines":1,"bbox":[712.82,493.75,124.97,22]}
+{"kind":"textbox","id":"sh/v2lk36x4","slide":24,"name":"TextBox 48","text":"The current model is scripted with optional AI. Persistent autonomous work and deep integrations remain future-facing.","textPreview":"The current model is scripted with optional AI. Persistent autonomous work and deep integrations remain future-facing.","textChars":118,"textLines":1,"bbox":[668.83,536.75,562.86,42.5]}
+{"kind":"notes","id":"nt/7qto7e10","slide":24,"text":"The University AI Office routes goals to specialised roles and prepares context, trade-offs, and actions for human approval. It is not an autonomous AI workforce."}
+{"kind":"slide","id":"sl/69wfm9o7","slide":25,"title":"CHAPTER 06","textShapes":3}
+{"kind":"shape","id":"sh/xg7axgf2","slide":25,"name":"AutoShape 2","bbox":[0,0,1279.68,720]}
+{"kind":"shape","id":"sh/cfyt4beh","slide":25,"name":"AutoShape 3","bbox":[0,0,1279.68,720]}
+{"kind":"shape","id":"sh/29wby1wf","slide":25,"name":"AutoShape 5","bbox":[0,0,1279.68,720]}
+{"kind":"shape","id":"sh/pc7atgf6","slide":25,"name":"AutoShape 6","bbox":[0,480,899.78,180]}
+{"kind":"shape","id":"sh/obyt0bel","slide":25,"name":"AutoShape 7","bbox":[719.82,80,559.86,120]}
+{"kind":"shape","id":"sh/fm5snmx4","slide":25,"name":"AutoShape 8","bbox":[230.33,86.39,2,2]}
+{"kind":"shape","id":"sh/elwbu1wj","slide":25,"name":"AutoShape 9","bbox":[537.46,57.59,1.5,1.5]}
+{"kind":"shape","id":"sh/wza9cbqp","slide":25,"name":"AutoShape 10","bbox":[921.36,158.39,2,2]}
+{"kind":"shape","id":"sh/h0jalgra","slide":25,"name":"AutoShape 11","bbox":[1087.73,108,1,1]}
+{"kind":"shape","id":"sh/uxsra18j","slide":25,"name":"AutoShape 12","bbox":[127.97,216,1.5,1.5]}
+{"kind":"shape","id":"sh/vy1sj694","slide":25,"name":"AutoShape 13","bbox":[767.81,36,2,2]}
+{"kind":"shape","id":"sh/8ba98bqt","slide":25,"name":"AutoShape 14","bbox":[1151.71,252,1,1]}
+{"kind":"shape","id":"sh/9cjahgry","slide":25,"name":"AutoShape 15","bbox":[383.9,129.59,1.5,1.5]}
+{"kind":"shape","id":"sh/m98r618n","slide":25,"name":"AutoShape 16","bbox":[703.82,288,2,2]}
+{"kind":"shape","id":"sh/7a1sf698","slide":25,"name":"AutoShape 17","bbox":[614.24,180,1,1]}
+{"kind":"shape","id":"sh/s7utkvqx","slide":25,"name":"AutoShape 18","bbox":[998.14,72,1.5,1.5]}
+{"kind":"shape","id":"sh/t83at0ri","slide":25,"name":"AutoShape 19","bbox":[281.52,324,2,2]}
+{"kind":"shape","id":"sh/1czihwva","slide":25,"name":"AutoShape 20","bbox":[529.87,519,219.95,1]}
+{"kind":"shape","id":"sh/gbq1obep","slide":25,"name":"AutoShape 21","bbox":[548.75,233.75,182.16,37.5]}
+{"kind":"shape","id":"sh/fax0f6d4","slide":25,"name":"AutoShape 22","bbox":[573.75,245.5,14,14]}
+{"kind":"shape","id":"sh/e9ojm1wj","slide":25,"name":"AutoShape 23","bbox":[573.75,245.5,14,14]}
+{"kind":"shape","id":"sh/t8fidwfe","slide":25,"name":"AutoShape 24","bbox":[573.75,245.5,14,14]}
+{"kind":"textbox","id":"sh/s761kret","slide":25,"name":"TextBox 25","text":"CHAPTER 06","textPreview":"CHAPTER 06","textChars":10,"textLines":1,"bbox":[595.74,244.75,113.17,15]}
+{"kind":"textbox","id":"sh/r6x0bmx8","slide":25,"name":"TextBox 26","text":"Strategic value and validation path","textPreview":"Strategic value and validation path","textChars":35,"textLines":1,"bbox":[222.44,307.25,834.79,59.8]}
+{"kind":"shape","id":"sh/6lojihwn","slide":25,"name":"AutoShape 27","bbox":[607.85,395.05,63.98,2]}
+{"kind":"textbox","id":"sh/5kfi9cf2","slide":25,"name":"TextBox 28","text":"CareerOS could extend Talentbank from episodic transactions to relationship infrastructure—but the core workflow should first be proven in a controlled setting.","textPreview":"CareerOS could extend Talentbank from episodic transactions to relationship infrastructure—but the core workflow should first be proven i...","textChars":160,"textLines":1,"bbox":[166.93,425.05,945.81,61.19]}
+{"kind":"shape","id":"sh/4j61g7eh","slide":25,"name":"AutoShape 29","bbox":[0,719,1279.68,1]}
+{"kind":"image","id":"im/lwz6pk7i","slide":25,"name":"Picture 4","bbox":[0,0,1279.68,720]}
+{"kind":"notes","id":"nt/69wfm9o7","slide":25,"text":"The final section frames Talentbank value and a validation path as strategic hypotheses—not existing partnerships or traction."}
+{"kind":"slide","id":"sl/l0bepsfm","slide":26,"title":"Talentbank can turn transactions into relationships","textShapes":18}
+{"kind":"shape","id":"sh/uhk36lk7","slide":26,"name":"AutoShape 2","bbox":[0,0,1279.68,720]}
+{"kind":"shape","id":"sh/vitkzqlc","slide":26,"name":"AutoShape 3","bbox":[0,0,1279.68,720]}
+{"kind":"shape","id":"sh/8fil4b21","slide":26,"name":"AutoShape 4","bbox":[0,0,1279.68,720]}
+{"kind":"shape","id":"sh/tgr2xg3m","slide":26,"name":"AutoShape 5","bbox":[0,0,1279.68,720]}
+{"kind":"shape","id":"sh/md0321kv","slide":26,"name":"AutoShape 6","bbox":[0,480,599.85,200]}
+{"kind":"shape","id":"sh/7e9kv6lg","slide":26,"name":"AutoShape 7","bbox":[859.78,480,419.9,160]}
+{"kind":"shape","id":"sh/kbil0r2p","slide":26,"name":"AutoShape 8","bbox":[0,540,1279.68,180]}
+{"kind":"shape","id":"sh/lcr2tw3a","slide":26,"name":"AutoShape 9","bbox":[0,540,1279.68,180]}
+{"kind":"textbox","id":"sh/lsja143i","slide":26,"name":"TextBox 10","text":"Talentbank can turn transactions into relationships","textPreview":"Talentbank can turn transactions into relationships","textChars":51,"textLines":1,"bbox":[47.99,49,1183.7,44]}
+{"kind":"shape","id":"sh/krat8z2x","slide":26,"name":"AutoShape 11","bbox":[47.99,114,1183.7,160.42]}
+{"kind":"textbox","id":"sh/z61szulc","slide":26,"name":"TextBox 12","text":"KEY INSIGHT  CareerOS could extend Talentbank across the student, employer, and university lifecycle through permissioned evidence and relationship history. This is a strategic hypothesis subject to data rights, buyer demand, trust, and operational validation.","textPreview":"KEY INSIGHT  CareerOS could extend Talentbank across the student, employer, and university lifecycle through permissioned evidence and re...","textChars":260,"textLines":1,"bbox":[72.98,133,1206.7,119.33]}
+{"kind":"shape","id":"sh/y5sr69kr","slide":26,"name":"AutoShape 13","bbox":[47.99,294.42,581.85,377.58]}
+{"kind":"shape","id":"sh/x4jax436","slide":26,"name":"AutoShape 14","bbox":[80.98,327.42,31.99,32]}
+{"kind":"textbox","id":"sh/c3a94z21","slide":26,"name":"TextBox 15","text":"01","textPreview":"01","textChars":2,"textLines":1,"bbox":[89.18,334.92,23.79,16]}
+{"kind":"textbox","id":"sh/b21svulg","slide":26,"name":"TextBox 16","text":"Student and employer value","textPreview":"Student and employer value","textChars":26,"textLines":1,"bbox":[124.97,327.83,188.95,30]}
+{"kind":"shape","id":"sh/a18r2pkv","slide":26,"name":"AutoShape 17","bbox":[80.98,379.42,515.87,1]}
+{"kind":"shape","id":"sh/p0zatk3a","slide":26,"name":"AutoShape 18","bbox":[80.98,404.42,35.99,36]}
+{"kind":"textbox","id":"sh/ozq90f2p","slide":26,"name":"TextBox 19","text":"S","textPreview":"S","textChars":1,"textLines":1,"bbox":[87.98,411.92,28.99,21]}
+{"kind":"textbox","id":"sh/0ve1wjex","slide":26,"name":"TextBox 20","text":"Student value","textPreview":"Student value","textChars":13,"textLines":1,"bbox":[132.97,405.42,463.88,21]}
+{"kind":"textbox","id":"sh/1wn25ofi","slide":26,"name":"TextBox 21","text":"Support exploration before applications, skill-building and community between them, and feedback afterward—creating value across the career-readiness lifecycle.","textPreview":"Support exploration before applications, skill-building and community between them, and feedback afterward—creating value across the care...","textChars":160,"textLines":1,"bbox":[132.97,444.11,463.88,108.25]}
+{"kind":"shape","id":"sh/etwju9wr","slide":26,"name":"AutoShape 22","bbox":[80.98,582.11,35.99,36]}
+{"kind":"textbox","id":"sh/fu5k3exc","slide":26,"name":"TextBox 23","text":"E","textPreview":"E","textChars":1,"textLines":1,"bbox":[87.98,589.61,28.99,21]}
+{"kind":"textbox","id":"sh/sru1szel","slide":26,"name":"TextBox 24","text":"Employer value","textPreview":"Employer value","textChars":14,"textLines":1,"bbox":[132.97,583.11,463.88,21]}
+{"kind":"textbox","id":"sh/ds3i14f6","slide":26,"name":"TextBox 25","text":"Add evidence-led discovery, warm-pipeline recovery, and reusable hiring context. Outcomes must be validated.","textPreview":"Add evidence-led discovery, warm-pipeline recovery, and reusable hiring context. Outcomes must be validated.","textChars":108,"textLines":1,"bbox":[132.97,621.8,465.77,98.2]}
+{"kind":"shape","id":"sh/qpcjq9wv","slide":26,"name":"AutoShape 26","bbox":[649.84,294.42,581.85,377.58]}
+{"kind":"shape","id":"sh/rql0zex0","slide":26,"name":"AutoShape 27","bbox":[682.83,327.42,31.99,32]}
+{"kind":"textbox","id":"sh/cny143e5","slide":26,"name":"TextBox 28","text":"02","textPreview":"02","textChars":2,"textLines":1,"bbox":[691.03,334.92,23.79,16]}
+{"kind":"textbox","id":"sh/xo72d8fq","slide":26,"name":"TextBox 29","text":"University and ecosystem value","textPreview":"University and ecosystem value","textChars":30,"textLines":1,"bbox":[726.82,327.83,240.94,30]}
+{"kind":"shape","id":"sh/7i9432hs","slide":26,"name":"AutoShape 30","bbox":[682.83,379.42,515.87,1]}
+{"kind":"shape","id":"sh/mh0nuxg7","slide":26,"name":"AutoShape 31","bbox":[682.83,404.42,35.99,36]}
+{"kind":"textbox","id":"sh/9kbm5czy","slide":26,"name":"TextBox 32","text":"U","textPreview":"U","textChars":1,"textLines":1,"bbox":[689.83,411.92,28.99,21]}
+{"kind":"textbox","id":"sh/8ji5w7yd","slide":26,"name":"TextBox 33","text":"University value","textPreview":"University value","textChars":16,"textLines":1,"bbox":[734.82,405.42,463.88,21]}
+{"kind":"textbox","id":"sh/vmt47mho","slide":26,"name":"TextBox 34","text":"Add readiness, curriculum alignment, accreditation evidence reuse, and decision workflows—moving beyond information display into institutional action.","textPreview":"Add readiness, curriculum alignment, accreditation evidence reuse, and decision workflows—moving beyond information display into institut...","textChars":150,"textLines":1,"bbox":[734.82,444.11,463.88,108.25]}
+{"kind":"shape","id":"sh/ulknyhg3","slide":26,"name":"AutoShape 35","bbox":[682.83,582.11,35.99,36]}
+{"kind":"textbox","id":"sh/h8bm9czu","slide":26,"name":"TextBox 36","text":"ECO","textPreview":"ECO","textChars":3,"textLines":1,"bbox":[689.83,589.61,28.99,21]}
+{"kind":"textbox","id":"sh/wn2507y9","slide":26,"name":"TextBox 37","text":"Ecosystem value","textPreview":"Ecosystem value","textChars":15,"textLines":1,"bbox":[734.82,583.11,463.88,21]}
+{"kind":"textbox","id":"sh/bqp4vihk","slide":26,"name":"TextBox 38","text":"Permissioned evidence could compound across interactions. Network effects remain a hypothesis.","textPreview":"Permissioned evidence could compound across interactions. Network effects remain a hypothesis.","textChars":94,"textLines":1,"bbox":[734.82,621.8,463.88,78.5]}
+{"kind":"notes","id":"nt/l0bepsfm","slide":26,"text":"CareerOS could extend Talentbank across the student, employer, and university lifecycle. Data rights, buyer demand, consent, trust, integrations, and operating ownership must be validated."}
+{"kind":"slide","id":"sl/4vyxknqp","slide":27,"title":"Validation path: prove one workflow before scaling the network","textShapes":14}
+{"kind":"shape","id":"sh/kn694nmx","slide":27,"name":"AutoShape 2","bbox":[0,0,1279.68,720]}
+{"kind":"shape","id":"sh/lofadsni","slide":27,"name":"AutoShape 3","bbox":[0,0,1279.68,720]}
+{"kind":"shape","id":"sh/mpor6x43","slide":27,"name":"AutoShape 4","bbox":[0,0,1279.68,720]}
+{"kind":"shape","id":"sh/7qxsfi5o","slide":27,"name":"AutoShape 5","bbox":[153.56,57.59,2,2]}
+{"kind":"shape","id":"sh/8r698nm9","slide":27,"name":"AutoShape 6","bbox":[358.3,36,1.5,1.5]}
+{"kind":"shape","id":"sh/9sfahsnu","slide":27,"name":"AutoShape 7","bbox":[575.86,86.39,2,2]}
+{"kind":"shape","id":"sh/utobax4f","slide":27,"name":"AutoShape 8","bbox":[793.4,21.59,1,1]}
+{"kind":"shape","id":"sh/vuxsj250","slide":27,"name":"AutoShape 9","bbox":[998.14,108,2.5,2.5]}
+{"kind":"shape","id":"sh/ju5gv294","slide":27,"name":"AutoShape 10","bbox":[1126.11,50.39,1.5,1.5]}
+{"kind":"shape","id":"sh/ytwfmx8j","slide":27,"name":"AutoShape 11","bbox":[281.52,129.59,1,1]}
+{"kind":"shape","id":"sh/lw7yxcra","slide":27,"name":"AutoShape 12","bbox":[703.82,72,2,2]}
+{"kind":"shape","id":"sh/kvyxo7qp","slide":27,"name":"AutoShape 13","bbox":[447.89,158.39,1.5,1.5]}
+{"kind":"shape","id":"sh/bq5gr298","slide":27,"name":"AutoShape 14","bbox":[921.36,43.19,1,1]}
+{"kind":"shape","id":"sh/apwfix8n","slide":27,"name":"AutoShape 15","bbox":[1177.3,144,2,2]}
+{"kind":"shape","id":"sh/xsnytcry","slide":27,"name":"AutoShape 16","bbox":[102.37,180,1.5,1.5]}
+{"kind":"shape","id":"sh/wrexk7qt","slide":27,"name":"AutoShape 17","bbox":[639.84,100.8,1,1]}
+{"kind":"shape","id":"sh/vmpg3m9c","slide":27,"name":"AutoShape 18","bbox":[511.87,28.8,2,2]}
+{"kind":"shape","id":"sh/ulgzuh8r","slide":27,"name":"AutoShape 19","bbox":[870.17,115.19,1.5,1.5]}
+{"kind":"shape","id":"sh/qhkj2lsz","slide":27,"name":"AutoShape 20","bbox":[0,520,599.85,120]}
+{"kind":"shape","id":"sh/rit0vqtk","slide":27,"name":"AutoShape 21","bbox":[859.78,580,419.9,100]}
+{"kind":"shape","id":"sh/sj214va5","slide":27,"name":"AutoShape 22","bbox":[0,500,1279.68,220]}
+{"kind":"shape","id":"sh/dkb2x0bq","slide":27,"name":"AutoShape 23","bbox":[0,500,1279.68,220]}
+{"kind":"shape","id":"sh/elkj65sb","slide":27,"name":"AutoShape 24","bbox":[0,660,1279.68,60]}
+{"kind":"textbox","id":"sh/fmdkzatw","slide":27,"name":"TextBox 25","text":"Validation path: prove one workflow before scaling the network","textPreview":"Validation path: prove one workflow before scaling the network","textChars":62,"textLines":1,"bbox":[47.99,48,1183.7,47]}
+{"kind":"shape","id":"sh/0nm18fa1","slide":27,"name":"AutoShape 26","bbox":[47.99,116.3,1183.7,150.89]}
+{"kind":"shape","id":"sh/1ov210bm","slide":27,"name":"AutoShape 27","bbox":[78.65,140.96,16.66,16.67]}
+{"kind":"shape","id":"sh/up0ju1sr","slide":27,"name":"AutoShape 28","bbox":[85.98,145.96,2,3.33]}
+{"kind":"shape","id":"sh/vq90n6tc","slide":27,"name":"AutoShape 29","bbox":[85.98,151.63,2,2]}
+{"kind":"textbox","id":"sh/x4fmt4vu","slide":27,"name":"TextBox 30","text":"Test the core workflow in a controlled setting: one computing or data faculty detects employability gaps, launches an intervention, captures evidence, and produces a reusable summary. This is a recommendation—not an announced pilot.","textPreview":"Test the core workflow in a controlled setting: one computing or data faculty detects employability gaps, launches an intervention, captu...","textChars":232,"textLines":1,"bbox":[110.97,142.3,1094.77,97.59]}
+{"kind":"shape","id":"sh/w36l0ju9","slide":27,"name":"AutoShape 31","bbox":[47.99,287.19,583.85,184.41]}
+{"kind":"shape","id":"sh/bix4red4","slide":27,"name":"AutoShape 32","bbox":[74.98,310.19,35.99,36]}
+{"kind":"textbox","id":"sh/aho3y9cj","slide":27,"name":"TextBox 33","text":"01","textPreview":"01","textChars":2,"textLines":1,"bbox":[84.64,318.94,26.34,17]}
+{"kind":"textbox","id":"sh/l8zmxov6","slide":27,"name":"TextBox 34","text":"Validate the core hypothesis","textPreview":"Validate the core hypothesis","textChars":28,"textLines":1,"bbox":[122.97,313.78,149.96,27]}
+{"kind":"textbox","id":"sh/k7q54jul","slide":27,"name":"TextBox 35","text":"Can one computing or data faculty detect two employability gaps, intervene for the current cohort, capture participation evidence, and produce a reusable outcome summary?","textPreview":"Can one computing or data faculty detect two employability gaps, intervene for the current cohort, capture participation evidence, and pr...","textChars":170,"textLines":1,"bbox":[74.98,362.19,556.86,46.19]}
+{"kind":"shape","id":"sh/j6h4ved0","slide":27,"name":"AutoShape 36","bbox":[647.84,287.19,583.85,184.41]}
+{"kind":"shape","id":"sh/y58329cf","slide":27,"name":"AutoShape 37","bbox":[674.83,310.19,35.99,36]}
+{"kind":"textbox","id":"sh/1cvmlkvm","slide":27,"name":"TextBox 38","text":"02","textPreview":"02","textChars":2,"textLines":1,"bbox":[684.49,318.94,26.34,17]}
+{"kind":"textbox","id":"sh/0bmlsfu1","slide":27,"name":"TextBox 39","text":"Key learning measures","textPreview":"Key learning measures","textChars":21,"textLines":1,"bbox":[722.82,313.78,149.96,27]}
+{"kind":"textbox","id":"sh/47up0nep","slide":27,"name":"TextBox 40","text":"Career Memory evidence completion; intervention uptake and completion; employer participation; time from signal to assigned action; staff preparation time.","textPreview":"Career Memory evidence completion; intervention uptake and completion; employer participation; time from signal to assigned action; staff...","textChars":155,"textLines":1,"bbox":[674.83,362.19,556.86,46.19]}
+{"kind":"shape","id":"sh/5836tsfa","slide":27,"name":"AutoShape 41","bbox":[47.99,487.59,583.85,184.41]}
+{"kind":"shape","id":"sh/i5c7yxwz","slide":27,"name":"AutoShape 42","bbox":[74.98,510.59,35.99,36]}
+{"kind":"textbox","id":"sh/36lor2x4","slide":27,"name":"TextBox 43","text":"03","textPreview":"03","textChars":2,"textLines":1,"bbox":[84.64,519.34,26.34,17]}
+{"kind":"textbox","id":"sh/g3apwnet","slide":27,"name":"TextBox 44","text":"Why faculty-level validation","textPreview":"Why faculty-level validation","textChars":28,"textLines":1,"bbox":[122.97,514.19,173.96,27]}
+{"kind":"textbox","id":"sh/h4j6psfe","slide":27,"name":"TextBox 45","text":"A faculty-level scope provides accountable ownership, bounded data, visible student benefit, and measurable operating signals without a full ecosystem rollout.","textPreview":"A faculty-level scope provides accountable ownership, bounded data, visible student benefit, and measurable operating signals without a f...","textChars":159,"textLines":1,"bbox":[74.98,562.59,556.86,46.19]}
+{"kind":"shape","id":"sh/u1s7udwn","slide":27,"name":"AutoShape 46","bbox":[647.84,487.59,583.85,184.41]}
+{"kind":"shape","id":"sh/v21onix8","slide":27,"name":"AutoShape 47","bbox":[674.83,510.59,35.99,36]}
+{"kind":"textbox","id":"sh/8zaps3eh","slide":27,"name":"TextBox 48","text":"04","textPreview":"04","textChars":2,"textLines":1,"bbox":[684.49,519.34,26.34,17]}
+{"kind":"textbox","id":"sh/t0j6l8f2","slide":27,"name":"TextBox 49","text":"Positioning of the next step","textPreview":"Positioning of the next step","textChars":28,"textLines":1,"bbox":[722.82,514.19,149.96,27]}
+{"kind":"textbox","id":"sh/bah8byh4","slide":27,"name":"TextBox 50","text":"This is a recommended validation path—not an announced pilot or partnership. The goal is to test product logic before scaling investment.","textPreview":"This is a recommended validation path—not an announced pilot or partnership. The goal is to test product logic before scaling investment.","textChars":137,"textLines":1,"bbox":[674.83,562.59,556.86,46.19]}
+{"kind":"notes","id":"nt/4vyxknqp","slide":27,"text":"The recommended next step is a controlled faculty-level validation of one repeated evidence-to-action workflow. It is not an announced pilot or partnership."}
+{"kind":"slide","id":"sl/3mdove10","slide":28,"title":"Remember · Prove · Act earlier · Keep learning","textShapes":3}
+{"kind":"shape","id":"sh/q9cz6xkv","slide":28,"name":"AutoShape 2","bbox":[0,0,1279.68,720]}
+{"kind":"shape","id":"sh/ralgf21g","slide":28,"name":"AutoShape 3","bbox":[0,0,1279.68,720]}
+{"kind":"shape","id":"sh/10nylwji","slide":28,"name":"AutoShape 5","bbox":[0,0,1279.68,720]}
+{"kind":"shape","id":"sh/exwzahkr","slide":28,"name":"AutoShape 6","bbox":[153.56,57.59,2,2]}
+{"kind":"shape","id":"sh/zy5gjm1c","slide":28,"name":"AutoShape 7","bbox":[998.14,108,2,2]}
+{"kind":"shape","id":"sh/o3ehgr29","slide":28,"name":"AutoShape 8","bbox":[575.86,158.39,1.5,1.5]}
+{"kind":"shape","id":"sh/947ipwje","slide":28,"name":"AutoShape 9","bbox":[793.4,36,2,2]}
+{"kind":"shape","id":"sh/lg3690fq","slide":28,"name":"AutoShape 10","bbox":[358.3,129.59,1.5,1.5]}
+{"kind":"shape","id":"sh/kfu5gfe5","slide":28,"name":"AutoShape 11","bbox":[1126.11,216,2,2]}
+{"kind":"shape","id":"sh/je1o7ax0","slide":28,"name":"AutoShape 12","bbox":[1177.3,86.39,1.5,1.5]}
+{"kind":"shape","id":"sh/ytsne5wf","slide":28,"name":"AutoShape 13","bbox":[102.37,180,2,2]}
+{"kind":"shape","id":"sh/tk36dkf2","slide":28,"name":"AutoShape 14","bbox":[703.82,252,1.5,1.5]}
+{"kind":"shape","id":"sh/8ju5kfeh","slide":28,"name":"AutoShape 15","bbox":[921.36,302.39,2,2]}
+{"kind":"shape","id":"sh/7ilobaxw","slide":28,"name":"AutoShape 16","bbox":[255.94,273.59,1.5,1.5]}
+{"kind":"shape","id":"sh/6hcni5wb","slide":28,"name":"AutoShape 17","bbox":[486.27,72,2,2]}
+{"kind":"shape","id":"sh/9ojm1gfi","slide":28,"name":"AutoShape 18","bbox":[127.97,412,599.85,200]}
+{"kind":"shape","id":"sh/ona58ved","slide":28,"name":"AutoShape 19","bbox":[715.82,416,499.88,160]}
+{"kind":"shape","id":"sh/0jex4fq5","slide":28,"name":"AutoShape 20","bbox":[319.92,564,799.8,120]}
+{"kind":"textbox","id":"sh/1knedkrq","slide":28,"name":"TextBox 21","text":"Remember · Prove · Act earlier · Keep learning","textPreview":"Remember · Prove · Act earlier · Keep learning","textChars":46,"textLines":1,"bbox":[77.84,236.8,1124,59.8]}
+{"kind":"shape","id":"sh/ehwf2p8z","slide":28,"name":"AutoShape 22","bbox":[579.86,332.59,119.97,1]}
+{"kind":"textbox","id":"sh/zi5wba9k","slide":28,"name":"TextBox 23","text":"CareerOS is the evidence-memory and action layer between education and employment","textPreview":"CareerOS is the evidence-memory and action layer between education and employment","textChars":81,"textLines":1,"bbox":[219.59,369.59,840.49,30.59]}
+{"kind":"shape","id":"sh/o7yx8zqh","slide":28,"name":"AutoShape 24","bbox":[501.48,440.19,276.7,43]}
+{"kind":"textbox","id":"sh/987eh4rm","slide":28,"name":"TextBox 25","text":"Prototype · Network to Validate","textPreview":"Prototype · Network to Validate","textChars":31,"textLines":1,"bbox":[515.98,440.19,247.7,43]}
+{"kind":"image","id":"im/psnmxk3m","slide":28,"name":"Picture 4","bbox":[0,0,1279.68,720]}
+{"kind":"notes","id":"nt/3mdove10","slide":28,"text":"CareerOS remembers the signal, proves it, enables earlier action, and preserves learning. It is the evidence-memory and action layer between education and employment."}

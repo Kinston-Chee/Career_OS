@@ -1,0 +1,30 @@
+{
+  "slides": [{
+    "slide": 1,
+    "single_page_pptx_path": "pages/slide-01.pptx",
+    "reference_path": "../photo_2026-07-24_23-49-52.jpg",
+    "render_path": "renders/slide-01/Slide1.PNG",
+    "generation_engine": {"tool": "pptxgenjs", "visual_fidelity_not_reduced": true},
+    "expected_pictures": 5,
+    "image_assets": [
+      {"path": "assets/slide-01-glass-platform.png", "role": "complex_visual_asset", "primary_text": false},
+      {"path": "assets/chart-bar.png", "role": "icon", "primary_text": false},
+      {"path": "assets/user.png", "role": "icon", "primary_text": false},
+      {"path": "assets/box.png", "role": "icon", "primary_text": false},
+      {"path": "assets/trending-up.png", "role": "icon", "primary_text": false}
+    ],
+    "native_components": ["editable title", "editable subtitle", "editable descriptor", "editable feature labels", "editable footer"],
+    "qa_expectations": {
+      "dual_gate_required": true,
+      "visual_semantics_required": true,
+      "all_key_text_editable": true,
+      "container_overflow_check_required": true
+    },
+    "page_execution": {
+      "mode": "single_page",
+      "page_status": "awaiting_user_approval",
+      "user_confirmed": false,
+      "made_before_next_slide": true
+    }
+  }]
+}

@@ -1,0 +1,18 @@
+{
+  "slide": 1,
+  "blueprint_render_path": "../photo_2026-07-24_23-49-52.jpg",
+  "ppt_render_path": "renders/cover/Slide1.PNG",
+  "visual_differences": [
+    {"severity": "Intentional", "item": "content", "note": "Reference copy and commerce icon were replaced with CareerOS positioning and an employer symbol."},
+    {"severity": "Medium", "item": "complex visual edge", "note": "The photographed glass illustration remains a rectangular cropped asset."}
+  ],
+  "surface_system_match": true,
+  "visual_semantics_preserved": true,
+  "editable_information_layer_pass": true,
+  "text_overflow_pass": true,
+  "container_overflow_pass": true,
+  "label_collision_pass": true,
+  "blueprint_background_not_used": true,
+  "deliverable_allowed": false,
+  "notes": ["Single-page CyberPPT checkpoint pending user approval."]
+}

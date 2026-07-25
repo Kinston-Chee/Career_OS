@@ -1,0 +1,30 @@
+{
+  "slide": 1,
+  "blueprint_path": "../photo_2026-07-24_23-49-52.jpg",
+  "canvas_size": {"reference_px": [1260, 946], "ppt_inches": [10, 7.5]},
+  "background_color_sample": "#F8FAFF",
+  "surface_system": "Continuous blue-white paper surface with a cropped glass-render asset on the right.",
+  "layout_regions": {
+    "header": "top-left wordmark",
+    "information_layer": "left 45%",
+    "complex_visual_layer": "right 55%",
+    "footer": "bottom-left motto and hairline"
+  },
+  "header_footer_system": "Editable wordmark and footer; viewer overlays excluded.",
+  "so_what_region": "Cover slide; no SO WHAT bar.",
+  "main_chart_semantics": "No chart; product-platform glass illustration.",
+  "density_targets": "Low-density cover with title, proposition, one descriptor, and four proof themes.",
+  "native_rebuild_targets": ["wordmark", "title", "subtitle", "descriptor", "four feature labels", "footer"],
+  "allowed_visual_assets": [{
+    "path": "assets/slide-01-glass-platform.png",
+    "source": "../photo_2026-07-24_23-49-52.jpg",
+    "reason": "Complex glass lighting, refraction, and 3D geometry",
+    "contains_primary_text": false
+  }],
+  "complex_visual_scan": {
+    "pictures_zero_is_not_goal": true,
+    "complex_asset_present": true,
+    "curve_trace_required": false
+  },
+  "generation_engine": {"tool": "pptxgenjs", "visual_fidelity_not_reduced": true}
+}

@@ -1,0 +1,4 @@
+interface:
+  display_name: "CareerOS Screenshot Curation"
+  short_description: "Capture proof-led CareerOS product screenshots"
+  default_prompt: "Use $careeros-screenshot-curation to inspect CareerOS and produce a verified screenshot manifest."
