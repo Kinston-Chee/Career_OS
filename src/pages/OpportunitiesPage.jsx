@@ -967,7 +967,6 @@ export default function OpportunitiesPage() {
         opportunity={activeOpportunity}
         onClose={() => setActiveOpportunity(null)}
         onApplied={handleApplied}
-        onApplyNow={(opportunity) => navigate('/student/intelligence', { state: { applyOpportunity: opportunity } })}
       />
       {trackerInitialApplication && (
         <ApplicationTrackerModal

@@ -42,9 +42,6 @@ export default function HomeTopNav({ user, readiness }) {
       </nav>
 
       <div className="flex items-center gap-4">
-        <Link to="/employer/home" className="hidden text-xs font-medium text-[#667394] hover:text-blue-700 sm:inline">
-          Switch to Employer View
-        </Link>
         <button type="button" className="relative rounded-full p-2 text-[#667394] hover:bg-blue-50 hover:text-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-100">
           <Bell size={18} />
           <span className="absolute -right-0.5 -top-0.5 h-2 w-2 rounded-full bg-rose-500" />
