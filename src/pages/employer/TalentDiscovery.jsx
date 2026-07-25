@@ -667,7 +667,7 @@ export default function TalentDiscovery() {
   }
 
   return (
-    <div className="flex h-screen w-screen flex-col overflow-hidden bg-[#F7F8FA] text-[#0F1117]" style={{ fontFamily: 'DM Sans, system-ui, sans-serif' }}>
+    <div className="flex h-screen w-screen flex-col overflow-hidden bg-[#F7F8FA] text-[#0F1117]">
       <EmployerNav variant="glass" />
 
       <div className="grid min-h-0 flex-1 grid-cols-[240px_minmax(0,1fr)_320px] overflow-hidden">

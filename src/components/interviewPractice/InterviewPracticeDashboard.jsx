@@ -591,16 +591,13 @@ export default function InterviewPracticeDashboard({ onStartMode, onStartRole })
     try {
       const result = await startInterviewSession(state)
 
-      // Backend rejected the request or the network dropped — keep the
-      // user on the setup form so they can tweak inputs and retry.
-      if (result.source === 'error') {
-        showToast(result.error || 'Could not start the interview. Please try again.', AlertCircle)
-        return
-      }
-
-      const sourceLabel = result.source === 'api'
-        ? `Starting: ${state.diff} ${role} · ${state.persona}`
-        : `Starting offline demo: ${state.diff} ${role} · ${state.persona}`
+      // Demo mode: always proceed to the practice session, even when the
+      // backend is unreachable — the API service returns a mock-fallback
+      // payload so the built-in scripted flow runs without a live server.
+      const sourceLabel =
+        result.source === 'api'
+          ? `Starting: ${state.diff} ${role} · ${state.persona}`
+          : `Starting offline demo: ${state.diff} ${role} · ${state.persona}`
       showToast(sourceLabel, Rocket)
 
       // Pass everything the parent (AICompanionPage) needs to render the
