@@ -276,6 +276,241 @@ export const candidateDetails = {
   },
 }
 
+// ─── Application status helper ────────────────────────────────────────────
+// A candidate is considered to have applied to one of the company's postings
+// when they are in the Shortlisted, In Process, or Hired stages. Everyone in
+// Aware or Engaged is a passive prospect the HR user should try to warm up.
+export const APPLIED_STAGES = new Set(['Shortlisted', 'In Process', 'Hired'])
+export function hasApplied(candidate) {
+  return APPLIED_STAGES.has(candidate?.pipelineStage)
+}
+
+// ─── Engagement data (non-applied candidates) ─────────────────────────────
+// Bespoke touchpoints/outreach ideas for a few named candidates; a generic
+// fallback keeps every non-applied candidate usable in the demo.
+const engagementOverrides = {
+  'aisha-rahman': {
+    touchpoints: [
+      { channel: 'event', label: 'Attended AI & Data Challenge briefing', date: 'Apr 24, 2025', note: 'Viewed booth for 12 min · asked about frontend track' },
+      { channel: 'view', label: 'Viewed Software Engineering Intern posting', date: 'May 3, 2025', note: 'Session · 6 min, revisited twice' },
+    ],
+    outreach: [
+      { channel: 'email', title: 'Invite to Frontend Portfolio Review', preview: "Hi Aisha, your Frontend portfolio caught our eye — want a 20-min portfolio review with our design lead?", cta: 'Send email' },
+      { channel: 'event', title: 'Nudge for Backend Fundamentals Workshop', preview: 'Round out your Backend evidence — reserve a spot in our June workshop.', cta: 'Send invite' },
+    ],
+    campaigns: [
+      { name: 'Frontend cohort · June intake', status: 'Recommended', tone: 'green' },
+      { name: 'Portfolio review pilot', status: 'Match', tone: 'blue' },
+    ],
+    bestChannel: 'Email · weekday mornings',
+    aiSummary: 'Warm prospect — engaged with a live event and revisited the posting. Send a low-friction portfolio review invite to convert to Applied.',
+  },
+  'hiro-ping': {
+    touchpoints: [
+      { channel: 'event', title: 'Booth conversation — Careers Day', label: 'Booth conversation — Careers Day', date: 'May 9, 2025', note: 'Asked about analyst assessment format' },
+    ],
+    outreach: [
+      { channel: 'assessment', title: 'Send technical assessment', preview: 'A 45-minute SQL + insight exercise — auto-graded, no interviewer needed.', cta: 'Send assessment' },
+      { channel: 'email', title: 'Personal check-in', preview: "Hi Hiro, thanks for stopping by at Careers Day — ready to move to the next step?", cta: 'Send email' },
+    ],
+    campaigns: [
+      { name: 'Data Analyst assessment cohort', status: 'Best fit', tone: 'green' },
+    ],
+    bestChannel: 'Email · afternoons',
+    aiSummary: 'Engaged in person but not yet assessed. Sending the SQL assessment now is the highest-leverage move.',
+  },
+  'jason-lee': {
+    touchpoints: [
+      { channel: 'view', label: 'Identified via campus pipeline', date: 'May 14, 2025', note: 'Sourced from Career Memory — no outreach yet' },
+    ],
+    outreach: [
+      { channel: 'email', title: 'First-touch introduction', preview: "Hi Jason, we noticed your Data Structures work — quick chat about our engineering intern track?", cta: 'Send email' },
+      { channel: 'linkedin', title: 'Connect on LinkedIn', preview: 'Warm the relationship before pitching the internship.', cta: 'Open LinkedIn' },
+    ],
+    campaigns: [
+      { name: 'Cold-source SE Intern nurture', status: 'New', tone: 'gray' },
+    ],
+    bestChannel: 'LinkedIn first, then email',
+    aiSummary: 'Cold prospect. Start with a lightweight LinkedIn connect + note, then follow up with an email invite in a week.',
+  },
+}
+
+export function getCandidateEngagement(candidate) {
+  const override = engagementOverrides[candidate.id]
+  if (override) return override
+  // Generic fallback keeps every non-applied candidate demo-ready.
+  const primarySkill = candidate.skills?.[0] || candidate.course
+  return {
+    touchpoints: [
+      { channel: 'view', label: `Identified in ${candidate.university} sourcing`, date: candidate.appliedDate, note: candidate.evidenceChips?.[0] || 'No engagement yet' },
+    ],
+    outreach: [
+      { channel: 'email', title: `Introduce ${candidate.targetRole} track`, preview: `Hi ${candidate.name.split(' ')[0]}, your ${primarySkill} evidence looks promising — a quick 15-min chat to explore fit?`, cta: 'Send email' },
+      { channel: 'assessment', title: 'Send skill checkpoint', preview: `A short ${primarySkill} exercise to validate the signal before scheduling a call.`, cta: 'Send assessment' },
+      { channel: 'event', title: 'Invite to upcoming employer event', preview: 'Warm the relationship in a group setting before a 1:1 outreach.', cta: 'Send invite' },
+    ],
+    campaigns: [
+      { name: `${candidate.targetRole} nurture · this quarter`, status: 'Suggested', tone: 'blue' },
+    ],
+    bestChannel: 'Email · weekday mornings',
+    aiSummary: `Passive prospect at the ${candidate.pipelineStage} stage. One warm outreach now can move ${candidate.name.split(' ')[0]} into the Applied pool.`,
+  }
+}
+
+// ─── Interview progress (applied candidates) ──────────────────────────────
+// Round.status: passed | in-progress | scheduled | pending | failed
+const interviewOverrides = {
+  'ivan-lim': {
+    overallScore: 92,
+    currentRound: 'Technical deep dive',
+    nextStep: { title: 'Technical deep dive with Priya Nair', date: 'May 22, 2025 · 2:00 PM', channel: 'Video call' },
+    rounds: [
+      {
+        id: 'screening',
+        name: 'Application screening',
+        status: 'passed',
+        date: 'May 12, 2025',
+        interviewer: 'AI Screening',
+        duration: '15 min',
+        score: 96,
+        summary: 'Evidence pack fully verified — full-stack project, workshop attendance, 4 leadership entries.',
+        scores: [
+          { label: 'Skill signal', pct: 96 },
+          { label: 'Career intent', pct: 92 },
+          { label: 'Availability match', pct: 100 },
+        ],
+        strengths: ['Verified React + Node.js project', 'Attended AI workshop — brand familiarity'],
+        concerns: ['Competing offer flagged — respond fast'],
+      },
+      {
+        id: 'first-round',
+        name: '1st round · Recruiter chat',
+        status: 'passed',
+        date: 'May 16, 2025',
+        interviewer: 'Sarah Wong · Talent Partner',
+        duration: '30 min',
+        score: 89,
+        summary: 'Strong culture fit and clear motivation. Communicates trade-offs well.',
+        scores: [
+          { label: 'Communication', pct: 92 },
+          { label: 'Motivation', pct: 88 },
+          { label: 'Values fit', pct: 87 },
+        ],
+        strengths: ['Clear articulation of past projects', 'Excited about Acme mission'],
+        concerns: ['Wants to understand mentorship structure before committing'],
+      },
+      {
+        id: 'technical',
+        name: '2nd round · Technical deep dive',
+        status: 'scheduled',
+        date: 'May 22, 2025 · 2:00 PM',
+        interviewer: 'Priya Nair · Engineering Lead',
+        duration: '60 min',
+        score: null,
+        summary: 'Pair-programming and system design walkthrough on a React + Node scenario.',
+        scores: [],
+        strengths: [],
+        concerns: [],
+      },
+      { id: 'culture', name: '3rd round · Culture fit panel', status: 'pending', date: '—', interviewer: 'Panel · 3 people', duration: '45 min', score: null, summary: '', scores: [], strengths: [], concerns: [] },
+      { id: 'offer', name: 'Offer', status: 'pending', date: '—', interviewer: 'HR + Hiring Manager', duration: '', score: null, summary: '', scores: [], strengths: [], concerns: [] },
+    ],
+  },
+  'marcus-tan': {
+    overallScore: 87,
+    currentRound: 'Culture fit panel',
+    nextStep: { title: 'Culture fit panel', date: 'May 20, 2025 · 4:30 PM', channel: 'On-site · KL office' },
+    rounds: [
+      {
+        id: 'screening',
+        name: 'Application screening',
+        status: 'passed',
+        date: 'May 8, 2025',
+        interviewer: 'AI Screening',
+        duration: '15 min',
+        score: 89,
+        summary: 'Strong open-source signal + API design project verified.',
+        scores: [{ label: 'Skill signal', pct: 90 }, { label: 'Career intent', pct: 78 }, { label: 'Availability match', pct: 95 }],
+        strengths: ['2+ years of OSS contributions', 'Dedicated API design project'],
+        concerns: ['Preference for larger-brand employers'],
+      },
+      {
+        id: 'first-round',
+        name: '1st round · Recruiter chat',
+        status: 'passed',
+        date: 'May 13, 2025',
+        interviewer: 'Sarah Wong · Talent Partner',
+        duration: '30 min',
+        score: 84,
+        summary: 'Understands Acme scale + mission. Slightly reserved but clear thinker.',
+        scores: [{ label: 'Communication', pct: 82 }, { label: 'Motivation', pct: 80 }, { label: 'Values fit', pct: 88 }],
+        strengths: ['Structured answers', 'Comfortable owning a module solo'],
+        concerns: ['Needs more push on why Acme over larger competitors'],
+      },
+      {
+        id: 'technical',
+        name: '2nd round · Technical deep dive',
+        status: 'passed',
+        date: 'May 17, 2025',
+        interviewer: 'Priya Nair · Engineering Lead',
+        duration: '60 min',
+        score: 88,
+        summary: 'Clean API design and thoughtful trade-off discussion. A bit slow under time pressure.',
+        scores: [{ label: 'System design', pct: 90 }, { label: 'Code quality', pct: 92 }, { label: 'Debugging', pct: 78 }],
+        strengths: ['Excellent OSS-quality code style', 'Explains trade-offs clearly'],
+        concerns: ['Debugging under time pressure needs practice'],
+      },
+      {
+        id: 'culture',
+        name: '3rd round · Culture fit panel',
+        status: 'in-progress',
+        date: 'May 20, 2025 · 4:30 PM',
+        interviewer: 'Panel · 3 people',
+        duration: '45 min',
+        score: null,
+        summary: 'Meet-the-team round with two engineers + one product partner.',
+        scores: [],
+        strengths: [],
+        concerns: [],
+      },
+      { id: 'offer', name: 'Offer', status: 'pending', date: '—', interviewer: 'HR + Hiring Manager', duration: '', score: null, summary: '', scores: [], strengths: [], concerns: [] },
+    ],
+  },
+}
+
+export function getCandidateInterviewProgress(candidate) {
+  const override = interviewOverrides[candidate.id]
+  if (override) return override
+  // Fallback: derive a plausible progression from pipelineStage so every
+  // applied candidate has a usable interview timeline in the demo.
+  const stage = candidate.pipelineStage
+  const base = [
+    { id: 'screening',   name: 'Application screening',       date: candidate.appliedDate,       interviewer: 'AI Screening',                 duration: '15 min' },
+    { id: 'first-round', name: '1st round · Recruiter chat',  date: '—',                          interviewer: 'Sarah Wong · Talent Partner',  duration: '30 min' },
+    { id: 'technical',   name: '2nd round · Technical deep dive', date: '—',                     interviewer: 'Priya Nair · Engineering Lead', duration: '60 min' },
+    { id: 'culture',     name: '3rd round · Culture fit panel', date: '—',                        interviewer: 'Panel · 3 people',             duration: '45 min' },
+    { id: 'offer',       name: 'Offer',                        date: '—',                          interviewer: 'HR + Hiring Manager',          duration: '' },
+  ]
+  const orderByStage = { Shortlisted: 1, 'In Process': 3, Hired: 5 }
+  const doneCount = orderByStage[stage] ?? 1
+  const rounds = base.map((r, i) => {
+    if (i < doneCount) {
+      return { ...r, status: 'passed', score: Math.max(70, candidate.matchScore - i * 3), summary: 'Solid performance — passed to the next round.', scores: [], strengths: [], concerns: [] }
+    }
+    if (i === doneCount) return { ...r, status: doneCount === 5 ? 'passed' : 'in-progress', score: null, summary: 'Currently at this stage.', scores: [], strengths: [], concerns: [] }
+    return { ...r, status: 'pending', score: null, summary: '', scores: [], strengths: [], concerns: [] }
+  })
+  const scored = rounds.filter((r) => typeof r.score === 'number')
+  const overallScore = scored.length ? Math.round(scored.reduce((a, r) => a + r.score, 0) / scored.length) : candidate.matchScore
+  const current = rounds.find((r) => r.status === 'in-progress') || rounds[rounds.length - 1]
+  return {
+    overallScore,
+    currentRound: current?.name || 'Screening',
+    nextStep: { title: current?.name, date: current?.date, channel: 'Video call' },
+    rounds,
+  }
+}
+
 // Generates a reasonable detail record for candidates without bespoke copy above,
 // so every candidate in the directory has a working detail view.
 export function getCandidateDetail(candidate) {

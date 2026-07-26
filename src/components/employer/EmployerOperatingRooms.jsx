@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
   BarChart3,
@@ -9,6 +9,7 @@ import {
   School,
   Users,
 } from 'lucide-react'
+import EmployerOfficerChatDrawer from './EmployerOfficerChatDrawer'
 
 const ROOMS = [
   {
@@ -23,17 +24,17 @@ const ROOMS = [
     ],
   },
   {
-    id: 'candidates',
-    name: 'Candidate Ops',
-    icon: Users,
-    time: '8:30 AM',
-    to: '/employer/candidates',
-    bullets: [
-      { text: '5 top matches waiting for next step.', alert: true },
-      { text: '3 shortlists likely to accept if contacted today.', alert: false },
-    ],
-    isCenter: true,
-  },
+      id: 'command-center',
+      name: 'Command Center',
+      icon: Building2,
+      time: '8:18 AM',
+      to: '/employer/home',
+      bullets: [
+        { text: '2 roles at risk need Dean-level review.', alert: true },
+        { text: '2 hiring decisions await approval.', alert: true },
+      ],
+      isCenter: true,
+    },
   {
     id: 'engagement',
     name: 'Engagement Studio',
@@ -68,14 +69,14 @@ const ROOMS = [
     ],
   },
   {
-    id: 'command-center',
-    name: 'Command Center',
-    icon: Building2,
-    time: '8:18 AM',
-    to: '/employer/home',
+    id: 'candidates',
+    name: 'Candidate Ops',
+    icon: Users,
+    time: '8:30 AM',
+    to: '/employer/candidates',
     bullets: [
-      { text: '2 roles at risk need Dean-level review.', alert: true },
-      { text: '2 hiring decisions await approval.', alert: true },
+      { text: '5 top matches waiting for next step.', alert: true },
+      { text: '3 shortlists likely to accept if contacted today.', alert: false },
     ],
   },
 ]
@@ -118,18 +119,33 @@ function RoomCard({ room, onClick }) {
 
 export default function EmployerOperatingRooms() {
   const navigate = useNavigate()
+  const [activeRoom, setActiveRoom] = useState(null)
+
+  const openRoom = (room) => {
+    // Command Center opens the full-page chat; everything else uses a
+    // side drawer so the Home dashboard stays visible behind it.
+    if (room.isCenter) {
+      navigate('/employer/command-center')
+      return
+    }
+    setActiveRoom(room)
+  }
 
   return (
     <div className="rounded-2xl border border-white/70 bg-white/75 p-5 shadow-[0_10px_30px_rgba(24,95,165,0.08)] backdrop-blur-sm">
       <div className="mb-4 flex items-center justify-between">
         <h2 className="text-sm font-bold text-gray-900">Talent Operating Rooms</h2>
-        <span className="text-xs font-medium text-slate-400">Click a room to open its AI officer</span>
+        <span className="text-xs font-medium text-slate-400">Click a room to chat with its AI officer</span>
       </div>
       <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
         {ROOMS.map((room) => (
-          <RoomCard key={room.id} room={room} onClick={(r) => navigate(r.to)} />
+          <RoomCard key={room.id} room={room} onClick={openRoom} />
         ))}
       </div>
+
+      {activeRoom ? (
+        <EmployerOfficerChatDrawer room={activeRoom} onClose={() => setActiveRoom(null)} />
+      ) : null}
     </div>
   )
 }

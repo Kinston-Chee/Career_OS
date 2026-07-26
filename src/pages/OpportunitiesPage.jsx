@@ -10,7 +10,9 @@ import {
   CalendarClock,
   Check,
   ChevronRight,
+  ExternalLink,
   Globe,
+  Layers,
   LayoutGrid,
   MapPin,
   MoreHorizontal,
@@ -20,6 +22,7 @@ import {
   Star,
   TrendingUp,
   Trophy,
+  Users,
   Wifi,
   X,
 } from 'lucide-react'
@@ -27,6 +30,11 @@ import HomeTopNav from '../components/home/HomeTopNav'
 import WhyThese3Modal from '../components/opportunitiesHub/WhyThese3Modal'
 import OpportunityDetailsPanel from '../components/opportunitiesHub/OpportunityDetailsPanel'
 import { candidateOverview, mockUser, opportunitiesHub, opportunityDetails } from '../data/mockData'
+import {
+  COMPANY_DIRECTORY,
+  COMPANY_INDUSTRIES,
+  TIER_META,
+} from '../data/companiesData'
 import { useCareerStore } from '../store/useCareerStore'
 
 // Card background art (loaded via Vite so the paths survive builds)
@@ -188,6 +196,405 @@ function sdgTone(number) {
   if ([8, 9].includes(number)) return { bg: '#E1F5EE', color: '#0F6E56' }
   if ([4].includes(number)) return { bg: '#E6F1FB', color: '#185FA5' }
   return { bg: '#FAEEDA', color: '#854F0B' }
+}
+
+
+const COMPANY_PAGE_SIZE = 6
+
+// ── Sponsored ad slots ────────────────────────────────────────────────────
+// Placeholder content — the ad server would inject real payloads at these
+// slot ids at runtime.
+const COMPANY_ADS = {
+  banner: {
+    id: 'ad-banner',
+    label: 'Sponsored',
+    title: 'Hiring 12 backend interns this cycle',
+    body: 'ByteDance is running a fast-track technical assessment — top scorers get an offer in 10 days.',
+    cta: 'Learn more',
+    color: '#111827',
+    accent: '#5B6CF9',
+  },
+  card: {
+    id: 'ad-card',
+    label: 'Sponsored',
+    title: 'AI & Data Challenge 2025 — TalentBank',
+    body: 'Ship a demo in 48 hours · RM 5,000 grand prize · fast-track interviews with 6 partner employers.',
+    cta: 'Register interest',
+    color: '#4C1D95',
+    accent: '#F59E0B',
+  },
+}
+
+// ── Companies view ─────────────────────────────────────────────────────────
+const SIGNAL_META = {
+  verified: { Icon: Check,       bg: '#FFEDD5', color: '#C2410C' },
+  award:    { Icon: Trophy,      bg: '#F5F6FA', color: '#334155' },
+  response: { Icon: CalendarClock, bg: '#DCFCE7', color: '#0F6E56' },
+  review:   { Icon: Star,        bg: '#FEF3C7', color: '#854F0B' },
+}
+
+function CompanyCard({ company, saved, onToggleSave, onView, onExplore, onOpenProfile }) {
+  const initialBg = company.logoColor
+  const mtone = matchTone(company.matchPercent)
+  const tier = TIER_META[company.tier]
+
+  // The whole card is clickable — child buttons stopPropagation so they
+  // still perform their own actions without also opening the profile.
+  const handleCardClick = () => onOpenProfile?.(company)
+  const handleCardKeyDown = (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault()
+      handleCardClick()
+    }
+  }
+
+  return (
+    <div
+      role="button"
+      tabIndex={0}
+      onClick={handleCardClick}
+      onKeyDown={handleCardKeyDown}
+      className="flex cursor-pointer flex-col overflow-hidden rounded-2xl border transition hover:-translate-y-0.5 hover:shadow-[0_4px_18px_rgba(15,17,32,.06)] focus:outline-none focus:ring-2 focus:ring-[#5B6CF9] focus:ring-offset-2"
+      style={{
+        borderColor: tier?.border || '#E8E9EF',
+        background: tier?.cardBg || '#FFFFFF',
+      }}
+    >
+      {tier ? (
+        <div
+          className="flex items-center justify-between px-5 py-1.5"
+          style={{ background: tier.ribbon }}
+        >
+          <span
+            className="inline-flex items-center gap-1.5 text-[10.5px] font-bold uppercase tracking-[.08em]"
+            style={{ color: tier.ribbonText }}
+          >
+            <Sparkles className="h-3 w-3" />
+            Premier Partner{tier.label ? ` · ${tier.label}` : ''}
+          </span>
+        </div>
+      ) : null}
+
+      <div className="flex flex-1 flex-col p-5">
+        <div className="flex items-start gap-3">
+          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl text-[13px] font-bold text-white" style={{ background: initialBg }}>
+            {company.initials}
+          </div>
+          <div className="min-w-0 flex-1">
+            <div className="flex items-center gap-1.5">
+              <p className="truncate text-[15px] font-semibold text-[#1A1C2E]">{company.name}</p>
+              {company.verified ? (
+                <span title="Verified employer" className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-[#FFEDD5] text-[#C2410C]">
+                  <Check className="h-2.5 w-2.5" strokeWidth={3} />
+                </span>
+              ) : null}
+            </div>
+            <p className="mt-0.5 truncate text-[12px] text-[#6B6F8A]">{company.industry}</p>
+            <p className="mt-0.5 flex items-center gap-2 text-[11.5px] text-[#6B6F8A]">
+              {typeof company.rating === 'number' ? (
+                <span className="inline-flex items-center gap-0.5 text-[#B45309]">
+                  <Star className="h-3 w-3 fill-[#F59E0B] text-[#F59E0B]" />
+                  <span className="font-semibold text-[#0F172A]">{company.rating.toFixed(1)}</span>
+                </span>
+              ) : null}
+              {company.followers ? <span>· {company.followers} following</span> : null}
+            </p>
+          </div>
+          <span className="rounded-md px-2 py-0.5 text-[12px] font-semibold" style={{ background: mtone.bg, color: mtone.color }}>{company.matchPercent}%</span>
+        </div>
+
+        <p className="mt-3 line-clamp-2 text-[12.5px] leading-5 text-[#6B6F8A]">{company.tagline}</p>
+
+        <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-[11.5px] text-[#6B6F8A]">
+          <span className="inline-flex items-center gap-1"><MapPin className="h-3 w-3" /> {company.location}</span>
+          <span className="inline-flex items-center gap-1"><Users className="h-3 w-3" /> {company.size}</span>
+        </div>
+
+        {/* Verified signals (replaces the old skills tag row) */}
+        <div className="mt-4">
+          <p className="mb-1.5 text-[10px] font-bold uppercase tracking-[.08em] text-[#94A3B8]">Verified signals</p>
+          <div className="flex flex-wrap gap-1.5">
+            {company.verifiedSignals?.map((sig) => {
+              const meta = SIGNAL_META[sig.kind] || SIGNAL_META.award
+              const Icon = meta.Icon
+              return (
+                <span
+                  key={sig.label}
+                  className="inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[11px] font-semibold"
+                  style={{ background: meta.bg, color: meta.color }}
+                >
+                  <Icon className="h-3 w-3" />
+                  {sig.label}
+                </span>
+              )
+            })}
+            {tier ? (
+              <span
+                className="inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[11px] font-semibold"
+                style={{ background: tier.badgeBg, color: tier.badgeText }}
+              >
+                <Sparkles className="h-3 w-3" />
+                {tier.badgeLabel}{company.partnerYears ? ` · ${company.partnerYears}y` : ''}
+              </span>
+            ) : null}
+          </div>
+        </div>
+
+        {company.positiveReview ? (
+          <div className="mt-3 rounded-lg border border-[#FDE68A] bg-[#FEF9E7] px-3 py-2 text-[11.5px] italic leading-5 text-[#7A4E0B]">
+            <Star className="mr-1 inline h-3 w-3 fill-[#F59E0B] text-[#F59E0B]" />
+            {company.positiveReview}
+          </div>
+        ) : null}
+
+        <div className="mt-3 rounded-lg border border-[#EEF0FF] bg-[#F0F2FF] px-3 py-2 text-[11.5px] leading-5 text-[#5B6CF9]">
+          <Sparkles className="mr-1 inline h-3 w-3" />
+          {company.highlight}
+        </div>
+
+        <div className="mt-auto flex items-center justify-between border-t border-[#E8E9EF] pt-3">
+          <span className="text-[12px] text-[#6B6F8A]">
+            <span className="font-semibold text-[#1A1C2E]">{company.openings}</span> open role{company.openings === 1 ? '' : 's'}
+          </span>
+          <div className="flex gap-1.5">
+            <button
+              type="button"
+              onClick={(e) => { e.stopPropagation(); onToggleSave?.() }}
+              className="inline-flex items-center gap-1 rounded-md border border-[#D0D2DC] bg-white px-2.5 py-1 text-[12px] font-medium text-[#1A1C2E] transition hover:bg-[#F5F6FA]"
+            >
+              {saved ? <BookmarkCheck className="h-3.5 w-3.5 text-[#5B6CF9]" /> : <Bookmark className="h-3.5 w-3.5" />}
+              {saved ? 'Following' : 'Follow'}
+            </button>
+            <button
+              type="button"
+              onClick={(e) => { e.stopPropagation(); onExplore?.() }}
+              className="inline-flex items-center gap-1 rounded-md border border-[#5B6CF9] bg-[#5B6CF9] px-2.5 py-1 text-[12px] font-medium text-white transition hover:bg-[#4a5ce8]"
+            >
+              View openings
+              <ChevronRight className="h-3.5 w-3.5" />
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+function CompanyBannerAd({ ad, onClick }) {
+  return (
+    <div
+      className="mb-5 flex flex-wrap items-center justify-between gap-4 rounded-2xl border p-5"
+      style={{ background: `linear-gradient(120deg, ${ad.color} 0%, #1F2937 100%)`, borderColor: ad.accent }}
+    >
+      <div className="flex items-start gap-4 text-white">
+        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg" style={{ background: `${ad.accent}33` }}>
+          <Sparkles className="h-5 w-5" style={{ color: ad.accent }} />
+        </span>
+        <div className="min-w-0">
+          <span className="inline-block rounded-full px-2 py-0.5 text-[10px] font-bold uppercase tracking-[.08em]" style={{ background: `${ad.accent}33`, color: ad.accent }}>
+            {ad.label}
+          </span>
+          <p className="mt-1.5 text-[15px] font-semibold">{ad.title}</p>
+          <p className="mt-0.5 text-[12.5px] leading-5 text-white/70">{ad.body}</p>
+        </div>
+      </div>
+      <button
+        type="button"
+        onClick={onClick}
+        className="inline-flex shrink-0 items-center gap-1 rounded-lg px-4 py-2 text-[13px] font-semibold text-[#111827] transition hover:opacity-90"
+        style={{ background: ad.accent }}
+      >
+        {ad.cta}
+        <ChevronRight className="h-4 w-4" />
+      </button>
+    </div>
+  )
+}
+
+function CompanyCardAd({ ad, onClick }) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className="group flex min-h-[280px] flex-col overflow-hidden rounded-2xl border-2 border-dashed p-5 text-left transition hover:-translate-y-0.5 hover:shadow-[0_4px_18px_rgba(15,17,32,.08)]"
+      style={{ borderColor: ad.accent, background: `linear-gradient(160deg, ${ad.color}12 0%, ${ad.accent}0F 100%)` }}
+    >
+      <span className="inline-block rounded-full px-2 py-0.5 text-[10px] font-bold uppercase tracking-[.08em]" style={{ background: `${ad.accent}22`, color: ad.color }}>
+        {ad.label}
+      </span>
+      <span className="mt-3 flex h-11 w-11 items-center justify-center rounded-xl" style={{ background: ad.color, color: '#fff' }}>
+        <Sparkles className="h-5 w-5" />
+      </span>
+      <p className="mt-3 text-[15px] font-semibold text-[#1A1C2E]">{ad.title}</p>
+      <p className="mt-1.5 text-[12.5px] leading-5 text-[#6B6F8A]">{ad.body}</p>
+      <span className="mt-auto inline-flex items-center gap-1 pt-3 text-[12.5px] font-semibold" style={{ color: ad.color }}>
+        {ad.cta}
+        <ChevronRight className="h-3.5 w-3.5 transition group-hover:translate-x-0.5" />
+      </span>
+      <span className="mt-2 text-[10px] uppercase tracking-wider text-[#9EA3BC]">Advertisement slot</span>
+    </button>
+  )
+}
+
+function Pager({ page, totalPages, onChange }) {
+  if (totalPages <= 1) return null
+  const pages = []
+  for (let i = 1; i <= totalPages; i += 1) pages.push(i)
+  return (
+    <div className="mt-6 flex flex-wrap items-center justify-between gap-3">
+      <button
+        type="button"
+        disabled={page === 1}
+        onClick={() => onChange(page - 1)}
+        className="inline-flex items-center gap-1 rounded-lg border border-[#D0D2DC] bg-white px-3 py-1.5 text-[13px] font-medium text-[#1A1C2E] transition hover:bg-[#F5F6FA] disabled:cursor-not-allowed disabled:opacity-40"
+      >
+        <ChevronRight className="h-3.5 w-3.5 rotate-180" />
+        Prev
+      </button>
+      <div className="flex items-center gap-1.5">
+        {pages.map((p) => (
+          <button
+            key={p}
+            type="button"
+            onClick={() => onChange(p)}
+            className={`h-8 w-8 rounded-lg border text-[13px] font-medium transition ${
+              page === p
+                ? 'border-[#5B6CF9] bg-[#5B6CF9] text-white'
+                : 'border-[#D0D2DC] bg-white text-[#1A1C2E] hover:bg-[#F5F6FA]'
+            }`}
+          >
+            {p}
+          </button>
+        ))}
+      </div>
+      <button
+        type="button"
+        disabled={page === totalPages}
+        onClick={() => onChange(page + 1)}
+        className="inline-flex items-center gap-1 rounded-lg border border-[#D0D2DC] bg-white px-3 py-1.5 text-[13px] font-medium text-[#1A1C2E] transition hover:bg-[#F5F6FA] disabled:cursor-not-allowed disabled:opacity-40"
+      >
+        Next
+        <ChevronRight className="h-3.5 w-3.5" />
+      </button>
+    </div>
+  )
+}
+
+function CompaniesView({ followedIds, onToggleFollow, onExplore, onAdClick, onOpenProfile }) {
+  const [industry, setIndustry] = useState('All')
+  const [search, setSearch] = useState('')
+  const [page, setPage] = useState(1)
+
+  const filtered = useMemo(() => {
+    let list = COMPANY_DIRECTORY
+    if (industry !== 'All') {
+      list = list.filter((c) => c.industry.toLowerCase().includes(industry.toLowerCase()))
+    }
+    const q = search.trim().toLowerCase()
+    if (q) {
+      list = list.filter((c) => {
+        const signals = (c.verifiedSignals || []).map((s) => s.label).join(' ').toLowerCase()
+        return (
+          c.name.toLowerCase().includes(q) ||
+          c.industry.toLowerCase().includes(q) ||
+          signals.includes(q)
+        )
+      })
+    }
+    return list
+  }, [industry, search])
+
+  const totalPages = Math.max(1, Math.ceil(filtered.length / COMPANY_PAGE_SIZE))
+  // Snap page back into range whenever the filter shrinks the list.
+  useEffect(() => {
+    if (page > totalPages) setPage(1)
+  }, [page, totalPages])
+  // Reset to page 1 whenever the user changes a filter or search term.
+  useEffect(() => { setPage(1) }, [industry, search])
+
+  const startIdx = (page - 1) * COMPANY_PAGE_SIZE
+  const paged = filtered.slice(startIdx, startIdx + COMPANY_PAGE_SIZE)
+
+  // Insert the sponsored card slot mid-page (after index 2) so it always
+  // appears within the visible grid.
+  const AD_SLOT_INDEX = 2
+  const withAd = [...paged]
+  if (paged.length > AD_SLOT_INDEX) {
+    withAd.splice(AD_SLOT_INDEX, 0, { __ad: true, ad: COMPANY_ADS.card })
+  } else if (paged.length > 0) {
+    withAd.push({ __ad: true, ad: COMPANY_ADS.card })
+  }
+
+  return (
+    <div>
+      {/* Filter row */}
+      <div className="mb-6 flex flex-wrap items-center gap-2.5">
+        <div className="inline-flex gap-[3px] rounded-[9px] bg-[#EBEBF0] p-[3px]">
+          {COMPANY_INDUSTRIES.map((ind) => {
+            const active = industry === ind
+            return (
+              <button
+                key={ind}
+                type="button"
+                onClick={() => setIndustry(ind)}
+                className={`rounded-md px-3.5 py-1 text-[13px] font-medium transition ${
+                  active ? 'bg-white text-[#1A1C2E] shadow-[0_1px_3px_rgba(0,0,0,.08)]' : 'text-[#6B6F8A] hover:text-[#1A1C2E]'
+                }`}
+              >
+                {ind}
+              </button>
+            )
+          })}
+        </div>
+        <div className="ml-auto flex items-center gap-2 rounded-lg border border-[#D0D2DC] bg-white px-3 py-1.5">
+          <Sparkles className="h-4 w-4 text-[#9EA3BC]" />
+          <input
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            placeholder="Search companies…"
+            className="w-52 border-none bg-transparent text-[13px] text-[#1A1C2E] outline-none placeholder:text-[#9EA3BC]"
+          />
+        </div>
+      </div>
+
+      {/* Sponsored banner ad */}
+      <CompanyBannerAd ad={COMPANY_ADS.banner} onClick={() => onAdClick?.(COMPANY_ADS.banner)} />
+
+      {/* Grid */}
+      {filtered.length === 0 ? (
+        <div className="rounded-xl border border-dashed border-[#D0D2DC] bg-white p-12 text-center">
+          <p className="text-[15px] font-semibold text-[#1A1C2E]">No companies match your search</p>
+          <p className="mt-1 text-[13px] text-[#6B6F8A]">Try clearing the industry or the search box.</p>
+        </div>
+      ) : (
+        <>
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
+            {withAd.map((entry, i) => (
+              entry.__ad ? (
+                <CompanyCardAd key={`ad-${i}`} ad={entry.ad} onClick={() => onAdClick?.(entry.ad)} />
+              ) : (
+                <CompanyCard
+                  key={entry.id}
+                  company={entry}
+                  saved={followedIds.includes(entry.id)}
+                  onToggleSave={() => onToggleFollow(entry)}
+                  onExplore={() => onExplore(entry)}
+                  onOpenProfile={onOpenProfile}
+                />
+              )
+            ))}
+          </div>
+          <div className="mt-4 flex items-center justify-between text-[12px] text-[#6B6F8A]">
+            <span>
+              Showing {startIdx + 1}–{Math.min(startIdx + COMPANY_PAGE_SIZE, filtered.length)} of {filtered.length} companies
+            </span>
+            <span>Page {page} of {totalPages}</span>
+          </div>
+          <Pager page={page} totalPages={totalPages} onChange={setPage} />
+        </>
+      )}
+    </div>
+  )
 }
 
 // ── Toast ──────────────────────────────────────────────────────────────────
@@ -727,6 +1134,8 @@ export default function OpportunitiesPage() {
   const navigate = useNavigate()
   const readiness = candidateOverview.careerSnapshot.readiness
 
+  const [pageMode, setPageMode] = useState('opportunities') // 'opportunities' | 'companies'
+  const [followedCompanies, setFollowedCompanies] = useState([])
   const [activeTab, setActiveTab] = useState('All')
   const [listFilter, setListFilter] = useState('All')
   const [sortBy, setSortBy] = useState('match')
@@ -872,34 +1281,99 @@ export default function OpportunitiesPage() {
     if (kind === 'skillgaps') showToast('Skill gaps highlighted in the sidebar')
   }
 
+  const toggleFollowCompany = (company) => {
+    setFollowedCompanies((prev) => {
+      const on = prev.includes(company.id)
+      showToast(on ? `Unfollowed ${company.name}` : `Following ${company.name}`)
+      return on ? prev.filter((id) => id !== company.id) : [...prev, company.id]
+    })
+  }
+
+  const openCompanyProfile = (company) => {
+    navigate(`/student/companies/${company.id}`)
+  }
+  const exploreCompanyOpenings = (company) => {
+    // "View openings" now jumps straight to the company profile page,
+    // which lists all openings for that company.
+    navigate(`/student/companies/${company.id}#openings`)
+  }
+
   return (
     <div className="min-h-screen bg-[#F5F6FA] text-[#1A1C2E]" style={{ fontFamily: 'Inter, system-ui, sans-serif' }}>
       <HomeTopNav user={mockUser} readiness={readiness} />
 
       <div className="mx-auto max-w-[1280px] px-8 pb-16 pt-8">
         {/* Topbar */}
-        <div className="mb-6 flex items-start justify-between gap-3">
+        <div className="mb-6 flex flex-wrap items-start justify-between gap-3">
           <div>
-            <h1 className="text-[24px] font-semibold text-[#1A1C2E]">Opportunities</h1>
-            <p className="mt-1 text-[13px] text-[#6B6F8A]">Your AI companion reviews new postings daily and surfaces what matters to you.</p>
+            <h1 className="text-[24px] font-semibold text-[#1A1C2E]">
+              {pageMode === 'companies' ? 'Companies' : 'Opportunities'}
+            </h1>
+            <p className="mt-1 text-[13px] text-[#6B6F8A]">
+              {pageMode === 'companies'
+                ? 'Browse employers hiring on CareerOS — follow the ones that match your career path.'
+                : 'Your AI companion reviews new postings daily and surfaces what matters to you.'}
+            </p>
           </div>
-          <button
-            type="button"
-            onClick={() => setShowFilters((v) => !v)}
-            className={`inline-flex items-center gap-1.5 rounded-lg border border-[#D0D2DC] px-3.5 py-1.5 text-[13px] transition ${
-              showFilters ? 'bg-[#5B6CF9] text-white border-[#5B6CF9]' : 'bg-white text-[#1A1C2E] hover:bg-[#F5F6FA]'
-            }`}
-          >
-            <Settings className="h-3.5 w-3.5" />
-            Filters
-            {activeFilterCount ? (
-              <span className={`ml-1 rounded-full px-1.5 py-0.5 text-[10px] font-semibold ${showFilters ? 'bg-white/25 text-white' : 'bg-[#5B6CF9] text-white'}`}>
-                {activeFilterCount}
-              </span>
+
+          <div className="flex flex-wrap items-center gap-2.5">
+            {/* Page-mode switcher */}
+            <div className="inline-flex items-center gap-0.5 rounded-full border border-[#D0D2DC] bg-white p-[3px]">
+              <button
+                type="button"
+                onClick={() => setPageMode('opportunities')}
+                className={`inline-flex items-center gap-1.5 rounded-full px-3.5 py-1 text-[12.5px] font-medium transition ${
+                  pageMode === 'opportunities' ? 'bg-[#5B6CF9] text-white shadow-[0_1px_3px_rgba(91,108,249,.25)]' : 'text-[#6B6F8A] hover:text-[#1A1C2E]'
+                }`}
+              >
+                <Layers className="h-3.5 w-3.5" />
+                Opportunities
+              </button>
+              <button
+                type="button"
+                onClick={() => setPageMode('companies')}
+                className={`inline-flex items-center gap-1.5 rounded-full px-3.5 py-1 text-[12.5px] font-medium transition ${
+                  pageMode === 'companies' ? 'bg-[#5B6CF9] text-white shadow-[0_1px_3px_rgba(91,108,249,.25)]' : 'text-[#6B6F8A] hover:text-[#1A1C2E]'
+                }`}
+              >
+                <Building2 className="h-3.5 w-3.5" />
+                Companies
+                <span className={`ml-1 rounded-full px-1.5 py-0.5 text-[10px] font-semibold ${pageMode === 'companies' ? 'bg-white/25 text-white' : 'bg-[#EBEBF0] text-[#6B6F8A]'}`}>
+                  {COMPANY_DIRECTORY.length}
+                </span>
+              </button>
+            </div>
+
+            {pageMode === 'opportunities' ? (
+              <button
+                type="button"
+                onClick={() => setShowFilters((v) => !v)}
+                className={`inline-flex items-center gap-1.5 rounded-lg border border-[#D0D2DC] px-3.5 py-1.5 text-[13px] transition ${
+                  showFilters ? 'bg-[#5B6CF9] text-white border-[#5B6CF9]' : 'bg-white text-[#1A1C2E] hover:bg-[#F5F6FA]'
+                }`}
+              >
+                <Settings className="h-3.5 w-3.5" />
+                Filters
+                {activeFilterCount ? (
+                  <span className={`ml-1 rounded-full px-1.5 py-0.5 text-[10px] font-semibold ${showFilters ? 'bg-white/25 text-white' : 'bg-[#5B6CF9] text-white'}`}>
+                    {activeFilterCount}
+                  </span>
+                ) : null}
+              </button>
             ) : null}
-          </button>
+          </div>
         </div>
 
+        {pageMode === 'companies' ? (
+          <CompaniesView
+            followedIds={followedCompanies}
+            onToggleFollow={toggleFollowCompany}
+            onExplore={exploreCompanyOpenings}
+            onOpenProfile={openCompanyProfile}
+            onAdClick={(ad) => showToast(`Opening sponsored: ${ad.title}`)}
+          />
+        ) : (
+        <>
         {/* Optional filter panel */}
         {showFilters ? <FilterPanel filters={filters} onChange={setFilters} onReset={resetFilters} /> : null}
 
@@ -960,6 +1434,8 @@ export default function OpportunitiesPage() {
             onBuildRoadmap={() => navigate('/student/skill-development')}
           />
         </div>
+        </>
+        )}
       </div>
 
       {showWhyModal && <WhyThese3Modal sections={opportunitiesHub.whyThese3} onClose={() => setShowWhyModal(false)} />}

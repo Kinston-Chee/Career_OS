@@ -17,6 +17,7 @@ import {
 } from 'lucide-react'
 import TimelineCard from './TimelineCard'
 import DraftTimelineCard from './DraftTimelineCard'
+import LinkedInPostButton from './LinkedInPostButton'
 
 // ─── LinkedIn-style categories ────────────────────────────────────────
 // Each Career Memory entry's `details.type` (from MEMORY_DETAILS in the
@@ -162,23 +163,26 @@ function CategoryEntryRow({ entry, onOpen, onEdit }) {
             />
           ))}
         </div>
-        <span
-          role="button"
-          tabIndex={0}
-          onClick={(event) => {
-            event.stopPropagation()
-            onEdit?.(entry)
-          }}
-          onKeyDown={(event) => {
-            if (event.key !== 'Enter' && event.key !== ' ') return
-            event.preventDefault()
-            event.stopPropagation()
-            onEdit?.(entry)
-          }}
-          className="rounded-full p-1.5 text-[#9aa6c3] transition hover:bg-blue-50 hover:text-blue-600"
-        >
-          <Pencil size={14} />
-        </span>
+        <div className="flex items-center gap-0.5">
+          <LinkedInPostButton entry={entry} />
+          <span
+            role="button"
+            tabIndex={0}
+            onClick={(event) => {
+              event.stopPropagation()
+              onEdit?.(entry)
+            }}
+            onKeyDown={(event) => {
+              if (event.key !== 'Enter' && event.key !== ' ') return
+              event.preventDefault()
+              event.stopPropagation()
+              onEdit?.(entry)
+            }}
+            className="rounded-full p-1.5 text-[#9aa6c3] transition hover:bg-blue-50 hover:text-blue-600"
+          >
+            <Pencil size={14} />
+          </span>
+        </div>
       </div>
     </div>
   )

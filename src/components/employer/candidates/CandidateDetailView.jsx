@@ -19,7 +19,14 @@ import PipelineStepper from './PipelineStepper'
 import ManagerBriefModal from './ManagerBriefModal'
 import ScheduleInterviewModal from './ScheduleInterviewModal'
 import MessageComposeModal from './MessageComposeModal'
-import { getCandidateDetail } from '../../../data/candidatesData'
+import EngagementSection from './EngagementSection'
+import InterviewProgressSection from './InterviewProgressSection'
+import {
+  getCandidateDetail,
+  getCandidateEngagement,
+  getCandidateInterviewProgress,
+  hasApplied,
+} from '../../../data/candidatesData'
 import { useEmployerWorkspaceStore } from '../../../store/useEmployerWorkspaceStore'
 
 const TRAIT_ICONS = { zap: Zap, shuffle: Shuffle, target: Target }
@@ -44,7 +51,24 @@ function CandidateAvatar({ initials, size = 'lg' }) {
   )
 }
 
-function MatchHeader({ candidate, onShortlist, onScheduleInterview, onPass, shortlisted, passed }) {
+function ApplicationStatusBadge({ applied, candidate }) {
+  if (applied) {
+    return (
+      <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-100 bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-700">
+        <CheckCircle2 className="h-3.5 w-3.5" />
+        Applied · {candidate.targetRole}
+      </span>
+    )
+  }
+  return (
+    <span className="inline-flex items-center gap-1.5 rounded-full border border-amber-100 bg-amber-50 px-3 py-1 text-xs font-semibold text-amber-700">
+      <ShieldAlert className="h-3.5 w-3.5" />
+      Not yet applied · {candidate.pipelineStage}
+    </span>
+  )
+}
+
+function MatchHeader({ candidate, applied, onReachOut, onShortlist, onScheduleInterview, onPass, shortlisted, passed }) {
   return (
     <section className={`employer-glass-card border-l-4 p-5 ${RISK_BORDER[candidate.matchScore >= 90 ? 'LOW' : 'MEDIUM']}`}>
       <div className="flex flex-wrap items-start justify-between gap-4">
@@ -53,7 +77,12 @@ function MatchHeader({ candidate, onShortlist, onScheduleInterview, onPass, shor
           <div>
             <h1 className="text-2xl font-bold text-gray-900">{candidate.name}</h1>
             <p className="mt-1 text-sm text-gray-500">{candidate.university} · {candidate.year} · {candidate.course}</p>
-            <p className="mt-0.5 text-sm font-medium text-[#185FA5]">Applied for: {candidate.targetRole}</p>
+            <div className="mt-1.5 flex flex-wrap items-center gap-2">
+              <span className="text-sm font-medium text-[#185FA5]">
+                {applied ? 'Applied for:' : 'Target role:'} {candidate.targetRole}
+              </span>
+              <ApplicationStatusBadge applied={applied} candidate={candidate} />
+            </div>
           </div>
         </div>
         <div className="text-right">
@@ -88,27 +117,42 @@ function MatchHeader({ candidate, onShortlist, onScheduleInterview, onPass, shor
 
       <div className="mt-4 flex flex-wrap items-center justify-between gap-3 border-t border-gray-50 pt-3">
         <p className="text-xs text-gray-400">{candidate.appliedDate}</p>
-        <div className="flex items-center gap-2">
+        {applied ? (
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={onShortlist}
+              disabled={shortlisted}
+              className={`rounded-full px-4 py-2 text-sm font-semibold text-white transition-colors ${shortlisted ? 'bg-green-600' : 'bg-green-600 hover:bg-green-700'}`}
+            >
+              {shortlisted ? '✓ Shortlisted' : 'Shortlist'}
+            </button>
+            <button
+              type="button"
+              onClick={onScheduleInterview}
+              className="rounded-full bg-[#185FA5] px-4 py-2 text-sm font-semibold text-white hover:bg-[#134c87]"
+            >
+              Schedule interview
+            </button>
+            <button
+              type="button"
+              onClick={onPass}
+              disabled={passed}
+              className="employer-secondary-button px-4 py-2 text-sm"
+            >
+              {passed ? 'Passed' : 'Pass'}
+            </button>
+          </div>
+        ) : (
           <button
             type="button"
-            onClick={onShortlist}
-            disabled={shortlisted}
-            className={`rounded-full px-4 py-2 text-sm font-semibold text-white transition-colors ${shortlisted ? 'bg-green-600' : 'bg-green-600 hover:bg-green-700'}`}
+            onClick={onReachOut}
+            className="inline-flex items-center gap-1.5 rounded-full bg-[#185FA5] px-4 py-2 text-sm font-semibold text-white transition hover:bg-[#134c87]"
           >
-            {shortlisted ? '✓ Shortlisted' : 'Shortlist'}
+            <Mail className="h-4 w-4" />
+            Reach out
           </button>
-          <button type="button" onClick={onScheduleInterview} className="rounded-full bg-[#185FA5] px-4 py-2 text-sm font-semibold text-white hover:bg-[#134c87]">
-            Schedule interview
-          </button>
-          <button
-            type="button"
-            onClick={onPass}
-            disabled={passed}
-            className="employer-secondary-button px-4 py-2 text-sm"
-          >
-            {passed ? 'Passed' : 'Pass'}
-          </button>
-        </div>
+        )}
       </div>
     </section>
   )
@@ -338,6 +382,9 @@ export default function CandidateDetailView({ candidate, backLabel, onBack, onTo
   const passed = passedIds.has(candidate.id)
   const detail = getCandidateDetail(candidate)
   const narrative = { firstName: candidate.name.split(' ')[0], text: detail.narrative }
+  const applied = hasApplied(candidate)
+  const engagement = applied ? null : getCandidateEngagement(candidate)
+  const interviewProgress = applied ? getCandidateInterviewProgress(candidate) : null
 
   const handleQuickAction = (actionId) => {
     if (actionId === 'favorite') {
@@ -362,8 +409,10 @@ export default function CandidateDetailView({ candidate, backLabel, onBack, onTo
         <div className="space-y-4">
           <MatchHeader
             candidate={candidate}
+            applied={applied}
             shortlisted={shortlisted}
             passed={passed}
+            onReachOut={() => setActiveModal('message')}
             onShortlist={() => {
               shortlistCandidate(candidate.id)
               onToast(`${candidate.name} added to shortlist`)
@@ -374,6 +423,29 @@ export default function CandidateDetailView({ candidate, backLabel, onBack, onTo
               onToast(`${candidate.name} marked as passed`)
             }}
           />
+          {applied ? (
+            <InterviewProgressSection
+              candidate={candidate}
+              progress={interviewProgress}
+              onScheduleNext={() => setActiveModal('interview')}
+              onAdvance={() => {
+                onMoveStage(candidate)
+                onToast(`${candidate.name} advanced to the next round`)
+              }}
+            />
+          ) : (
+            <EngagementSection
+              candidate={candidate}
+              engagement={engagement}
+              onSendOutreach={(item) => {
+                if (item.channel === 'assessment') onToast(`Assessment sent to ${candidate.name}`)
+                else if (item.channel === 'event') onToast(`Event invite sent to ${candidate.name}`)
+                else if (item.channel === 'linkedin') onToast(`Opened LinkedIn profile for ${candidate.name}`)
+                else onToast(`Message sent to ${candidate.name}`)
+              }}
+              onSchedule={(campaign) => onToast(`${candidate.name} added to ${campaign.name}`)}
+            />
+          )}
           <CareerNarrative narrative={narrative} />
           <SelfDiscoveryCard name={candidate.name} traits={detail.selfDiscovery} summary={detail.selfDiscoverySummary} />
           <CareerMemoryTimeline entries={detail.careerMemory} />

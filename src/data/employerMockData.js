@@ -82,8 +82,8 @@ export const metricsPills = [
   {
     id: 'quality-of-hire',
     icon: 'star',
-    label: 'Quality of hire (pred.)',
-    value: '87%',
+    label: 'Number of Application',
+    value: '87',
     delta: '▲ 5% vs last 30 days',
     deltaTone: 'green',
     info: true,
@@ -112,7 +112,7 @@ export const metricsPills = [
   {
     id: 'event-roi',
     icon: 'chart',
-    label: 'Event ROI (this month)',
+    label: 'Event Exposure',
     value: '4.6x',
     delta: '▲ 0.9x vs last month',
     deltaTone: 'green',
@@ -247,6 +247,6 @@ export const employerNavTabs = [
   { label: 'Talent Discovery', to: '/employer/talent-discovery', icon: 'pipeline' },
   { label: 'Candidates', to: '/employer/candidates', icon: 'people' },
   { label: 'Engagement', to: '/employer/posting', icon: 'campaign' },
-  { label: 'Campus Pipeline', to: '/employer/campus-pipeline', icon: 'school' },
+  { label: 'Pipeline', to: '/employer/campus-pipeline', icon: 'school' },
   { label: 'Analytics', to: '/employer/analytics', icon: 'analytics' },
 ]
