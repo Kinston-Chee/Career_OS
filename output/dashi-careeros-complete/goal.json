@@ -1,0 +1,1036 @@
+{
+  "title": "CareerOS — AI-Powered Career Operating System",
+  "goal": "Explain the complete CareerOS product, its three connected workspaces, truth boundaries, Talentbank strategic value, and next-stage validation for independent reading.",
+  "audience": "Organisers, judges, Talentbank leadership, and potential investors",
+  "owner": "CareerOS Team",
+  "language": "en",
+  "randomSeed": "careeros-complete-20260725-k4m",
+  "pageCount": 24,
+  "themePack": "theme01",
+  "slides": [
+    {
+      "id": "s01-cover",
+      "layout": "theme01_page004",
+      "props": {
+        "kicker": "CAREEROS",
+        "issue": "ASYNC PITCH",
+        "overline": "CAREER OPERATING SYSTEM",
+        "titleTop": "Act before",
+        "titleBottom": "potential is lost",
+        "subtitle": "Evidence and action across education and employment.",
+        "sticker": "PROTOTYPE",
+        "stats": [
+          {
+            "value": "01",
+            "label": "Student workspace"
+          },
+          {
+            "value": "02",
+            "label": "Employer workspace"
+          },
+          {
+            "value": "03",
+            "label": "University workspace"
+          }
+        ],
+        "footnote": "Talentbank AI Hackathon · July 2026",
+        "accentColor": "#6D5CE8",
+        "statCount": 3
+      }
+    },
+    {
+      "id": "s02-pain",
+      "layout": "theme01_page083",
+      "props": {
+        "kicker": "THE SHARED FAILURE",
+        "title": "One evidence gap",
+        "en": "THREE CONSEQUENCES",
+        "cn": "DIFFERENT USERS · SAME LOSS",
+        "takeaways": [
+          {
+            "tag": "STUDENT",
+            "en": "UNCERTAINTY",
+            "text": "Chris has experience but weak proof and no clear next action."
+          },
+          {
+            "tag": "EMPLOYER",
+            "en": "RESTART",
+            "text": "Recruiting restarts after prior talent signals go cold."
+          },
+          {
+            "tag": "UNIVERSITY",
+            "en": "TOO LATE",
+            "text": "A cohort cannot wait for the next curriculum cycle."
+          }
+        ],
+        "summary": "Useful signals are fragmented, weakly evidenced, and remembered too late.",
+        "bandLabel": "DEMO PERSONAS",
+        "caption": "Pains are product hypotheses, not measured prevalence.",
+        "takeawayCount": 3
+      }
+    },
+    {
+      "id": "s03-system-gap",
+      "layout": "theme01_page009",
+      "props": {
+        "kicker": "WHY TOOLS FALL SHORT",
+        "title": "The handoffs fail",
+        "en": "TRANSACTIONS END",
+        "cn": "CONTEXT DISAPPEARS",
+        "chapters": [
+          {
+            "no": "01",
+            "label": "ACTIVITY",
+            "en": "Resume claim",
+            "desc": "Student work loses source, recency, and context."
+          },
+          {
+            "no": "02",
+            "label": "ENGAGEMENT",
+            "en": "Attendance list",
+            "desc": "Observed behaviour rarely follows the participant."
+          },
+          {
+            "no": "03",
+            "label": "SCREENING",
+            "en": "ATS snapshot",
+            "desc": "Decision rationale stays in a tool or inbox."
+          },
+          {
+            "no": "04",
+            "label": "OUTCOMES",
+            "en": "Annual report",
+            "desc": "Feedback reaches programme teams after the window."
+          }
+        ],
+        "caption": "CareerOS preserves context between transactions.",
+        "chapterCount": 4,
+        "accentColor": "#5B8DEF"
+      }
+    },
+    {
+      "id": "s04-model",
+      "layout": "theme01_page010",
+      "props": {
+        "kicker": "THE OPERATING MODEL",
+        "title": "Evidence must move",
+        "en": "FROM SIGNAL TO LEARNING",
+        "cn": "PRESERVE CONTEXT · TRIGGER ACTION",
+        "axisA": {
+          "tag": "EVIDENCE",
+          "title": "Remember the signal",
+          "en": "SOURCE · RECENCY · CONTEXT",
+          "desc": "Projects, applications, challenges, demand, and outcomes become reusable evidence."
+        },
+        "axisB": {
+          "tag": "ACTION",
+          "title": "Change the next move",
+          "en": "DECIDE · ASSIGN · FOLLOW UP",
+          "desc": "Evidence informs skill choices, shortlists, interventions, and programme priorities."
+        },
+        "result": "SIGNAL → EVIDENCE → DECISION → ACTION → LEARNING",
+        "crossLabel": "CAREEROS",
+        "caption": "Selected handoffs exist; a live shared network is future-facing."
+      }
+    },
+    {
+      "id": "s05-student-memory",
+      "layout": "theme01_page076",
+      "props": {
+        "kicker": "STUDENT WORKSPACE",
+        "title": "Evidence precedes guidance",
+        "en": "CHRIS · DATA SCIENCE",
+        "cn": "FROM EXPERIENCE TO REUSABLE PROOF",
+        "frames": [
+          {
+            "caption": "Career Memory preserves projects, skills, and context.",
+            "tag": "MEMORY"
+          },
+          {
+            "caption": "Career Intelligence reveals adjacent paths and gaps.",
+            "tag": "DIRECTION"
+          },
+          {
+            "caption": "Opportunities explain fit and missing evidence.",
+            "tag": "ACTION"
+          },
+          {
+            "caption": "The Companion turns intent into preparation.",
+            "tag": "GUIDANCE"
+          }
+        ],
+        "caption": "Demonstrated UI · recommendations and data illustrative.",
+        "images": [
+          "assets/user-media/student-memory.png",
+          "assets/user-media/student-intelligence.png"
+        ],
+        "imageSlotCount": 2,
+        "accentColor": "#6D5CE8"
+      }
+    },
+    {
+      "id": "s06-intelligence",
+      "layout": "theme01_page028",
+      "props": {
+        "kicker": "CAREER INTELLIGENCE",
+        "title": "A degree is a starting signal",
+        "en": "EXPAND OPTIONS",
+        "cn": "CHOOSE ONE EVIDENCE-BUILDING STEP",
+        "events": [
+          {
+            "date": "START",
+            "round": "CURRENT EVIDENCE",
+            "amount": "01",
+            "unit": "BASELINE",
+            "note": "Interpret Data Science projects, skills, and interests."
+          },
+          {
+            "date": "EXPLORE",
+            "round": "ADJACENT PATHS",
+            "amount": "02",
+            "unit": "OPTIONS",
+            "note": "Reveal transferable evidence and plausible roles."
+          },
+          {
+            "date": "PRIORITISE",
+            "round": "GAP",
+            "amount": "03",
+            "unit": "NEXT STEP",
+            "note": "Choose the next missing skill or proof."
+          },
+          {
+            "date": "ACT",
+            "round": "COMMITMENT",
+            "amount": "04",
+            "unit": "FOLLOW-UP",
+            "note": "Link the gap to learning or market action."
+          }
+        ],
+        "caption": "Paths and market signals are illustrative.",
+        "itemCount": 4,
+        "accentColor": "#7A5AE0"
+      }
+    },
+    {
+      "id": "s07-action",
+      "layout": "theme01_page037",
+      "props": {
+        "eyebrow": "GUIDANCE MUST END IN ACTION",
+        "value": "NEXT",
+        "prefix": "ONE",
+        "suffix": "ACTION",
+        "unitLabel": "NOT ANOTHER SCORE",
+        "headline": "Advice becomes commitment",
+        "highlightWord": "ACTION",
+        "sub": "Fit explanations, missing evidence, deadlines, and application state keep the next move visible.",
+        "caption": "Demonstrated local workflow · no live marketplace.",
+        "stickers": [
+          {
+            "label": "WHY FIT"
+          },
+          {
+            "label": "WHAT IS MISSING"
+          },
+          {
+            "label": "SAVE OR APPLY"
+          },
+          {
+            "label": "FOLLOW UP"
+          }
+        ],
+        "stickerCount": 4
+      }
+    },
+    {
+      "id": "s08-companion",
+      "layout": "theme01_page052",
+      "props": {
+        "eyebrow": "GUIDANCE + READINESS",
+        "titleLines": [
+          {
+            "text": "ASK FROM INTENT"
+          },
+          {
+            "text": "PRACTISE THE MOMENT"
+          },
+          {
+            "text": "RETURN TO BUILD"
+          }
+        ],
+        "lead": "The Companion reduces navigation; practice creates a specific preparation task; community sustains return value.",
+        "tags": [
+          {
+            "label": "CONTEXTUAL ROUTING"
+          },
+          {
+            "label": "INTERVIEW PRACTICE"
+          },
+          {
+            "label": "COMMUNITY SUPPORT"
+          },
+          {
+            "label": "SIMULATED AI"
+          }
+        ],
+        "caption": "Optional model calls use scripted fallbacks; scoring is not validated.",
+        "images": [
+          "assets/user-media/student-companion.png",
+          "assets/user-media/student-opportunities.png"
+        ],
+        "imageSlotCount": 2,
+        "accentColor": "#6D5CE8",
+        "tagCount": 4
+      }
+    },
+    {
+      "id": "s09-return",
+      "layout": "theme01_page029",
+      "props": {
+        "kicker": "BETWEEN APPLICATIONS",
+        "title": "Return value compounds",
+        "en": "SUPPORT → NEW EVIDENCE",
+        "cn": "NOT AN EPISODIC JOB PORTAL",
+        "points": [
+          {
+            "h": "BELONGING",
+            "d": "A joined community normalises setbacks and shares practical help."
+          },
+          {
+            "h": "TARGETED SUPPORT",
+            "d": "Mentorship and learning respond to a named gap."
+          },
+          {
+            "h": "NEW PROOF",
+            "d": "New activity can become future Career Memory evidence."
+          }
+        ],
+        "caption": "Community is demonstrated locally; mentorship loops are thinner.",
+        "images": [
+          "assets/user-media/student-community.png"
+        ],
+        "imageSlotCount": 1,
+        "pointCount": 3
+      }
+    },
+    {
+      "id": "s10-employer-problem",
+      "layout": "theme01_page056",
+      "props": {
+        "kicker": "EMPLOYER WORKSPACE",
+        "title": "Start with evidence",
+        "en": "FROM CLAIM TO VALIDATION",
+        "cn": "RETAIN THE REASON BEHIND EACH DECISION",
+        "leftLabel": "TODAY",
+        "rightLabel": "CAREEROS",
+        "unit": "DECISION DEPTH",
+        "series": [
+          {
+            "label": "CV CLAIM",
+            "from": 90,
+            "to": 35
+          },
+          {
+            "label": "PROVEN CONTEXT",
+            "from": 20,
+            "to": 85
+          },
+          {
+            "label": "GAP VISIBILITY",
+            "from": 15,
+            "to": 80
+          },
+          {
+            "label": "DECISION HISTORY",
+            "from": 10,
+            "to": 75
+          },
+          {
+            "label": "WARM RELATIONSHIP",
+            "from": 5,
+            "to": 70
+          }
+        ],
+        "note": "Illustrative comparison—not measured performance.",
+        "caption": "Candidates, scores, and histories are demo data.",
+        "itemCount": 5,
+        "accentColor": "#5B8DEF"
+      }
+    },
+    {
+      "id": "s11-discovery",
+      "layout": "theme01_page024",
+      "props": {
+        "kicker": "TALENT DISCOVERY",
+        "partLabel": "EMPLOYER PROOF",
+        "index": "11",
+        "title": "Fit needs a reason",
+        "en": "EVIDENCE + UNCERTAINTY",
+        "desc": "Start from a need, surface contextual evidence, expose gaps, and prepare a targeted validation question.",
+        "topics": [
+          {
+            "label": "HIRING NEED"
+          },
+          {
+            "label": "CAREER MEMORY"
+          },
+          {
+            "label": "FIT RATIONALE"
+          },
+          {
+            "label": "VALIDATION"
+          },
+          {
+            "label": "FAIRNESS FUTURE"
+          }
+        ],
+        "caption": "Matching and candidate data are simulated.",
+        "images": [
+          "assets/user-media/employer-discovery.png"
+        ],
+        "imageSlotCount": 1,
+        "accentColor": "#5B8DEF",
+        "topicCount": 5
+      }
+    },
+    {
+      "id": "s12-pipeline",
+      "layout": "theme01_page038",
+      "props": {
+        "kicker": "DECISION CONTINUITY",
+        "title": "Rationale survives the handoff",
+        "en": "NOT ONLY PIPELINE STAGE",
+        "cn": "EVIDENCE · DECISION · NEXT VALIDATION",
+        "risks": [
+          {
+            "title": "SHORTLIST",
+            "en": "WHY MOVE",
+            "chain": [
+              "Evidence",
+              "Rationale",
+              "Question",
+              "Owner"
+            ],
+            "impact": "The next reviewer sees why the candidate progressed."
+          },
+          {
+            "title": "PASS",
+            "en": "WHY STOP",
+            "chain": [
+              "Gap",
+              "Context",
+              "Decision",
+              "Record"
+            ],
+            "impact": "A decision keeps context instead of becoming a label."
+          },
+          {
+            "title": "SCHEDULE",
+            "en": "WHAT NEXT",
+            "chain": [
+              "Stage",
+              "Task",
+              "Deadline",
+              "Handoff"
+            ],
+            "impact": "Follow-up remains visible to the team."
+          },
+          {
+            "title": "BOUNDARY",
+            "en": "LOCAL STATE",
+            "chain": [
+              "No ATS",
+              "No audit",
+              "No send",
+              "No persistence"
+            ],
+            "impact": "Production workflow and controls remain future."
+          }
+        ],
+        "caption": "Demonstrated local workflow; ATS sync, audit history, and outbound actions are future.",
+        "chainCount": 4
+      }
+    },
+    {
+      "id": "s13-renewable-pipeline",
+      "layout": "theme01_page045",
+      "props": {
+        "kicker": "CAMPUS PIPELINE",
+        "title": "Prior engagement stays useful",
+        "en": "RENEWABLE CONTEXT",
+        "intro": "Challenges, workshops, and candidate reviews become relationship history that can support the next hiring need.",
+        "stats": [
+          {
+            "value": "01",
+            "unit": "TOUCHPOINT",
+            "label": "Remember context"
+          },
+          {
+            "value": "02",
+            "unit": "NEW NEED",
+            "label": "Explain relevance"
+          },
+          {
+            "value": "03",
+            "unit": "RE-ENGAGE",
+            "label": "Prepare outreach"
+          }
+        ],
+        "points": [
+          {
+            "h": "PRESERVE",
+            "d": "Keep what was observed and why it mattered."
+          },
+          {
+            "h": "REWARM",
+            "d": "Surface warm candidates when demand returns."
+          },
+          {
+            "h": "LEARN",
+            "d": "Use insights to improve future engagement."
+          }
+        ],
+        "caption": "Rewarming, sending, and analytics are simulated.",
+        "images": [
+          "assets/user-media/employer-pipeline.png"
+        ],
+        "imageSlotCount": 1,
+        "statCount": 3,
+        "pointCount": 3
+      }
+    },
+    {
+      "id": "s14-university-problem",
+      "layout": "theme01_page070",
+      "props": {
+        "kicker": "UNIVERSITY WORKSPACE",
+        "title": "Action must beat the report",
+        "en": "THE CURRENT COHORT",
+        "cn": "NEEDS HELP BEFORE THE NEXT CURRICULUM CYCLE",
+        "periods": [
+          "DETECT",
+          "ASSIGN",
+          "REVIEW"
+        ],
+        "series": [
+          {
+            "name": "READINESS",
+            "ranks": [
+              1,
+              1,
+              1
+            ]
+          },
+          {
+            "name": "CURRICULUM",
+            "ranks": [
+              2,
+              3,
+              2
+            ]
+          },
+          {
+            "name": "ALUMNI",
+            "ranks": [
+              3,
+              2,
+              3
+            ]
+          },
+          {
+            "name": "PARTNERSHIPS",
+            "ranks": [
+              4,
+              4,
+              4
+            ]
+          },
+          {
+            "name": "ACCREDITATION",
+            "ranks": [
+              5,
+              5,
+              5
+            ]
+          },
+          {
+            "name": "AI OFFICE",
+            "ranks": [
+              6,
+              6,
+              6
+            ]
+          }
+        ],
+        "rankNote": "Structure only—not measured ranking.",
+        "caption": "Institutional metrics and records shown are demo data.",
+        "accentColor": "#5B8DEF",
+        "itemCount": 6,
+        "periodCount": 3
+      }
+    },
+    {
+      "id": "s15-readiness",
+      "layout": "theme01_page050",
+      "props": {
+        "kicker": "STUDENT READINESS",
+        "title": "Risk needs an owner",
+        "en": "SIGNAL → INTERVENTION",
+        "cn": "LEADING SIGNALS REQUIRE GOVERNANCE",
+        "subject": "READINESS WORKFLOW",
+        "grade": "GOVERNED",
+        "gradeNote": "BEFORE DEPLOYMENT",
+        "gradeKicker": "REQUIRED",
+        "criteria": [
+          {
+            "name": "CONSENT",
+            "en": "PERMISSION",
+            "score": 100,
+            "verdict": "REQUIRED"
+          },
+          {
+            "name": "MINIMISATION",
+            "en": "DATA SCOPE",
+            "score": 100,
+            "verdict": "REQUIRED"
+          },
+          {
+            "name": "ROLE ACCESS",
+            "en": "CONTROL",
+            "score": 100,
+            "verdict": "REQUIRED"
+          },
+          {
+            "name": "CORRECTION",
+            "en": "APPEAL",
+            "score": 100,
+            "verdict": "REQUIRED"
+          },
+          {
+            "name": "FAIRNESS",
+            "en": "VALIDATION",
+            "score": 100,
+            "verdict": "REQUIRED"
+          }
+        ],
+        "caption": "Governance checklist, not a measured product score.",
+        "accentColor": "#5B8DEF",
+        "criterionCount": 5
+      }
+    },
+    {
+      "id": "s16-curriculum",
+      "layout": "theme01_page062",
+      "props": {
+        "kicker": "CURRICULUM ALIGNMENT",
+        "title": "A gap needs two clocks",
+        "highlightWord": "NOW + GOVERNED",
+        "en": "CURRENT COHORT / PROGRAMME",
+        "lead": "Support students now with targeted learning or partnership action, while formal reform follows evidence and review.",
+        "stats": [
+          {
+            "value": "01",
+            "unit": "NOW",
+            "label": "Targeted support"
+          },
+          {
+            "value": "02",
+            "unit": "NEXT",
+            "label": "Evidence roadmap"
+          },
+          {
+            "value": "03",
+            "unit": "GOVERN",
+            "label": "Programme review"
+          }
+        ],
+        "caption": "Demand and coverage data are mock.",
+        "images": [
+          "assets/user-media/university-curriculum.png"
+        ],
+        "imageSlotCount": 1,
+        "accentColor": "#6D5CE8",
+        "backgroundMode": "media",
+        "statCount": 3
+      }
+    },
+    {
+      "id": "s17-feedback-action",
+      "layout": "theme01_page081",
+      "props": {
+        "kicker": "FEEDBACK + EXECUTION",
+        "title": "Signals need an action channel",
+        "en": "OUTCOME → PARTNER → EVIDENCE",
+        "panels": [
+          {
+            "tag": "ALUMNI",
+            "tagTone": "ILLUSTRATIVE",
+            "heading": "Find patterns worth investigating"
+          },
+          {
+            "tag": "COLLABORATION",
+            "tagTone": "SIMULATED",
+            "heading": "Design action around a named gap"
+          },
+          {
+            "tag": "ACCREDITATION",
+            "tagTone": "SIMULATED",
+            "heading": "Reuse evidence with ownership"
+          }
+        ],
+        "caption": "Analytics, partner data, outreach, and causal learning are simulated.",
+        "images": [
+          "assets/user-media/university-alumni.png",
+          "assets/user-media/university-collaboration.png",
+          "assets/user-media/university-accreditation.png"
+        ],
+        "imageSlotCount": 3,
+        "accentColor": "#7A5AE0"
+      }
+    },
+    {
+      "id": "s18-accreditation",
+      "layout": "theme01_page054",
+      "props": {
+        "kicker": "ACCREDITATION HUB",
+        "title": "Evidence should be reusable",
+        "en": "VISIBLE READINESS",
+        "cn": "SOURCE · OWNER · PERIOD · COMPLETENESS",
+        "unit": "WORKFLOW STAGE",
+        "prefix": "ILLUSTRATIVE",
+        "items": [
+          {
+            "label": "MAP REQUIREMENT",
+            "value": 6,
+            "meta": "SOURCE"
+          },
+          {
+            "label": "ASSIGN OWNER",
+            "value": 5,
+            "meta": "ACCOUNTABILITY"
+          },
+          {
+            "label": "CHECK PERIOD",
+            "value": 4,
+            "meta": "RECENCY"
+          },
+          {
+            "label": "FIND GAP",
+            "value": 3,
+            "meta": "MISSING ITEM"
+          },
+          {
+            "label": "REUSE EVIDENCE",
+            "value": 2,
+            "meta": "SHARED CONTEXT"
+          },
+          {
+            "label": "HUMAN REVIEW",
+            "value": 1,
+            "meta": "BEFORE EXPORT"
+          }
+        ],
+        "caption": "Ordinal workflow, not measured readiness.",
+        "accentColor": "#5B8DEF",
+        "itemCount": 6
+      }
+    },
+    {
+      "id": "s19-ai-office",
+      "layout": "theme01_page026",
+      "props": {
+        "kicker": "UNIVERSITY AI OFFICE",
+        "title": "Dashboards become governed work",
+        "en": "HUMAN DECISION BEFORE EFFECT",
+        "intro": "Specialised roles prepare context, actions, and trade-offs; leaders approve, edit, or reject before any external effect.",
+        "milestones": [
+          {
+            "date": "SOURCE",
+            "round": "CONTEXT",
+            "amount": "01",
+            "note": "Read the relevant workspace signal."
+          },
+          {
+            "date": "PREPARE",
+            "round": "ACTION",
+            "amount": "02",
+            "note": "Draft an accountable next step."
+          },
+          {
+            "date": "DECIDE",
+            "round": "APPROVAL",
+            "amount": "03",
+            "note": "Require human review and ownership."
+          },
+          {
+            "date": "EFFECT",
+            "round": "EXTERNAL",
+            "amount": "04",
+            "note": "Execution remains future-facing."
+          }
+        ],
+        "quote": "Prepared decisions, not autonomous employees.",
+        "quoteBy": "PRODUCT BOUNDARY",
+        "images": [
+          "assets/user-media/university-ai-office.png"
+        ],
+        "imageSlotCount": 1,
+        "milestoneCount": 4
+      }
+    },
+    {
+      "id": "s20-connected-loop",
+      "layout": "theme01_page066",
+      "props": {
+        "kicker": "THE CONNECTED SYSTEM",
+        "title": "Evidence survives the handoff",
+        "en": "MORE THAN THREE DASHBOARDS",
+        "cn": "SOLID = SHOWN · DASHED = FUTURE",
+        "cornerLabel": "WORKSPACE / VALUE",
+        "dims": [
+          "SIGNAL",
+          "EVIDENCE",
+          "DECISION",
+          "ACTION",
+          "LEARNING"
+        ],
+        "rows": [
+          {
+            "name": "STUDENT",
+            "tag": "BUILD PROOF",
+            "scores": [
+              3,
+              3,
+              2,
+              3,
+              2
+            ]
+          },
+          {
+            "name": "EMPLOYER",
+            "tag": "VALIDATE FIT",
+            "scores": [
+              3,
+              2,
+              3,
+              3,
+              2
+            ]
+          },
+          {
+            "name": "UNIVERSITY",
+            "tag": "ACT EARLIER",
+            "scores": [
+              3,
+              2,
+              3,
+              3,
+              2
+            ]
+          },
+          {
+            "name": "SHARED LOOP",
+            "tag": "FUTURE",
+            "scores": [
+              1,
+              1,
+              1,
+              1,
+              1
+            ]
+          }
+        ],
+        "legend": [
+          "3 SHOWN",
+          "2 PARTIAL",
+          "1 FUTURE",
+          "DEMO DATA"
+        ],
+        "caption": "Architecture is demonstrated in parts; end-to-end propagation is future.",
+        "rowCount": 4,
+        "dimCount": 5,
+        "accentColor": "#7A5AE0"
+      }
+    },
+    {
+      "id": "s21-truth",
+      "layout": "theme01_page067",
+      "props": {
+        "kicker": "PRODUCT TRUTH",
+        "title": "Logic proven, outcomes unproven",
+        "en": "DEMONSTRATED / SIMULATED / FUTURE",
+        "cn": "NO TRACTION OR ACCURACY CLAIMS",
+        "chartSectionLabel": "CAPABILITY BOUNDARY",
+        "totalLabel": "VISIBLE AREAS",
+        "unit": "ILLUSTRATIVE COUNT",
+        "runLabel": "PRODUCT SCOPE",
+        "steps": [
+          {
+            "label": "DEMONSTRATED UI",
+            "value": 3
+          },
+          {
+            "label": "LOCAL WORKFLOWS",
+            "value": 3
+          },
+          {
+            "label": "SIMULATED DATA",
+            "value": 3
+          },
+          {
+            "label": "FUTURE INTEGRATION",
+            "value": 3
+          },
+          {
+            "label": "FUTURE NETWORK",
+            "value": 3
+          }
+        ],
+        "caption": "Counts are structural labels, not performance metrics.",
+        "accentColor": "#5B8DEF",
+        "itemCount": 5
+      }
+    },
+    {
+      "id": "s22-talentbank",
+      "layout": "theme01_page040",
+      "props": {
+        "kicker": "TALENTBANK VALUE",
+        "title": "From transactions to infrastructure",
+        "en": "A CONDITIONAL STRATEGIC PATH",
+        "cn": "VALUE REQUIRES RIGHTS · TRUST · DEMAND",
+        "phases": [
+          {
+            "period": "STUDENTS",
+            "step": "01 · LIFECYCLE",
+            "heading": "Engage beyond applications",
+            "points": [
+              "Evidence, guidance, practice",
+              "Community and follow-up"
+            ],
+            "verdict": "LONGER RELATIONSHIP"
+          },
+          {
+            "period": "EMPLOYERS",
+            "step": "02 · WORKFLOW",
+            "heading": "Add decision context",
+            "points": [
+              "Evidence-led discovery",
+              "Warm-pipeline recovery"
+            ],
+            "verdict": "REUSABLE CONTEXT"
+          },
+          {
+            "period": "UNIVERSITIES",
+            "step": "03 · OPERATIONS",
+            "heading": "Turn insight into action",
+            "points": [
+              "Readiness and alignment",
+              "Partnerships and evidence"
+            ],
+            "verdict": "ACT EARLIER"
+          }
+        ],
+        "caption": "No proprietary data, customers, or network advantage is claimed.",
+        "itemCount": 3,
+        "accentColor": "#7A5AE0"
+      }
+    },
+    {
+      "id": "s23-validation",
+      "layout": "theme01_page046",
+      "props": {
+        "kicker": "NEXT-STAGE VALIDATION",
+        "title": "Prove one repeated workflow",
+        "en": "BOUNDED HYPOTHESIS · NOT A PILOT",
+        "intro": "Test whether one computing faculty can detect two gaps, launch an intervention, capture evidence, and reuse the outcome summary.",
+        "stats": [
+          {
+            "value": "01",
+            "unit": "FACULTY",
+            "label": "Controlled scope"
+          },
+          {
+            "value": "02",
+            "unit": "GAPS",
+            "label": "Named priorities"
+          },
+          {
+            "value": "01",
+            "unit": "OWNER",
+            "label": "Career services"
+          }
+        ],
+        "points": [
+          {
+            "h": "TRUST",
+            "d": "Consent, data rights, and correction."
+          },
+          {
+            "h": "ADOPTION",
+            "d": "Owners use the workflow repeatedly."
+          },
+          {
+            "h": "VALUE",
+            "d": "Measure time from signal to action."
+          }
+        ],
+        "caption": "Recommended validation path; no partnership announced.",
+        "images": [
+          "assets/user-media/university-readiness.png"
+        ],
+        "imageSlotCount": 1,
+        "statCount": 3,
+        "pointCount": 3
+      }
+    },
+    {
+      "id": "s24-close",
+      "layout": "theme01_page084",
+      "props": {
+        "kicker": "CAREEROS",
+        "title": "Protect career potential",
+        "en": "REMEMBER · PROVE · ACT · LEARN",
+        "cn": "THE EVIDENCE MEMORY AND ACTION LAYER",
+        "listLabel": "THE CLOSING THESIS",
+        "sources": [
+          {
+            "label": "STUDENT",
+            "note": "Preserve evidence and choose clearer next actions."
+          },
+          {
+            "label": "EMPLOYER",
+            "note": "Retain context and make explainable decisions."
+          },
+          {
+            "label": "UNIVERSITY",
+            "note": "Act on gaps while outcomes can still change."
+          },
+          {
+            "label": "OPPORTUNITY",
+            "note": "Validate the permissioned shared evidence loop."
+          }
+        ],
+        "meta": [
+          {
+            "k": "STATUS",
+            "v": "PROTOTYPE"
+          },
+          {
+            "k": "SUBMISSION",
+            "v": "TALENTBANK AI"
+          },
+          {
+            "k": "DATE",
+            "v": "JULY 2026"
+          }
+        ],
+        "panelLabel": "THE PRODUCT DEFINITION",
+        "lead": "The evidence memory and action layer between education and employment.",
+        "disclaimer": "No adoption, partnerships, measured outcomes, ROI, or AI accuracy claimed.",
+        "caption": "CAREEROS · EDUCATION ↔ EMPLOYMENT",
+        "sourceCount": 4,
+        "accentColor": "#6D5CE8"
+      }
+    }
+  ]
+}

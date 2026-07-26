@@ -113,10 +113,10 @@ function StatCard({ value, valueTone, label, sublabel }) {
   }
   return (
     <div className="rounded-2xl border border-white/70 bg-white/85 p-4 shadow-[0_10px_24px_rgba(37,99,235,0.06),inset_0_1px_0_rgba(255,255,255,0.85)]">
-      <p className={`text-2xl font-black tracking-tight ${VALUE_TONES[valueTone] ?? 'text-[#11194a]'}`}>
+      <p className={`text-2xl font-bold tracking-tight ${VALUE_TONES[valueTone] ?? 'text-[#11194a]'}`}>
         {value}
       </p>
-      <p className="mt-1 text-sm font-bold text-[#11194a]">{label}</p>
+      <p className="mt-1 text-sm font-semibold text-[#11194a]">{label}</p>
       <p className="mt-0.5 text-xs font-medium text-[#7382a1]">{sublabel}</p>
     </div>
   )
@@ -162,10 +162,10 @@ export default function SkillGapAnalysis({ skills = DEFAULT_SKILL_GAPS }) {
       {/* ── Header row ─────────────────────────────────────────── */}
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div className="min-w-0">
-          <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-violet-600">
+          <p className="text-[11px] font-semibold uppercase tracking-wide text-violet-600">
             Skill Gap Analysis
           </p>
-          <h2 className="mt-1 text-lg font-black leading-tight text-[#11194a] sm:text-xl">
+          <h2 className="mt-1 text-lg font-bold leading-tight text-[#11194a] sm:text-xl">
             {headline}
           </h2>
           <p className="mt-1 text-sm font-medium text-[#637094]">{subheadline}</p>
@@ -175,25 +175,25 @@ export default function SkillGapAnalysis({ skills = DEFAULT_SKILL_GAPS }) {
           {/* Editable target-role pill */}
           <label className="inline-flex items-center gap-2 rounded-full border border-white/70 bg-white/95 px-3 py-2 shadow-[0_4px_10px_rgba(37,99,235,0.06)] transition focus-within:border-blue-300 focus-within:ring-2 focus-within:ring-blue-100">
             <Briefcase size={14} className="text-blue-600" strokeWidth={2.2} />
-            <span className="text-xs font-bold text-[#637094]">Target:</span>
+            <span className="text-xs font-semibold text-[#637094]">Target:</span>
             <input
               value={targetRole}
               onChange={(event) => setTargetRole(event.target.value)}
               placeholder="Data Analyst"
               aria-label="Target role"
-              className="w-40 bg-transparent text-xs font-black text-blue-700 placeholder:text-[#9aa6c3] focus:outline-none"
+              className="w-40 bg-transparent text-xs font-semibold text-blue-700 placeholder:text-[#8a96af] focus:outline-none"
             />
           </label>
 
           {/* Optional industry filter */}
           <div className="relative inline-flex items-center gap-2 rounded-full border border-white/70 bg-white/95 px-3 py-2 shadow-[0_4px_10px_rgba(37,99,235,0.06)] transition focus-within:border-violet-300 focus-within:ring-2 focus-within:ring-violet-100">
             <Building2 size={14} className="text-violet-600" strokeWidth={2.2} />
-            <span className="text-xs font-bold text-[#637094]">Industry:</span>
+            <span className="text-xs font-semibold text-[#637094]">Industry:</span>
             <select
               value={industryId}
               onChange={(event) => setIndustryId(event.target.value)}
               aria-label="Industry (optional)"
-              className="appearance-none bg-transparent pr-4 text-xs font-black text-violet-700 focus:outline-none"
+              className="appearance-none bg-transparent pr-4 text-xs font-semibold text-violet-700 focus:outline-none"
             >
               {INDUSTRY_OPTIONS.map((option) => (
                 <option key={option.id} value={option.id}>
@@ -231,7 +231,7 @@ export default function SkillGapAnalysis({ skills = DEFAULT_SKILL_GAPS }) {
       {/* ── Skill table ────────────────────────────────────────── */}
       <div className="mt-4 overflow-hidden rounded-2xl border border-white/70 bg-white/80 shadow-[inset_0_1px_0_rgba(255,255,255,0.85)]">
         {/* Column headers */}
-        <div className="grid grid-cols-[minmax(150px,1.4fr)_minmax(160px,2.6fr)_70px_100px] items-center gap-3 border-b border-blue-50 px-4 py-2.5 text-[10px] font-black uppercase tracking-[0.14em] text-[#9aa6c3]">
+        <div className="grid grid-cols-[minmax(150px,1.4fr)_minmax(160px,2.6fr)_70px_100px] items-center gap-3 border-b border-blue-50 px-4 py-2.5 text-[10px] font-semibold uppercase tracking-wide text-[#7382a1]">
           <span>Skill</span>
           <span>Your level vs. required</span>
           <span className="text-center">Gap</span>
@@ -261,7 +261,7 @@ export default function SkillGapAnalysis({ skills = DEFAULT_SKILL_GAPS }) {
                     aria-hidden="true"
                   />
                   <div className="min-w-0">
-                    <p className="truncate text-sm font-black text-[#11194a]">{skill.name}</p>
+                    <p className="truncate text-sm font-semibold text-[#11194a]">{skill.name}</p>
                     <p className="text-[11px] font-medium text-[#7382a1]">{skill.description}</p>
                   </div>
                 </div>
@@ -279,7 +279,7 @@ export default function SkillGapAnalysis({ skills = DEFAULT_SKILL_GAPS }) {
                       aria-hidden="true"
                     />
                   </div>
-                  <div className="mt-1.5 flex justify-between text-[11px] font-bold">
+                  <div className="mt-1.5 flex justify-between text-[11px] font-semibold">
                     <span className="text-blue-700">You: {skill.yourLevel}%</span>
                     <span className="text-[#7382a1]">Need: {skill.requiredLevel}%</span>
                   </div>
@@ -288,7 +288,7 @@ export default function SkillGapAnalysis({ skills = DEFAULT_SKILL_GAPS }) {
                 {/* Gap pill */}
                 <div className="flex justify-center">
                   <span
-                    className={`inline-flex min-w-[3.25rem] justify-center rounded-full border px-2.5 py-1 text-xs font-black ${GAP_PILL_TONES[skill.severity]}`}
+                    className={`inline-flex min-w-[3.25rem] justify-center rounded-full border px-2.5 py-1 text-xs font-bold ${GAP_PILL_TONES[skill.severity]}`}
                   >
                     {gapLabel}
                   </span>
@@ -299,7 +299,7 @@ export default function SkillGapAnalysis({ skills = DEFAULT_SKILL_GAPS }) {
                   {isActionable ? (
                     <button
                       type="button"
-                      className={`inline-flex items-center gap-1 text-xs font-black transition ${nextStepTone}`}
+                      className={`inline-flex items-center gap-1 text-xs font-bold transition ${nextStepTone}`}
                     >
                       {skill.nextStep}
                       <ArrowRight size={12} strokeWidth={2.6} />

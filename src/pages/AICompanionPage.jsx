@@ -501,7 +501,7 @@ export default function AICompanionPage() {
   const [isQuickActionsOpen, setIsQuickActionsOpen] = useState(true)
 
   // ── Interview Practice mode ─────────────────────────────────────────
-  const [activeMode, setActiveMode] = useState('chat') // 'chat' | 'practice'
+  const [activeMode, setActiveMode] = useState(() => (location.state?.activeMode === 'practice' ? 'practice' : 'chat')) // 'chat' | 'practice'
   const [sessionConfig, setSessionConfig] = useState(null) // { mode, role, company }
 
   const scrollRef = useRef(null)

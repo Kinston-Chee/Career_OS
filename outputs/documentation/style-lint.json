@@ -1,0 +1,170 @@
+{
+  "input": "C:\\Users\\kinst\\OneDrive\\\u6587\u6863\\TalentBank Hackathon\\outputs\\documentation\\CareerOS_Product_Documentation_Round_2.docx",
+  "fonts_by_char_count": {
+    "Calibri": 7935
+  },
+  "direct_run_formatting_runs": 209,
+  "direct_paragraph_formatting_paragraphs": 305,
+  "heading_like_paragraphs_not_heading_style": [
+    {
+      "para_index": 2,
+      "text": "CAREEROS",
+      "style": "Normal"
+    },
+    {
+      "para_index": 3,
+      "text": "CareerOS",
+      "style": "Normal"
+    },
+    {
+      "para_index": 4,
+      "text": "The evidence memory and action layer\nbetween education and employment",
+      "style": "Normal"
+    },
+    {
+      "para_index": 5,
+      "text": "ROUND 2 PRODUCT DOCUMENTATION",
+      "style": "Normal"
+    },
+    {
+      "para_index": 208,
+      "text": "Stakeholder",
+      "style": "Normal"
+    },
+    {
+      "para_index": 209,
+      "text": "Failure today",
+      "style": "Normal"
+    },
+    {
+      "para_index": 210,
+      "text": "Consequence",
+      "style": "Normal"
+    },
+    {
+      "para_index": 221,
+      "text": "Workspace",
+      "style": "Normal"
+    },
+    {
+      "para_index": 222,
+      "text": "Representative user",
+      "style": "Normal"
+    },
+    {
+      "para_index": 223,
+      "text": "Primary job",
+      "style": "Normal"
+    },
+    {
+      "para_index": 234,
+      "text": "Stage",
+      "style": "Normal"
+    },
+    {
+      "para_index": 235,
+      "text": "CareerOS meaning",
+      "style": "Normal"
+    },
+    {
+      "para_index": 236,
+      "text": "Examples",
+      "style": "Normal"
+    },
+    {
+      "para_index": 258,
+      "text": "Stakeholder",
+      "style": "Normal"
+    },
+    {
+      "para_index": 259,
+      "text": "Value that can accumulate",
+      "style": "Normal"
+    },
+    {
+      "para_index": 268,
+      "text": "Capability",
+      "style": "Normal"
+    },
+    {
+      "para_index": 269,
+      "text": "Current status",
+      "style": "Normal"
+    },
+    {
+      "para_index": 270,
+      "text": "Boundary",
+      "style": "Normal"
+    },
+    {
+      "para_index": 301,
+      "text": "Layer",
+      "style": "Normal"
+    },
+    {
+      "para_index": 302,
+      "text": "Current implementation",
+      "style": "Normal"
+    }
+  ],
+  "examples": {
+    "direct_paragraph_formatting": [
+      {
+        "para_index": 1,
+        "text": "",
+        "style": "Normal"
+      },
+      {
+        "para_index": 5,
+        "text": "ROUND 2 PRODUCT DOCUMENTATION",
+        "style": "Normal"
+      },
+      {
+        "para_index": 7,
+        "text": "",
+        "style": "Normal"
+      },
+      {
+        "para_index": 12,
+        "text": "",
+        "style": "Normal"
+      },
+      {
+        "para_index": 14,
+        "text": "1. Executive Summary",
+        "style": "List Bullet"
+      }
+    ],
+    "direct_run_formatting": [
+      {
+        "para_index": 2,
+        "run_text": "CAREEROS",
+        "style": "Normal"
+      },
+      {
+        "para_index": 3,
+        "run_text": "CareerOS",
+        "style": "Normal"
+      },
+      {
+        "para_index": 4,
+        "run_text": "The evidence memory and action layer\nbetween education and employment",
+        "style": "Normal"
+      },
+      {
+        "para_index": 5,
+        "run_text": "ROUND 2 PRODUCT DOCUMENTATION",
+        "style": "Normal"
+      },
+      {
+        "para_index": 6,
+        "run_text": "Talentbank AI Hackathon 2026  \u00b7  July 2026",
+        "style": "Normal"
+      }
+    ]
+  },
+  "notes": [
+    "Direct formatting is not always wrong, but it often causes inconsistent output when templates change.",
+    "Heading-like paragraphs not using Heading styles can break TOC and accessibility."
+  ]
+}

@@ -1,0 +1,452 @@
+{
+  "goal": "C:\\Users\\kinst\\OneDrive\\文档\\TalentBank Hackathon\\output\\dashi-careeros-complete\\goal.part-05.json",
+  "themePack": "theme01",
+  "slideCount": 4,
+  "part": {
+    "index": 5,
+    "total": 5,
+    "startSlide": 21,
+    "endSlide": 24
+  },
+  "slides": [
+    {
+      "slide": 21,
+      "layout": "theme01_page067",
+      "label": "资金瀑布 · 构成",
+      "roles": [
+        "data",
+        "distribution"
+      ],
+      "fillPlan": {
+        "text": [
+          {
+            "key": "kicker",
+            "role": "title",
+            "type": "string",
+            "maxChars": 18
+          },
+          {
+            "key": "title",
+            "role": "title",
+            "type": "string",
+            "maxChars": 20
+          },
+          {
+            "key": "en",
+            "role": "eyebrow",
+            "type": "string",
+            "maxChars": 26
+          },
+          {
+            "key": "cn",
+            "role": "eyebrow",
+            "type": "string",
+            "maxChars": 35
+          },
+          {
+            "key": "chartSectionLabel",
+            "role": "eyebrow",
+            "type": "string",
+            "maxChars": 20
+          },
+          {
+            "key": "totalLabel",
+            "role": "eyebrow",
+            "type": "string",
+            "maxChars": 18
+          },
+          {
+            "key": "unit",
+            "role": "eyebrow",
+            "type": "string",
+            "maxChars": 18
+          },
+          {
+            "key": "runLabel",
+            "role": "eyebrow",
+            "type": "string",
+            "maxChars": 18
+          },
+          {
+            "key": "caption",
+            "role": "body",
+            "type": "string",
+            "maxChars": 40
+          }
+        ],
+        "arrays": [
+          {
+            "key": "steps",
+            "role": "step",
+            "visibleCount": 5,
+            "maxCount": 5,
+            "countKey": "categoryCount",
+            "itemShape": {
+              "label": "string",
+              "value": "number"
+            },
+            "itemFields": {
+              "label": {
+                "role": "eyebrow",
+                "type": "string",
+                "maxChars": 18
+              },
+              "value": {
+                "role": "metric",
+                "type": "number",
+                "numericRange": {
+                  "observedMin": 71,
+                  "observedMax": 420
+                },
+                "numericBounds": {
+                  "min": 0,
+                  "max": 462,
+                  "enforced": false
+                },
+                "maxChars": 9
+              }
+            }
+          }
+        ],
+        "media": []
+      }
+    },
+    {
+      "slide": 22,
+      "layout": "theme01_page040",
+      "label": "阶段性策略路线图",
+      "roles": [
+        "relationship",
+        "process",
+        "actions"
+      ],
+      "fillPlan": {
+        "text": [
+          {
+            "key": "kicker",
+            "role": "title",
+            "type": "string",
+            "maxChars": 18
+          },
+          {
+            "key": "title",
+            "role": "title",
+            "type": "string",
+            "maxChars": 24
+          },
+          {
+            "key": "en",
+            "role": "eyebrow",
+            "type": "string",
+            "maxChars": 22
+          },
+          {
+            "key": "cn",
+            "role": "eyebrow",
+            "type": "string",
+            "maxChars": 26
+          },
+          {
+            "key": "caption",
+            "role": "body",
+            "type": "string",
+            "maxChars": 36
+          }
+        ],
+        "arrays": [
+          {
+            "key": "phases",
+            "role": "step",
+            "visibleCount": 3,
+            "maxCount": 4,
+            "countKey": "itemCount",
+            "itemShape": {
+              "period": "string",
+              "step": "string",
+              "heading": "string",
+              "points": [
+                "string"
+              ],
+              "verdict": "string"
+            },
+            "itemFields": {
+              "period": {
+                "role": "eyebrow",
+                "type": "string",
+                "maxChars": 18
+              },
+              "step": {
+                "role": "eyebrow",
+                "type": "string",
+                "maxChars": 18
+              },
+              "heading": {
+                "role": "eyebrow",
+                "type": "string",
+                "maxChars": 18
+              },
+              "verdict": {
+                "role": "eyebrow",
+                "type": "string",
+                "maxChars": 18
+              }
+            },
+            "nestedArrays": {
+              "points": {
+                "visibleCount": 2,
+                "countKey": null,
+                "fixedLength": 2,
+                "itemShape": "string",
+                "item": {
+                  "role": "eyebrow",
+                  "maxChars": 24
+                }
+              }
+            }
+          },
+          {
+            "key": "phases[].points",
+            "role": "list-item",
+            "visibleCount": 2,
+            "countKey": null,
+            "fixedLength": 2,
+            "itemShape": "string",
+            "item": {
+              "role": "eyebrow",
+              "maxChars": 24
+            }
+          }
+        ],
+        "media": []
+      }
+    },
+    {
+      "slide": 23,
+      "layout": "theme01_page045",
+      "label": "典型案例 · xAI",
+      "roles": [
+        "case",
+        "image"
+      ],
+      "fillPlan": {
+        "text": [
+          {
+            "key": "kicker",
+            "role": "title",
+            "type": "string",
+            "maxChars": 18
+          },
+          {
+            "key": "title",
+            "role": "title",
+            "type": "string",
+            "maxChars": 22
+          },
+          {
+            "key": "en",
+            "role": "eyebrow",
+            "type": "string",
+            "maxChars": 18
+          },
+          {
+            "key": "intro",
+            "role": "body",
+            "type": "string",
+            "maxChars": 80
+          },
+          {
+            "key": "caption",
+            "role": "body",
+            "type": "string",
+            "maxChars": 42
+          }
+        ],
+        "arrays": [
+          {
+            "key": "stats",
+            "role": "metric",
+            "visibleCount": 3,
+            "maxCount": 3,
+            "countKey": "statCount",
+            "itemShape": {
+              "value": "string",
+              "unit": "string",
+              "label": "string"
+            },
+            "itemFields": {
+              "value": {
+                "role": "metric",
+                "type": "string",
+                "maxChars": 9
+              },
+              "unit": {
+                "role": "eyebrow",
+                "type": "string",
+                "maxChars": 18
+              },
+              "label": {
+                "role": "eyebrow",
+                "type": "string",
+                "maxChars": 18
+              }
+            }
+          },
+          {
+            "key": "points",
+            "role": "list-item",
+            "visibleCount": 3,
+            "maxCount": 3,
+            "countKey": "pointCount",
+            "itemShape": {
+              "h": "string",
+              "d": "string"
+            },
+            "itemFields": {
+              "h": {
+                "role": "eyebrow",
+                "type": "string",
+                "maxChars": 18
+              },
+              "d": {
+                "role": "eyebrow",
+                "type": "string",
+                "maxChars": 33
+              }
+            }
+          }
+        ],
+        "media": [
+          {
+            "key": "images",
+            "write": "props.images",
+            "visibleCount": 1,
+            "maxCount": 3,
+            "countKey": "imageSlotCount",
+            "accepts": [
+              "image",
+              "video"
+            ],
+            "acceptedKindsSource": "mediaArrayField",
+            "itemShape": "string | {src,kind,type}"
+          }
+        ]
+      }
+    },
+    {
+      "slide": 24,
+      "layout": "theme01_page071",
+      "label": "构成演变 · 百分比堆叠",
+      "roles": [],
+      "fillPlan": {
+        "text": [
+          {
+            "key": "kicker",
+            "role": "title",
+            "type": "string",
+            "maxChars": 18
+          },
+          {
+            "key": "title",
+            "role": "title",
+            "type": "string",
+            "maxChars": 18
+          },
+          {
+            "key": "en",
+            "role": "eyebrow",
+            "type": "string",
+            "maxChars": 18
+          },
+          {
+            "key": "cn",
+            "role": "eyebrow",
+            "type": "string",
+            "maxChars": 38
+          },
+          {
+            "key": "note",
+            "role": "body",
+            "type": "string",
+            "maxChars": 36
+          },
+          {
+            "key": "caption",
+            "role": "body",
+            "type": "string",
+            "maxChars": 40
+          }
+        ],
+        "arrays": [
+          {
+            "key": "segments",
+            "role": "list-item",
+            "visibleCount": 4,
+            "maxCount": 4,
+            "countKey": "segmentCount",
+            "itemShape": {
+              "label": "string"
+            },
+            "itemFields": {
+              "label": {
+                "role": "eyebrow",
+                "type": "string",
+                "maxChars": 18
+              }
+            }
+          },
+          {
+            "key": "rows",
+            "role": "list-item",
+            "visibleCount": 4,
+            "maxCount": 5,
+            "countKey": "itemCount",
+            "itemShape": {
+              "period": "string",
+              "shares": [
+                "number"
+              ]
+            },
+            "itemFields": {
+              "period": {
+                "role": "eyebrow",
+                "type": "string",
+                "maxChars": 18
+              }
+            },
+            "nestedArrays": {
+              "shares": {
+                "visibleCount": 4,
+                "maxCount": 4,
+                "countKey": null,
+                "fixedLength": 4,
+                "numericRange": {
+                  "observedMin": 5,
+                  "observedMax": 50
+                },
+                "itemShape": "number",
+                "item": {
+                  "role": "eyebrow",
+                  "maxChars": 18
+                }
+              }
+            }
+          },
+          {
+            "key": "rows[].shares",
+            "role": "distribution",
+            "visibleCount": 4,
+            "maxCount": 4,
+            "countKey": null,
+            "fixedLength": 4,
+            "itemShape": "number",
+            "numericRange": {
+              "observedMin": 5,
+              "observedMax": 50
+            }
+          }
+        ],
+        "media": []
+      }
+    }
+  ]
+}

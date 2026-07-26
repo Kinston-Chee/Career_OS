@@ -1,0 +1,89 @@
+{
+  "version": 1,
+  "items": [
+    {
+      "sourceId": "3bad502cee83",
+      "relative": "assets/user-media/student-memory.png",
+      "kind": "image",
+      "mime": "image/png"
+    },
+    {
+      "sourceId": "3136b69ab6aa",
+      "relative": "assets/user-media/student-intelligence.png",
+      "kind": "image",
+      "mime": "image/png"
+    },
+    {
+      "sourceId": "bad6d0ec689f",
+      "relative": "assets/user-media/student-opportunities.png",
+      "kind": "image",
+      "mime": "image/png"
+    },
+    {
+      "sourceId": "f4e593aa1164",
+      "relative": "assets/user-media/student-companion.png",
+      "kind": "image",
+      "mime": "image/png"
+    },
+    {
+      "sourceId": "1204f26b2410",
+      "relative": "assets/user-media/student-community.png",
+      "kind": "image",
+      "mime": "image/png"
+    },
+    {
+      "sourceId": "683ed272d14c",
+      "relative": "assets/user-media/employer-discovery.png",
+      "kind": "image",
+      "mime": "image/png"
+    },
+    {
+      "sourceId": "a60edcfa4c4f",
+      "relative": "assets/user-media/employer-candidates.png",
+      "kind": "image",
+      "mime": "image/png"
+    },
+    {
+      "sourceId": "5227848e45ad",
+      "relative": "assets/user-media/employer-pipeline.png",
+      "kind": "image",
+      "mime": "image/png"
+    },
+    {
+      "sourceId": "e070e3e62832",
+      "relative": "assets/user-media/university-readiness.png",
+      "kind": "image",
+      "mime": "image/png"
+    },
+    {
+      "sourceId": "9504cc34c8aa",
+      "relative": "assets/user-media/university-curriculum.png",
+      "kind": "image",
+      "mime": "image/png"
+    },
+    {
+      "sourceId": "11b6f1645f9f",
+      "relative": "assets/user-media/university-alumni.png",
+      "kind": "image",
+      "mime": "image/png"
+    },
+    {
+      "sourceId": "be49d25b68a9",
+      "relative": "assets/user-media/university-collaboration.png",
+      "kind": "image",
+      "mime": "image/png"
+    },
+    {
+      "sourceId": "39847fbd2643",
+      "relative": "assets/user-media/university-accreditation.png",
+      "kind": "image",
+      "mime": "image/png"
+    },
+    {
+      "sourceId": "33b4d5ceea92",
+      "relative": "assets/user-media/university-ai-office.png",
+      "kind": "image",
+      "mime": "image/png"
+    }
+  ]
+}

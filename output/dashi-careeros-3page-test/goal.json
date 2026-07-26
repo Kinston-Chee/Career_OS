@@ -1,0 +1,132 @@
+{
+  "title": "CareerOS — Three-Slide Design Test",
+  "goal": "Introduce CareerOS, establish the three-sided evidence gap, and show how the student, employer, and university workspaces connect.",
+  "audience": "Organisers, judges, Talentbank leadership, and potential investors",
+  "owner": "CareerOS Team",
+  "language": "en",
+  "randomSeed": "careeros-tech-glass-20260725-a3k",
+  "pageCount": 3,
+  "themePack": "theme01",
+  "slides": [
+    {
+      "id": "cover",
+      "layout": "theme01_page004",
+      "props": {
+        "kicker": "CAREEROS",
+        "issue": "PRODUCT PITCH",
+        "overline": "AI-POWERED CAREER OPERATING SYSTEM",
+        "titleTop": "Career evidence",
+        "titleBottom": "that drives action",
+        "subtitle": "The memory and action layer between education and employment.",
+        "sticker": "PROTOTYPE",
+        "stats": [
+          {
+            "value": "01",
+            "label": "Student workspace"
+          },
+          {
+            "value": "02",
+            "label": "Employer workspace"
+          },
+          {
+            "value": "03",
+            "label": "University workspace"
+          }
+        ],
+        "footnote": "Three workspaces. One shared evidence loop.",
+        "statCount": 3,
+        "showSticker": true,
+        "showBokeh": true,
+        "accentColor": "#6D5CE8",
+        "showCaption": true
+      }
+    },
+    {
+      "id": "problem",
+      "layout": "theme01_page009",
+      "props": {
+        "kicker": "THE SYSTEM GAP",
+        "title": "Signals stay split",
+        "en": "THREE USERS",
+        "cn": "ONE BROKEN LOOP",
+        "chapters": [
+          {
+            "no": "01",
+            "label": "STUDENT",
+            "en": "Proof gets lost",
+            "desc": "Projects, skills and progress rarely become reusable career evidence."
+          },
+          {
+            "no": "02",
+            "label": "EMPLOYER",
+            "en": "Signals stay thin",
+            "desc": "Recruiters rely on snapshots, not demonstrated capability."
+          },
+          {
+            "no": "03",
+            "label": "UNIVERSITY",
+            "en": "Feedback arrives late",
+            "desc": "Market gaps surface after students miss the chance to respond."
+          }
+        ],
+        "caption": "CareerOS turns fragments into evidence and earlier action.",
+        "chapterCount": 3,
+        "highlight": true,
+        "highlightIndex": 0,
+        "accentColor": "#5B8DEF",
+        "showDesc": true,
+        "showCaption": true
+      }
+    },
+    {
+      "id": "ecosystem",
+      "layout": "theme01_page040",
+      "props": {
+        "kicker": "CONNECTED WORKSPACES",
+        "title": "One loop drives action",
+        "en": "REMEMBER → PROVE → ACT",
+        "cn": "ONE SHARED OPERATING LAYER",
+        "phases": [
+          {
+            "period": "STUDENT",
+            "step": "01 · BUILD",
+            "heading": "Evidence becomes reusable",
+            "points": [
+              "Career memory preserves proof",
+              "AI guidance turns proof into action"
+            ],
+            "verdict": "ACT WITH CONTEXT"
+          },
+          {
+            "period": "EMPLOYER",
+            "step": "02 · DECIDE",
+            "heading": "Signals gain depth",
+            "points": [
+              "Discover demonstrated capability",
+              "Turn matches into engagement"
+            ],
+            "verdict": "DECIDE WITH PROOF"
+          },
+          {
+            "period": "UNIVERSITY",
+            "step": "03 · INTERVENE",
+            "heading": "Feedback arrives earlier",
+            "points": [
+              "See gaps across cohorts",
+              "Target support before outcomes"
+            ],
+            "verdict": "INTERVENE EARLIER"
+          }
+        ],
+        "caption": "Prototype now; network effects later.",
+        "itemCount": 3,
+        "highlight": true,
+        "highlightIndex": 1,
+        "accentColor": "#7A5AE0",
+        "showRail": true,
+        "showVerdict": true,
+        "showCaption": true
+      }
+    }
+  ]
+}

@@ -229,7 +229,7 @@ export default function CareerIntelligencePage() {
               layout stays put. The actual chat panel is position: fixed inside
               so it never scrolls with the page. */}
           <div className="min-w-0">
-            <div className="lg:fixed lg:top-20 lg:z-10 lg:h-[min(calc(100vh-6rem),36rem)] lg:w-[320px] lg:left-[max(2rem,calc((100vw-1480px)/2+2rem))]">
+            <div className="lg:fixed lg:top-20 lg:z-10 lg:h-[calc(100vh-6rem)] lg:w-[320px] lg:left-[max(2rem,calc((100vw-1480px)/2+2rem))]">
               <CareerPathCompanionPanel
                 message={COMPANION_MESSAGE}
                 messages={chatMessages}

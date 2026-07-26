@@ -22,7 +22,7 @@ export default function TimelineCard({ entry, onOpen, onEdit }) {
     <div className="relative flex gap-4 pb-7">
       <span className="relative z-10 mt-3 h-2 w-2 flex-shrink-0 rounded-full bg-blue-600" />
 
-      <span className="w-16 flex-shrink-0 whitespace-pre-line pt-1.5 text-xs font-bold text-blue-700">
+      <span className="w-16 flex-shrink-0 whitespace-pre-line pt-1.5 text-xs font-semibold text-blue-700">
         {entry.year}
       </span>
 
@@ -43,7 +43,7 @@ export default function TimelineCard({ entry, onOpen, onEdit }) {
 
         <div className="min-w-0 flex-1">
           <div className="flex items-center gap-2">
-            <p className="truncate text-sm font-bold text-[#11194a]">{entry.title}</p>
+            <p className="truncate text-sm font-semibold text-[#11194a]">{entry.title}</p>
             {entry.verified && (
               <span className="inline-flex flex-shrink-0 items-center gap-1 rounded-full border border-emerald-100 bg-emerald-50/80 px-2 py-0.5 text-[11px] font-semibold text-emerald-700">
                 <CheckCircle2 size={11} strokeWidth={2.4} /> Verified

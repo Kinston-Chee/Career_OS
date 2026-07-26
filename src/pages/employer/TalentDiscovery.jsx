@@ -75,7 +75,7 @@ function PostingsRail({ selectedId, onSelect, onCreate }) {
   }))
 
   return (
-    <aside className="flex h-full flex-col overflow-y-auto border-r border-[#E4E7EC] bg-white py-4">
+    <aside className="employer-glass-card flex h-full flex-col overflow-y-auto p-4">
       <div className="px-4 pb-4">
         <p className="mb-2 px-1 text-[10px] font-bold uppercase tracking-[.08em] text-[#8892A0]">Postings</p>
         {items.map((p) => {
@@ -86,10 +86,10 @@ function PostingsRail({ selectedId, onSelect, onCreate }) {
               key={p.id}
               type="button"
               onClick={() => onSelect(p.id)}
-              className={`mb-0.5 flex w-full flex-col gap-1 rounded-lg border px-3 py-2.5 text-left transition ${
+              className={`mb-1 flex w-full flex-col gap-1 rounded-xl border px-3 py-2.5 text-left transition ${
                 active
-                  ? 'border-[#C5CBFC] bg-[#EEF0FE]'
-                  : 'border-transparent hover:bg-[#F7F8FA]'
+                  ? 'border-blue-200 bg-blue-50/80'
+                  : 'border-transparent bg-white/45 hover:bg-white/75'
               }`}
             >
               <div className="flex items-center justify-between gap-2">
@@ -111,7 +111,7 @@ function PostingsRail({ selectedId, onSelect, onCreate }) {
           )
         })}
       </div>
-      <div className="mx-4 h-px bg-[#E4E7EC]" />
+      <div className="mx-4 h-px bg-blue-100/70" />
       <button
         type="button"
         onClick={onCreate}
@@ -171,7 +171,7 @@ function MainPanel({ posting, statuses, onShortlist, onPass, onView, onDraft, on
   const visibleAll = filteredAll.slice(0, visibleCount)
 
   return (
-    <main className="overflow-y-auto bg-[#F7F8FA] px-6 py-5">
+    <main className="overflow-y-auto px-1 py-1">
       {/* Metrics strip */}
       <section className="mb-5 grid grid-cols-2 gap-3 md:grid-cols-4">
         <MetricCard label="Total applicants" value={posting.stat1Value} valueTone="hi" sub="Across active posting" />
@@ -211,7 +211,7 @@ function MainPanel({ posting, statuses, onShortlist, onPass, onView, onDraft, on
 
       {/* Body */}
       {!posting.hasFullData ? (
-        <div className="rounded-xl border border-[#E4E7EC] bg-white p-16 text-center text-sm text-[#8892A0]">
+        <div className="employer-glass-card p-16 text-center text-sm text-[#8892A0]">
           Loading applicants for {posting.title}…
         </div>
       ) : tab === 'interviewer' ? (
@@ -247,7 +247,7 @@ function MainPanel({ posting, statuses, onShortlist, onPass, onView, onDraft, on
           </div>
         </div>
       ) : (
-        <div className="overflow-hidden rounded-xl border border-[#E4E7EC] bg-white">
+        <div className="employer-glass-card overflow-hidden p-0">
           <table className="w-full border-collapse">
             <thead>
               <tr className="border-b border-[#E4E7EC] bg-[#F7F8FA]">
@@ -302,7 +302,7 @@ function MainPanel({ posting, statuses, onShortlist, onPass, onView, onDraft, on
 function MetricCard({ label, value, valueTone, sub }) {
   const colors = { hi: 'text-[#4F62F7]', ok: 'text-[#0E9F6E]', warn: 'text-[#D97706]' }
   return (
-    <div className="rounded-xl border border-[#E4E7EC] bg-white px-4 py-3.5">
+    <div className="employer-glass-metric px-4 py-3.5">
       <div className="mb-1.5 text-[10px] font-bold uppercase tracking-[.07em] text-[#8892A0]">{label}</div>
       <div className={`font-mono text-[22px] font-medium leading-none ${colors[valueTone] || 'text-[#0F1117]'}`}>{value}</div>
       <div className="mt-1 text-[11px] text-[#8892A0]">{sub}</div>
@@ -342,7 +342,7 @@ function FilterPill({ active, onClick, children }) {
 
 function PagerNav({ onClick, children }) {
   return (
-    <button type="button" onClick={onClick} className="flex h-[30px] w-[30px] items-center justify-center rounded-lg border border-[#E4E7EC] bg-white text-[#3D4A5C] transition hover:border-[#C8CDD6]">{children}</button>
+    <button type="button" onClick={onClick} className="flex h-[30px] w-[30px] items-center justify-center rounded-lg border border-blue-100 bg-white/80 text-[#3D4A5C] transition hover:border-blue-200">{children}</button>
   )
 }
 
@@ -360,7 +360,7 @@ function ShortlistRow({ rank, candidate, status, accent, onShortlist, onPass, on
   const isPassed = status === 'Passed'
   return (
     <div
-      className="relative grid grid-cols-[28px_36px_1fr_auto] items-start gap-x-3 overflow-hidden rounded-xl border border-[#E4E7EC] bg-white px-4 py-3.5 transition hover:border-[#C8CDD6]"
+      className="employer-glass-card relative grid grid-cols-[28px_36px_1fr_auto] items-start gap-x-3 overflow-hidden px-4 py-3.5 transition hover:bg-white/90"
     >
       <span className="absolute inset-y-0 left-0 w-[3px]" style={{ background: accent }} />
       <div className="pt-2.5 text-center font-mono text-[12px] text-[#8892A0]">{String(rank).padStart(2, '0')}</div>
@@ -442,8 +442,8 @@ function TalentAIPanel({ tracker, messages, onSendMessage, onQuickAction }) {
   }
 
   return (
-    <aside className="flex h-full flex-col overflow-hidden border-l border-[#E4E7EC] bg-white">
-      <div className="flex shrink-0 items-center justify-between border-b border-[#E4E7EC] px-4 py-3">
+    <aside className="employer-glass-card flex h-full flex-col overflow-hidden p-0">
+      <div className="flex shrink-0 items-center justify-between border-b border-blue-100/70 px-4 py-3">
         <div className="flex items-center gap-2">
           <span className="flex h-7 w-7 items-center justify-center rounded-md bg-[#4F62F7]">
             <Sparkles className="h-3.5 w-3.5 text-white" />
@@ -475,7 +475,7 @@ function TalentAIPanel({ tracker, messages, onSendMessage, onQuickAction }) {
         ))}
       </div>
 
-      <div className="shrink-0 border-t border-[#E4E7EC] px-4 py-2.5">
+      <div className="shrink-0 border-t border-blue-100/70 px-4 py-2.5">
         <div className="mb-2 flex items-center justify-between">
           <span className="text-[10px] font-bold uppercase tracking-[.07em] text-[#8892A0]">Application Tracker</span>
           <button type="button" className="text-[11px] font-medium text-[#4F62F7] hover:underline">View all →</button>
@@ -487,7 +487,7 @@ function TalentAIPanel({ tracker, messages, onSendMessage, onQuickAction }) {
         </div>
       </div>
 
-      <div className="shrink-0 border-t border-[#E4E7EC] px-3.5 py-3">
+      <div className="shrink-0 border-t border-blue-100/70 px-3.5 py-3">
         <div className="mb-2 flex flex-col gap-1">
           <QuickChip icon={Mail} onClick={() => onQuickAction('Draft outreach · Ivan Lim')}>Draft outreach · Ivan Lim</QuickChip>
           <QuickChip icon={ShieldAlert} onClick={() => onQuickAction('Summarise risk signals across all shortlisted')}>Summarise risk signals</QuickChip>
@@ -513,7 +513,7 @@ function TalentAIPanel({ tracker, messages, onSendMessage, onQuickAction }) {
 function TrackerCell({ num, label, tone }) {
   const color = tone === 'indigo' ? 'text-[#4F62F7]' : tone === 'blue' ? 'text-[#2563eb]' : 'text-[#8892A0]'
   return (
-    <div className="rounded-lg bg-[#F7F8FA] p-2 text-center">
+    <div className="rounded-lg bg-white/65 p-2 text-center ring-1 ring-blue-100/60">
       <div className={`font-mono text-[18px] font-medium leading-none ${color}`}>{num}</div>
       <div className="mt-0.5 text-[10px] text-[#8892A0]">{label}</div>
     </div>
@@ -522,7 +522,7 @@ function TrackerCell({ num, label, tone }) {
 
 function QuickChip({ icon: Icon, onClick, children }) {
   return (
-    <button type="button" onClick={onClick} className="flex items-center gap-1.5 rounded-md border border-[#E4E7EC] bg-[#F7F8FA] px-2.5 py-1.5 text-left text-[11px] text-[#3D4A5C] transition hover:border-[#4F62F7] hover:text-[#4F62F7]">
+    <button type="button" onClick={onClick} className="flex items-center gap-1.5 rounded-md border border-blue-100 bg-white/70 px-2.5 py-1.5 text-left text-[11px] text-[#3D4A5C] transition hover:border-[#4F62F7] hover:text-[#4F62F7]">
       <Icon className="h-3.5 w-3.5" />
       {children}
     </button>
@@ -582,7 +582,7 @@ function ModalField({ label, children }) {
 function DemoToast({ message }) {
   if (!message) return null
   return (
-    <div className="fixed bottom-5 right-5 z-[300] rounded-lg border border-[#E4E7EC] bg-white px-4 py-2.5 text-[13px] font-medium text-[#0F1117] shadow-[0_8px_24px_rgba(15,17,23,.12)]">
+    <div className="employer-glass-card fixed bottom-5 right-5 z-[300] px-4 py-2.5 text-[13px] font-medium text-[#0F1117]">
       {message}
     </div>
   )
@@ -667,39 +667,44 @@ export default function TalentDiscovery() {
   }
 
   return (
-    <div className="flex h-screen w-screen flex-col overflow-hidden bg-[#F7F8FA] text-[#0F1117]" style={{ fontFamily: 'DM Sans, system-ui, sans-serif' }}>
+    <div
+      className="employer-workspace-page flex h-screen w-screen flex-col overflow-hidden text-[#111B3F]"
+      style={{ fontFamily: 'DM Sans, system-ui, sans-serif' }}
+    >
       <EmployerNav variant="glass" />
 
-      <div className="grid min-h-0 flex-1 grid-cols-[240px_minmax(0,1fr)_320px] overflow-hidden">
-        <PostingsRail
-          selectedId={selectedPostingId}
-          onSelect={setSelectedPostingId}
-          onCreate={() => setModalOpen(true)}
-        />
-        <MainPanel
-          posting={selectedPosting}
-          onNotify={showToast}
-          statuses={statuses}
-          onShortlist={handleShortlist}
-          onPass={handlePass}
-          onView={handleView}
-          onDraft={handleDraft}
-          tab={tab}
-          setTab={setTab}
-          filter={filter}
-          setFilter={setFilter}
-          allFilter={allFilter}
-          setAllFilter={setAllFilter}
-          page={page}
-          setPage={setPage}
-        />
-        <TalentAIPanel
-          tracker={tracker}
-          messages={messages}
-          onSendMessage={handleChatSend}
-          onQuickAction={handleQuickAction}
-        />
-      </div>
+      <main className="min-w-0 flex-1 overflow-hidden">
+        <div className="mx-auto grid h-full max-w-[1480px] grid-cols-[250px_minmax(0,1fr)_330px] gap-4 px-6 py-5">
+          <PostingsRail
+            selectedId={selectedPostingId}
+            onSelect={setSelectedPostingId}
+            onCreate={() => setModalOpen(true)}
+          />
+          <MainPanel
+            posting={selectedPosting}
+            onNotify={showToast}
+            statuses={statuses}
+            onShortlist={handleShortlist}
+            onPass={handlePass}
+            onView={handleView}
+            onDraft={handleDraft}
+            tab={tab}
+            setTab={setTab}
+            filter={filter}
+            setFilter={setFilter}
+            allFilter={allFilter}
+            setAllFilter={setAllFilter}
+            page={page}
+            setPage={setPage}
+          />
+          <TalentAIPanel
+            tracker={tracker}
+            messages={messages}
+            onSendMessage={handleChatSend}
+            onQuickAction={handleQuickAction}
+          />
+        </div>
+      </main>
 
       <NewPostingModal open={modalOpen} onClose={() => setModalOpen(false)} onCreate={handleCreatePosting} />
       <DemoToast message={toast} />

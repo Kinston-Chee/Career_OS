@@ -84,7 +84,7 @@ function ViewToggle({ view, onChange }) {
             className={`inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-bold transition ${
               active
                 ? 'bg-blue-600 text-white shadow-[0_6px_16px_rgba(37,99,235,0.28)]'
-                : 'text-[#35507d] hover:bg-blue-50 hover:text-blue-700'
+                : 'text-[#52627f] hover:bg-blue-50 hover:text-blue-700'
             }`}
           >
             <Icon size={13} strokeWidth={2.4} />
@@ -131,7 +131,7 @@ function CategoryEntryRow({ entry, onOpen, onEdit }) {
 
       <div className="min-w-0 flex-1">
         <div className="flex items-center gap-2">
-          <p className="truncate text-sm font-bold text-[#11194a]">{entry.title}</p>
+          <p className="truncate text-sm font-semibold text-[#11194a]">{entry.title}</p>
           {entry.verified && (
             <span className="inline-flex flex-shrink-0 items-center gap-1 rounded-full border border-emerald-100 bg-emerald-50/80 px-2 py-0.5 text-[11px] font-semibold text-emerald-700">
               <CheckCircle2 size={11} strokeWidth={2.4} /> Verified
@@ -205,7 +205,7 @@ function CategoriesView({ groups, onOpen, onEdit }) {
                   <Icon size={17} strokeWidth={2.2} />
                 </span>
                 <div>
-                  <h2 className="text-base font-black text-[#11194a]">{group.label}</h2>
+                  <h2 className="text-base font-bold text-[#11194a]">{group.label}</h2>
                   <p className="text-xs font-medium text-[#7382a1]">{group.description}</p>
                 </div>
               </div>

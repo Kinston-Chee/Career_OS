@@ -212,11 +212,7 @@ export default function CandidateHomePage() {
       })
     }
     else if (action.title === 'Log an experience') navigate('/student/profile')
-    else if (action.title === 'Practice interview') setModal({
-      title: 'AI Mock Interview',
-      rows: ['Role: Software Engineer Intern', 'Duration: 10 min', 'Focus: NLP project, problem solving, communication'],
-      actions: [{ label: 'Start practice', onClick: () => showToast('Mock interview started') }],
-    })
+    else if (action.title === 'Practice interview') navigate('/student/ai-companion', { state: { activeMode: 'practice' } })
     else if (action.title === 'Check skill gaps') navigate('/student/intelligence')
     else if (action.title === 'Find campus events') navigate('/student/opportunities')
   }

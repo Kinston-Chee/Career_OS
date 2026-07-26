@@ -137,7 +137,7 @@ function Sidebar({ currentCat, onSelectCategory, gapCount, progressCount, catego
     { id: 'cert',      name: 'Certifications',   sub: `${categoryCounts.cert.progress} in progress` },
   ]
   return (
-    <aside className="flex h-full min-h-0 w-60 shrink-0 flex-col overflow-y-auto border-r border-[#e2e5f0] bg-white py-5">
+    <aside className="flex h-full min-h-0 w-64 shrink-0 flex-col overflow-y-auto rounded-2xl border border-white/70 bg-white/80 py-5 shadow-[0_18px_44px_rgba(38,72,140,0.08)] backdrop-blur-xl">
       <SidebarLabel>Overview</SidebarLabel>
       <SidebarItem
         active={currentCat === 'all'}
@@ -188,13 +188,13 @@ function Sidebar({ currentCat, onSelectCategory, gapCount, progressCount, catego
         pill={{ label: String(progressCount), tone: 'technical' }}
       />
 
-      <div className="mt-auto border-t border-[#e2e5f0] px-4 pt-4">
-        <div className="flex items-center gap-3">
+      <div className="mt-auto border-t border-[#dfe8f7] px-4 pt-4">
+        <div className="flex items-center gap-3 rounded-2xl border border-blue-100/70 bg-blue-50/55 p-3">
           <ProgressRing size={52} strokeWidth={5} pct={68} color="#5B6CF9" fontSize={11} />
           <div className="min-w-0">
-            <p className="text-xs text-[#6b7280]">Overall readiness</p>
+            <p className="text-xs font-medium text-[#637094]">Overall readiness</p>
             <p className="text-lg font-semibold text-[#5B6CF9]">68%</p>
-            <p className="text-[11px] text-[#9ca3af]">Target: Full-Stack Eng.</p>
+            <p className="text-[11px] font-medium text-[#7382a1]">Target: Full-Stack Eng.</p>
           </div>
         </div>
       </div>
@@ -204,7 +204,7 @@ function Sidebar({ currentCat, onSelectCategory, gapCount, progressCount, catego
 
 function SidebarLabel({ children }) {
   return (
-    <p className="mb-2 mt-4 px-4 text-[10.5px] font-semibold uppercase tracking-widest text-[#9ca3af] first-of-type:mt-0">
+    <p className="mb-2 mt-4 px-4 text-[10.5px] font-semibold uppercase tracking-wide text-[#7382a1] first-of-type:mt-0">
       {children}
     </p>
   )
@@ -220,16 +220,15 @@ function SidebarItem({ active, onClick, icon, iconBg, name, sub, pill }) {
       type="button"
       onClick={onClick}
       className={`relative flex items-center gap-2.5 px-4 py-2.5 text-left transition ${
-        active ? 'bg-[#f0f2ff]' : 'hover:bg-[#f8f9ff]'
+        active ? 'bg-blue-50/80' : 'hover:bg-white/70'
       }`}
     >
-      {active && <span className="absolute left-0 top-1.5 bottom-1.5 w-[3px] rounded-r bg-[#5B6CF9]" />}
       <span className={`flex h-7 w-7 items-center justify-center rounded-md ${iconBg}`}>
         {icon}
       </span>
       <span className="min-w-0 flex-1">
-        <p className={`truncate text-[13px] font-medium ${active ? 'text-[#5B6CF9]' : 'text-[#374151]'}`}>{name}</p>
-        <p className="text-[11px] text-[#9ca3af]">{sub}</p>
+        <p className={`truncate text-[13px] font-semibold ${active ? 'text-[#185FA5]' : 'text-[#26365c]'}`}>{name}</p>
+        <p className="text-[11px] font-medium text-[#7382a1]">{sub}</p>
       </span>
       <PillBadge tone={pill.tone}>{pill.label}</PillBadge>
     </button>
@@ -265,7 +264,11 @@ function SkillCard({ skill, onSelect, onOpenDetail }) {
   const Icon = SKILL_ICON[skill.icon] ?? Code2
   const palette = CAT_PALETTE[skill.cat] ?? CAT_PALETTE.technical
   const gapDelta = skill.pct - skill.required
-  const borderColor = skill.status === 'gap' ? '#ef4444' : skill.status === 'done' ? '#22c55e' : palette.bar
+  const statusGlow = skill.status === 'gap'
+    ? '0_14px_32px_rgba(244,63,94,0.08)'
+    : skill.status === 'done'
+      ? '0_14px_32px_rgba(16,185,129,0.08)'
+      : '0_14px_32px_rgba(37,99,235,0.08)'
 
   const badge = skill.status === 'gap'
     ? { label: `Gap: ${gapDelta} pts`, cls: BADGE_CLASS.gap }
@@ -286,8 +289,8 @@ function SkillCard({ skill, onSelect, onOpenDetail }) {
           onSelect(skill.id)
         }
       }}
-      className="group relative cursor-pointer overflow-hidden rounded-2xl border border-[#e2e5f0] bg-white p-4 text-left transition hover:-translate-y-0.5 hover:border-[#a5b4fc]"
-      style={{ borderLeftWidth: 3, borderLeftColor: borderColor }}
+      className="group relative cursor-pointer overflow-hidden rounded-2xl border border-white/75 bg-white/[0.82] p-4 text-left shadow-[0_10px_28px_rgba(38,72,140,0.07)] backdrop-blur-xl transition hover:-translate-y-0.5 hover:border-blue-200"
+      style={{ boxShadow: statusGlow }}
     >
       <div className="mb-3 flex items-start justify-between gap-3">
         <span
@@ -298,15 +301,15 @@ function SkillCard({ skill, onSelect, onOpenDetail }) {
         </span>
         <div className="flex flex-col items-end gap-1">
           <span className={`rounded-md px-2 py-0.5 text-[10.5px] font-semibold ${badge.cls}`}>{badge.label}</span>
-          <div className="flex items-center gap-1.5 text-[11px] text-[#9ca3af]">
+          <div className="flex items-center gap-1.5 text-[11px] font-medium text-[#7382a1]">
             <span className="h-1.5 w-1.5 rounded-full" style={{ background: STATUS_COLOR[skill.status] }} />
             {STATUS_LABEL[skill.status]}
           </div>
         </div>
       </div>
 
-      <p className="text-sm font-medium text-[#111827]">{skill.name}</p>
-      <p className="mb-3 text-xs text-[#9ca3af]">{skill.sub}</p>
+      <p className="text-sm font-semibold text-[#11194a]">{skill.name}</p>
+      <p className="mb-3 text-xs font-medium text-[#637094]">{skill.sub}</p>
 
       <div className="mb-3 flex items-center gap-3">
         <ProgressRing size={64} strokeWidth={7} pct={skill.pct} color={palette.bar} />
@@ -314,8 +317,8 @@ function SkillCard({ skill, onSelect, onOpenDetail }) {
           {topSubskills.map((ss) => (
             <div key={ss.n}>
               <div className="mb-0.5 flex justify-between">
-                <span className="text-[11px] text-[#374151]">{ss.n}</span>
-                <span className="text-[11px] font-medium text-[#6b7280]">{ss.p}%</span>
+                <span className="text-[11px] font-medium text-[#52627f]">{ss.n}</span>
+                <span className="text-[11px] font-medium text-[#637094]">{ss.p}%</span>
               </div>
               <div className="h-[5px] overflow-hidden rounded bg-[#f1f5f9]">
                 <div className="h-full rounded transition-all" style={{ width: `${ss.p}%`, background: palette.bar }} />
@@ -327,8 +330,8 @@ function SkillCard({ skill, onSelect, onOpenDetail }) {
 
       <div className="flex items-center justify-between border-t border-[#f0f2ff] pt-3">
         <div className="min-w-0">
-          <p className="text-[11px] text-[#9ca3af]">Next step</p>
-          <p className="truncate text-[12px] font-medium text-[#374151]">
+          <p className="text-[11px] font-medium text-[#7382a1]">Next step</p>
+          <p className="truncate text-[12px] font-medium text-[#26365c]">
             {skill.milestones.find((m) => !m.done)?.t || 'Keep maintaining'}
           </p>
         </div>
@@ -351,7 +354,7 @@ function SkillCard({ skill, onSelect, onOpenDetail }) {
 function CategoryBanner({ meta }) {
   const bg = meta.color
   return (
-    <div className="mb-6 flex items-center gap-6 rounded-2xl px-6 py-5 text-white" style={{ background: bg }}>
+    <div className="mb-6 flex items-center gap-6 rounded-2xl border border-white/45 px-6 py-5 text-white shadow-[0_16px_38px_rgba(38,72,140,0.12)]" style={{ background: bg }}>
       <ProgressRing size={72} strokeWidth={7} pct={meta.pct} color="#fff" trackColor="rgba(255,255,255,.3)" textColor="#fff" />
       <div className="min-w-0 flex-1">
         <p className="text-base font-semibold">{meta.label}</p>
@@ -384,11 +387,11 @@ function DetailPanel({ skill, onClose }) {
   const palette = CAT_PALETTE[skill.cat] ?? CAT_PALETTE.technical
   const gap = skill.pct - skill.required
   return (
-    <aside className="flex h-full min-h-0 w-80 shrink-0 flex-col gap-5 overflow-y-auto border-l border-[#e2e5f0] bg-white p-5">
+    <aside className="flex h-full min-h-0 w-80 shrink-0 flex-col gap-5 overflow-y-auto border-l border-white/70 bg-white/[0.82] p-5 shadow-[0_18px_44px_rgba(38,72,140,0.08)] backdrop-blur-xl">
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
-          <h3 className="truncate text-base font-semibold text-[#111827]">{skill.name}</h3>
-          <p className="text-[12.5px] leading-relaxed text-[#6b7280]">{skill.sub}</p>
+          <h3 className="truncate text-base font-bold text-[#11194a]">{skill.name}</h3>
+          <p className="text-[12.5px] font-medium leading-relaxed text-[#637094]">{skill.sub}</p>
         </div>
         <button
           type="button"
@@ -412,13 +415,13 @@ function DetailPanel({ skill, onClose }) {
       <Section title="Sub-skills">
         {skill.subskills.map((ss) => (
           <div key={ss.n} className="mb-2.5 flex items-center gap-2.5 last:mb-0">
-            <span className="w-28 shrink-0 text-[13px] text-[#374151]">{ss.n}</span>
+            <span className="w-28 shrink-0 text-[13px] font-medium text-[#26365c]">{ss.n}</span>
             <div className="flex-1">
               <div className="h-1.5 overflow-hidden rounded bg-[#f1f5f9]">
                 <div className="h-full rounded transition-all" style={{ width: `${ss.p}%`, background: palette.bar }} />
               </div>
             </div>
-            <span className="w-8 shrink-0 text-right text-[11.5px] font-medium text-[#6b7280]">{ss.p}%</span>
+            <span className="w-8 shrink-0 text-right text-[11.5px] font-medium text-[#637094]">{ss.p}%</span>
           </div>
         ))}
       </Section>
@@ -431,8 +434,8 @@ function DetailPanel({ skill, onClose }) {
             }`}>
               {m.done && <Check size={10} strokeWidth={3} />}
             </span>
-            <span className={`flex-1 text-[12.5px] ${m.done ? 'text-[#9ca3af] line-through' : 'text-[#374151]'}`}>{m.t}</span>
-            <span className="text-[11px] font-semibold text-[#9ca3af]">{m.xp}</span>
+            <span className={`flex-1 text-[12.5px] font-medium ${m.done ? 'text-[#8a96af] line-through' : 'text-[#26365c]'}`}>{m.t}</span>
+            <span className="text-[11px] font-semibold text-[#7382a1]">{m.xp}</span>
           </div>
         ))}
       </Section>
@@ -447,8 +450,8 @@ function DetailPanel({ skill, onClose }) {
               )}
             </div>
             <div className="flex-1">
-              <p className="text-[12.5px] font-medium text-[#111827]">{a.t}</p>
-              <p className="mt-0.5 text-[11.5px] text-[#9ca3af]">{a.meta}</p>
+              <p className="text-[12.5px] font-semibold text-[#11194a]">{a.t}</p>
+              <p className="mt-0.5 text-[11.5px] font-medium text-[#7382a1]">{a.meta}</p>
             </div>
           </div>
         ))}
@@ -469,8 +472,8 @@ function DetailPanel({ skill, onClose }) {
                 <RIcon size={14} />
               </span>
               <div className="min-w-0 flex-1">
-                <p className="truncate text-[12.5px] font-medium text-[#111827]">{r.t}</p>
-                <p className="text-[11px] text-[#9ca3af]">{r.meta}</p>
+                <p className="truncate text-[12.5px] font-semibold text-[#11194a]">{r.t}</p>
+                <p className="text-[11px] font-medium text-[#7382a1]">{r.meta}</p>
               </div>
               <span className="shrink-0 whitespace-nowrap text-[11.5px] font-semibold text-[#5B6CF9]">{r.xp}</span>
             </div>
@@ -484,7 +487,7 @@ function DetailPanel({ skill, onClose }) {
 function Stat({ label, value, valueColor }) {
   return (
     <div>
-      <p className="text-[11px] text-[#9ca3af]">{label}</p>
+      <p className="text-[11px] font-medium text-[#7382a1]">{label}</p>
       <p className="text-[15px] font-semibold" style={valueColor ? { color: valueColor } : { color: '#111827' }}>
         {value}
       </p>
@@ -495,7 +498,7 @@ function Stat({ label, value, valueColor }) {
 function Section({ title, children }) {
   return (
     <div>
-      <p className="mb-2.5 text-[12px] font-semibold uppercase tracking-wider text-[#6b7280]">{title}</p>
+      <p className="mb-2.5 text-[12px] font-semibold uppercase tracking-wide text-[#637094]">{title}</p>
       {children}
     </div>
   )
@@ -561,10 +564,10 @@ export default function SkillDevelopmentPage() {
   const isRegularCategory = Boolean(activeMeta)
 
   return (
-    <div className="fixed inset-0 flex flex-col overflow-hidden bg-[#F0F2FF] text-[#111827]" style={{ fontFamily: 'Inter, sans-serif' }}>
+    <div className="fixed inset-0 flex flex-col overflow-hidden bg-[#f6f9ff] text-[#111827]" style={{ fontFamily: 'Inter, sans-serif' }}>
       <HomeTopNav user={mockUser} readiness={readiness} />
 
-      <div className="flex min-h-0 flex-1">
+      <div className="mx-auto flex w-full max-w-[1480px] min-h-0 flex-1 gap-6 px-4 py-5 sm:px-6 lg:px-8">
         <Sidebar
           currentCat={currentCat}
           onSelectCategory={(cat) => { setCurrentCat(cat); setCurrentFilter('all') }}
@@ -573,23 +576,23 @@ export default function SkillDevelopmentPage() {
           categoryCounts={categoryCounts}
         />
 
-        <div className="flex min-w-0 flex-1 overflow-hidden">
+        <div className="flex min-w-0 flex-1 overflow-hidden rounded-2xl border border-white/65 bg-white/45 shadow-[0_18px_50px_rgba(38,72,140,0.08)] backdrop-blur-xl">
           <main className="flex min-w-0 flex-1 flex-col overflow-hidden">
-            <div className="flex-1 overflow-y-auto px-8 pb-12 pt-7">
+            <div className="flex-1 overflow-y-auto px-6 pb-12 pt-6">
               {/* Header */}
               <header className="mb-6 flex flex-wrap items-start justify-between gap-3">
                 <div>
-                  <p className="mb-1.5 flex items-center gap-2 text-[11px] font-semibold uppercase tracking-widest text-[#5B6CF9]">
+                  <p className="mb-1.5 flex items-center gap-2 text-[11px] font-semibold uppercase tracking-wide text-[#185FA5]">
                     <span
                       className="h-[3px] w-7 rounded"
                       style={{ background: isRegularCategory ? activeMeta.color : '#5B6CF9' }}
                     />
                     {isRegularCategory ? activeMeta.label : 'All categories'}
                   </p>
-                  <h1 className="mb-1 text-2xl font-semibold text-[#111827]">
+                  <h1 className="mb-1 text-2xl font-bold text-[#11194a]">
                     {isRegularCategory ? activeMeta.label : 'Skill Development'}
                   </h1>
-                  <p className="text-[13.5px] text-[#6b7280]">
+                  <p className="text-[13.5px] font-medium text-[#637094]">
                     {isRegularCategory
                       ? `${activeMeta.desc} ${activeMeta.gaps} gap${activeMeta.gaps === 1 ? '' : 's'} · ${activeMeta.skills} skills tracked.`
                       : `Track your progress across ${SKILLS.length} skills. You have ${totalGaps} gaps to close before you qualify for your target role.`}
@@ -598,13 +601,13 @@ export default function SkillDevelopmentPage() {
                 <div className="flex items-center gap-2.5">
                   <button
                     type="button"
-                    className="flex items-center gap-1.5 rounded-full border border-[#e2e5f0] bg-white px-4 py-2 text-[13px] text-[#374151] transition hover:border-[#a5b4fc] hover:text-[#5B6CF9]"
+                    className="flex items-center gap-1.5 rounded-full border border-white/75 bg-white/85 px-4 py-2 text-[13px] font-semibold text-[#374151] shadow-sm transition hover:border-blue-200 hover:text-[#185FA5]"
                   >
                     <SlidersHorizontal size={14} /> Adjust targets
                   </button>
                   <button
                     type="button"
-                    className="flex items-center gap-1.5 rounded-full bg-[#5B6CF9] px-4 py-2 text-[13px] font-medium text-white transition hover:bg-[#4a5be0]"
+                    className="flex items-center gap-1.5 rounded-full bg-blue-600 px-4 py-2 text-[13px] font-bold text-white shadow-[0_10px_20px_rgba(37,99,235,0.20)] transition hover:bg-blue-700"
                   >
                     <Plus size={14} /> Log activity
                   </button>
@@ -623,7 +626,7 @@ export default function SkillDevelopmentPage() {
                 <select
                   value={sortBy}
                   onChange={(event) => setSortBy(event.target.value)}
-                  className="cursor-pointer rounded-lg border border-[#e2e5f0] bg-white px-3 py-1.5 text-[12.5px] text-[#374151] outline-none"
+                  className="cursor-pointer rounded-xl border border-white/75 bg-white/85 px-3 py-1.5 text-[12.5px] font-semibold text-[#374151] outline-none focus:border-blue-300 focus:ring-2 focus:ring-blue-100"
                 >
                   <option value="priority">Sort: priority</option>
                   <option value="gap">Sort: biggest gap</option>
@@ -645,7 +648,7 @@ export default function SkillDevelopmentPage() {
               </div>
 
               {displayedSkills.length === 0 && (
-                <div className="rounded-2xl border border-dashed border-[#c7cef7] bg-white/70 p-10 text-center text-sm text-[#6b7280]">
+                <div className="rounded-2xl border border-dashed border-[#c7cef7] bg-white/70 p-10 text-center text-sm font-medium text-[#6b7280]">
                   Nothing to show under this filter.
                 </div>
               )}
@@ -669,7 +672,7 @@ function FilterChip({ active, onClick, count, children }) {
       className={`flex items-center gap-1.5 rounded-full border px-3.5 py-1.5 text-[12.5px] transition ${
         active
           ? 'border-[#5B6CF9] bg-[#5B6CF9] text-white'
-          : 'border-[#e2e5f0] bg-white text-[#6b7280] hover:border-[#a5b4fc] hover:text-[#5B6CF9]'
+          : 'border-[#e2e5f0] bg-white text-[#637094] hover:border-[#a5b4fc] hover:text-[#185FA5]'
       }`}
     >
       {children}

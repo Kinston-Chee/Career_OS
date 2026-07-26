@@ -1,0 +1,34 @@
+{
+  "title": "CareerOS — AI-Powered Career Operating System",
+  "goal": "Explain the complete CareerOS product, its three connected workspaces, truth boundaries, Talentbank strategic value, and next-stage validation for independent reading.",
+  "themePack": "theme01",
+  "pageCount": 24,
+  "part": {
+    "index": 1,
+    "total": 5,
+    "startSlide": 1,
+    "endSlide": 5
+  },
+  "slides": [
+    {
+      "layout": "theme01_page004",
+      "props": {}
+    },
+    {
+      "layout": "theme01_page083",
+      "props": {}
+    },
+    {
+      "layout": "theme01_page009",
+      "props": {}
+    },
+    {
+      "layout": "theme01_page010",
+      "props": {}
+    },
+    {
+      "layout": "theme01_page037",
+      "props": {}
+    }
+  ]
+}

@@ -188,7 +188,7 @@ function CareerMemoryDetailModal({ memory, editing, onClose, onEdit, onCancelEdi
               <Sparkles size={20} strokeWidth={2.2} />
             </span>
             <div className="min-w-0">
-              <h2 className="text-lg font-black text-[#11194a] sm:text-xl">{form.title}</h2>
+              <h2 className="text-lg font-bold text-[#11194a] sm:text-xl">{form.title}</h2>
               <p className="mt-0.5 text-sm font-semibold text-[#637094]">{form.organisation}</p>
               <div className="mt-2 flex flex-wrap items-center gap-1.5">
                 <span className="rounded-full border border-blue-100 bg-blue-50/80 px-2.5 py-1 text-[11px] font-bold text-blue-700">{form.type}</span>
@@ -506,7 +506,7 @@ export default function MemoryProfilePage() {
               layout stays put. The actual chat panel is position: fixed inside
               so it never scrolls with the page. */}
           <div className="min-w-0">
-            <div className="lg:fixed lg:top-20 lg:z-10 lg:h-[min(calc(100vh-6rem),36rem)] lg:w-[300px] lg:left-[max(2rem,calc((100vw-1480px)/2+2rem))]">
+            <div className="lg:fixed lg:top-20 lg:z-10 lg:h-[calc(100vh-6rem)] lg:w-[300px] lg:left-[max(2rem,calc((100vw-1480px)/2+2rem))]">
               <CompanionChatPanel
                 companion={careerMemoryView.companion}
                 onShowDraft={() => setDraftPhase('typing')}
