@@ -955,7 +955,7 @@ export default function OpportunitiesPage() {
           <Sidebar
             counts={overviewCounts}
             tracker={opportunityTracker}
-            onViewAll={() => setTrackerInitialApplication(opportunityTracker[0])}
+            onViewAll={() => navigate('/student/applications')}
             onSelectApplication={setTrackerInitialApplication}
             onBuildRoadmap={() => navigate('/student/skill-development')}
           />
@@ -967,7 +967,6 @@ export default function OpportunitiesPage() {
         opportunity={activeOpportunity}
         onClose={() => setActiveOpportunity(null)}
         onApplied={handleApplied}
-        onApplyNow={(opportunity) => navigate('/student/intelligence', { state: { applyOpportunity: opportunity } })}
       />
       {trackerInitialApplication && (
         <ApplicationTrackerModal
