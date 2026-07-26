@@ -17,6 +17,7 @@ import Candidates from './pages/employer/Candidates'
 import CampusPipeline from './pages/employer/CampusPipeline'
 import Engagements from './pages/employer/Engagements'
 import EmployerHome from './pages/EmployerHome'
+import EmployerCommandCenter from './pages/EmployerCommandCenter'
 import EmployerWorkspacePage from './pages/EmployerWorkspacePage'
 import TalentDiscovery from './pages/employer/TalentDiscovery'
 import LandingPage from './pages/LandingPage'
@@ -25,6 +26,7 @@ import MemoryProfilePage from './pages/MemoryProfilePage'
 import MentorshipsPage from './pages/MentorshipsPage'
 import OpportunitiesPage from './pages/OpportunitiesPage'
 import OpportunityCategoryPage from './pages/OpportunityCategoryPage'
+import CompanyProfilePage from './pages/CompanyProfilePage'
 import PlaceholderPage from './pages/PlaceholderPage'
 import ProfilePage from './pages/ProfilePage'
 import CareerAnimalPage from './pages/CareerAnimalPage'
@@ -61,6 +63,7 @@ export default function App() {
         <Route path="/student/career-intelligence" element={<CareerIntelligencePage />} />
         <Route path="/student/opportunities" element={<OpportunitiesPage />} />
         <Route path="/student/opportunities/:categoryId" element={<OpportunityCategoryPage />} />
+        <Route path="/student/companies/:companyId" element={<CompanyProfilePage />} />
         <Route path="/student/communities" element={<CommunitiesPage />} />
         <Route path="/student/mentorships" element={<MentorshipsPage />} />
         <Route path="/student/skill-development" element={<SkillDevelopmentPage />} />
@@ -93,6 +96,7 @@ export default function App() {
       <Route element={<ProtectedRoute role="employer" />}>
         {/* Round 2 AI-first pages — own top-nav layout, kept outside AppLayout's sidebar shell. */}
         <Route path="/employer/home" element={<EmployerHome />} />
+        <Route path="/employer/command-center" element={<EmployerCommandCenter />} />
         <Route path="/employer/talent" element={<EmployerWorkspacePage />} />
         <Route path="/employer/talent-discovery" element={<TalentDiscovery />} />
         <Route path="/employer/posting" element={<Engagements />} />

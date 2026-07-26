@@ -1,5 +1,6 @@
 import React from 'react'
 import { CheckCircle2, GraduationCap, Pencil, Trophy } from 'lucide-react'
+import LinkedInPostButton from './LinkedInPostButton'
 
 const LOGO_TONES = {
   emerald: 'border-emerald-100 bg-emerald-100/55 text-emerald-700 shadow-[inset_0_1px_0_rgba(255,255,255,0.85),0_10px_24px_rgba(16,185,129,0.10)]',
@@ -72,23 +73,26 @@ export default function TimelineCard({ entry, onOpen, onEdit }) {
               />
             ))}
           </div>
-          <span
-            role="button"
-            tabIndex={0}
-            onClick={(event) => {
-              event.stopPropagation()
-              onEdit?.(entry)
-            }}
-            onKeyDown={(event) => {
-              if (event.key !== 'Enter' && event.key !== ' ') return
-              event.preventDefault()
-              event.stopPropagation()
-              onEdit?.(entry)
-            }}
-            className="rounded-full p-1.5 text-[#9aa6c3] transition hover:bg-blue-50 hover:text-blue-600"
-          >
-            <Pencil size={14} />
-          </span>
+          <div className="flex items-center gap-0.5">
+            <LinkedInPostButton entry={entry} />
+            <span
+              role="button"
+              tabIndex={0}
+              onClick={(event) => {
+                event.stopPropagation()
+                onEdit?.(entry)
+              }}
+              onKeyDown={(event) => {
+                if (event.key !== 'Enter' && event.key !== ' ') return
+                event.preventDefault()
+                event.stopPropagation()
+                onEdit?.(entry)
+              }}
+              className="rounded-full p-1.5 text-[#9aa6c3] transition hover:bg-blue-50 hover:text-blue-600"
+            >
+              <Pencil size={14} />
+            </span>
+          </div>
         </div>
       </div>
     </div>

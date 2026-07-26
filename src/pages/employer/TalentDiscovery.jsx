@@ -30,8 +30,8 @@ const AVATAR_TONES = [
 
 const POSTING_BADGE_TONE = {
   Internship: 'bg-[#EEF0FE] text-[#4F62F7]',
-  Challenge: 'bg-[#FEF3C7] text-[#D97706]',
-  Workshop: 'bg-[#E8F8F3] text-[#0E9F6E]',
+  'Full-Time': 'bg-[#FEF3C7] text-[#D97706]',
+  'Part-Time': 'bg-[#E8F8F3] text-[#0E9F6E]',
 }
 
 const PIP_TONE = {
@@ -260,7 +260,11 @@ function MainPanel({ posting, statuses, onShortlist, onPass, onView, onDraft, on
               {visibleAll.map((c, i) => {
                 const st = statuses[c.id] || c.status
                 return (
-                  <tr key={c.id} className="border-b border-[#E4E7EC] last:border-b-0 hover:bg-[#F7F8FA]">
+                  <tr
+                    key={c.id}
+                    onClick={() => onView(c)}
+                    className="cursor-pointer border-b border-[#E4E7EC] last:border-b-0 hover:bg-[#F7F8FA]"
+                  >
                     <td className="px-3 py-2.5 font-mono text-[11px] text-[#8892A0]">{i + 1}</td>
                     <td className="px-3 py-2.5">
                       <div className="flex items-center gap-2.5">
@@ -277,9 +281,9 @@ function MainPanel({ posting, statuses, onShortlist, onPass, onView, onDraft, on
                     <td className="px-3 py-2.5"><span className={`inline-block rounded-[4px] px-1.5 py-[2px] text-[10px] font-semibold ${STATUS_PILL[st] || STATUS_PILL.Reviewed}`}>{st}</span></td>
                     <td className="px-3 py-2.5 text-right">
                       {st !== 'Passed' ? (
-                        <button type="button" onClick={() => onPass(c)} className="text-[11px] text-[#8892A0] transition hover:text-[#DC2626]">Pass</button>
+                        <button type="button" onClick={(e) => { e.stopPropagation(); onPass(c) }} className="text-[11px] text-[#8892A0] transition hover:text-[#DC2626]">Pass</button>
                       ) : null}
-                      <button type="button" onClick={() => onView(c)} className="ml-2 text-[11px] font-semibold text-[#4F62F7] hover:underline">View →</button>
+                      <button type="button" onClick={(e) => { e.stopPropagation(); onView(c) }} className="ml-2 text-[11px] font-semibold text-[#4F62F7] hover:underline">View →</button>
                     </td>
                   </tr>
                 )
@@ -358,9 +362,22 @@ function Avatar({ initials, tone, size = 36, fontSize = 12 }) {
 function ShortlistRow({ rank, candidate, status, accent, onShortlist, onPass, onDraft, onView }) {
   const isShortlisted = status === 'Shortlisted'
   const isPassed = status === 'Passed'
+  // Whole card opens the profile — inline buttons stop propagation so they
+  // still perform their own action without also opening the profile.
+  const stop = (e) => e.stopPropagation()
+  const handleCardKey = (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault()
+      onView(candidate)
+    }
+  }
   return (
     <div
-      className="employer-glass-card relative grid grid-cols-[28px_36px_1fr_auto] items-start gap-x-3 overflow-hidden px-4 py-3.5 transition hover:bg-white/90"
+      role="button"
+      tabIndex={0}
+      onClick={() => onView(candidate)}
+      onKeyDown={handleCardKey}
+      className="employer-glass-card relative grid cursor-pointer grid-cols-[28px_36px_1fr_auto] items-start gap-x-3 overflow-hidden px-4 py-3.5 transition hover:bg-white/90 hover:shadow-[0_2px_10px_rgba(15,17,32,.05)] focus:outline-none focus:ring-2 focus:ring-[#4F62F7] focus:ring-offset-2"
     >
       <span className="absolute inset-y-0 left-0 w-[3px]" style={{ background: accent }} />
       <div className="pt-2.5 text-center font-mono text-[12px] text-[#8892A0]">{String(rank).padStart(2, '0')}</div>
@@ -394,23 +411,23 @@ function ShortlistRow({ rank, candidate, status, accent, onShortlist, onPass, on
         </div>
         <div className="col-start-3 mt-2 flex flex-wrap gap-1.5" style={{ gridColumn: '3 / span 2' }}>
           {isShortlisted ? (
-            <button type="button" disabled className="inline-flex items-center gap-1 rounded-md border border-[#6ee7b7] bg-[#E8F8F3] px-3 py-1 text-[11px] font-medium text-[#0E9F6E]">
+            <button type="button" onClick={stop} disabled className="inline-flex items-center gap-1 rounded-md border border-[#6ee7b7] bg-[#E8F8F3] px-3 py-1 text-[11px] font-medium text-[#0E9F6E]">
               <Check className="h-3 w-3" /> Shortlisted
             </button>
           ) : (
-            <button type="button" onClick={() => onShortlist(candidate)} className="inline-flex items-center gap-1 rounded-md border border-[#E4E7EC] bg-[#F7F8FA] px-3 py-1 text-[11px] font-medium text-[#3D4A5C] transition hover:border-[#C8CDD6] hover:text-[#0F1117]">
+            <button type="button" onClick={(e) => { stop(e); onShortlist(candidate) }} className="inline-flex items-center gap-1 rounded-md border border-[#E4E7EC] bg-[#F7F8FA] px-3 py-1 text-[11px] font-medium text-[#3D4A5C] transition hover:border-[#C8CDD6] hover:text-[#0F1117]">
               <Bookmark className="h-3 w-3" /> Shortlist
             </button>
           )}
-          <button type="button" onClick={() => onDraft(candidate)} className="inline-flex items-center gap-1 rounded-md border border-[#4F62F7] bg-[#4F62F7] px-3 py-1 text-[11px] font-medium text-white transition hover:bg-[#3d50e8]">
+          <button type="button" onClick={(e) => { stop(e); onDraft(candidate) }} className="inline-flex items-center gap-1 rounded-md border border-[#4F62F7] bg-[#4F62F7] px-3 py-1 text-[11px] font-medium text-white transition hover:bg-[#3d50e8]">
             <Mail className="h-3 w-3" /> Draft outreach
           </button>
           {!isPassed ? (
-            <button type="button" onClick={() => onPass(candidate)} className="inline-flex items-center gap-1 rounded-md border border-[#E4E7EC] bg-[#F7F8FA] px-3 py-1 text-[11px] font-medium text-[#3D4A5C] transition hover:border-[#C8CDD6] hover:text-[#0F1117]">
+            <button type="button" onClick={(e) => { stop(e); onPass(candidate) }} className="inline-flex items-center gap-1 rounded-md border border-[#E4E7EC] bg-[#F7F8FA] px-3 py-1 text-[11px] font-medium text-[#3D4A5C] transition hover:border-[#C8CDD6] hover:text-[#0F1117]">
               Pass
             </button>
           ) : null}
-          <button type="button" onClick={() => onView(candidate)} className="inline-flex items-center gap-1 text-[11px] font-medium text-[#4F62F7] hover:underline">
+          <button type="button" onClick={(e) => { stop(e); onView(candidate) }} className="inline-flex items-center gap-1 text-[11px] font-medium text-[#4F62F7] hover:underline">
             <Sparkles className="h-3 w-3" /> Why this match?
           </button>
         </div>
@@ -530,34 +547,155 @@ function QuickChip({ icon: Icon, onClick, children }) {
 }
 
 // ── Modal ────────────────────────────────────────────────────────────────────
+const WORK_MODES = ['Office', 'Remote', 'Hybrid']
+
+const MODAL_INPUT_CLASS =
+  'w-full rounded-lg border border-[#E4E7EC] bg-[#F7F8FA] px-3 py-2.5 text-[13px] outline-none transition focus:border-[#4F62F7] focus:bg-white focus:ring-4 focus:ring-[#4F62F7]/10'
+
+function ModalChipInput({ items, onAdd, onRemove, placeholder }) {
+  const [draft, setDraft] = useState('')
+  const handleKey = (e) => {
+    if (e.key === 'Enter' || e.key === ',') {
+      e.preventDefault()
+      const clean = draft.trim().replace(/,+$/, '')
+      if (clean && !items.includes(clean)) onAdd(clean)
+      setDraft('')
+    } else if (e.key === 'Backspace' && !draft && items.length) {
+      onRemove(items[items.length - 1])
+    }
+  }
+  return (
+    <div className="flex flex-wrap items-center gap-1.5 rounded-lg border border-[#E4E7EC] bg-[#F7F8FA] px-2 py-1.5 transition focus-within:border-[#4F62F7] focus-within:bg-white focus-within:ring-4 focus-within:ring-[#4F62F7]/10">
+      {items.map((item) => (
+        <span key={item} className="inline-flex items-center gap-1 rounded-full border border-[#D0D5FE] bg-[#EEF0FE] px-2 py-0.5 text-[12px] font-medium text-[#4F62F7]">
+          {item}
+          <button type="button" onClick={() => onRemove(item)} className="rounded-full p-0.5 text-[#4F62F7]/70 transition hover:bg-[#D0D5FE] hover:text-[#4F62F7]" aria-label={`Remove ${item}`}>
+            <X className="h-3 w-3" />
+          </button>
+        </span>
+      ))}
+      <input
+        value={draft}
+        onChange={(e) => setDraft(e.target.value)}
+        onKeyDown={handleKey}
+        placeholder={items.length ? '' : placeholder}
+        className="min-w-[7rem] flex-1 bg-transparent text-[13px] text-[#0F1117] outline-none placeholder:text-[#8892A0]"
+      />
+    </div>
+  )
+}
+
 function NewPostingModal({ open, onClose, onCreate }) {
-  const [form, setForm] = useState({ type: 'Internship', title: '', company: '', description: '', deadline: '' })
+  const [form, setForm] = useState({
+    type: 'Full-time',
+    title: '',
+    company: '',
+    description: '',
+    deadline: '',
+    salaryMin: '',
+    salaryMax: '',
+    salaryCurrency: 'MYR',
+    salaryPeriod: 'month',
+    workingFrom: 'Office',
+    requirements: '',
+    tags: [],
+    benefits: [],
+  })
   if (!open) return null
   const patch = (p) => setForm((prev) => ({ ...prev, ...p }))
+  const addChip = (field) => (item) => setForm((prev) => ({ ...prev, [field]: [...prev[field], item] }))
+  const removeChip = (field) => (item) => setForm((prev) => ({ ...prev, [field]: prev[field].filter((x) => x !== item) }))
+
   return (
-    <div className="fixed inset-0 z-[200] flex items-center justify-center bg-black/50" onClick={onClose}>
-      <div className="w-[460px] max-w-[94vw] rounded-2xl border border-[#E4E7EC] bg-white p-7" onClick={(e) => e.stopPropagation()}>
+    <div className="fixed inset-0 z-[200] flex items-center justify-center bg-black/50 px-4 py-6" onClick={onClose}>
+      <div className="max-h-[92vh] w-[520px] max-w-[94vw] overflow-y-auto rounded-2xl border border-[#E4E7EC] bg-white p-7" onClick={(e) => e.stopPropagation()}>
         <div className="mb-5 flex items-center justify-between">
           <h2 className="text-[17px] font-semibold text-[#0F1117]">Create posting</h2>
           <button type="button" onClick={onClose} className="rounded-md p-1 text-[#8892A0] hover:bg-[#F7F8FA]"><X className="h-4 w-4" /></button>
         </div>
+
         <ModalField label="Posting type">
-          <select value={form.type} onChange={(e) => patch({ type: e.target.value })} className="w-full rounded-lg border border-[#E4E7EC] bg-[#F7F8FA] px-3 py-2.5 text-[13px] outline-none focus:border-[#4F62F7]">
-            {['Internship', 'Full-time', 'Challenge', 'Workshop'].map((o) => <option key={o}>{o}</option>)}
+          <select value={form.type} onChange={(e) => patch({ type: e.target.value })} className={MODAL_INPUT_CLASS}>
+            {[ 'Full-time', 'Part-time','Internship'].map((o) => <option key={o}>{o}</option>)}
           </select>
         </ModalField>
+
         <ModalField label="Role title">
-          <input value={form.title} onChange={(e) => patch({ title: e.target.value })} placeholder="e.g. Frontend Engineering Intern" className="w-full rounded-lg border border-[#E4E7EC] bg-[#F7F8FA] px-3 py-2.5 text-[13px] outline-none focus:border-[#4F62F7]" />
+          <input value={form.title} onChange={(e) => patch({ title: e.target.value })} placeholder="e.g. Frontend Engineering Intern" className={MODAL_INPUT_CLASS} />
         </ModalField>
+
         <ModalField label="Company and location">
-          <input value={form.company} onChange={(e) => patch({ company: e.target.value })} placeholder="e.g. Acme Corporation · Kuala Lumpur" className="w-full rounded-lg border border-[#E4E7EC] bg-[#F7F8FA] px-3 py-2.5 text-[13px] outline-none focus:border-[#4F62F7]" />
+          <input value={form.company} onChange={(e) => patch({ company: e.target.value })} placeholder="e.g. Acme Corporation · Kuala Lumpur" className={MODAL_INPUT_CLASS} />
         </ModalField>
+
         <ModalField label="Description">
-          <textarea value={form.description} onChange={(e) => patch({ description: e.target.value })} placeholder="Describe the role, responsibilities, and requirements…" className="min-h-[72px] w-full resize-y rounded-lg border border-[#E4E7EC] bg-[#F7F8FA] px-3 py-2.5 text-[13px] outline-none focus:border-[#4F62F7]" />
+          <textarea value={form.description} onChange={(e) => patch({ description: e.target.value })} placeholder="Describe the role, responsibilities, and requirements…" className={`${MODAL_INPUT_CLASS} min-h-[72px] resize-y`} />
         </ModalField>
+
+        <ModalField label="Salary range">
+          <div className="grid grid-cols-2 gap-2">
+            <input value={form.salaryMin} onChange={(e) => patch({ salaryMin: e.target.value })} placeholder="Min · e.g. 2,500" inputMode="numeric" className={MODAL_INPUT_CLASS} />
+            <input value={form.salaryMax} onChange={(e) => patch({ salaryMax: e.target.value })} placeholder="Max · e.g. 3,500" inputMode="numeric" className={MODAL_INPUT_CLASS} />
+            <select value={form.salaryCurrency} onChange={(e) => patch({ salaryCurrency: e.target.value })} className={MODAL_INPUT_CLASS}>
+              {['MYR', 'SGD', 'USD'].map((c) => <option key={c}>{c}</option>)}
+            </select>
+            <select value={form.salaryPeriod} onChange={(e) => patch({ salaryPeriod: e.target.value })} className={MODAL_INPUT_CLASS}>
+              {['month', 'year', 'hour'].map((p) => <option key={p} value={p}>/ {p}</option>)}
+            </select>
+          </div>
+        </ModalField>
+
+        <ModalField label="Working from">
+          <div className="inline-flex gap-0.5 rounded-lg border border-[#E4E7EC] bg-[#F7F8FA] p-[3px]">
+            {WORK_MODES.map((w) => {
+              const active = form.workingFrom === w
+              return (
+                <button
+                  key={w}
+                  type="button"
+                  onClick={() => patch({ workingFrom: w })}
+                  className={`rounded-md px-3.5 py-1.5 text-[13px] font-medium transition ${
+                    active ? 'bg-white text-[#4F62F7] shadow-[0_1px_3px_rgba(79,98,247,.15)]' : 'text-[#6B7280] hover:text-[#0F1117]'
+                  }`}
+                >
+                  {w}
+                </button>
+              )
+            })}
+          </div>
+        </ModalField>
+
+        <ModalField label="Requirements">
+          <input
+            value={form.requirements}
+            onChange={(e) => patch({ requirements: e.target.value })}
+            placeholder="e.g. React, Node.js, 1+ years experience"
+            className={MODAL_INPUT_CLASS}
+          />
+        </ModalField>
+
+        <ModalField label="Tags">
+          <ModalChipInput
+            items={form.tags}
+            onAdd={addChip('tags')}
+            onRemove={removeChip('tags')}
+            placeholder="Add a tag and press Enter…"
+          />
+        </ModalField>
+
+        <ModalField label="Benefits (optional)">
+          <ModalChipInput
+            items={form.benefits}
+            onAdd={addChip('benefits')}
+            onRemove={removeChip('benefits')}
+            placeholder="Health insurance, learning budget…"
+          />
+        </ModalField>
+
         <ModalField label="Application deadline">
-          <input type="date" value={form.deadline} onChange={(e) => patch({ deadline: e.target.value })} className="w-full rounded-lg border border-[#E4E7EC] bg-[#F7F8FA] px-3 py-2.5 text-[13px] outline-none focus:border-[#4F62F7]" />
+          <input type="date" value={form.deadline} onChange={(e) => patch({ deadline: e.target.value })} className={MODAL_INPUT_CLASS} />
         </ModalField>
+
         <div className="mt-1 flex justify-end gap-2.5">
           <button type="button" onClick={onClose} className="rounded-lg border border-[#E4E7EC] bg-white px-3.5 py-1.5 text-[13px] font-medium text-[#0F1117] transition hover:bg-[#F7F8FA]">Cancel</button>
           <button type="button" onClick={() => { onCreate(form); onClose() }} className="inline-flex items-center gap-1.5 rounded-lg bg-[#4F62F7] px-3.5 py-1.5 text-[13px] font-medium text-white transition hover:bg-[#3d50e8]">

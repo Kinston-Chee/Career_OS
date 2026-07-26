@@ -8,6 +8,7 @@ import {
   Brain,
   Building2,
   Check,
+  CheckCircle2,
   ChevronRight,
   Code2,
   Container,
@@ -25,9 +26,14 @@ import {
   RefreshCw,
   Server,
   SlidersHorizontal,
+  Sparkles,
+  Star,
+  Target,
+  TrendingUp,
   Users,
   Video,
   X,
+  Zap,
 } from 'lucide-react'
 import HomeTopNav from '../components/home/HomeTopNav'
 import { candidateOverview, mockUser } from '../data/mockData'
@@ -504,6 +510,106 @@ function Section({ title, children }) {
   )
 }
 
+// ─── Overview dashboard (top of the "All categories" view) ──────────
+// Compact metric strip + tiny completion trend sparkline. Kept slim
+// (fits in ~90px tall) so it complements the existing filters + grid
+// without dominating the page.
+function OverviewDashboard({ skills }) {
+  // Weekly completed-skill counts for the last 6 weeks (mock demo trend).
+  // In a live app this would come from a real activity feed.
+  const trend = [0, 1, 2, 2, 3, skills.filter((s) => s.status === 'done').length]
+
+  const totalCompleted = skills.filter((s) => s.status === 'done').length
+  const totalInProgress = skills.filter((s) => s.status === 'progress').length
+
+  // XP earned = sum of xp on milestones of completed skills + a mock bonus
+  // per in-progress skill so the number moves week to week.
+  const parseXp = (raw) => {
+    const n = parseInt(String(raw || '').replace(/[^0-9]/g, ''), 10)
+    return Number.isFinite(n) ? n : 0
+  }
+  const xpEarned = skills.reduce((sum, s) => {
+    const milestoneXp = (s.milestones || []).reduce((a, m) => a + (s.status === 'done' ? parseXp(m.xp) : 0), 0)
+    const inProgressBonus = s.status === 'progress' ? Math.round(s.pct / 5) : 0
+    return sum + milestoneXp + inProgressBonus
+  }, 0)
+
+  const readinessPct = Math.round(
+    skills.reduce((sum, s) => sum + Math.min(100, (s.pct / Math.max(1, s.required)) * 100), 0) / Math.max(1, skills.length),
+  )
+
+  const streak = 5 // demo streak — days-in-a-row of skill activity
+
+  // Sparkline geometry
+  const w = 120
+  const h = 32
+  const max = Math.max(1, ...trend)
+  const points = trend
+    .map((v, i) => {
+      const x = (i / (trend.length - 1)) * w
+      const y = h - (v / max) * h
+      return `${x.toFixed(1)},${y.toFixed(1)}`
+    })
+    .join(' ')
+
+  const stats = [
+    { key: 'done',      label: 'Completed',   value: totalCompleted, sub: 'skills done', tone: 'green',  Icon: CheckCircle2 },
+    { key: 'progress',  label: 'In progress', value: totalInProgress, sub: 'active paths', tone: 'blue',   Icon: TrendingUp },
+    { key: 'xp',        label: 'XP earned',   value: xpEarned,        sub: 'this quarter', tone: 'amber',  Icon: Star },
+    { key: 'readiness', label: 'Readiness',   value: `${readinessPct}%`, sub: 'target role', tone: 'indigo', Icon: Target },
+    { key: 'streak',    label: 'Streak',      value: `${streak}d`,    sub: 'in a row 🔥',    tone: 'rose',   Icon: Flame },
+  ]
+
+  const TONE = {
+    green:  { bg: 'bg-emerald-50',   text: 'text-emerald-600' },
+    blue:   { bg: 'bg-blue-50',      text: 'text-[#5B6CF9]'    },
+    amber:  { bg: 'bg-amber-50',     text: 'text-amber-600'    },
+    indigo: { bg: 'bg-indigo-50',    text: 'text-indigo-600'   },
+    rose:   { bg: 'bg-rose-50',      text: 'text-rose-600'     },
+  }
+
+  return (
+    <section className="mb-5 rounded-2xl border border-[#e2e5f0] bg-white p-4 shadow-[0_2px_10px_rgba(15,17,32,.04)]">
+      <div className="flex flex-wrap items-center justify-between gap-4">
+        {/* Stats row */}
+        <div className="flex flex-1 flex-wrap items-center gap-4">
+          {stats.map((s) => {
+            const tone = TONE[s.tone]
+            return (
+              <div key={s.key} className="flex min-w-[110px] items-center gap-2.5">
+                <span className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-lg ${tone.bg} ${tone.text}`}>
+                  <s.Icon size={16} strokeWidth={2.2} />
+                </span>
+                <div>
+                  <p className="text-[10.5px] font-semibold uppercase tracking-wide text-[#8a94ab]">{s.label}</p>
+                  <p className="mt-0.5 text-[16px] font-bold leading-none text-[#111827]">{s.value}</p>
+                  <p className="mt-0.5 text-[10.5px] text-[#9aa3b8]">{s.sub}</p>
+                </div>
+              </div>
+            )
+          })}
+        </div>
+
+        {/* Trend sparkline */}
+        <div className="flex items-center gap-3 border-l border-[#eef0f6] pl-4">
+          <div>
+            <p className="text-[10.5px] font-semibold uppercase tracking-wide text-[#8a94ab]">Completed / week</p>
+            <p className="mt-0.5 text-[10.5px] text-[#9aa3b8]">Last 6 weeks</p>
+          </div>
+          <svg viewBox={`0 0 ${w} ${h}`} className="h-8 w-[120px]" preserveAspectRatio="none">
+            <polyline points={points} fill="none" stroke="#5B6CF9" strokeWidth="1.8" strokeLinejoin="round" strokeLinecap="round" />
+            {trend.map((v, i) => {
+              const x = (i / (trend.length - 1)) * w
+              const y = h - (v / max) * h
+              return <circle key={i} cx={x} cy={y} r={i === trend.length - 1 ? 2.2 : 1.4} fill="#5B6CF9" />
+            })}
+          </svg>
+        </div>
+      </div>
+    </section>
+  )
+}
+
 // ─── Page ────────────────────────────────────────────────────────────
 export default function SkillDevelopmentPage() {
   const navigate = useNavigate()
@@ -615,6 +721,11 @@ export default function SkillDevelopmentPage() {
               </header>
 
               {isRegularCategory && <CategoryBanner meta={activeMeta} />}
+
+              {/* Overview dashboard — only on the "All categories" landing */}
+              {!isRegularCategory && currentCat !== 'gap' && currentCat !== 'progress' ? (
+                <OverviewDashboard skills={SKILLS} />
+              ) : null}
 
               {/* Filters */}
               <div className="mb-5 flex flex-wrap items-center gap-2">

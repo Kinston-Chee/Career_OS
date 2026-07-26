@@ -51,9 +51,9 @@ export const postings = [
   },
   {
     id: 'ai-data-challenge',
-    badge: 'Challenge',
+    badge: 'Full-Time',
     badgeTone: 'orange',
-    title: 'AI & Data Challenge 2025',
+    title: 'AI Engineer',
     company: 'Acme Corporation',
     location: 'Online',
     posted: 'Apr 20',
@@ -73,9 +73,9 @@ export const postings = [
   },
   {
     id: 'backend-workshop',
-    badge: 'Workshop',
+    badge: 'Part-Time',
     badgeTone: 'teal',
-    title: 'Backend Engineering Workshop',
+    title: 'Sales & Marketing Executive',
     company: 'Acme Corporation',
     location: "Taylor's University",
     posted: 'Apr 15',
