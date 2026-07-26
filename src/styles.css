@@ -393,18 +393,18 @@
 .landing-reveal.rd3.is-in { transition-delay: 220ms; }
 .landing-reveal.rd4.is-in { transition-delay: 320ms; }
 
-/* ── Glass surface (cinema-dark spec) ───────────────────────────────────── */
+/* ── Glass surface (light theme) ───────────────────────────────────────── */
 .glass {
-  background: var(--surface);
+  background: rgba(255,255,255,0.85);
   backdrop-filter: blur(20px) saturate(1.4);
   -webkit-backdrop-filter: blur(20px) saturate(1.4);
-  border: 1px solid var(--border-h);
+  border: 1px solid rgba(0,0,0,0.08);
 }
 .glass-med {
-  background: rgba(255,255,255,0.07);
+  background: rgba(255,255,255,0.75);
   backdrop-filter: blur(28px) saturate(1.6);
   -webkit-backdrop-filter: blur(28px) saturate(1.6);
-  border: 1px solid rgba(255,255,255,0.11);
+  border: 1px solid rgba(0,0,0,0.10);
 }
 
 /* Accent glow button */

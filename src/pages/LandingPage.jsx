@@ -207,13 +207,18 @@ const NAV = [
   { href: '#roadmap', label: 'Roadmap' },
 ]
 
-/* shared section bg shades */
-const S1 = '#020203'   // hero
-const S2 = '#050506'   // problem
-const S3 = '#07070a'   // workspaces
-const S4 = '#050506'   // how-it-works
-const S5 = '#07070a'   // intelligence
-const S6 = '#050506'   // roadmap
+/* shared section bg shades — light theme */
+const S1 = '#ffffff'
+const S2 = '#f7f8ff'
+const S3 = '#ffffff'
+const S4 = '#f7f8ff'
+const S5 = '#ffffff'
+const S6 = '#f7f8ff'
+
+/* light theme text tokens */
+const TH = '#0f0e1a'   // heading
+const TB = '#6b7280'   // body
+const TM = '#9ca3af'   // muted
 
 export default function LandingPage() {
   const navigate = useNavigate()
@@ -241,32 +246,32 @@ export default function LandingPage() {
       <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
       <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet" />
 
-      <main style={{ background: S1, fontFamily: "'DM Sans', sans-serif", color: '#EDEDEF' }} className="min-h-screen overflow-x-hidden">
+      <main style={{ background: S1, fontFamily: "'DM Sans', sans-serif", color: TH }} className="min-h-screen overflow-x-hidden">
 
         {/* â"€â"€ NAV â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€ */}
         <nav
           className="sticky top-0 z-40 flex h-16 items-center justify-between px-6 sm:px-12"
-          style={{ background: 'rgba(2,2,3,0.80)', backdropFilter: 'blur(24px) saturate(1.4)', WebkitBackdropFilter: 'blur(24px) saturate(1.4)', borderBottom: '1px solid rgba(255,255,255,0.06)' }}
+          style={{ background: 'rgba(255,255,255,0.92)', backdropFilter: 'blur(24px) saturate(1.4)', WebkitBackdropFilter: 'blur(24px) saturate(1.4)', borderBottom: '1px solid rgba(0,0,0,0.07)' }}
         >
           <a href="#top" onClick={(e) => smooth(e, '#top')} className="flex items-center gap-2.5">
             <img src={compassIcon} alt="CareerOS" className="h-9 w-9 rounded-xl" />
-            <span style={{ fontWeight: 700, letterSpacing: '-0.02em', color: '#EDEDEF' }}>CareerOS</span>
+            <span style={{ fontWeight: 700, letterSpacing: '-0.02em', color: '#0f0e1a' }}>CareerOS</span>
           </a>
           <div className="hidden gap-0.5 md:flex">
             {NAV.map((n) => (
               <a key={n.href} href={n.href} onClick={(e) => smooth(e, n.href)}
                 className="rounded-lg px-3.5 py-1.5 text-sm transition-colors"
-                style={{ color: '#8A8F98', fontWeight: 500 }}
-                onMouseEnter={(e) => { e.currentTarget.style.color = '#EDEDEF'; e.currentTarget.style.background = 'rgba(255,255,255,0.06)' }}
-                onMouseLeave={(e) => { e.currentTarget.style.color = '#8A8F98'; e.currentTarget.style.background = 'transparent' }}
+                style={{ color: '#374151', fontWeight: 500 }}
+                onMouseEnter={(e) => { e.currentTarget.style.color = '#0f0e1a'; e.currentTarget.style.background = 'rgba(0,0,0,0.05)' }}
+                onMouseLeave={(e) => { e.currentTarget.style.color = '#374151'; e.currentTarget.style.background = 'transparent' }}
               >{n.label}</a>
             ))}
           </div>
           <div className="flex items-center gap-2">
             <Link to="/auth" className="rounded-lg px-4 py-1.5 text-sm font-medium transition-colors"
-              style={{ color: '#8A8F98', border: '1px solid rgba(255,255,255,0.08)' }}
-              onMouseEnter={(e) => { e.currentTarget.style.color = '#EDEDEF' }}
-              onMouseLeave={(e) => { e.currentTarget.style.color = '#8A8F98' }}
+              style={{ color: '#374151', border: '1px solid rgba(0,0,0,0.12)' }}
+              onMouseEnter={(e) => { e.currentTarget.style.color = '#0f0e1a' }}
+              onMouseLeave={(e) => { e.currentTarget.style.color = '#374151' }}
             >Sign in</Link>
             <Link to="/auth?mode=signup" className="btn-accent rounded-lg px-4 py-1.5 text-sm font-semibold text-white">
               Request access
@@ -276,28 +281,28 @@ export default function LandingPage() {
 
         {/* HERO */}
         <section id="top" className="relative overflow-hidden"
-          style={{ background: 'linear-gradient(160deg, #0e0b2e 0%, #080618 40%, #020203 75%)', minHeight: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}
+          style={{ background: 'linear-gradient(160deg, #edeaff 0%, #f0eeff 35%, #ffffff 70%)', minHeight: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}
         >
           {/* Aurora mesh */}
-          <div className="aurora-bg pointer-events-none absolute inset-0 opacity-35" />
+          <div className="aurora-bg pointer-events-none absolute inset-0 opacity-10" />
 
           {/* Dot grid */}
           <div className="pointer-events-none absolute inset-0"
-            style={{ backgroundImage: 'radial-gradient(rgba(255,255,255,0.025) 1px, transparent 1px)', backgroundSize: '28px 28px' }}
+            style={{ backgroundImage: 'radial-gradient(rgba(94,106,210,0.08) 1px, transparent 1px)', backgroundSize: '28px 28px' }}
           />
 
           {/* Diagonal editorial lines */}
           <div className="pointer-events-none absolute inset-0 opacity-[0.025]"
-            style={{ backgroundImage: 'repeating-linear-gradient(125deg, rgba(255,255,255,1) 0px, rgba(255,255,255,1) 1px, transparent 1px, transparent 64px)' }}
+            style={{ backgroundImage: 'repeating-linear-gradient(125deg, rgba(94,106,210,0.06) 0px, rgba(94,106,210,0.06) 1px, transparent 1px, transparent 64px)' }}
           />
 
           {/* Background orbs */}
           <Orb orbClass="l-orb-a" speed={0.06} className="h-[700px] w-[700px] -left-48 -top-48"
-            style={{ background: 'radial-gradient(circle, rgba(94,106,210,0.22) 0%, transparent 58%)', mixBlendMode: 'screen' }} />
+            style={{ background: 'radial-gradient(circle, rgba(94,106,210,0.22) 0%, transparent 58%)' }} />
           <Orb orbClass="l-orb-b" speed={0.04} className="h-[600px] w-[600px] -right-24 -top-24"
-            style={{ background: 'radial-gradient(circle, rgba(139,92,246,0.20) 0%, transparent 58%)', mixBlendMode: 'screen' }} />
+            style={{ background: 'radial-gradient(circle, rgba(139,92,246,0.20) 0%, transparent 58%)' }} />
           <Orb orbClass="l-orb-c" speed={0.09} className="h-[500px] w-[500px] left-1/2 bottom-0"
-            style={{ background: 'radial-gradient(circle, rgba(14,165,233,0.12) 0%, transparent 60%)', mixBlendMode: 'screen' }} />
+            style={{ background: 'radial-gradient(circle, rgba(14,165,233,0.12) 0%, transparent 60%)' }} />
 
           {/* ── Split layout ─────────────────────────────────────────────── */}
           <div className="relative mx-auto flex w-full max-w-7xl flex-col items-center gap-8 px-6 py-24 sm:px-12 lg:flex-row lg:items-center lg:gap-0 lg:py-0"
@@ -308,7 +313,7 @@ export default function LandingPage() {
 
               {/* Eyebrow */}
               <div className="landing-fade-in mb-8 inline-flex items-center gap-2.5 rounded-full px-5 py-2 text-[11px] font-bold uppercase tracking-[0.2em]"
-                style={{ background: 'rgba(94,106,210,0.12)', border: '1px solid rgba(94,106,210,0.30)', color: '#a5b4fc', backdropFilter: 'blur(12px)' }}
+                style={{ background: 'rgba(94,106,210,0.08)', border: '1px solid rgba(94,106,210,0.20)', color: '#5E6AD2', backdropFilter: 'blur(12px)' }}
               >
                 <span className="relative flex h-2 w-2">
                   <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-indigo-400 opacity-60" />
@@ -319,25 +324,25 @@ export default function LandingPage() {
 
               {/* BOMBASTIC HEADLINE */}
               <h1 className="mb-6" style={{ lineHeight: 1.00, letterSpacing: '-0.03em', perspective: '900px' }}>
-                <span className="block text-[clamp(2rem,5vw,4rem)] font-light italic" style={{ color: 'rgba(255,255,255,0.55)' }}>
+                <span className="block text-[clamp(2rem,5vw,4rem)] font-light italic" style={{ color: 'rgba(15,14,26,0.45)' }}>
                   Your career story,
                 </span>
-                <span className="block text-[clamp(3rem,8.5vw,7rem)] font-black uppercase text-white" style={{ letterSpacing: '-0.04em' }}>
+                <span className="block text-[clamp(3rem,8.5vw,7rem)] font-black uppercase" style={{ color: TH }} style={{ letterSpacing: '-0.04em' }}>
                   <span className="hero-word" style={{ animationDelay: '100ms' }}>finally </span>
                   <span className="hero-word gradient-shimmer" style={{ animationDelay: '200ms' }}>remembered.</span>
                 </span>
-                <span className="mt-1 block text-[clamp(1rem,2.5vw,1.75rem)] font-semibold" style={{ color: '#8A8F98', letterSpacing: '-0.01em' }}>
+                <span className="mt-1 block text-[clamp(1rem,2.5vw,1.75rem)] font-semibold" style={{ color: '#6b7280', letterSpacing: '-0.01em' }}>
                   <span className="hero-word" style={{ animationDelay: '340ms' }}>For </span>
-                  <span className="hero-word" style={{ animationDelay: '400ms', color: '#818cf8' }}>students,</span>
+                  <span className="hero-word" style={{ animationDelay: '400ms', color: '#6366f1' }}>students,</span>
                   <span className="hero-word" style={{ animationDelay: '460ms' }}> employers</span>
                   <span className="hero-word" style={{ animationDelay: '510ms' }}> &amp;</span>
-                  <span className="hero-word" style={{ animationDelay: '560ms', color: '#38bdf8' }}> universities.</span>
+                  <span className="hero-word" style={{ animationDelay: '560ms', color: '#0ea5e9' }}> universities.</span>
                 </span>
               </h1>
 
               {/* Sub-copy */}
               <p className="landing-fade-in mb-10 max-w-lg text-base leading-relaxed sm:text-lg"
-                style={{ color: '#8A8F98', animationDelay: '620ms' }}
+                style={{ color: '#6b7280', animationDelay: '620ms' }}
               >
                 CareerOS preserves what students can do, helps employers recover warm talent,
                 and lets universities act on readiness gaps before they become graduate outcomes.
@@ -351,10 +356,9 @@ export default function LandingPage() {
                   <Rocket className="h-5 w-5" /> Explore the prototype
                 </button>
                 <a href="#vision" onClick={(e) => smooth(e, '#vision')}
-                  className="glass inline-flex items-center gap-2.5 rounded-xl px-7 py-4 text-base font-medium transition-colors"
-                  style={{ color: '#8A8F98' }}
-                  onMouseEnter={(e) => e.currentTarget.style.color = '#EDEDEF'}
-                  onMouseLeave={(e) => e.currentTarget.style.color = '#8A8F98'}
+                  className="inline-flex items-center gap-2.5 rounded-xl px-7 py-4 text-base font-medium transition-colors" style={{ color: '#374151', background: 'rgba(0,0,0,0.05)', border: '1px solid rgba(0,0,0,0.10)' }}
+                  onMouseEnter={(e) => e.currentTarget.style.color = '#0f0e1a'}
+                  onMouseLeave={(e) => e.currentTarget.style.color = '#374151'}
                 >
                   <ChartNoAxesColumnIncreasing className="h-5 w-5" /> How it works
                 </a>
@@ -365,7 +369,7 @@ export default function LandingPage() {
                 {STATS.map((s) => (
                   <div key={s.l}>
                     <div className="text-xl font-bold sm:text-2xl" style={{ color: s.c }}>{s.v}</div>
-                    <div className="text-[11px] font-medium uppercase tracking-wider" style={{ color: '#8A8F98' }}>{s.l}</div>
+                    <div className="text-[11px] font-medium uppercase tracking-wider" style={{ color: '#9ca3af' }}>{s.l}</div>
                   </div>
                 ))}
               </div>
@@ -403,8 +407,8 @@ export default function LandingPage() {
                 {/* Speech bubble */}
                 <div className="absolute -top-2 right-0 sm:-top-6"
                   style={{
-                    background: 'rgba(8,8,20,0.92)',
-                    border: '1px solid rgba(94,106,210,0.38)',
+                    background: 'rgba(255,255,255,0.96)',
+                    border: '1px solid rgba(94,106,210,0.25)',
                     borderRadius: '14px',
                     backdropFilter: 'blur(20px)',
                     padding: '10px 16px',
@@ -419,7 +423,7 @@ export default function LandingPage() {
                   <div style={{
                     position: 'absolute', bottom: -7, left: 20,
                     width: 13, height: 7,
-                    background: 'rgba(8,8,20,0.92)',
+                    background: 'rgba(255,255,255,0.96)',
                     clipPath: 'polygon(0 0, 100% 0, 50% 100%)',
                   }} />
                 </div>
@@ -436,18 +440,18 @@ export default function LandingPage() {
 
         {/* â"€â"€ PROBLEM â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€ */}
         <section id="problem" className="relative overflow-hidden px-6 py-24 sm:px-12"
-          style={{ background: S2, borderTop: '1px solid rgba(255,255,255,0.05)' }}
+          style={{ background: S2, borderTop: '1px solid rgba(0,0,0,0.07)' }}
         >
           <Orb orbClass="l-orb-b" speed={0.06} className="h-[500px] w-[500px] -right-20 -top-20"
-            style={{ background: 'radial-gradient(circle, rgba(139,92,246,0.08) 0%, transparent 60%)', mixBlendMode: 'screen' }} />
+            style={{ background: 'radial-gradient(circle, rgba(139,92,246,0.08) 0%, transparent 60%)' }} />
 
           <div className="relative mx-auto max-w-6xl">
             <Reveal variant="left" className="mb-14 max-w-2xl">
               <Label>The Problem</Label>
-              <h2 className="mt-4 text-3xl font-bold leading-tight tracking-tight text-white sm:text-4xl">
+              <h2 className="mt-4 text-3xl font-bold leading-tight tracking-tight sm:text-4xl" style={{ color: TH }}>
                 Career potential is lost<br />when evidence arrives too late.
               </h2>
-              <p className="mt-4 text-base leading-relaxed" style={{ color: '#8A8F98' }}>
+              <p className="mt-4 text-base leading-relaxed" style={{ color: '#6b7280' }}>
                 Students lose proof, employers lose warm relationships, and universities lose time.
                 CareerOS keeps those signals alive long enough for someone to act.
               </p>
@@ -457,9 +461,9 @@ export default function LandingPage() {
               {PROBLEM_CARDS.map((c, i) => (
                 <Reveal key={c.title} delay={i + 1} variant="scale" className="h-full">
                   <div className="group relative flex h-full flex-col overflow-hidden rounded-2xl p-7 transition-transform duration-300 hover:-translate-y-1.5"
-                    style={{ background: 'rgba(255,255,255,0.04)', border: `1px solid rgba(255,255,255,0.08)`, backdropFilter: 'blur(20px)', boxShadow: '0 4px 24px rgba(0,0,0,0.24)' }}
+                    style={{ background: '#ffffff', border: `1px solid rgba(0,0,0,0.08)`, boxShadow: '0 2px 16px rgba(0,0,0,0.06)' }}
                     onMouseEnter={(e) => { e.currentTarget.style.borderColor = `${c.color}40` }}
-                    onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)' }}
+                    onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'rgba(0,0,0,0.08)' }}
                   >
                     {/* corner glow */}
                     <div className="pointer-events-none absolute -right-8 -top-8 h-28 w-28 rounded-full transition-opacity duration-500 opacity-0 group-hover:opacity-100"
@@ -470,9 +474,9 @@ export default function LandingPage() {
                       </div>
                       <span className="text-3xl font-bold tracking-tight" style={{ color: c.color }}>{c.stat}</span>
                     </div>
-                    <h3 className="mt-5 text-base font-semibold text-white">{c.title}</h3>
-                    <p className="mt-2 text-sm leading-relaxed" style={{ color: '#8A8F98' }}>{c.body}</p>
-                    <p className="mt-4 text-[11px]" style={{ color: '#8A8F98', opacity: 0.6 }}>Focus: {c.src}</p>
+                    <h3 className="mt-5 text-base font-semibold" style={{ color: TH }}>{c.title}</h3>
+                    <p className="mt-2 text-sm leading-relaxed" style={{ color: '#6b7280' }}>{c.body}</p>
+                    <p className="mt-4 text-[11px]" style={{ color: '#9ca3af' }}>Focus: {c.src}</p>
                   </div>
                 </Reveal>
               ))}
@@ -482,16 +486,16 @@ export default function LandingPage() {
 
         {/* â"€â"€ WORKSPACES â€" Bento grid (variance 8/10) â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€ */}
         <section id="workspaces" className="relative overflow-hidden px-6 pb-24 pt-10 sm:px-12"
-          style={{ background: S3, borderTop: '1px solid rgba(255,255,255,0.05)' }}
+          style={{ background: S3, borderTop: '1px solid rgba(0,0,0,0.07)' }}
         >
           <Orb orbClass="l-orb-a" speed={0.07} className="h-[600px] w-[600px] -left-40 top-0"
-            style={{ background: 'radial-gradient(circle, rgba(94,106,210,0.09) 0%, transparent 60%)', mixBlendMode: 'screen' }} />
+            style={{ background: 'radial-gradient(circle, rgba(94,106,210,0.09) 0%, transparent 60%)' }} />
 
           <div className="relative mx-auto max-w-6xl">
             <Reveal variant="scale" className="mb-14 text-center">
               <Label centered>The Solution</Label>
-              <h2 className="mt-4 text-3xl font-bold tracking-tight text-white sm:text-4xl">One memory layer, three workspaces</h2>
-              <p className="mx-auto mt-4 max-w-xl text-base" style={{ color: '#8A8F98' }}>
+              <h2 className="mt-4 text-3xl font-bold tracking-tight sm:text-4xl" style={{ color: TH }}>One memory layer, three workspaces</h2>
+              <p className="mx-auto mt-4 max-w-xl text-base" style={{ color: '#6b7280' }}>
                 Each workspace keeps its own job to be done, but shares the same operating principle:
                 remember the signal, prove it, act earlier.
               </p>
@@ -506,7 +510,7 @@ export default function LandingPage() {
                   <Reveal className="h-full lg:col-span-3" variant="up">
                     <button type="button" onClick={() => enter(ws)}
                       className="group relative flex h-full w-full flex-col overflow-hidden rounded-2xl p-10 text-left transition-transform duration-300 hover:-translate-y-1"
-                      style={{ background: 'rgba(255,255,255,0.04)', border: `1px solid ${ws.border}`, backdropFilter: 'blur(24px)', boxShadow: '0 4px 32px rgba(0,0,0,0.28)' }}
+                      style={{ background: '#ffffff', border: `1px solid ${ws.border}`, boxShadow: '0 2px 20px rgba(0,0,0,0.07)' }}
                       onMouseEnter={(e) => { e.currentTarget.style.boxShadow = `0 0 50px ${ws.glow}` }}
                       onMouseLeave={(e) => { e.currentTarget.style.boxShadow = '0 4px 32px rgba(0,0,0,0.28)' }}
                     >
@@ -521,11 +525,11 @@ export default function LandingPage() {
                         <div className="mb-2 text-[11px] font-semibold uppercase tracking-widest" style={{ color: ws.accent }}>{ws.sub}</div>
                         <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl text-xl font-bold text-white"
                           style={{ background: ws.grad, boxShadow: `0 4px 20px ${ws.glow}` }}>{ws.letter}</div>
-                        <h3 className="text-2xl font-bold tracking-tight text-white">{ws.title}</h3>
-                        <p className="mt-3 max-w-sm text-base leading-relaxed" style={{ color: '#8A8F98' }}>{ws.desc}</p>
+                        <h3 className="text-2xl font-bold tracking-tight" style={{ color: TH }}>{ws.title}</h3>
+                        <p className="mt-3 max-w-sm text-base leading-relaxed" style={{ color: '#6b7280' }}>{ws.desc}</p>
                         <ul className="mt-6 flex flex-col gap-3">
                           {ws.bullets.map((b) => (
-                            <li key={b} className="flex items-start gap-2.5 text-sm leading-snug" style={{ color: '#8A8F98' }}>
+                            <li key={b} className="flex items-start gap-2.5 text-sm leading-snug" style={{ color: '#6b7280' }}>
                               <Check className="mt-0.5 h-4 w-4 shrink-0" style={{ color: ws.accent }} /> {b}
                             </li>
                           ))}
@@ -545,7 +549,7 @@ export default function LandingPage() {
                   <Reveal key={ws.id} delay={i + 1} variant="up" className="flex-1">
                     <button type="button" onClick={() => enter(ws)}
                       className="group relative flex h-full w-full flex-col overflow-hidden rounded-2xl p-7 text-left transition-transform duration-300 hover:-translate-y-1"
-                      style={{ background: 'rgba(255,255,255,0.04)', border: `1px solid ${ws.border}`, backdropFilter: 'blur(24px)', boxShadow: '0 4px 24px rgba(0,0,0,0.24)' }}
+                      style={{ background: '#ffffff', border: `1px solid ${ws.border}`, boxShadow: '0 2px 16px rgba(0,0,0,0.06)' }}
                       onMouseEnter={(e) => { e.currentTarget.style.boxShadow = `0 0 40px ${ws.glow}` }}
                       onMouseLeave={(e) => { e.currentTarget.style.boxShadow = '0 4px 24px rgba(0,0,0,0.24)' }}
                     >
@@ -558,8 +562,8 @@ export default function LandingPage() {
                         <div className="mb-1 text-[10px] font-semibold uppercase tracking-widest" style={{ color: ws.accent }}>{ws.sub}</div>
                         <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl text-base font-bold text-white"
                           style={{ background: ws.grad, boxShadow: `0 4px 14px ${ws.glow}` }}>{ws.letter}</div>
-                        <h3 className="text-lg font-bold tracking-tight text-white">{ws.title}</h3>
-                        <p className="mt-2 text-sm leading-relaxed" style={{ color: '#8A8F98' }}>{ws.desc}</p>
+                        <h3 className="text-lg font-bold tracking-tight" style={{ color: TH }}>{ws.title}</h3>
+                        <p className="mt-2 text-sm leading-relaxed" style={{ color: '#6b7280' }}>{ws.desc}</p>
                         <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold transition-opacity duration-200 group-hover:opacity-90"
                           style={{ color: ws.accent }}
                         >{ws.cta} <ArrowRight className="h-3.5 w-3.5" /></span>
@@ -574,20 +578,20 @@ export default function LandingPage() {
 
         {/* â"€â"€ HOW IT WORKS â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€ */}
         <section id="how" className="relative overflow-hidden px-6 py-24 sm:px-12"
-          style={{ background: S4, borderTop: '1px solid rgba(255,255,255,0.05)' }}
+          style={{ background: S4, borderTop: '1px solid rgba(0,0,0,0.07)' }}
         >
           <div className="pointer-events-none absolute inset-0"
-            style={{ backgroundImage: 'radial-gradient(rgba(255,255,255,0.025) 1px, transparent 1px)', backgroundSize: '28px 28px' }} />
+            style={{ backgroundImage: 'radial-gradient(rgba(94,106,210,0.08) 1px, transparent 1px)', backgroundSize: '28px 28px' }} />
           <Orb orbClass="l-orb-c" speed={0.09} className="h-[500px] w-[500px] -right-16 top-0"
-            style={{ background: 'radial-gradient(circle, rgba(94,106,210,0.10) 0%, transparent 60%)', mixBlendMode: 'screen' }} />
+            style={{ background: 'radial-gradient(circle, rgba(94,106,210,0.10) 0%, transparent 60%)' }} />
 
           <div className="relative mx-auto max-w-6xl">
             <Reveal variant="left" className="mb-14">
               <Label>How It Works</Label>
-              <h2 className="mt-4 text-3xl font-bold tracking-tight text-white sm:text-4xl">
+              <h2 className="mt-4 text-3xl font-bold tracking-tight sm:text-4xl" style={{ color: TH }}>
                 From isolated moments<br />to earlier action
               </h2>
-              <p className="mt-4 max-w-md text-base leading-relaxed" style={{ color: '#8A8F98' }}>
+              <p className="mt-4 max-w-md text-base leading-relaxed" style={{ color: '#6b7280' }}>
                 CareerOS is not just dashboards. It is a loop that preserves evidence,
                 explains what matters, and routes the next accountable action.
               </p>
@@ -597,16 +601,16 @@ export default function LandingPage() {
               {STEPS.map((s, i) => (
                 <Reveal key={s.n} delay={Math.min(i + 1, 4)} variant="up" className="h-full">
                   <div className="group relative flex h-full flex-col overflow-hidden rounded-2xl p-7 transition-transform duration-300 hover:-translate-y-1.5"
-                    style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', backdropFilter: 'blur(20px)' }}
+                    style={{ background: '#ffffff', border: '1px solid rgba(0,0,0,0.08)' }}
                     onMouseEnter={(e) => { e.currentTarget.style.borderColor = `${s.color}40` }}
-                    onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)' }}
+                    onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'rgba(0,0,0,0.08)' }}
                   >
                     <p className="text-[11px] font-bold uppercase tracking-[0.22em]" style={{ color: s.color }}>Step {s.n}</p>
                     <div className="mt-4 flex h-11 w-11 items-center justify-center rounded-xl" style={{ background: `${s.color}16`, border: `1px solid ${s.color}28` }}>
                       <s.Icon className="h-5 w-5" style={{ color: s.color }} />
                     </div>
-                    <h3 className="mt-4 text-base font-semibold text-white">{s.title}</h3>
-                    <p className="mt-2 text-sm leading-relaxed" style={{ color: '#8A8F98' }}>{s.body}</p>
+                    <h3 className="mt-4 text-base font-semibold" style={{ color: TH }}>{s.title}</h3>
+                    <p className="mt-2 text-sm leading-relaxed" style={{ color: '#6b7280' }}>{s.body}</p>
                   </div>
                 </Reveal>
               ))}
@@ -616,18 +620,18 @@ export default function LandingPage() {
 
         {/* â"€â"€ INTELLIGENCE â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€ */}
         <section id="vision" className="relative overflow-hidden px-6 py-24 sm:px-12"
-          style={{ background: S5, borderTop: '1px solid rgba(255,255,255,0.05)' }}
+          style={{ background: S5, borderTop: '1px solid rgba(0,0,0,0.07)' }}
         >
           <Orb orbClass="l-orb-a" speed={0.06} className="h-[500px] w-[500px] -left-20 bottom-0"
-            style={{ background: 'radial-gradient(circle, rgba(139,92,246,0.09) 0%, transparent 60%)', mixBlendMode: 'screen' }} />
+            style={{ background: 'radial-gradient(circle, rgba(139,92,246,0.09) 0%, transparent 60%)' }} />
 
           <div className="relative mx-auto max-w-6xl">
             <Reveal variant="right" className="mb-14">
               <Label>Intelligence Layer</Label>
-              <h2 className="mt-4 text-3xl font-bold tracking-tight text-white sm:text-4xl">
+              <h2 className="mt-4 text-3xl font-bold tracking-tight sm:text-4xl" style={{ color: TH }}>
                 Why this can become<br />more than a feature
               </h2>
-              <p className="mt-4 max-w-lg text-base leading-relaxed" style={{ color: '#8A8F98' }}>
+              <p className="mt-4 max-w-lg text-base leading-relaxed" style={{ color: '#6b7280' }}>
                 The defensible value is not generic AI. It is permissioned longitudinal context,
                 relationship history, and operational evidence that can compound over time.
               </p>
@@ -637,16 +641,16 @@ export default function LandingPage() {
               {INTEL_CARDS.map((c, i) => (
                 <Reveal key={c.title} delay={Math.min(i + 1, 4)} variant={i % 2 === 0 ? 'left' : 'right'} className="h-full">
                   <div className="group flex h-full items-start gap-5 rounded-2xl p-7 transition-transform duration-300 hover:-translate-y-1"
-                    style={{ background: 'rgba(255,255,255,0.04)', border: `1px solid rgba(255,255,255,0.08)`, backdropFilter: 'blur(20px)' }}
+                    style={{ background: '#ffffff', border: `1px solid rgba(0,0,0,0.08)` }}
                     onMouseEnter={(e) => { e.currentTarget.style.borderColor = `${c.color}38` }}
-                    onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)' }}
+                    onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'rgba(0,0,0,0.08)' }}
                   >
                     <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl" style={{ background: `${c.color}16` }}>
                       <c.Icon className="h-5 w-5" style={{ color: c.color }} />
                     </div>
                     <div>
-                      <h3 className="text-base font-semibold text-white">{c.title}</h3>
-                      <p className="mt-2 text-sm leading-relaxed" style={{ color: '#8A8F98' }}>{c.body}</p>
+                      <h3 className="text-base font-semibold" style={{ color: TH }}>{c.title}</h3>
+                      <p className="mt-2 text-sm leading-relaxed" style={{ color: '#6b7280' }}>{c.body}</p>
                       <span className="mt-3 inline-block rounded-full px-3 py-0.5 text-[11px] font-semibold"
                         style={{ background: `${c.color}14`, color: c.color }}>{c.tag}</span>
                     </div>
@@ -659,16 +663,16 @@ export default function LandingPage() {
 
         {/* â"€â"€ ROADMAP â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€ */}
         <section id="roadmap" className="relative overflow-hidden px-6 py-24 sm:px-12"
-          style={{ background: S6, borderTop: '1px solid rgba(255,255,255,0.05)' }}
+          style={{ background: S6, borderTop: '1px solid rgba(0,0,0,0.07)' }}
         >
           <Orb orbClass="l-orb-b" speed={0.04} className="h-[400px] w-[700px] left-1/2 top-0 -translate-x-1/2"
-            style={{ background: 'radial-gradient(ellipse, rgba(94,106,210,0.08) 0%, transparent 65%)', mixBlendMode: 'screen' }} />
+            style={{ background: 'radial-gradient(ellipse, rgba(94,106,210,0.08) 0%, transparent 65%)' }} />
 
           <div className="relative mx-auto max-w-6xl">
             <Reveal variant="scale" className="mb-14 text-center">
               <Label centered>Build Roadmap</Label>
-              <h2 className="mt-4 text-3xl font-bold tracking-tight text-white sm:text-4xl">What we can show. What must be proven.</h2>
-              <p className="mx-auto mt-4 max-w-lg text-base" style={{ color: '#8A8F98' }}>
+              <h2 className="mt-4 text-3xl font-bold tracking-tight sm:text-4xl" style={{ color: TH }}>What we can show. What must be proven.</h2>
+              <p className="mx-auto mt-4 max-w-lg text-base" style={{ color: '#6b7280' }}>
                 The prototype demonstrates the interaction model. The pilot proves whether evidence,
                 intervention, and relationship history produce operational value.
               </p>
@@ -678,17 +682,17 @@ export default function LandingPage() {
               {ROADMAP.map((p, i) => (
                 <Reveal key={p.title} delay={i + 1} variant="up" className="h-full">
                   <div className="relative flex h-full flex-col overflow-hidden rounded-2xl p-7 transition-transform duration-300 hover:-translate-y-1.5"
-                    style={{ background: 'rgba(255,255,255,0.04)', border: `1px solid rgba(255,255,255,0.08)`, backdropFilter: 'blur(20px)', boxShadow: '0 4px 24px rgba(0,0,0,0.24)' }}
+                    style={{ background: '#ffffff', border: `1px solid rgba(0,0,0,0.08)`, boxShadow: '0 2px 16px rgba(0,0,0,0.06)' }}
                   >
                     <span className="mb-5 inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-[11px] font-semibold uppercase tracking-wide"
                       style={{ background: `${p.pillColor}14`, border: `1px solid ${p.pillColor}28`, color: p.pillColor }}
                     >
                       <span className={`h-1.5 w-1.5 rounded-full ${p.dot}`} /> {p.pill}
                     </span>
-                    <h3 className="text-base font-semibold text-white">{p.title}</h3>
+                    <h3 className="text-base font-semibold" style={{ color: TH }}>{p.title}</h3>
                     <ul className="mt-4 flex flex-col gap-2.5">
                       {p.items.map((item) => (
-                        <li key={item} className="flex items-start gap-2.5 text-sm leading-snug" style={{ color: '#8A8F98' }}>
+                        <li key={item} className="flex items-start gap-2.5 text-sm leading-snug" style={{ color: '#6b7280' }}>
                           <Check className="mt-0.5 h-4 w-4 shrink-0" style={{ color: p.check }} /> {item}
                         </li>
                       ))}
@@ -701,14 +705,13 @@ export default function LandingPage() {
         </section>
 
         {/* â"€â"€ CTA BANNER â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€ */}
-        <section className="px-6 pb-20 pt-6 sm:px-12" style={{ background: '#07070a', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
+        <section className="px-6 pb-20 pt-6 sm:px-12" style={{ background: '#f7f8ff', borderTop: '1px solid rgba(0,0,0,0.07)' }}>
           <Reveal variant="scale">
             <div className="relative mx-auto max-w-6xl overflow-hidden rounded-3xl px-10 py-24 text-center sm:px-20"
               style={{
-                background: 'linear-gradient(135deg, rgba(94,106,210,0.16) 0%, rgba(139,92,246,0.12) 50%, rgba(14,165,233,0.10) 100%)',
-                border: '1px solid rgba(94,106,210,0.20)',
-                backdropFilter: 'blur(32px)',
-                boxShadow: '0 0 80px rgba(94,106,210,0.10), inset 0 1px 0 rgba(255,255,255,0.07)',
+                background: 'linear-gradient(135deg, rgba(94,106,210,0.06) 0%, rgba(139,92,246,0.05) 50%, rgba(14,165,233,0.04) 100%)',
+                border: '1px solid rgba(94,106,210,0.15)',
+                boxShadow: '0 4px 40px rgba(94,106,210,0.08), 0 0 0 1px rgba(94,106,210,0.10)',
               }}
             >
               {/* inner aurora */}
@@ -718,14 +721,14 @@ export default function LandingPage() {
 
               <div className="relative">
                 <span className="inline-flex items-center gap-2 rounded-full px-4 py-1 text-xs font-semibold"
-                  style={{ background: 'rgba(94,106,210,0.15)', border: '1px solid rgba(94,106,210,0.28)', color: '#a5b4fc' }}
+                  style={{ background: 'rgba(94,106,210,0.08)', border: '1px solid rgba(94,106,210,0.20)', color: '#5E6AD2' }}
                 >
                   <Sparkles className="h-3 w-3" /> Prototype ready for demo
                 </span>
-                <h2 className="mt-6 text-3xl font-bold leading-tight tracking-tight text-white sm:text-4xl">
+                <h2 className="mt-6 text-3xl font-bold leading-tight tracking-tight sm:text-4xl" style={{ color: TH }}>
                   A career operating system<br />that remembers before it recommends.
                 </h2>
-                <p className="mt-4 text-base" style={{ color: '#8A8F98' }}>
+                <p className="mt-4 text-base" style={{ color: '#6b7280' }}>
                   Explore the working prototype across student, employer, and university workflows.
                   Outcomes, integrations, and predictive accuracy belong in the pilot, not in the claim.
                 </p>
@@ -736,9 +739,9 @@ export default function LandingPage() {
                     <CompassLucide className="h-4 w-4" /> Explore the prototype
                   </button>
                   <a href="#" className="glass inline-flex items-center gap-2 rounded-xl px-7 py-3.5 text-sm font-medium transition-colors"
-                    style={{ color: '#8A8F98' }}
-                    onMouseEnter={(e) => e.currentTarget.style.color = '#EDEDEF'}
-                    onMouseLeave={(e) => e.currentTarget.style.color = '#8A8F98'}
+                    style={{ color: '#374151' }}
+                    onMouseEnter={(e) => e.currentTarget.style.color = '#0f0e1a'}
+                    onMouseLeave={(e) => e.currentTarget.style.color = '#374151'}
                   >
                     <Mail className="h-4 w-4" /> Get in touch
                   </a>
@@ -750,15 +753,15 @@ export default function LandingPage() {
 
         {/* â"€â"€ FOOTER â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€ */}
         <footer className="flex flex-wrap items-center justify-between gap-4 px-6 py-6 sm:px-12"
-          style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }}
+          style={{ borderTop: '1px solid rgba(0,0,0,0.07)', background: '#f7f8ff' }}
         >
-          <span className="text-sm font-bold tracking-tight" style={{ color: '#8A8F98', opacity: 0.5 }}>CareerOS</span>
+          <span className="text-sm font-bold tracking-tight" style={{ color: '#6b7280' }}>CareerOS</span>
           <div className="flex gap-6">
             {['GitHub', 'Pitch Deck', 'Team', 'Contact'].map((l) => (
               <a key={l} href="#" className="text-xs transition-colors"
-                style={{ color: '#8A8F98', opacity: 0.5 }}
-                onMouseEnter={(e) => { e.currentTarget.style.opacity = '1'; e.currentTarget.style.color = '#EDEDEF' }}
-                onMouseLeave={(e) => { e.currentTarget.style.opacity = '0.5'; e.currentTarget.style.color = '#8A8F98' }}
+                style={{ color: '#9ca3af' }}
+                onMouseEnter={(e) => { e.currentTarget.style.color = '#0f0e1a' }}
+                onMouseLeave={(e) => { e.currentTarget.style.color = '#9ca3af' }}
               >{l}</a>
             ))}
           </div>
