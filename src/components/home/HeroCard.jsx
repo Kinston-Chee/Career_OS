@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
-import { ArrowRight, Bot, Eye, Send, Sparkles, Zap } from 'lucide-react'
+import { ArrowRight, Eye, Send, Sparkles, Zap } from 'lucide-react'
+import robotImg from '../../assets/career-os-robot.png'
 
 const CHIP_ICONS = [Sparkles, Eye, Zap]
 
@@ -27,8 +28,8 @@ export default function HeroCard({ briefing, onSubmit, onOpenCompanion }) {
       <div className="flex items-start justify-between gap-3">
         <div className="flex items-center gap-3">
           <div className="relative">
-            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-violet-600 to-indigo-600 text-white shadow-[0_8px_18px_rgba(99,102,241,0.3)]">
-              <Bot size={22} strokeWidth={2.2} aria-hidden="true" />
+            <div className="flex h-12 w-12 items-center justify-center overflow-hidden rounded-2xl bg-gradient-to-br from-violet-100 to-indigo-100 shadow-[0_8px_18px_rgba(99,102,241,0.3)]">
+              <img src={robotImg} alt="" aria-hidden="true" className="h-14 w-14 object-contain object-bottom" />
             </div>
             <span
               className="absolute -bottom-0.5 -left-0.5 h-3 w-3 rounded-full border-2 border-white bg-emerald-500 shadow-sm"

@@ -7,7 +7,7 @@ import { useCareerStore } from '../store/useCareerStore'
 // Each signup/login role maps to a protected route in App.jsx. The store's
 // `selectRole(...)` call is what passes the ProtectedRoute guard.
 const ROLES = [
-  { id: 'student', label: 'Candidate', initial: 'C', gradient: 'from-indigo-500 to-indigo-400', path: '/student/overview' },
+  { id: 'student', label: 'Candidate', initial: 'C', gradient: 'from-indigo-500 to-indigo-400', path: '/student/home' },
   { id: 'employer', label: 'Employer', initial: 'E', gradient: 'from-purple-600 to-purple-400', path: '/employer' },
   { id: 'university', label: 'University', initial: 'U', gradient: 'from-sky-600 to-cyan-400', path: '/university' },
 ]
