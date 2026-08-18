@@ -4,6 +4,7 @@ import { BriefcaseBusiness, Clock3, MapPin, RefreshCw, Sparkles } from 'lucide-r
 import HomeTopNav from '../components/home/HomeTopNav'
 import CareerPathCompanionPanel from '../components/careerPath/CareerPathCompanionPanel'
 import DynamicModulePlaceholder from '../components/careerPath/DynamicModulePlaceholder'
+import RecommendedCareerPaths from '../components/careerPath/RecommendedCareerPaths'
 import CareerPathNetworkGraph from '../components/career/network/CareerPathNetworkGraph'
 import OpportunityDetailsPanel from '../components/opportunitiesHub/OpportunityDetailsPanel'
 import { candidateOverview, careerPathNetwork, mockUser } from '../data/mockData'
@@ -148,6 +149,8 @@ export default function CareerIntelligencePage() {
   const [chips, setChips] = useState(incomingOpportunity ? EXPLORE_CHIPS : null)
   const [activeModule, setActiveModule] = useState(incomingOpportunity ? 'jobs' : null)
   const [activeOpportunity, setActiveOpportunity] = useState(incomingOpportunity)
+  // Focus the graph on a node picked outside the canvas (recommended paths).
+  const [focusRequest, setFocusRequest] = useState(null)
   const addApplication = useCareerStore((state) => state.addApplication)
   const addOpportunityTrackerEntry = useCareerStore((state) => state.addOpportunityTrackerEntry)
   const selectedRole = careerPathNetwork.roles.find((role) => role.id === selectedPathId)
@@ -178,6 +181,13 @@ export default function CareerIntelligencePage() {
       ROLE_MESSAGES[id] ?? 'This role is part of your wider career map. Pick Software Engineer, Data Analyst, or Product Manager to explore the full demo flow.',
       EXPLORE_CHIPS,
     )
+  }
+
+  // Recommended-path card → select the role (which opens its AI Career Advisor
+  // Report) and focus the matching node on the graph.
+  const handleRecommendedSelect = (roleId) => {
+    if (selectedPathId !== roleId) handleRoleSelect(roleId)
+    setFocusRequest((prev) => ({ id: roleId, nonce: (prev?.nonce ?? 0) + 1 }))
   }
 
   const handleChipClick = (chip) => {
@@ -259,9 +269,15 @@ export default function CareerIntelligencePage() {
               network={careerPathNetwork}
               selectedPathId={selectedPathId}
               onSelectPath={handleRoleSelect}
+              onDeselect={resetPath}
+              focusRequest={focusRequest}
             />
 
-            {activeModule === 'jobs' ? (
+            {/* Nothing selected → recommend paths. Otherwise show the module
+                for the selected role (jobs list, or the advisor report). */}
+            {!selectedPathId ? (
+              <RecommendedCareerPaths onSelect={handleRecommendedSelect} />
+            ) : activeModule === 'jobs' ? (
               <ActiveJobPostings
                 roleId={selectedPathId}
                 roleName={selectedRoleName}

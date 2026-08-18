@@ -1,12 +1,10 @@
-import React, { useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import {
   AlertCircle,
-  BarChart3,
-  Briefcase,
   Check,
   ChevronUp,
   Clock,
-  Cpu,
   FileText,
   History,
   Loader2,
@@ -14,10 +12,12 @@ import {
   Play,
   RefreshCw,
   Rocket,
+  ScrollText,
   Settings,
   SlidersHorizontal,
 } from 'lucide-react'
 import { startInterviewSession } from '../../services/interviewPracticeApi'
+import { SESSIONS } from '../../data/interviewSessions'
 
 // ── Config option lists ──────────────────────────────────────────────────────
 const DIFFICULTY = ['Beginner', 'Intermediate', 'Advanced', 'Expert']
@@ -37,87 +37,6 @@ const ACTIVE_TONE = {
 const IDLE_CHIP =
   'bg-[#F8F9FF] border-[#C9CEDF] text-[#6B7280] hover:border-[#5B6CF9] hover:text-[#5B6CF9]'
 
-// ── Mock session history ─────────────────────────────────────────────────────
-const SESSIONS = [
-  {
-    id: 1,
-    role: 'Software Engineer',
-    company: 'Google',
-    date: '18 Jul 2026',
-    score: 91,
-    pass: true,
-    duration: '12 min',
-    tone: 'Formal',
-    persona: 'Tech Lead',
-    lang: 'English',
-    diff: 'Advanced',
-    Icon: Briefcase,
-    iconBg: 'rgba(91,108,249,.2)',
-    iconColor: '#818CF8',
-    stripe: '#5B6CF9',
-    skills: { confidence: 88, intro: 84, vocab: 76, story: 72 },
-    feedback: {
-      strengths:
-        'Clear problem decomposition and confident delivery on system design questions. Strong technical vocabulary throughout the session.',
-      improvements:
-        'Struggled when requirements were ambiguous. Practice narrowing scope and confirming assumptions before diving into solutions.',
-      grammar:
-        'Strong throughout. Minor tense inconsistency when describing past projects — watch for mixing past and present tense in the same answer.',
-    },
-  },
-  {
-    id: 2,
-    role: 'ML Engineer',
-    company: 'ByteDance',
-    date: '15 Jul 2026',
-    score: 74,
-    pass: true,
-    duration: '9 min',
-    tone: 'Stress test',
-    persona: 'Hiring Manager',
-    lang: 'English',
-    diff: 'Intermediate',
-    Icon: Cpu,
-    iconBg: 'rgba(168,85,247,.2)',
-    iconColor: '#C084FC',
-    stripe: '#A855F7',
-    skills: { confidence: 70, intro: 65, vocab: 80, story: 55 },
-    feedback: {
-      strengths:
-        'Good technical vocabulary and stayed calm under pressure. Showed self-awareness when acknowledging knowledge gaps.',
-      improvements:
-        'Answers were too long. Aim for the STAR format to keep responses under 2 minutes. Practice trimming filler before the key point.',
-      grammar:
-        "A few filler words ('um', 'like'). Overall fluent and coherent — the structure breaks down slightly under time pressure.",
-    },
-  },
-  {
-    id: 3,
-    role: 'Data Analyst',
-    company: 'Grab',
-    date: '10 Jul 2026',
-    score: 58,
-    pass: false,
-    duration: '8 min',
-    tone: 'Challenging',
-    persona: 'C-suite exec',
-    lang: 'English',
-    diff: 'Advanced',
-    Icon: BarChart3,
-    iconBg: 'rgba(245,158,11,.2)',
-    iconColor: '#FCD34D',
-    stripe: '#F59E0B',
-    skills: { confidence: 52, intro: 60, vocab: 48, story: 38 },
-    feedback: {
-      strengths:
-        'Honest about knowledge gaps — a positive professional trait. Willing to admit uncertainty rather than bluff through an answer.',
-      improvements:
-        "Needed far more specific examples. Quantify your impact: 'reduced churn by 12%' lands better than 'helped with retention'.",
-      grammar:
-        "Sentence structure breaks down under pressure. Slow down, finish your thoughts, and avoid starting sentences without knowing how they'll end.",
-    },
-  },
-]
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
 function fmtSeconds(s) {
@@ -354,7 +273,7 @@ function SetupView({ state, set, onLaunch, onGoHistory, submitting }) {
 }
 
 // ── Session card (dark) ──────────────────────────────────────────────────────
-function SessionCard({ s, isOpen, onToggle, onRestart, onReport }) {
+function SessionCard({ s, isOpen, onToggle, onRestart, onReport, onReview }) {
   const r = 28
   const circ = 2 * Math.PI * r
   const offset = circ - (s.score / 100) * circ
@@ -440,17 +359,24 @@ function SessionCard({ s, isOpen, onToggle, onRestart, onReport }) {
         </div>
       ) : null}
 
-      <div className="flex border-t border-[#2E3252]">
-        <button type="button" onClick={() => onRestart(s)} className="flex h-10 flex-1 items-center justify-center gap-1.5 text-xs font-medium text-[#8B91AE] transition hover:bg-[#2E3252] hover:text-[#5B6CF9]">
+      {/* Four actions — a 2×2 grid keeps each label readable at card width. */}
+      <div className="grid grid-cols-2 border-t border-[#2E3252]">
+        <button type="button" onClick={() => onRestart(s)} className="flex h-10 items-center justify-center gap-1.5 border-b border-r border-[#2E3252] text-xs font-medium text-[#8B91AE] transition hover:bg-[#2E3252] hover:text-[#5B6CF9]">
           <RefreshCw className="h-3.5 w-3.5" /> Restart
         </button>
-        <div className="w-px shrink-0 bg-[#2E3252]" />
-        <button type="button" onClick={() => onToggle(s.id)} className="flex h-10 flex-1 items-center justify-center gap-1.5 text-xs font-medium text-[#8B91AE] transition hover:bg-[#2E3252] hover:text-[#EAECF5]">
+        <button
+          type="button"
+          onClick={() => onReview(s)}
+          title="See what you got right and wrong in each answer"
+          className="flex h-10 items-center justify-center gap-1.5 border-b border-[#2E3252] text-xs font-medium text-[#8B91AE] transition hover:bg-[#2E3252] hover:text-[#a0aaff]"
+        >
+          <ScrollText className="h-3.5 w-3.5" /> Review
+        </button>
+        <button type="button" onClick={() => onToggle(s.id)} className="flex h-10 items-center justify-center gap-1.5 border-r border-[#2E3252] text-xs font-medium text-[#8B91AE] transition hover:bg-[#2E3252] hover:text-[#EAECF5]">
           {isOpen ? <ChevronUp className="h-3.5 w-3.5" /> : <MessageSquare className="h-3.5 w-3.5" />}
           {isOpen ? 'Hide feedback' : 'View feedback'}
         </button>
-        <div className="w-px shrink-0 bg-[#2E3252]" />
-        <button type="button" onClick={() => onReport(s)} className="flex h-10 flex-1 items-center justify-center gap-1.5 text-xs font-medium text-[#8B91AE] transition hover:bg-[#2E3252] hover:text-emerald-400">
+        <button type="button" onClick={() => onReport(s)} className="flex h-10 items-center justify-center gap-1.5 text-xs font-medium text-[#8B91AE] transition hover:bg-[#2E3252] hover:text-emerald-400">
           <FileText className="h-3.5 w-3.5" /> Full report
         </button>
       </div>
@@ -459,7 +385,7 @@ function SessionCard({ s, isOpen, onToggle, onRestart, onReport }) {
 }
 
 // ── History view (dark) ──────────────────────────────────────────────────────
-function HistoryView({ filter, setFilter, expanded, setExpanded, onRestart, onReport }) {
+function HistoryView({ filter, setFilter, expanded, setExpanded, onRestart, onReport, onReview }) {
   const filtered = useMemo(() => {
     if (filter === 'pass') return SESSIONS.filter((s) => s.pass)
     if (filter === 'fail') return SESSIONS.filter((s) => !s.pass)
@@ -475,7 +401,7 @@ function HistoryView({ filter, setFilter, expanded, setExpanded, onRestart, onRe
       <div className="mb-7 flex items-end justify-between gap-4">
         <div>
           <div className="text-[22px] font-bold text-white">Session history</div>
-          <div className="mt-1 text-[13px] text-[#8B91AE]">Click a card to expand feedback · Restart pre-fills the setup form</div>
+          <div className="mt-1 text-[13px] text-[#8B91AE]">Review opens the full transcript with feedback on every answer · Restart pre-fills the setup form</div>
         </div>
         <div className="flex gap-6">
           <div className="text-right">
@@ -529,6 +455,7 @@ function HistoryView({ filter, setFilter, expanded, setExpanded, onRestart, onRe
               onToggle={(id) => setExpanded((prev) => ({ ...prev, [id]: !prev[id] }))}
               onRestart={onRestart}
               onReport={onReport}
+              onReview={onReview}
             />
           ))}
         </div>
@@ -550,8 +477,22 @@ function Toast({ toast }) {
 }
 
 // ── Main ─────────────────────────────────────────────────────────────────────
-export default function InterviewPracticeDashboard({ onStartMode, onStartRole }) {
-  const [view, setView] = useState('setup')
+export default function InterviewPracticeDashboard({
+  onStartMode,
+  onStartRole,
+  initialView = 'setup',
+  viewNonce = 0,
+  prefillSessionId = null,
+}) {
+  const navigate = useNavigate()
+  const [view, setView] = useState(initialView === 'history' ? 'history' : 'setup')
+
+  // The parent re-asserts the view after a session ends ("View feedback" lands
+  // on Session history). The nonce makes a repeat request take effect.
+  useEffect(() => {
+    if (initialView !== 'history' && initialView !== 'setup') return
+    setView(initialView)
+  }, [initialView, viewNonce])
   const [expanded, setExpanded] = useState({})
   const [filter, setFilter] = useState('all')
   const [toast, setToast] = useState(null)
@@ -570,6 +511,23 @@ export default function InterviewPracticeDashboard({ onStartMode, onStartRole })
     jobUrl: '',
   })
   const set = (patch) => setState((prev) => ({ ...prev, ...patch }))
+
+  // "Practise this again" on the review page hands back a session id — prefill
+  // the setup form from it, the same way Restart does.
+  useEffect(() => {
+    if (!prefillSessionId) return
+    const source = SESSIONS.find((s) => s.id === Number(prefillSessionId))
+    if (!source) return
+    setState((prev) => ({
+      ...prev,
+      jobRole: source.role,
+      tone: source.tone,
+      persona: source.persona,
+      lang: source.lang,
+      diff: source.diff,
+    }))
+    setView('setup')
+  }, [prefillSessionId])
 
   const showToast = (msg, Icon = AlertCircle) => {
     setToast({ msg, Icon })
@@ -656,6 +614,12 @@ export default function InterviewPracticeDashboard({ onStartMode, onStartRole })
     showToast(`Opening full report: ${s.role} (${s.date})`, FileText)
   }
 
+  // Opens the reviewed transcript — the full conversation with per-answer
+  // feedback on its own page.
+  const handleReview = (s) => {
+    navigate(`/student/ai-companion/review/${s.id}`)
+  }
+
   return (
     <div>
       <style dangerouslySetInnerHTML={{ __html: `
@@ -704,6 +668,7 @@ export default function InterviewPracticeDashboard({ onStartMode, onStartRole })
           setExpanded={setExpanded}
           onRestart={handleRestart}
           onReport={handleReport}
+          onReview={handleReview}
         />
       )}
 

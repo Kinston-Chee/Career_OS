@@ -1,25 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react'
+import { createPortal } from 'react-dom'
+import LinkedInPostDraft, { LinkedInGlyph } from './LinkedInPostDraft'
 
-// Inline LinkedIn "in" glyph — used instead of lucide-react's icon because the
-// pinned lucide-react version does not export `Linkedin`.
-function LinkedInGlyph({ size = 14 }) {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 24 24"
-      width={size}
-      height={size}
-      fill="currentColor"
-      aria-hidden="true"
-    >
-      <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.024-3.037-1.852-3.037-1.853 0-2.136 1.446-2.136 2.94v5.666H9.351V9h3.414v1.561h.049c.476-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 1 1 0-4.125 2.062 2.062 0 0 1 0 4.125zM7.114 20.452H3.558V9h3.556v11.452zM22.225 0H1.771C.792 0 0 .775 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .775 23.2 0 22.222 0h.003z" />
-    </svg>
-  )
-}
-
-// Button that shows a "Post on LinkedIn" tooltip on hover and, on click,
-// pops a small demo confirmation card near the cursor. No real posting.
+// Button that shows a "Post on LinkedIn" tooltip on hover and, on click, opens a
+// draft panel for the user to review, edit, and approve. No real posting.
 export default function LinkedInPostButton({ entry }) {
+  const [draftOpen, setDraftOpen] = useState(false)
   const [confirm, setConfirm] = useState(false)
   const timerRef = useRef(null)
 
@@ -27,15 +13,20 @@ export default function LinkedInPostButton({ entry }) {
 
   const handleClick = (event) => {
     event.stopPropagation()
-    setConfirm(true)
-    window.clearTimeout(timerRef.current)
-    timerRef.current = window.setTimeout(() => setConfirm(false), 3200)
+    setDraftOpen(true)
   }
 
   const handleKeyDown = (event) => {
     if (event.key !== 'Enter' && event.key !== ' ') return
     event.preventDefault()
     handleClick(event)
+  }
+
+  const handleApprove = () => {
+    setDraftOpen(false)
+    setConfirm(true)
+    window.clearTimeout(timerRef.current)
+    timerRef.current = window.setTimeout(() => setConfirm(false), 3200)
   }
 
   const title = entry?.title || 'this experience'
@@ -59,7 +50,17 @@ export default function LinkedInPostButton({ entry }) {
         </span>
       </span>
 
-      {confirm ? (
+      {draftOpen ? (
+        <LinkedInPostDraft
+          entry={entry}
+          onApprove={handleApprove}
+          onClose={() => setDraftOpen(false)}
+        />
+      ) : null}
+
+      {/* Portalled for the same reason as the draft: the card's backdrop-blur
+          would pin this fixed toast to the card instead of the viewport. */}
+      {confirm ? createPortal(
         <div
           role="status"
           aria-live="polite"
@@ -70,7 +71,7 @@ export default function LinkedInPostButton({ entry }) {
             <LinkedInGlyph size={16} />
           </span>
           <div className="min-w-0">
-            <p className="text-sm font-bold text-[#11194a]">Draft opened on LinkedIn</p>
+            <p className="text-sm font-bold text-[#11194a]">Post approved</p>
             <p className="mt-0.5 text-xs font-medium leading-5 text-[#637094]">
               &ldquo;{title}&rdquo; Post successfully created. You can view it on LinkedIn now.
             </p>
@@ -83,7 +84,8 @@ export default function LinkedInPostButton({ entry }) {
           >
             ✕
           </button>
-        </div>
+        </div>,
+        document.body,
       ) : null}
     </>
   )

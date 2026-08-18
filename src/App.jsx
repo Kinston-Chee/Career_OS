@@ -4,6 +4,7 @@ import AppLayout from './components/layout/AppLayout'
 import AlumniSignalIntelligencePage from './pages/AlumniSignalIntelligencePage'
 import AICompanionPage from './pages/AICompanionPage'
 import ApplicationsPage from './pages/ApplicationsPage'
+import InterviewReviewPage from './pages/InterviewReviewPage'
 import AuthPage from './pages/AuthPage'
 import CandidateHomePage from './pages/CandidateHomePage'
 import CandidateInsightsPage from './pages/CandidateInsightsPage'
@@ -69,6 +70,7 @@ export default function App() {
         <Route path="/student/skill-development" element={<SkillDevelopmentPage />} />
         <Route path="/student/skill-development/:skillId" element={<SkillDetailPage />} />
         <Route path="/student/ai-companion" element={<AICompanionPage />} />
+        <Route path="/student/ai-companion/review/:sessionId" element={<InterviewReviewPage />} />
         <Route path="/student/ai-assistant" element={<Navigate to="/student/ai-companion" replace />} />
         <Route path="/student/account" element={<ProfilePage />} />
         <Route path="/student/career-animal" element={<CareerAnimalPage />} />

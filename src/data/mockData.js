@@ -2904,10 +2904,20 @@ export const candidateHome = {
     { id: 'qa-6', icon: 'Bot', title: 'Ask my companion', subtitle: 'Anything career' },
   ],
   recentActivity: [
-    { id: 'ra-1', icon: 'Sparkles', tone: 'violet', text: 'AI Career Coach suggested 3 skills for your Software Engineer profile', time: 'Today 09:12' },
-    { id: 'ra-2', icon: 'Briefcase', tone: 'emerald', text: 'Applied to Shopee - Product Manager Intern', time: 'Yesterday 16:45' },
-    { id: 'ra-3', icon: 'FileText', tone: 'blue', text: 'Updated your profile - added 2 new projects', time: 'Yesterday 10:08' },
-    { id: 'ra-4', icon: 'Award', tone: 'amber', text: 'Completed System Design Basics in Learning Hub', time: 'May 14, 20:33' },
+    { id: 'ra-1', icon: 'Sparkles', tone: 'violet', text: 'AI Career Coach suggested 3 skills for your Software Engineer profile', time: 'Today 09:12', route: '/student/ai-companion' },
+    { id: 'ra-2', icon: 'Briefcase', tone: 'emerald', text: 'Applied to Shopee - Product Manager Intern', time: 'Yesterday 16:45', route: '/student/applications' },
+    { id: 'ra-3', icon: 'FileText', tone: 'blue', text: 'Updated your profile - added 2 new projects', time: 'Yesterday 10:08', route: '/student/profile' },
+    { id: 'ra-4', icon: 'Award', tone: 'amber', text: 'Completed System Design Basics in Learning Hub', time: 'May 14, 20:33', route: '/student/skill-development' },
+  ],
+  activityLog: [
+    { id: 'ra-1', icon: 'Sparkles', tone: 'violet', text: 'AI Career Coach suggested 3 skills for your Software Engineer profile', time: 'Today 09:12', route: '/student/ai-companion' },
+    { id: 'ra-5', icon: 'Target', tone: 'violet', text: 'TalentBank AI Challenge match refreshed', time: 'Today 08:40', route: '/student/opportunities' },
+    { id: 'ra-6', icon: 'Eye', tone: 'blue', text: 'Lenovo viewed your profile', time: 'Today 08:12', route: '/student/intelligence' },
+    { id: 'ra-2', icon: 'Briefcase', tone: 'emerald', text: 'Applied to Shopee - Product Manager Intern', time: 'Yesterday 16:45', route: '/student/applications' },
+    { id: 'ra-3', icon: 'FileText', tone: 'blue', text: 'Updated your profile - added 2 new projects', time: 'Yesterday 10:08', route: '/student/profile' },
+    { id: 'ra-7', icon: 'Users', tone: 'emerald', text: 'Joined the Data Science Malaysia community', time: 'Yesterday 09:26', route: '/student/communities' },
+    { id: 'ra-4', icon: 'Award', tone: 'amber', text: 'Completed System Design Basics in Learning Hub', time: 'May 14, 20:33', route: '/student/skill-development' },
+    { id: 'ra-8', icon: 'MessageCircle', tone: 'amber', text: 'Mentor session booked with Aisyah Rahman', time: 'May 14, 15:02', route: '/student/mentorships' },
   ],
   pickingUpWhereLeftOff: [
     { id: 'pu-1', icon: 'Briefcase', title: 'TalentBank application', tag: '1 step left', tone: 'orange' },
@@ -2988,11 +2998,54 @@ export const careerMemoryView = {
     { id: 'sig-2', icon: 'Code2', tone: 'violet', label: 'Full-Stack Development', value: 65, level: 'Medium' },
     { id: 'sig-3', icon: 'BarChart3', tone: 'emerald', label: 'Data Analysis', value: 65, level: 'Medium' },
   ],
+  // Each gap points at the fix it opens: `entryId` edits an existing Career
+  // Memory entry (with `field` naming the section to fix), while `prefill`
+  // opens the Add Experience form for an experience that isn't logged yet.
   gaps: [
-    { id: 'gap-1', text: 'Add a project link to your NLP entry — +3% readiness' },
-    { id: 'gap-2', text: 'Log your FYP — strong signal for data roles' },
-    { id: 'gap-3', text: 'Hackathon entry has no outcome logged' },
-    { id: 'gap-4', text: 'No leadership entry after June 2024' },
+    {
+      id: 'gap-1',
+      text: 'Add a project link to your Grab internship entry — +3% readiness',
+      entryId: 'mem-1',
+      field: 'evidence',
+      action: 'Edit entry',
+    },
+    {
+      id: 'gap-2',
+      text: 'Log your FYP — strong signal for data roles',
+      action: 'Add entry',
+      prefill: {
+        typeId: 'project',
+        title: 'Final Year Project',
+        organisation: "Taylor's University",
+        startDate: '2025-01-06',
+        endDate: '',
+        description: 'Final Year Project — describe the problem, your approach, and the outcome so far.',
+        skills: ['Data Analysis', 'Python', 'Research'],
+        evidenceUrl: '',
+      },
+    },
+    {
+      id: 'gap-3',
+      text: 'Hackathon entry has no outcome logged',
+      entryId: 'mem-3',
+      field: 'description',
+      action: 'Edit entry',
+    },
+    {
+      id: 'gap-4',
+      text: 'No leadership entry after June 2024',
+      action: 'Add entry',
+      prefill: {
+        typeId: 'experience',
+        title: 'Leadership role',
+        organisation: '',
+        startDate: '2024-07-01',
+        endDate: '',
+        description: 'What you led after June 2024 — the team, the scope, and what changed because of you.',
+        skills: ['Leadership'],
+        evidenceUrl: '',
+      },
+    },
   ],
 }
 

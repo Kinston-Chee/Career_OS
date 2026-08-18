@@ -8,6 +8,7 @@ import { SelfDiscoveryFlow } from '../components/profile/SelfDiscoveryCard'
 import OpportunityCards from '../components/home/OpportunityCards'
 import QuickActions from '../components/home/QuickActions'
 import RecentActivity from '../components/home/RecentActivity'
+import { getActivityIcon, getActivityTone } from '../components/home/activityMeta'
 import RightSidebar from '../components/home/RightSidebar'
 import { candidateHome, candidateOverview, mockUser } from '../data/mockData'
 import mentorshipWidgetBg from '../assets/Mentorship Widget bg.png'
@@ -71,6 +72,30 @@ function DemoModal({ modal, onClose }) {
             {modal.rows.map((row) => (
               <p key={row} className="rounded-2xl border border-white/70 bg-white/55 px-4 py-3 text-sm font-semibold leading-6 text-[#3a4669] shadow-[inset_0_1px_0_rgba(255,255,255,0.75),0_8px_24px_rgba(37,99,235,0.06)]">{row}</p>
             ))}
+          </div>
+        )}
+        {modal.items && (
+          <div className="mt-4 max-h-[46vh] space-y-2 overflow-y-auto pr-1">
+            {modal.items.map((item) => {
+              const Icon = getActivityIcon(item.icon)
+              return (
+                <button
+                  key={item.id}
+                  type="button"
+                  onClick={() => modal.onItemSelect?.(item)}
+                  className="group flex w-full items-center gap-3 rounded-2xl border border-white/70 bg-white/55 px-4 py-3 text-left shadow-[inset_0_1px_0_rgba(255,255,255,0.75),0_8px_24px_rgba(37,99,235,0.06)] transition hover:border-blue-200 hover:bg-white/85 focus:outline-none focus:ring-4 focus:ring-blue-100"
+                >
+                  <span className={`flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full ${getActivityTone(item.tone)}`}>
+                    <Icon size={15} strokeWidth={2.2} />
+                  </span>
+                  <span className="min-w-0 flex-1">
+                    <span className="block text-sm font-semibold leading-5 text-[#3a4669] group-hover:text-[#11194a]">{item.text}</span>
+                    <span className="mt-0.5 block text-xs font-medium text-[#7382a1]">{item.time}</span>
+                  </span>
+                  <ArrowRight size={15} className="flex-shrink-0 text-[#a6b2cc] transition-transform group-hover:translate-x-0.5 group-hover:text-blue-600" />
+                </button>
+              )
+            })}
           </div>
         )}
         {modal.sections && (
@@ -217,13 +242,17 @@ export default function CandidateHomePage() {
     else if (action.title === 'Find campus events') navigate('/student/opportunities')
   }
 
+  const handleActivity = (item) => {
+    if (!item.route) return
+    setModal(null)
+    navigate(item.route)
+  }
+
   const openRecentActivity = () => setModal({
     title: 'Recent activity',
-    rows: [
-      ...candidateHome.recentActivity.map((item) => `${item.text} - ${item.time}`),
-      'TalentBank AI Challenge match refreshed - Today 08:40',
-      'Lenovo viewed your profile - Today 08:12',
-    ],
+    body: 'Everything CareerOS logged for you this week. Select an entry to jump straight to it.',
+    items: candidateHome.activityLog,
+    onItemSelect: handleActivity,
   })
 
   const openMentorshipModal = () => setModal({
@@ -261,7 +290,7 @@ export default function CandidateHomePage() {
             <CareerAnimalHomeCard onRetake={() => setShowAssessment(true)} />
             <OpportunityCards opportunities={candidateHome.exploreOpportunities} onSelect={handleOpportunity} />
             <QuickActions actions={candidateHome.quickActions} onAction={handleQuickAction} />
-            <RecentActivity items={candidateHome.recentActivity} onSelect={(item) => showToast(item.text)} onViewAll={openRecentActivity} />
+            <RecentActivity items={candidateHome.recentActivity} onSelect={handleActivity} onViewAll={openRecentActivity} />
           </div>
 
           <div className="min-w-0">

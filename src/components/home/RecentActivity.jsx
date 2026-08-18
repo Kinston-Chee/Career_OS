@@ -1,14 +1,6 @@
 import React from 'react'
-import { ArrowRight, Award, BarChart3, Briefcase, FileText, Sparkles, Users } from 'lucide-react'
-
-const ICONS = { Sparkles, Briefcase, FileText, Award, Users, BarChart3 }
-
-const TONES = {
-  violet: 'bg-violet-500 text-white',
-  emerald: 'bg-emerald-500 text-white',
-  blue: 'bg-blue-500 text-white',
-  amber: 'bg-amber-500 text-white',
-}
+import { ArrowRight, ChevronRight } from 'lucide-react'
+import { getActivityIcon, getActivityTone } from './activityMeta'
 
 export default function RecentActivity({ items, onSelect, onViewAll }) {
   return (
@@ -16,14 +8,15 @@ export default function RecentActivity({ items, onSelect, onViewAll }) {
       <h2 className="mb-2 text-base font-bold text-[#11194a]">Recent activity</h2>
       <div className="divide-y divide-[#e7eef9]">
         {items.map((item) => {
-          const Icon = ICONS[item.icon] ?? Sparkles
+          const Icon = getActivityIcon(item.icon)
           return (
-            <button key={item.id} type="button" onClick={() => onSelect?.(item)} className="flex w-full items-center gap-3 py-3 text-left first:pt-1 hover:bg-blue-50/30">
-              <span className={`flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full ${TONES[item.tone] ?? TONES.blue}`}>
+            <button key={item.id} type="button" onClick={() => onSelect?.(item)} className="group flex w-full items-center gap-3 rounded-lg py-3 text-left transition first:pt-1 hover:bg-blue-50/50 focus:outline-none focus:ring-4 focus:ring-blue-100">
+              <span className={`flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full ${getActivityTone(item.tone)}`}>
                 <Icon size={14} strokeWidth={2.2} />
               </span>
-              <p className="min-w-0 flex-1 truncate text-sm font-medium text-[#455371]">{item.text}</p>
+              <p className="min-w-0 flex-1 truncate text-sm font-medium text-[#455371] group-hover:text-[#11194a]">{item.text}</p>
               <span className="flex-shrink-0 text-xs font-medium text-[#7382a1]">{item.time}</span>
+              <ChevronRight size={15} className="flex-shrink-0 text-[#a6b2cc] transition-transform group-hover:translate-x-0.5 group-hover:text-blue-600" />
             </button>
           )
         })}

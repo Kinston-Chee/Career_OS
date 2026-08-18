@@ -1,6 +1,8 @@
 import React, { useMemo, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { Briefcase, ClipboardList, GripVertical, Mail, Mic, Target } from 'lucide-react'
 import HomeTopNav from '../components/home/HomeTopNav'
+import ApplicationDetailModal from '../components/applications/ApplicationDetailModal'
 import { useCareerStore } from '../store/useCareerStore'
 import { candidateOverview, mockUser } from '../data/mockData'
 
@@ -29,7 +31,7 @@ function companyIconStyle(company = '') {
   return COMPANY_ICON_STYLES[key] ?? COMPANY_ICON_STYLES.default
 }
 
-function ApplicationCard({ app, onDragStart, onDragEnd, isDragging }) {
+function ApplicationCard({ app, onDragStart, onDragEnd, isDragging, onOpen }) {
   const daysInStage = useMemo(() => {
     const last = app.statusHistory[app.statusHistory.length - 1]
     if (!last) return 0
@@ -40,9 +42,20 @@ function ApplicationCard({ app, onDragStart, onDragEnd, isDragging }) {
   return (
     <div
       draggable
+      role="button"
+      tabIndex={0}
+      // Click opens the detail modal; dragging still moves the card between
+      // stages, so the grip stays as the drag affordance.
+      onClick={() => onOpen?.(app)}
+      onKeyDown={(event) => {
+        if (event.key !== 'Enter' && event.key !== ' ') return
+        event.preventDefault()
+        onOpen?.(app)
+      }}
       onDragStart={(event) => onDragStart(event, app.id)}
       onDragEnd={onDragEnd}
-      className={`group cursor-grab rounded-xl border border-slate-200/80 bg-white p-3.5 shadow-[0_4px_12px_rgba(0,0,0,0.04)] transition hover:-translate-y-0.5 hover:border-blue-200 hover:shadow-md active:cursor-grabbing ${
+      aria-label={`${app.jobTitle} at ${app.company} — open details`}
+      className={`group cursor-pointer rounded-xl border border-slate-200/80 bg-white p-3.5 shadow-[0_4px_12px_rgba(0,0,0,0.04)] transition hover:-translate-y-0.5 hover:border-blue-200 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-blue-300 active:cursor-grabbing ${
         isDragging ? 'opacity-50 ring-2 ring-blue-200' : ''
       }`}
     >
@@ -173,6 +186,12 @@ export default function ApplicationsPage() {
   const moveApplicationStage = useCareerStore((state) => state.moveApplicationStage)
   const [draggedApplicationId, setDraggedApplicationId] = useState(null)
   const [dragOverStage, setDragOverStage] = useState(null)
+  const [openApplicationId, setOpenApplicationId] = useState(null)
+  const navigate = useNavigate()
+
+  // Read the open application back out of the store so the modal follows any
+  // stage change (e.g. the card is dragged while its details are open).
+  const openApplication = applications.find((app) => app.id === openApplicationId) ?? null
 
   const grouped = useMemo(() => {
     const result = {}
@@ -263,6 +282,7 @@ export default function ApplicationsPage() {
                           onDragStart={handleDragStart}
                           onDragEnd={handleDragEnd}
                           isDragging={draggedApplicationId === app.id}
+                          onOpen={(selected) => setOpenApplicationId(selected.id)}
                         />
                       ))
                     ) : (
@@ -280,6 +300,15 @@ export default function ApplicationsPage() {
         {/* Timeline */}
         <ApplicationTimeline applications={applications} />
       </div>
+
+      <ApplicationDetailModal
+        app={openApplication}
+        onClose={() => setOpenApplicationId(null)}
+        onAction={(cta) => {
+          setOpenApplicationId(null)
+          navigate(cta.route, cta.state ? { state: cta.state } : undefined)
+        }}
+      />
     </div>
   )
 }

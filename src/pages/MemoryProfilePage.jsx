@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { Building2, Calendar, CheckCircle2, FileText, ListChecks, Paperclip, Pencil, Sparkles, Tag as TagIcon, X } from 'lucide-react'
+import { AlertTriangle, Building2, Calendar, CheckCircle2, FileText, ListChecks, Paperclip, Pencil, Sparkles, Tag as TagIcon, X } from 'lucide-react'
 import HomeTopNav from '../components/home/HomeTopNav'
 import CompanionChatPanel from '../components/careerMemory/CompanionChatPanel'
 import MemoryTimeline from '../components/careerMemory/MemoryTimeline'
@@ -133,7 +133,7 @@ function ChipInput({ items, draft, onDraftChange, onAdd, onRemove, placeholder }
   )
 }
 
-function CareerMemoryDetailModal({ memory, editing, onClose, onEdit, onCancelEdit, onSave }) {
+function CareerMemoryDetailModal({ memory, editing, gapHint, onClose, onEdit, onCancelEdit, onSave }) {
   const [form, setForm] = useState(() => ({
     ...memory.details,
     skills: ensureArray(memory.details.skills),
@@ -204,6 +204,17 @@ function CareerMemoryDetailModal({ memory, editing, onClose, onEdit, onCancelEdi
           </button>
         </div>
 
+        {/* Shown when this modal was opened from a "Gaps in your story" row,
+            so the user can see which gap they came here to close. */}
+        {gapHint ? (
+          <div className="mt-4 flex items-start gap-2.5 rounded-2xl border border-orange-100 bg-orange-50/70 px-4 py-3">
+            <AlertTriangle size={15} className="mt-0.5 flex-shrink-0 text-orange-500" strokeWidth={2.3} />
+            <p className="text-sm font-semibold leading-5 text-[#8a4b08]">
+              Fixing this gap: <span className="font-bold">{gapHint.text}</span>
+            </p>
+          </div>
+        ) : null}
+
         {editing ? (
           <div className="mt-6 space-y-5">
             <div className="grid gap-3 sm:grid-cols-2">
@@ -224,7 +235,7 @@ function CareerMemoryDetailModal({ memory, editing, onClose, onEdit, onCancelEdi
               </DetailSection>
             </div>
 
-            <DetailSection icon={FileText} title="Overview" hint="A few lines is fine">
+            <DetailSection icon={FileText} title="Overview" hint="A few lines is fine" highlight={gapHint?.field === 'description'}>
               <textarea
                 value={form.description}
                 onChange={(event) => update('description', event.target.value)}
@@ -234,7 +245,7 @@ function CareerMemoryDetailModal({ memory, editing, onClose, onEdit, onCancelEdi
               />
             </DetailSection>
 
-            <DetailSection icon={TagIcon} title="Skills & signals" hint="Press Enter or comma to add">
+            <DetailSection icon={TagIcon} title="Skills & signals" hint="Press Enter or comma to add" highlight={gapHint?.field === 'skills'}>
               <ChipInput
                 items={ensureArray(form.skills)}
                 draft={skillDraft}
@@ -245,7 +256,7 @@ function CareerMemoryDetailModal({ memory, editing, onClose, onEdit, onCancelEdi
               />
             </DetailSection>
 
-            <DetailSection icon={Paperclip} title="Evidence" hint="Press Enter or comma to add">
+            <DetailSection icon={Paperclip} title="Evidence" hint="Press Enter or comma to add" highlight={gapHint?.field === 'evidence'}>
               <ChipInput
                 items={ensureArray(form.evidence)}
                 draft={evidenceDraft}
@@ -322,13 +333,18 @@ function CareerMemoryDetailModal({ memory, editing, onClose, onEdit, onCancelEdi
   )
 }
 
-function DetailSection({ icon: Icon, title, hint, children }) {
+function DetailSection({ icon: Icon, title, hint, highlight = false, children }) {
   return (
-    <div className="block">
+    <div className={highlight ? 'block rounded-2xl bg-orange-50/60 p-3 ring-2 ring-orange-200' : 'block'}>
       <span className="mb-1.5 flex items-center gap-1.5 text-xs font-bold uppercase tracking-wide text-[#637094]">
         {Icon ? <Icon size={13} className="text-blue-600" strokeWidth={2.4} /> : null}
         {title}
         {hint ? <span className="text-[10px] font-medium normal-case text-[#9aa6c3]">· {hint}</span> : null}
+        {highlight ? (
+          <span className="rounded-full bg-orange-100 px-2 py-0.5 text-[10px] font-bold normal-case text-orange-700">
+            Fix here
+          </span>
+        ) : null}
       </span>
       {children}
     </div>
@@ -362,6 +378,9 @@ export default function MemoryProfilePage() {
   const [leadershipBoost, setLeadershipBoost] = useState(false)
   const [activeMemory, setActiveMemory] = useState(null)
   const [editing, setEditing] = useState(false)
+  // The gap row that opened the detail modal, if any — drives the banner and
+  // the highlighted field inside the edit form.
+  const [activeGap, setActiveGap] = useState(null)
   const [toast, setToast] = useState('')
   const [isAddOpen, setIsAddOpen] = useState(false)
   // Prefill for the AddExperienceModal. Set by the AI-fill flow so the
@@ -379,9 +398,26 @@ export default function MemoryProfilePage() {
     toastRef.current = window.setTimeout(() => setToast(''), 1800)
   }
 
-  const openMemory = (entry, edit = false) => {
+  const openMemory = (entry, edit = false, gap = null) => {
     setActiveMemory(entry)
     setEditing(edit)
+    setActiveGap(gap)
+  }
+
+  // "Gaps in your story" → the interface that actually closes the gap. Gaps
+  // tied to an existing entry open that entry's edit form with the relevant
+  // section highlighted; the rest open a prefilled Add Experience form.
+  const handleFixGap = (gap) => {
+    if (gap.entryId) {
+      const entry = timeline.find((item) => item.id === gap.entryId)
+      if (entry) {
+        openMemory(entry, true, gap)
+        return
+      }
+    }
+    setAddInitialValues(gap.prefill ?? null)
+    setIsAddOpen(true)
+    showToast(gap.prefill ? 'Prefilled a draft — review and save' : 'Add the missing experience')
   }
 
   const saveMemory = (details) => {
@@ -400,6 +436,7 @@ export default function MemoryProfilePage() {
     )))
     setActiveMemory((current) => ({ ...current, title: nextTitle, period: details.dateRange, tags: details.skills.slice(0, 3), verified: details.status.toLowerCase().includes('verified'), details }))
     setEditing(false)
+    setActiveGap(null)
     showToast('Career Memory updated')
   }
 
@@ -545,7 +582,7 @@ export default function MemoryProfilePage() {
           <div className="min-w-0">
             <div className="space-y-4 lg:fixed lg:top-20 lg:z-10 lg:w-[320px] lg:right-[max(2rem,calc((100vw-1480px)/2+2rem))]">
               <AISignalsPanel signals={careerMemoryView.aiSignals} leadershipBoost={leadershipBoost} />
-              <GapsPanel gaps={careerMemoryView.gaps} />
+              <GapsPanel gaps={careerMemoryView.gaps} onFix={handleFixGap} />
             </div>
           </div>
         </div>
@@ -555,9 +592,10 @@ export default function MemoryProfilePage() {
         <CareerMemoryDetailModal
           memory={activeMemory}
           editing={editing}
-          onClose={() => setActiveMemory(null)}
+          gapHint={activeGap}
+          onClose={() => { setActiveMemory(null); setActiveGap(null) }}
           onEdit={() => setEditing(true)}
-          onCancelEdit={() => setEditing(false)}
+          onCancelEdit={() => { setEditing(false); setActiveGap(null) }}
           onSave={saveMemory}
         />
       )}

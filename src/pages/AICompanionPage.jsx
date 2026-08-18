@@ -503,6 +503,9 @@ export default function AICompanionPage() {
   // ── Interview Practice mode ─────────────────────────────────────────
   const [activeMode, setActiveMode] = useState(() => (location.state?.activeMode === 'practice' ? 'practice' : 'chat')) // 'chat' | 'practice'
   const [sessionConfig, setSessionConfig] = useState(null) // { mode, role, company }
+  // Which dashboard view to show. The nonce lets us re-assert the view (e.g.
+  // jump to history after a session ends) even if it was already set before.
+  const [practiceView, setPracticeView] = useState({ view: location.state?.practiceView, nonce: 0 })
 
   const scrollRef = useRef(null)
   const timersRef = useRef([])
@@ -665,6 +668,14 @@ export default function AICompanionPage() {
 
   const handleExitSession = () => setSessionConfig(null)
 
+  // Ending a session and choosing "View feedback" drops the user straight into
+  // Session history, where the report for that session lives.
+  const handleViewFeedback = () => {
+    setSessionConfig(null)
+    setActiveMode('practice')
+    setPracticeView((prev) => ({ view: 'history', nonce: prev.nonce + 1 }))
+  }
+
   return (
     <div className="min-h-screen bg-[#f6f9ff] text-[#121a3a]">
       {/* Voice session overlay — sits above everything */}
@@ -674,6 +685,7 @@ export default function AICompanionPage() {
           role={sessionConfig.role}
           company={sessionConfig.company}
           onExit={handleExitSession}
+          onViewFeedback={handleViewFeedback}
         />
       )}
 
@@ -720,6 +732,9 @@ export default function AICompanionPage() {
           <InterviewPracticeDashboard
             onStartMode={handleStartMode}
             onStartRole={handleStartRole}
+            initialView={practiceView.view}
+            viewNonce={practiceView.nonce}
+            prefillSessionId={location.state?.restartSessionId}
           />
         )}
 

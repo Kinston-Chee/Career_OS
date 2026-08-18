@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 import ForceGraph2D from 'react-force-graph-2d'
-import { Sparkles } from 'lucide-react'
+import { Search, Sparkles, X } from 'lucide-react'
 import nodeGraphBg from '../../../assets/Node graph bg.png'
 
 const SKILL_COLOR = '#64748b' // slate-500 — neutral for all skills
@@ -56,6 +56,63 @@ function IndustryFilter({ industries, activeIndustry, onChange }) {
         ))}
       </select>
     </label>
+  )
+}
+
+/**
+ * NodeSearch
+ *
+ * Finds a node by name and hands it to the graph to select + focus. Submitting
+ * a term that matches nothing leaves the graph untouched.
+ */
+function NodeSearch({ value, onChange, onSubmit, onClear, notFound, suggestions }) {
+  return (
+    <form
+      onSubmit={(event) => {
+        event.preventDefault()
+        onSubmit(value)
+      }}
+      className="flex flex-col items-end gap-1"
+    >
+      <div
+        className="flex items-center gap-2 rounded-full px-3 py-1.5"
+        style={{
+          background: 'rgba(255, 255, 255, 0.8)',
+          backdropFilter: 'blur(8px)',
+          WebkitBackdropFilter: 'blur(8px)',
+          border: `1px solid ${notFound ? 'rgba(251, 146, 60, 0.6)' : 'rgba(200, 210, 255, 0.5)'}`,
+        }}
+      >
+        <Search size={13} className="flex-shrink-0 text-violet-500" strokeWidth={2.4} />
+        <input
+          type="search"
+          value={value}
+          onChange={(event) => onChange(event.target.value)}
+          placeholder="Search a role or skill…"
+          aria-label="Search the career network"
+          list="career-network-nodes"
+          className="w-[168px] bg-transparent text-xs font-semibold text-violet-700 placeholder:font-medium placeholder:text-slate-400 focus:outline-none"
+        />
+        <datalist id="career-network-nodes">
+          {suggestions.map((name) => (
+            <option key={name} value={name} />
+          ))}
+        </datalist>
+        {value ? (
+          <button
+            type="button"
+            onClick={onClear}
+            aria-label="Clear search"
+            className="rounded-full p-0.5 text-slate-400 transition hover:bg-violet-50 hover:text-violet-600"
+          >
+            <X size={12} strokeWidth={2.6} />
+          </button>
+        ) : null}
+      </div>
+      {notFound ? (
+        <span className="pr-1 text-[10.5px] font-semibold text-orange-500">No node matches that search</span>
+      ) : null}
+    </form>
   )
 }
 
@@ -117,11 +174,17 @@ function GraphLegend({ industries }) {
   )
 }
 
-export default function CareerPathNetworkGraph({ network, selectedPathId, onSelectPath }) {
+export default function CareerPathNetworkGraph({ network, selectedPathId, onSelectPath, onDeselect, focusRequest }) {
   const containerRef = useRef(null)
   const fgRef = useRef(null)
   const [size, setSize] = useState({ width: 600, height: 520 })
   const [activeIndustry, setActiveIndustry] = useState('all')
+  const [query, setQuery] = useState('')
+  const [notFound, setNotFound] = useState(false)
+  const [focusedNodeId, setFocusedNodeId] = useState(null)
+  // Set when a search lands. The camera can only move once the simulation has
+  // given the node coordinates, so the move happens in an effect.
+  const [pendingFocusId, setPendingFocusId] = useState(null)
 
   // Industry color lookup so node painting stays O(1).
   const industryColorById = useMemo(() => {
@@ -212,10 +275,105 @@ export default function CareerPathNetworkGraph({ network, selectedPathId, onSele
     }
   }, [graphData])
 
+  // Focus asked for from outside the graph (e.g. a recommended-path card).
+  // The nonce lets the same node be re-focused after the user pans away.
+  useEffect(() => {
+    if (!focusRequest?.id) return
+    const node = graphData.nodes.find((item) => item.id === focusRequest.id)
+    if (!node) return
+    if (node.dimmed) setActiveIndustry('all')
+    setFocusedNodeId(focusRequest.id)
+    setPendingFocusId(focusRequest.id)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [focusRequest?.id, focusRequest?.nonce])
+
+  // Move the camera onto a searched node once the force sim has placed it.
+  useEffect(() => {
+    if (!pendingFocusId) return undefined
+    let timer = null
+    let tries = 0
+    const settle = () => {
+      const fg = fgRef.current
+      const node = graphData.nodes.find((item) => item.id === pendingFocusId)
+      if (fg && node && Number.isFinite(node.x) && Number.isFinite(node.y)) {
+        fg.centerAt(node.x, node.y, 700)
+        fg.zoom(3.2, 700)
+        setPendingFocusId(null)
+        return
+      }
+      if (tries < 25) {
+        tries += 1
+        timer = window.setTimeout(settle, 120)
+      }
+    }
+    timer = window.setTimeout(settle, 60)
+    return () => window.clearTimeout(timer)
+  }, [pendingFocusId, graphData])
+
+  // Role names first — a search for "data analyst" should land on the role,
+  // not a skill that happens to contain the word.
+  const searchableNames = useMemo(
+    () => [
+      ...network.roles.map((role) => role.label),
+      ...network.skills.map((skill) => skill.label),
+    ],
+    [network],
+  )
+
+  const handleSearch = (raw) => {
+    const term = raw.trim().toLowerCase()
+    if (!term) {
+      setNotFound(false)
+      return
+    }
+
+    const roles = graphData.nodes.filter((node) => node.type === 'role')
+    const skills = graphData.nodes.filter((node) => node.type === 'skill')
+    const findIn = (list) =>
+      list.find((node) => node.name.toLowerCase() === term)
+      ?? list.find((node) => node.name.toLowerCase().startsWith(term))
+      ?? list.find((node) => node.name.toLowerCase().includes(term))
+
+    const match = findIn(roles) ?? findIn(skills)
+
+    // Nothing in the graph matches — leave the graph exactly as it is.
+    if (!match) {
+      setNotFound(true)
+      return
+    }
+
+    setNotFound(false)
+    // A match hidden by the industry filter would be invisible once focused,
+    // so widen the filter back to all industries first.
+    if (match.dimmed) setActiveIndustry('all')
+    setFocusedNodeId(match.id)
+    setPendingFocusId(match.id)
+    // Clicking a selected role toggles it off, but searching for one should
+    // always leave it selected — so skip the call when it already is.
+    if (match.type === 'role' && match.id !== selectedPathId && typeof onSelectPath === 'function') {
+      onSelectPath(match.id)
+    }
+  }
+
+  const clearSearch = () => {
+    setQuery('')
+    setNotFound(false)
+    setFocusedNodeId(null)
+  }
+
   const handleNodeClick = (node) => {
+    setFocusedNodeId(node.id)
     if (node.type === 'role' && typeof onSelectPath === 'function') {
       onSelectPath(node.id)
     }
+  }
+
+  // Clicking empty canvas clears the current selection — both the selected
+  // role path and any node highlighted by a search.
+  const handleBackgroundClick = () => {
+    setFocusedNodeId(null)
+    setNotFound(false)
+    if (typeof onDeselect === 'function') onDeselect()
   }
 
   const paintNode = (node, ctx, globalScale) => {
@@ -223,6 +381,17 @@ export default function CareerPathNetworkGraph({ network, selectedPathId, onSele
     const radius = isRole ? 9 : 3.4
     const baseColor = isRole ? industryColorById[node.industry] ?? '#6366f1' : SKILL_COLOR
     const fillColor = node.dimmed ? DIMMED_NODE : baseColor
+
+    // Search focus ring — works for skills too, which have no "selected path".
+    if (focusedNodeId === node.id) {
+      ctx.beginPath()
+      ctx.arc(node.x, node.y, radius + 7, 0, 2 * Math.PI)
+      ctx.strokeStyle = hexToRgba('#8b5cf6', 0.75)
+      ctx.lineWidth = 2 / globalScale
+      ctx.setLineDash([3 / globalScale, 2 / globalScale])
+      ctx.stroke()
+      ctx.setLineDash([])
+    }
 
     // Highlight ring when this role is the currently selected path.
     if (isRole && selectedPathId === node.id && !node.dimmed) {
@@ -311,11 +480,21 @@ export default function CareerPathNetworkGraph({ network, selectedPathId, onSele
             to zoom, and click a role to view its detailed path.
           </p>
         </div>
-        <IndustryFilter
-          industries={network.industries}
-          activeIndustry={activeIndustry}
-          onChange={setActiveIndustry}
-        />
+        <div className="flex flex-wrap items-start gap-2">
+          <IndustryFilter
+            industries={network.industries}
+            activeIndustry={activeIndustry}
+            onChange={setActiveIndustry}
+          />
+          <NodeSearch
+            value={query}
+            onChange={(next) => { setQuery(next); setNotFound(false) }}
+            onSubmit={handleSearch}
+            onClear={clearSearch}
+            notFound={notFound}
+            suggestions={searchableNames}
+          />
+        </div>
       </header>
 
       <div
@@ -346,6 +525,7 @@ export default function CareerPathNetworkGraph({ network, selectedPathId, onSele
           linkCanvasObjectMode={() => 'replace'}
           linkCanvasObject={paintLink}
           onNodeClick={handleNodeClick}
+          onBackgroundClick={handleBackgroundClick}
           cooldownTicks={120}
           d3AlphaDecay={0.025}
           d3VelocityDecay={0.32}

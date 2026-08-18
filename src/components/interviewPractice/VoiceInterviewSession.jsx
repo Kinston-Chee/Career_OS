@@ -324,7 +324,7 @@ function TopIconBtn({ onClick, title, children }) {
 }
 
 // ── Main component ──────────────────────────────────────────────────────────
-export default function VoiceInterviewSession({ mode, role, company, onExit }) {
+export default function VoiceInterviewSession({ mode, role, company, onExit, onViewFeedback }) {
   const sessionSeconds = 720 // 12 min demo
   const gapSeconds = 10
 
@@ -667,7 +667,13 @@ export default function VoiceInterviewSession({ mode, role, company, onExit }) {
           visible={ended}
           stats={{ duration: durationStr, exchanges: exchangeCount, avgGap }}
           onRestart={() => { resetSession(); startSession() }}
-          onViewFeedback={() => { resetSession(); onExit && onExit() }}
+          // "View feedback" closes the session and lands the user on the
+          // session history list; falls back to a plain exit if unwired.
+          onViewFeedback={() => {
+            resetSession()
+            if (onViewFeedback) onViewFeedback()
+            else if (onExit) onExit()
+          }}
         />
       </div>
 

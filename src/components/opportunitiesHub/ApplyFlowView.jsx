@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { Check } from 'lucide-react'
+import { buildApplyBlueprint } from '../../data/applyFormBlueprints'
 
 function StepDots({ applyStep }) {
   const steps = [
@@ -66,22 +67,37 @@ function FormField({ label, defaultValue }) {
 }
 
 export default function ApplyFlowView({ opportunity, applyStep, setApplyStep, onClose, onSubmitted, onViewApplications }) {
-  const isEvent = opportunity.category === 'event'
-  const [mode, setMode] = useState(null)
-  const [studentIdInput, setStudentIdInput] = useState('')
-  const [studentId, setStudentId] = useState('')
-  const [eventConfirmed, setEventConfirmed] = useState(false)
+  // What we ask for depends on the opportunity's category and title — a job
+  // posting collects personal details, a challenge collects team details, an
+  // event collects attendance details.
+  const blueprint = useMemo(() => buildApplyBlueprint(opportunity), [opportunity])
 
-  const handleStudentIdSubmit = () => {
-    if (!studentIdInput.trim()) return
-    setStudentId(studentIdInput.trim())
+  const [choice, setChoice] = useState(null)
+  const [followUpInput, setFollowUpInput] = useState('')
+  const [followUpValue, setFollowUpValue] = useState('')
+
+  // Reset whenever the panel switches to a different opportunity.
+  useEffect(() => {
+    setChoice(null)
+    setFollowUpInput('')
+    setFollowUpValue('')
+  }, [opportunity?.id])
+
+  const handleFollowUpSubmit = () => {
+    if (!followUpInput.trim()) return
+    setFollowUpValue(followUpInput.trim())
     setTimeout(() => setApplyStep(2), 800)
   }
 
-  const handleEventConfirm = () => {
-    setEventConfirmed(true)
-    setTimeout(() => setApplyStep(2), 500)
+  // Fields carry `valueFrom` when their value comes from the conversation
+  // rather than the blueprint default.
+  const resolveValue = (field) => {
+    if (field.valueFrom === 'choice') return choice?.label ?? field.value
+    if (field.valueFrom === blueprint.followUp?.key) return followUpValue || field.value
+    return field.value
   }
+
+  const extraFields = choice ? blueprint.choiceExtras?.[choice.id] ?? [] : []
 
   if (applyStep === 4) {
     return (
@@ -89,9 +105,9 @@ export default function ApplyFlowView({ opportunity, applyStep, setApplyStep, on
         <span className="flex h-12 w-12 items-center justify-center rounded-full bg-green-100 text-green-600">
           <Check size={24} strokeWidth={2.6} />
         </span>
-        <p className="mt-4 text-base font-bold text-green-700">Application submitted!</p>
+        <p className="mt-4 text-base font-bold text-green-700">{blueprint.successTitle}</p>
         <p className="mt-1 text-sm font-medium text-[#7382a1]">{opportunity.title}</p>
-        <p className="mt-3 text-xs font-medium text-[#9aa6c3]">You'll hear back within 3–5 days.</p>
+        <p className="mt-3 text-xs font-medium text-[#9aa6c3]">{blueprint.successNote}</p>
 
         <div className="mt-8 w-full space-y-2">
           <button
@@ -120,101 +136,74 @@ export default function ApplyFlowView({ opportunity, applyStep, setApplyStep, on
       <div className="flex-1 space-y-4 overflow-y-auto p-5 transition-opacity duration-150">
         {applyStep === 1 && (
           <>
-            {isEvent ? (
-              <>
-                <RobotBubble>
-                  {`Hi Chris! Registering you for ${opportunity.org}.\nJust confirm — you're attending as an individual student?`}
-                </RobotBubble>
-                {!eventConfirmed && (
-                  <div className="flex gap-2 pl-[42px]">
-                    <button
-                      type="button"
-                      onClick={handleEventConfirm}
-                      className="rounded-full border border-[#dfe8f7] bg-white px-3.5 py-1.5 text-xs font-bold text-[#35507d] transition hover:border-blue-300 hover:bg-blue-50"
-                    >
-                      Yes, confirm
-                    </button>
-                    <button
-                      type="button"
-                      onClick={onClose}
-                      className="rounded-full border border-[#dfe8f7] bg-white px-3.5 py-1.5 text-xs font-bold text-[#35507d] transition hover:border-blue-300 hover:bg-blue-50"
-                    >
-                      Actually, no
-                    </button>
-                  </div>
-                )}
-              </>
-            ) : (
-              <>
-                <RobotBubble>
-                  {"Hi Chris! I'll help you apply.\nQuick question — are you applying solo or with a team?"}
-                </RobotBubble>
+            <RobotBubble>
+              {`${blueprint.intro}\n${blueprint.choice.prompt}`}
+            </RobotBubble>
 
-                {!mode && (
-                  <div className="flex gap-2 pl-[42px]">
-                    <button
-                      type="button"
-                      onClick={() => setMode('solo')}
-                      className="rounded-full border border-[#dfe8f7] bg-white px-3.5 py-1.5 text-xs font-bold text-[#35507d] transition hover:border-blue-300 hover:bg-blue-50"
-                    >
-                      Solo
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setMode('team')}
-                      className="rounded-full border border-[#dfe8f7] bg-white px-3.5 py-1.5 text-xs font-bold text-[#35507d] transition hover:border-blue-300 hover:bg-blue-50"
-                    >
-                      With a team
-                    </button>
-                  </div>
-                )}
+            {!choice && (
+              <div className="flex flex-wrap gap-2 pl-[42px]">
+                {blueprint.choice.options.map((option) => (
+                  <button
+                    key={option.id}
+                    type="button"
+                    onClick={() => setChoice(option)}
+                    className="rounded-full border border-[#dfe8f7] bg-white px-3.5 py-1.5 text-xs font-bold text-[#35507d] transition hover:border-blue-300 hover:bg-blue-50"
+                  >
+                    {option.label}
+                  </button>
+                ))}
+              </div>
+            )}
 
-                {mode && !studentId && (
-                  <RobotBubble delay={100}>
-                    {"Got it. What's your student ID at Taylor's University?"}
-                    <div className="mt-3 flex items-center gap-2">
-                      <input
-                        type="text"
-                        value={studentIdInput}
-                        onChange={(event) => setStudentIdInput(event.target.value)}
-                        placeholder="e.g. 0329847"
-                        className="flex-1 rounded-lg border border-[#dfe8f7] bg-gray-50 px-3 py-2 text-sm text-[#2c3656] focus:outline-none focus:ring-2 focus:ring-blue-100"
-                      />
-                      <button
-                        type="button"
-                        onClick={handleStudentIdSubmit}
-                        className="flex-shrink-0 rounded-lg bg-blue-600 px-3 py-2 text-xs font-bold text-white transition hover:bg-blue-700"
-                      >
-                        Continue →
-                      </button>
-                    </div>
-                  </RobotBubble>
-                )}
+            {choice && !followUpValue && blueprint.followUp && (
+              <RobotBubble delay={100}>
+                {blueprint.followUp.prompt}
+                <div className="mt-3 flex items-center gap-2">
+                  <input
+                    type="text"
+                    value={followUpInput}
+                    onChange={(event) => setFollowUpInput(event.target.value)}
+                    placeholder={blueprint.followUp.placeholder}
+                    className="flex-1 rounded-lg border border-[#dfe8f7] bg-gray-50 px-3 py-2 text-sm text-[#2c3656] focus:outline-none focus:ring-2 focus:ring-blue-100"
+                  />
+                  <button
+                    type="button"
+                    onClick={handleFollowUpSubmit}
+                    className="flex-shrink-0 rounded-lg bg-blue-600 px-3 py-2 text-xs font-bold text-white transition hover:bg-blue-700"
+                  >
+                    Continue →
+                  </button>
+                </div>
+              </RobotBubble>
+            )}
 
-                {studentId && (
-                  <RobotBubble delay={100}>
-                    {'Perfect, I have everything I need.\nLet me fill in the form for you.'}
-                  </RobotBubble>
-                )}
-              </>
+            {followUpValue && (
+              <RobotBubble delay={100}>
+                {`Perfect, I have everything I need.\nLet me fill in your ${blueprint.kindLabel.toLowerCase()}.`}
+              </RobotBubble>
             )}
           </>
         )}
 
         {applyStep === 2 && (
           <>
-            <RobotBubble>{"Here's your application.\nEdit anything or ask me to change something."}</RobotBubble>
+            <RobotBubble>
+              {`Here's your ${blueprint.kindLabel.toLowerCase()} for ${opportunity.title}.\nEdit anything or ask me to change something.`}
+            </RobotBubble>
 
-            <div className="rounded-xl border border-[#e2eaf8] bg-white p-4">
-              <FormField label="Full name" defaultValue="Chris Lee" />
-              <FormField label="University" defaultValue="Taylor's University" />
-              <FormField label="Year" defaultValue="Year 3" />
-              <FormField label="Course" defaultValue="Data Science" />
-              <FormField label="Student ID" defaultValue={studentId || '0329847'} />
-              <FormField label="Email" defaultValue="chris.lee@taylors.edu.my" />
-              {opportunity.category === 'internship' && <FormField label="Availability" defaultValue="Jun – Aug 2025" />}
-              {mode === 'team' && <FormField label="Team name" defaultValue="NeuralNomads" />}
-            </div>
+            {blueprint.sections.map((section, index) => (
+              <div key={section.title} className="rounded-xl border border-[#e2eaf8] bg-white p-4">
+                <p className="mb-2.5 text-[11px] font-bold uppercase tracking-wide text-blue-600">{section.title}</p>
+                {section.fields.map((field) => (
+                  <FormField key={field.label} label={field.label} defaultValue={resolveValue(field)} />
+                ))}
+                {/* Conditional fields (team roster, group size…) join the last section. */}
+                {index === blueprint.sections.length - 1 &&
+                  extraFields.map((field) => (
+                    <FormField key={field.label} label={field.label} defaultValue={field.value} />
+                  ))}
+              </div>
+            ))}
 
             <input
               type="text"
@@ -227,9 +216,7 @@ export default function ApplyFlowView({ opportunity, applyStep, setApplyStep, on
 
         {applyStep === 3 && (
           <>
-            <RobotBubble>
-              {`Everything looks good!\nReady to submit your application for ${opportunity.title}?`}
-            </RobotBubble>
+            <RobotBubble>{blueprint.confirmPrompt}</RobotBubble>
             <div className="flex gap-2 pl-[42px]">
               <button
                 type="button"
@@ -239,7 +226,7 @@ export default function ApplyFlowView({ opportunity, applyStep, setApplyStep, on
                 }}
                 className="rounded-lg bg-blue-600 px-4 py-2 text-xs font-bold text-white transition hover:bg-blue-700"
               >
-                Yes, submit
+                {blueprint.submitLabel}
               </button>
               <button
                 type="button"

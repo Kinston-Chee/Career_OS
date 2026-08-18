@@ -1,51 +1,33 @@
 import React, { useMemo, useState } from 'react'
-import { ArrowRight, Briefcase, Building2, ChevronDown } from 'lucide-react'
+import { useNavigate } from 'react-router-dom'
+import { ArrowRight, Award, Briefcase, Building2, ChevronDown, ChevronRight, Code2, Users } from 'lucide-react'
+import { SKILLS } from '../../data/skillDevelopmentData'
 
-// ─── Demo data ────────────────────────────────────────────────────────
-// One row per tracked skill against the target role. Wire this to real
-// data (Career Memory signals × target-role requirements) later.
-const DEFAULT_SKILL_GAPS = [
-  {
-    id: 'system-design',
-    name: 'System design',
-    description: 'Architecture, scalability',
-    yourLevel: 22,
-    requiredLevel: 80,
-    nextStep: 'Start course',
-  },
-  {
-    id: 'data-sql',
-    name: 'Data / SQL',
-    description: 'Queries, schema design',
-    yourLevel: 30,
-    requiredLevel: 65,
-    nextStep: 'Start course',
-  },
-  {
-    id: 'backend-apis',
-    name: 'Backend APIs',
-    description: 'REST, auth, deployment',
-    yourLevel: 45,
-    requiredLevel: 75,
-    nextStep: 'Build project',
-  },
-  {
-    id: 'react-frontend',
-    name: 'React / Frontend',
-    description: 'Components, state, hooks',
-    yourLevel: 70,
-    requiredLevel: 70,
-    nextStep: 'Maintain',
-  },
-  {
-    id: 'leadership',
-    name: 'Leadership',
-    description: 'Team, cross-functional',
-    yourLevel: 88,
-    requiredLevel: 60,
-    nextStep: 'Strength',
-  },
+// ─── Categories ───────────────────────────────────────────────────────
+// Ids match the Skill Development page's sidebar so a click can land the
+// user on exactly the right section there.
+const CATEGORIES = [
+  { id: 'technical', label: 'Technical', icon: Code2, chip: 'bg-[#e0e3ff] text-[#5B6CF9]' },
+  { id: 'soft', label: 'Soft skills', icon: Users, chip: 'bg-[#e1f5ee] text-[#0F6E56]' },
+  { id: 'domain', label: 'Domain knowledge', icon: Building2, chip: 'bg-[#fef9c3] text-[#854F0B]' },
+  { id: 'cert', label: 'Certifications', icon: Award, chip: 'bg-[#ede9fe] text-[#534AB7]' },
 ]
+
+// Career Memory tracks the same skills the Skill Development page does, so the
+// gap table is derived from that single source instead of a second copy.
+const DEFAULT_SKILL_GAPS = SKILLS.map((skill) => ({
+  id: skill.id,
+  name: skill.name,
+  description: skill.sub,
+  category: skill.cat,
+  yourLevel: skill.pct,
+  requiredLevel: skill.required,
+  nextStep: skill.status === 'gap'
+    ? 'Start course'
+    : skill.status === 'progress'
+      ? 'Continue path'
+      : skill.yourLevel > skill.requiredLevel ? 'Strength' : 'Maintain',
+}))
 
 const INDUSTRY_OPTIONS = [
   { id: 'any', label: 'Any industry' },
@@ -99,10 +81,7 @@ const GAP_PILL_TONES = {
   strength: 'bg-emerald-50 text-emerald-700 border-emerald-100',
 }
 
-const NEXT_STEP_TONES = {
-  actionable: 'text-blue-600 hover:text-blue-800',
-  passive: 'text-[#7382a1]',
-}
+const ROW_GRID = 'grid grid-cols-[minmax(150px,1.4fr)_minmax(160px,2.6fr)_70px_110px] items-center gap-3'
 
 // ─── Stat card ───────────────────────────────────────────────────────
 function StatCard({ value, valueTone, label, sublabel }) {
@@ -122,8 +101,75 @@ function StatCard({ value, valueTone, label, sublabel }) {
   )
 }
 
+// ─── Skill row ───────────────────────────────────────────────────────
+// Each row is a button: it opens the matching skill on the Skill Development
+// page, pre-filtered to the skill's own category.
+function SkillRow({ skill, onOpenSkill }) {
+  const barWidth = Math.max(0, Math.min(100, skill.yourLevel))
+  const markerLeft = Math.max(0, Math.min(100, skill.requiredLevel))
+  const gapLabel = skill.gap > 0 ? `+${skill.gap}` : skill.gap === 0 ? 'Met' : `${skill.gap}`
+
+  return (
+    <li>
+      <button
+        type="button"
+        onClick={() => onOpenSkill(skill)}
+        aria-label={`Open ${skill.name} in Skill Development`}
+        className={`${ROW_GRID} group w-full px-4 py-3.5 text-left transition hover:bg-blue-50/60 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-200`}
+      >
+        {/* Skill */}
+        <div className="flex items-start gap-2">
+          <span
+            className={`mt-1.5 h-2 w-2 flex-shrink-0 rounded-full ${DOT_TONES[skill.severity]}`}
+            aria-hidden="true"
+          />
+          <div className="min-w-0">
+            <p className="truncate text-sm font-semibold text-[#11194a] group-hover:text-blue-700">{skill.name}</p>
+            <p className="truncate text-[11px] font-medium text-[#7382a1]">{skill.description}</p>
+          </div>
+        </div>
+
+        {/* Bar + numbers */}
+        <div>
+          <div className="relative h-2 rounded-full bg-blue-50">
+            <div
+              className={`absolute inset-y-0 left-0 rounded-full ${BAR_TONES[skill.severity]}`}
+              style={{ width: `${barWidth}%` }}
+            />
+            <span
+              className={`absolute top-1/2 h-3.5 w-[3px] -translate-x-1/2 -translate-y-1/2 rounded-full ${MARKER_TONES[skill.severity]}`}
+              style={{ left: `${markerLeft}%` }}
+              aria-hidden="true"
+            />
+          </div>
+          <div className="mt-1.5 flex justify-between text-[11px] font-semibold">
+            <span className="text-blue-700">You: {skill.yourLevel}%</span>
+            <span className="text-[#7382a1]">Need: {skill.requiredLevel}%</span>
+          </div>
+        </div>
+
+        {/* Gap pill */}
+        <div className="flex justify-center">
+          <span
+            className={`inline-flex min-w-[3.25rem] justify-center rounded-full border px-2.5 py-1 text-xs font-bold ${GAP_PILL_TONES[skill.severity]}`}
+          >
+            {gapLabel}
+          </span>
+        </div>
+
+        {/* Next step */}
+        <div className="flex items-center justify-end gap-1 text-xs font-bold text-blue-600 transition group-hover:text-blue-800">
+          {skill.nextStep}
+          <ArrowRight size={12} strokeWidth={2.6} className="transition-transform group-hover:translate-x-0.5" />
+        </div>
+      </button>
+    </li>
+  )
+}
+
 // ─── Main component ──────────────────────────────────────────────────
 export default function SkillGapAnalysis({ skills = DEFAULT_SKILL_GAPS }) {
+  const navigate = useNavigate()
   const [targetRole, setTargetRole] = useState('Full-Stack Engineer')
   const [industryId, setIndustryId] = useState('any')
 
@@ -149,6 +195,33 @@ export default function SkillGapAnalysis({ skills = DEFAULT_SKILL_GAPS }) {
       readinessGain,
     }
   }, [skills])
+
+  // Categories are dynamic: one is only suggested while it still has skills
+  // below their required level. Categories already covered move to the
+  // "on track" strip instead of taking up a whole block.
+  const { needsWork, onTrack } = useMemo(() => {
+    const buckets = CATEGORIES.map((category) => {
+      const rows = summary.enriched.filter((skill) => skill.category === category.id)
+      const gaps = rows.filter((skill) => skill.gap < 0)
+      const avgReadiness = rows.length
+        ? Math.round(rows.reduce((sum, s) => sum + Math.min(100, (s.yourLevel / s.requiredLevel) * 100), 0) / rows.length)
+        : 0
+      return { ...category, rows, gaps, avgReadiness }
+    }).filter((bucket) => bucket.rows.length > 0)
+
+    return {
+      needsWork: buckets.filter((bucket) => bucket.gaps.length > 0),
+      onTrack: buckets.filter((bucket) => bucket.gaps.length === 0),
+    }
+  }, [summary])
+
+  const openCategory = (categoryId) => {
+    navigate('/student/skill-development', { state: { category: categoryId } })
+  }
+
+  const openSkill = (skill) => {
+    navigate('/student/skill-development', { state: { category: skill.category, skillId: skill.id } })
+  }
 
   const headline = summary.skillsBelowThreshold > 0
     ? `${summary.skillsBelowThreshold} gap${summary.skillsBelowThreshold === 1 ? '' : 's'} standing between you and your target role`
@@ -228,91 +301,87 @@ export default function SkillGapAnalysis({ skills = DEFAULT_SKILL_GAPS }) {
         />
       </div>
 
-      {/* ── Skill table ────────────────────────────────────────── */}
-      <div className="mt-4 overflow-hidden rounded-2xl border border-white/70 bg-white/80 shadow-[inset_0_1px_0_rgba(255,255,255,0.85)]">
-        {/* Column headers */}
-        <div className="grid grid-cols-[minmax(150px,1.4fr)_minmax(160px,2.6fr)_70px_100px] items-center gap-3 border-b border-blue-50 px-4 py-2.5 text-[10px] font-semibold uppercase tracking-wide text-[#7382a1]">
-          <span>Skill</span>
-          <span>Your level vs. required</span>
-          <span className="text-center">Gap</span>
-          <span className="text-right">Next step</span>
-        </div>
-
-        <ul className="divide-y divide-blue-50">
-          {summary.enriched.map((skill) => {
-            const barWidth = Math.max(0, Math.min(100, skill.yourLevel))
-            const markerLeft = Math.max(0, Math.min(100, skill.requiredLevel))
-            const gapLabel = skill.gap > 0
-              ? `+${skill.gap}`
-              : skill.gap === 0
-                ? 'Met'
-                : `${skill.gap}`
-            const isActionable = skill.nextStep === 'Start course' || skill.nextStep === 'Build project'
-            const nextStepTone = isActionable ? NEXT_STEP_TONES.actionable : NEXT_STEP_TONES.passive
-            return (
-              <li
-                key={skill.id}
-                className="grid grid-cols-[minmax(150px,1.4fr)_minmax(160px,2.6fr)_70px_100px] items-center gap-3 px-4 py-3.5"
+      {/* ── Categories that still need work ────────────────────── */}
+      <div className="mt-4 space-y-3">
+        {needsWork.map((category) => {
+          const Icon = category.icon
+          return (
+            <div
+              key={category.id}
+              className="overflow-hidden rounded-2xl border border-white/70 bg-white/80 shadow-[inset_0_1px_0_rgba(255,255,255,0.85)]"
+            >
+              {/* Category header — opens this section on Skill Development */}
+              <button
+                type="button"
+                onClick={() => openCategory(category.id)}
+                className="group flex w-full items-center gap-3 border-b border-blue-50 px-4 py-3 text-left transition hover:bg-blue-50/50 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-200"
               >
-                {/* Skill */}
-                <div className="flex items-start gap-2">
-                  <span
-                    className={`mt-1.5 h-2 w-2 flex-shrink-0 rounded-full ${DOT_TONES[skill.severity]}`}
-                    aria-hidden="true"
-                  />
-                  <div className="min-w-0">
-                    <p className="truncate text-sm font-semibold text-[#11194a]">{skill.name}</p>
-                    <p className="text-[11px] font-medium text-[#7382a1]">{skill.description}</p>
-                  </div>
-                </div>
-
-                {/* Bar + numbers */}
-                <div>
-                  <div className="relative h-2 rounded-full bg-blue-50">
-                    <div
-                      className={`absolute inset-y-0 left-0 rounded-full ${BAR_TONES[skill.severity]}`}
-                      style={{ width: `${barWidth}%` }}
-                    />
-                    <span
-                      className={`absolute top-1/2 h-3.5 w-[3px] -translate-x-1/2 -translate-y-1/2 rounded-full ${MARKER_TONES[skill.severity]}`}
-                      style={{ left: `${markerLeft}%` }}
-                      aria-hidden="true"
-                    />
-                  </div>
-                  <div className="mt-1.5 flex justify-between text-[11px] font-semibold">
-                    <span className="text-blue-700">You: {skill.yourLevel}%</span>
-                    <span className="text-[#7382a1]">Need: {skill.requiredLevel}%</span>
-                  </div>
-                </div>
-
-                {/* Gap pill */}
-                <div className="flex justify-center">
-                  <span
-                    className={`inline-flex min-w-[3.25rem] justify-center rounded-full border px-2.5 py-1 text-xs font-bold ${GAP_PILL_TONES[skill.severity]}`}
-                  >
-                    {gapLabel}
+                <span className={`flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg ${category.chip}`}>
+                  <Icon size={16} strokeWidth={2.1} />
+                </span>
+                <span className="min-w-0 flex-1">
+                  <span className="block text-sm font-bold text-[#11194a] group-hover:text-blue-700">{category.label}</span>
+                  <span className="block text-[11px] font-medium text-[#7382a1]">
+                    {category.gaps.length} gap{category.gaps.length === 1 ? '' : 's'} · {category.rows.length} skill
+                    {category.rows.length === 1 ? '' : 's'} tracked · {category.avgReadiness}% ready
                   </span>
-                </div>
+                </span>
+                <span className="flex flex-shrink-0 items-center gap-1 text-xs font-bold text-blue-600 group-hover:text-blue-800">
+                  View section
+                  <ChevronRight size={14} strokeWidth={2.6} className="transition-transform group-hover:translate-x-0.5" />
+                </span>
+              </button>
 
-                {/* Next step */}
-                <div className="text-right">
-                  {isActionable ? (
-                    <button
-                      type="button"
-                      className={`inline-flex items-center gap-1 text-xs font-bold transition ${nextStepTone}`}
-                    >
-                      {skill.nextStep}
-                      <ArrowRight size={12} strokeWidth={2.6} />
-                    </button>
-                  ) : (
-                    <span className={`text-xs font-bold ${nextStepTone}`}>{skill.nextStep}</span>
-                  )}
-                </div>
-              </li>
-            )
-          })}
-        </ul>
+              {/* Column headers */}
+              <div className={`${ROW_GRID} border-b border-blue-50 px-4 py-2 text-[10px] font-semibold uppercase tracking-wide text-[#7382a1]`}>
+                <span>Skill</span>
+                <span>Your level vs. required</span>
+                <span className="text-center">Gap</span>
+                <span className="text-right">Next step</span>
+              </div>
+
+              <ul className="divide-y divide-blue-50">
+                {category.gaps.map((skill) => (
+                  <SkillRow key={skill.id} skill={skill} onOpenSkill={openSkill} />
+                ))}
+              </ul>
+            </div>
+          )
+        })}
       </div>
+
+      {/* ── Categories already covered ─────────────────────────── */}
+      {onTrack.length > 0 && (
+        <div className="mt-3 flex flex-wrap items-center gap-2 rounded-2xl border border-emerald-100 bg-emerald-50/60 px-4 py-3">
+          <span className="text-xs font-bold uppercase tracking-wide text-emerald-700">On track</span>
+          <span className="text-xs font-medium text-emerald-800">
+            No suggestions needed here — you already meet every requirement.
+          </span>
+          <span className="ml-auto flex flex-wrap gap-2">
+            {onTrack.map((category) => {
+              const Icon = category.icon
+              return (
+                <button
+                  key={category.id}
+                  type="button"
+                  onClick={() => openCategory(category.id)}
+                  className="inline-flex items-center gap-1.5 rounded-full border border-emerald-200 bg-white/85 px-3 py-1 text-xs font-bold text-emerald-800 transition hover:bg-white"
+                >
+                  <Icon size={12} strokeWidth={2.2} />
+                  {category.label}
+                  <ChevronRight size={12} strokeWidth={2.6} />
+                </button>
+              )
+            })}
+          </span>
+        </div>
+      )}
+
+      {needsWork.length === 0 && (
+        <p className="mt-3 rounded-2xl border border-dashed border-emerald-200 bg-white/70 p-6 text-center text-sm font-semibold text-emerald-700">
+          Every tracked category meets its requirement for {targetRole || 'your target role'}. Nothing to close right now.
+        </p>
+      )}
     </section>
   )
 }

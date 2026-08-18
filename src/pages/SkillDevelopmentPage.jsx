@@ -1,5 +1,5 @@
-import React, { useMemo, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import React, { useEffect, useMemo, useState } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
 import {
   AlertCircle,
   Atom,
@@ -613,12 +613,31 @@ function OverviewDashboard({ skills }) {
 // ─── Page ────────────────────────────────────────────────────────────
 export default function SkillDevelopmentPage() {
   const navigate = useNavigate()
+  const location = useLocation()
   const readiness = candidateOverview.careerSnapshot.readiness
-  const [currentCat, setCurrentCat] = useState('all')
+  // Other pages (e.g. Career Memory's skill-gap analysis) can deep-link into a
+  // category, and optionally straight into one skill's detail panel.
+  const incoming = location.state ?? {}
+  const [currentCat, setCurrentCat] = useState(() => (
+    CAT_META[incoming.category] ? incoming.category : 'all'
+  ))
   const [currentFilter, setCurrentFilter] = useState('all')
   const [sortBy, setSortBy] = useState('priority')
-  const [selectedSkillId, setSelectedSkillId] = useState(null)
-  const [detailOpen, setDetailOpen] = useState(false)
+  const [selectedSkillId, setSelectedSkillId] = useState(incoming.skillId ?? null)
+  const [detailOpen, setDetailOpen] = useState(Boolean(incoming.skillId))
+
+  // Re-apply when arriving again on an already-mounted page.
+  useEffect(() => {
+    if (!incoming.category && !incoming.skillId) return
+    if (CAT_META[incoming.category]) {
+      setCurrentCat(incoming.category)
+      setCurrentFilter('all')
+    }
+    if (incoming.skillId && SKILLS.some((s) => s.id === incoming.skillId)) {
+      setSelectedSkillId(incoming.skillId)
+      setDetailOpen(true)
+    }
+  }, [incoming.category, incoming.skillId])
 
   const displayedSkills = useMemo(() => {
     let list = filterByCategory(currentCat)
