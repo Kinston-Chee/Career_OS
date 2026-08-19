@@ -23,18 +23,29 @@ import {
 import HomeTopNav from '../components/home/HomeTopNav'
 import TypewriterText from '../components/ui/TypewriterText'
 import robotImage from '../assets/career-os-robot.png'
+import homeOpportunity1 from '../assets/Home_eo_1.png'
+import homeOpportunity2 from '../assets/Home_eo_2.png'
+import homeOpportunity3 from '../assets/Home_eo_3.png'
+import homeOpportunity4 from '../assets/Home_eo_4.png'
+import opportunityCompetition from '../assets/Opportunity Competition bg.png'
+import opportunityIntern from '../assets/Opportunity Intern bg.png'
+import opportunityJob from '../assets/Opportunity Job bg.png'
+import opportunityTalk from '../assets/Opportunity Talk bg.png'
+import mentorshipVisual from '../assets/Mentorship Widget bg.png'
+import communityArtworkReference from '../assets/CommunityArtworkReference.png'
+import communitiesHeroBackground from '../assets/Communities Hero Background.png'
 import { candidateOverview, mockUser } from '../data/mockData'
 
 const communities = [
-  { id: 'data-science', name: 'Data Science', icon: BarChart3, tone: 'blue', industry: 'Technology', path: 'Data Science', members: 5284, discussions: 684, activity: '2 minutes ago', description: 'Projects, interviews, internships and practical career advice for aspiring Data Scientists.' },
-  { id: 'software-engineering', name: 'Software Engineering', icon: Code2, tone: 'indigo', industry: 'Technology', path: 'Software Engineering', members: 7130, discussions: 912, activity: '5 minutes ago', description: 'Build stronger engineering skills and learn from students and working developers.' },
-  { id: 'business-analysis', name: 'Business Analysis', icon: BriefcaseBusiness, tone: 'emerald', industry: 'Business', path: 'Business Analysis', members: 3126, discussions: 426, activity: '11 minutes ago', description: 'Discuss case interviews, requirements, stakeholder work and analyst career paths.' },
-  { id: 'machine-learning', name: 'Machine Learning', icon: Sparkles, tone: 'violet', industry: 'Technology', path: 'Machine Learning', members: 2487, discussions: 318, activity: '18 minutes ago', description: 'Share ML projects, learning resources and advice for moving into applied AI roles.' },
-  { id: 'cybersecurity', name: 'Cybersecurity', icon: ShieldCheck, tone: 'rose', industry: 'Technology', path: 'Cybersecurity', members: 2814, discussions: 355, activity: '24 minutes ago', description: 'Learn from security students and practitioners through real scenarios and resources.' },
-  { id: 'product-management', name: 'Product Management', icon: Lightbulb, tone: 'amber', industry: 'Product', path: 'Product Management', members: 2218, discussions: 296, activity: '31 minutes ago', description: 'Explore product thinking, APM applications, case studies and stakeholder skills.' },
-  { id: 'ui-ux-design', name: 'UI/UX Design', icon: Palette, tone: 'rose', industry: 'Design', path: 'UI/UX Design', members: 1972, discussions: 274, activity: '42 minutes ago', description: 'Get portfolio feedback and exchange practical design process and interview advice.' },
-  { id: 'graduate-careers', name: 'Graduate Careers Malaysia', icon: GraduationCap, tone: 'emerald', industry: 'Cross-industry', path: 'Graduate Jobs', members: 4316, discussions: 588, activity: '1 hour ago', description: 'Navigate graduate programmes, career fairs and early-career applications together.' },
-  { id: 'women-in-tech', name: 'Women in Tech', icon: Laptop, tone: 'violet', industry: 'Technology', path: 'Women in Tech', members: 3648, discussions: 472, activity: '7 minutes ago', description: 'A supportive space for women building careers across software, data, product, design and emerging technology.' },
+  { id: 'data-science', name: 'Data Science', icon: BarChart3, tone: 'blue', image: homeOpportunity2, imageClass: 'object-cover', overlay: 'from-cyan-950/20 via-cyan-950/10 to-slate-950/85', industry: 'Technology', path: 'Data Science', members: 5284, discussions: 684, activity: '2 minutes ago', description: 'Projects, interviews, internships and practical career advice for aspiring Data Scientists.' },
+  { id: 'software-engineering', name: 'Software Engineering', icon: Code2, tone: 'indigo', image: homeOpportunity1, imageClass: 'object-cover', overlay: 'from-blue-950/10 via-blue-950/20 to-slate-950/90', industry: 'Technology', path: 'Software Engineering', members: 7130, discussions: 912, activity: '5 minutes ago', description: 'Build stronger engineering skills and learn from students and working developers.' },
+  { id: 'business-analysis', name: 'Business Analysis', icon: BriefcaseBusiness, tone: 'emerald', image: opportunityJob, imageClass: 'object-contain object-right', visualSurface: 'bg-gradient-to-br from-emerald-50 to-cyan-100', overlay: 'from-emerald-950/5 via-emerald-950/5 to-emerald-950/75', industry: 'Business', path: 'Business Analysis', members: 3126, discussions: 426, activity: '11 minutes ago', description: 'Discuss case interviews, requirements, stakeholder work and analyst career paths.' },
+  { id: 'machine-learning', name: 'Machine Learning', icon: Sparkles, tone: 'violet', image: homeOpportunity3, imageClass: 'object-cover', overlay: 'from-violet-950/10 via-violet-950/20 to-slate-950/90', industry: 'Technology', path: 'Machine Learning', members: 2487, discussions: 318, activity: '18 minutes ago', description: 'Share ML projects, learning resources and advice for moving into applied AI roles.' },
+  { id: 'cybersecurity', name: 'Cybersecurity', icon: ShieldCheck, tone: 'rose', image: opportunityCompetition, imageClass: 'object-contain object-right', visualSurface: 'bg-gradient-to-br from-sky-100 to-indigo-200', overlay: 'from-indigo-950/5 via-indigo-950/10 to-slate-950/80', industry: 'Technology', path: 'Cybersecurity', members: 2814, discussions: 355, activity: '24 minutes ago', description: 'Learn from security students and practitioners through real scenarios and resources.' },
+  { id: 'product-management', name: 'Product Management', icon: Lightbulb, tone: 'amber', image: homeOpportunity4, imageClass: 'object-cover', overlay: 'from-amber-950/5 via-amber-950/10 to-stone-950/85', industry: 'Product', path: 'Product Management', members: 2218, discussions: 296, activity: '31 minutes ago', description: 'Explore product thinking, APM applications, case studies and stakeholder skills.' },
+  { id: 'ui-ux-design', name: 'UI/UX Design', icon: Palette, tone: 'rose', image: opportunityTalk, imageClass: 'object-contain object-right', visualSurface: 'bg-gradient-to-br from-fuchsia-50 to-rose-100', overlay: 'from-fuchsia-950/5 via-fuchsia-950/5 to-fuchsia-950/75', industry: 'Design', path: 'UI/UX Design', members: 1972, discussions: 274, activity: '42 minutes ago', description: 'Get portfolio feedback and exchange practical design process and interview advice.' },
+  { id: 'graduate-careers', name: 'Graduate Careers Malaysia', icon: GraduationCap, tone: 'emerald', image: opportunityIntern, imageClass: 'object-contain object-right', visualSurface: 'bg-gradient-to-br from-blue-50 to-violet-100', overlay: 'from-blue-950/5 via-blue-950/5 to-slate-950/75', industry: 'Cross-industry', path: 'Graduate Jobs', members: 4316, discussions: 588, activity: '1 hour ago', description: 'Navigate graduate programmes, career fairs and early-career applications together.' },
+  { id: 'women-in-tech', name: 'Women in Tech', icon: Laptop, tone: 'violet', image: mentorshipVisual, imageClass: 'object-contain object-right-bottom', visualSurface: 'bg-gradient-to-br from-blue-50 to-indigo-100', overlay: 'from-indigo-950/5 via-indigo-950/5 to-indigo-950/80', industry: 'Technology', path: 'Women in Tech', members: 3648, discussions: 472, activity: '7 minutes ago', description: 'A supportive space for women building careers across software, data, product, design and emerging technology.' },
 ]
 
 const recommended = [
@@ -42,6 +53,13 @@ const recommended = [
   { communityId: 'business-analysis', match: 95 },
   { communityId: 'machine-learning', match: 93 },
   { communityId: 'software-engineering', match: 91 },
+]
+
+const recommendationGlassTones = [
+  'border-cyan-100/70 bg-cyan-50/35',
+  'border-violet-100/70 bg-violet-50/35',
+  'border-emerald-100/70 bg-emerald-50/35',
+  'border-blue-100/70 bg-blue-50/35',
 ]
 
 const initialDiscussions = [
@@ -80,6 +98,14 @@ const toneClasses = {
   amber: 'border-amber-100 bg-amber-50 text-amber-700',
 }
 
+const communityArtworkCrops = {
+  'graduate-careers': { x: 29, y: 32, width: 604, height: 351 },
+  'women-in-tech': { x: 657, y: 32, width: 620, height: 351 },
+  'business-analysis': { x: 1302, y: 32, width: 607, height: 351 },
+  cybersecurity: { x: 209, y: 413, width: 630, height: 352 },
+  'ui-ux-design': { x: 864, y: 413, width: 625, height: 352 },
+}
+
 function formatCount(value) {
   return new Intl.NumberFormat('en-MY').format(value)
 }
@@ -103,21 +129,58 @@ function ModalShell({ title, description, onClose, children, size = 'max-w-xl' }
 
 function CommunityCard({ community, joined, onJoin, onOpen }) {
   const Icon = community.icon
+  const artworkCrop = communityArtworkCrops[community.id]
+
   return (
-    <article className="flex min-h-[260px] flex-col rounded-2xl border border-[#e2eaf8] bg-white p-5 shadow-[0_8px_22px_rgba(44,76,142,0.07)] transition hover:-translate-y-0.5 hover:border-blue-200 hover:shadow-[0_14px_32px_rgba(37,99,235,0.10)]">
-      <div className="flex items-start justify-between gap-3">
-        <span className={`flex h-12 w-12 items-center justify-center rounded-xl border ${toneClasses[community.tone]}`}><Icon size={22} /></span>
-        <span className="text-xs font-semibold text-[#8a96af]">Active {community.activity}</span>
+    <article className="group flex min-h-[352px] flex-col overflow-hidden rounded-2xl border border-[#e2eaf8] bg-white shadow-[0_8px_22px_rgba(44,76,142,0.07)] transition duration-200 hover:-translate-y-1 hover:border-blue-200 hover:shadow-[0_18px_38px_rgba(37,99,235,0.13)]">
+      <div className={`relative h-40 shrink-0 overflow-hidden ${community.visualSurface || 'bg-slate-900'}`}>
+        {artworkCrop ? (
+          <div
+            className="absolute left-0 top-1/2 w-full -translate-y-1/2 overflow-hidden transition duration-500 group-hover:scale-105"
+            style={{ aspectRatio: `${artworkCrop.width} / ${artworkCrop.height}` }}
+          >
+            <img
+              src={communityArtworkReference}
+              alt=""
+              aria-hidden="true"
+              className="pointer-events-none absolute max-w-none select-none"
+              style={{
+                width: `${(1938 / artworkCrop.width) * 100}%`,
+                height: 'auto',
+                left: `${(-artworkCrop.x / artworkCrop.width) * 100}%`,
+                top: `${(-artworkCrop.y / artworkCrop.height) * 100}%`,
+              }}
+            />
+          </div>
+        ) : (
+          <img src={community.image} alt="" aria-hidden="true" className={`absolute inset-0 h-full w-full transition duration-500 group-hover:scale-105 ${community.imageClass}`} />
+        )}
+        <div className="absolute inset-0 bg-gradient-to-b from-slate-950/5 via-transparent to-slate-950/80" />
+        <div className="relative flex h-full flex-col justify-between p-4">
+          <div className="flex items-start justify-between gap-3">
+            <span className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/30 bg-white/90 text-[#26365c] shadow-[0_6px_18px_rgba(15,23,42,0.14)] backdrop-blur-sm"><Icon size={20} /></span>
+            <span className="rounded-full border border-white/25 bg-slate-950/35 px-2.5 py-1 text-[11px] font-bold text-white shadow-sm backdrop-blur-md">Active {community.activity}</span>
+          </div>
+          <h3 className="max-w-[88%] text-xl font-bold leading-tight text-white drop-shadow-sm">{community.name}</h3>
+        </div>
       </div>
-      <button type="button" disabled={!joined} onClick={onOpen} className={`mt-4 text-left text-lg font-bold transition ${joined ? 'text-[#11194a] hover:text-blue-700' : 'cursor-default text-[#11194a]'}`}>{community.name}</button>
-      <p className="mt-2 text-sm font-medium leading-6 text-[#637094]">{community.description}</p>
-      <div className="mt-4 flex flex-wrap gap-3 text-xs font-semibold text-[#52627f]">
-        <span className="flex items-center gap-1.5"><Users size={13} /> {formatCount(community.members)} Members</span>
-        <span className="flex items-center gap-1.5"><MessageCircle size={13} /> {formatCount(community.discussions)} Discussions</span>
-      </div>
-      <div className="mt-auto flex gap-2 pt-5">
-        {joined && <button type="button" onClick={onOpen} className="h-10 flex-1 rounded-xl border border-blue-100 bg-white text-sm font-bold text-blue-700 transition hover:bg-blue-50">Open</button>}
-        <button type="button" onClick={onJoin} className={`h-10 flex-1 rounded-xl text-sm font-bold transition ${joined ? 'border border-emerald-200 bg-emerald-50 text-emerald-700' : 'bg-blue-600 text-white hover:bg-blue-700'}`}>{joined ? 'Joined' : 'Join'}</button>
+
+      <div className="flex flex-1 flex-col p-5">
+        <p className="min-h-[72px] text-sm font-medium leading-6 text-[#637094]">{community.description}</p>
+        <div className="mt-4 flex flex-wrap gap-x-4 gap-y-2 border-t border-[#edf2fa] pt-4 text-xs font-semibold text-[#52627f]">
+          <span className="flex items-center gap-1.5"><Users size={13} /> {formatCount(community.members)} Members</span>
+          <span className="flex items-center gap-1.5"><MessageCircle size={13} /> {formatCount(community.discussions)} Discussions</span>
+        </div>
+        <div className="mt-auto pt-5">
+          <button
+            type="button"
+            onClick={joined ? onOpen : onJoin}
+            className={`inline-flex h-10 w-full items-center justify-center gap-2 rounded-xl text-sm font-bold transition focus:outline-none focus:ring-4 focus:ring-blue-100 ${joined ? 'border border-blue-200 bg-blue-50 text-blue-700 hover:bg-blue-100' : 'bg-blue-600 text-white shadow-[0_8px_18px_rgba(37,99,235,0.18)] hover:bg-blue-700'}`}
+          >
+            {joined ? <ArrowRight size={15} /> : <Users size={15} />}
+            {joined ? 'Open Community' : 'Join Community'}
+          </button>
+        </div>
       </div>
     </article>
   )
@@ -324,24 +387,32 @@ export default function CommunitiesPage() {
           <p className="mt-1 max-w-3xl text-sm font-medium text-[#637094]">Connect with people who share your career goals, ask questions, exchange experiences, and learn from those who have already taken the path you're on.</p>
         </header>
 
-        <section className="relative mt-5 overflow-hidden rounded-2xl border border-[#dfe8fb] bg-white shadow-[0_10px_28px_rgba(38,72,140,0.08)]">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_78%_20%,rgba(167,139,250,0.20),transparent_30%),linear-gradient(135deg,rgba(255,255,255,0.96),rgba(239,246,255,0.84))]" />
-          <div className="relative grid grid-cols-1 gap-5 px-5 py-6 sm:px-8 lg:grid-cols-[minmax(330px,0.9fr)_minmax(0,1.55fr)]">
+        <section className="relative mt-5 overflow-hidden rounded-2xl border border-white/80 bg-[#edf4ff] shadow-[0_16px_38px_rgba(38,72,140,0.12)] ring-1 ring-inset ring-blue-100/70">
+          <img src={communitiesHeroBackground} alt="" aria-hidden="true" className="absolute -inset-2 h-[calc(100%+1rem)] w-[calc(100%+1rem)] max-w-none object-fill" />
+          <div className="absolute inset-0 bg-white/10" />
+          <div className="absolute inset-y-0 left-0 w-[43%] bg-gradient-to-r from-white/55 via-white/24 to-transparent" />
+          <div className="absolute inset-x-0 top-0 h-px bg-white" />
+          <div className="relative grid grid-cols-1 gap-6 px-5 py-7 sm:px-8 lg:grid-cols-[minmax(330px,0.9fr)_minmax(0,1.55fr)]">
             <div className="flex items-center gap-5">
               <img src={robotImage} alt="CareerOS companion robot" className="h-28 w-28 flex-shrink-0 object-contain drop-shadow-[0_18px_24px_rgba(37,99,235,0.22)] sm:h-36 sm:w-36 lg:h-40 lg:w-40" />
-              <p className="text-xl font-semibold leading-tight text-[#11194a] sm:text-2xl">
+              <p className="max-w-[340px] text-xl font-semibold leading-tight text-[#11194a] sm:text-2xl">
                 <TypewriterText text={companionMessage} speed={20} onComplete={() => setShowRecommendations(true)} />
               </p>
             </div>
             <div className="min-w-0">
-              <div className="flex gap-3 overflow-x-auto pb-2">
+              <div className="flex gap-3 overflow-x-auto px-1 pb-3 pt-1">
                 {showRecommendations && recommendedCommunities.map((community, index) => (
-                  <article key={community.id} className="min-w-[230px] rounded-xl border border-white/80 bg-white/78 p-4 shadow-[0_12px_30px_rgba(37,99,235,0.10)] backdrop-blur-xl transition hover:-translate-y-0.5 hover:bg-white" style={{ animation: 'chatFadeIn 200ms ease both', animationDelay: `${index * 70}ms` }}>
-                    <span className="rounded-full bg-emerald-50 px-2.5 py-1 text-xs font-bold text-emerald-700">{community.match}% Match</span>
+                  <article
+                    key={community.id}
+                    className={`relative min-w-[238px] overflow-hidden rounded-2xl border p-4 shadow-[0_18px_42px_rgba(42,74,145,0.14)] ring-1 ring-inset ring-white/70 backdrop-blur-2xl backdrop-saturate-150 transition duration-200 hover:-translate-y-1 hover:bg-white/55 hover:shadow-[0_24px_48px_rgba(42,74,145,0.18)] ${recommendationGlassTones[index % recommendationGlassTones.length]}`}
+                    style={{ animation: 'chatFadeIn 200ms ease both', animationDelay: `${index * 70}ms` }}
+                  >
+                    <div className="pointer-events-none absolute inset-x-3 top-0 h-px bg-white/90" />
+                    <span className="inline-flex rounded-full border border-emerald-100/80 bg-emerald-50/75 px-2.5 py-1 text-xs font-bold text-emerald-700 shadow-sm backdrop-blur-md">{community.match}% Match</span>
                     <h3 className="mt-3 font-bold text-[#11194a]">{community.name} Community</h3>
                     <p className="mt-1 text-xs font-semibold text-[#7382a1]">{formatCount(community.members)} Members</p>
                     <p className="mt-3 min-h-[54px] text-xs font-medium leading-5 text-[#637094]">{community.description}</p>
-                    <button type="button" onClick={() => toggleJoin(community.id)} className="mt-3 inline-flex items-center gap-1 text-xs font-bold text-blue-700">{joinedIds.includes(community.id) ? 'Joined' : 'Join Community'} <ArrowRight size={13} /></button>
+                    <button type="button" onClick={() => toggleJoin(community.id)} className="mt-3 inline-flex h-9 items-center gap-1.5 rounded-lg border border-white/75 bg-white/55 px-3 text-xs font-bold text-blue-700 shadow-sm backdrop-blur-md transition hover:border-blue-100 hover:bg-white/80">{joinedIds.includes(community.id) ? 'Joined' : 'Join Community'} <ArrowRight size={13} /></button>
                   </article>
                 ))}
               </div>

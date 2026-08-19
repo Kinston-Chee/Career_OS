@@ -1,3 +1,5 @@
+import { DATA_SCIENCE_READINESS } from './candidateSkillProfile'
+
 // Central demo dataset for the frontend prototype. Page components import these
 // exports directly until a backend API is connected.
 export const mockUser = {
@@ -748,7 +750,7 @@ export const careerPathNetwork = {
   ],
   roles: [
     { id: 'data-analyst', label: 'Data Analyst', industry: 'tech-data', matchScore: 92 },
-    { id: 'data-scientist', label: 'Data Scientist', industry: 'tech-data', matchScore: 78 },
+    { id: 'data-scientist', label: 'Data Scientist', industry: 'tech-data', matchScore: DATA_SCIENCE_READINESS },
     { id: 'data-engineer', label: 'Data Engineer', industry: 'tech-data', matchScore: 74 },
     { id: 'bi-analyst', label: 'BI Analyst', industry: 'tech-data', matchScore: 78 },
     { id: 'ml-engineer', label: 'ML Engineer', industry: 'tech-data', matchScore: 65 },
@@ -778,6 +780,8 @@ export const careerPathNetwork = {
     { id: 'cloud', label: 'Cloud (AWS/GCP)', category: 'Technical' },
     { id: 'git', label: 'Git', category: 'Technical' },
     { id: 'data-cleaning', label: 'Data Cleaning', category: 'Technical' },
+    { id: 'data-analysis', label: 'Data Analysis', category: 'Technical' },
+    { id: 'data-visualization', label: 'Data Visualization', category: 'Technical' },
     { id: 'communication', label: 'Communication', category: 'Soft' },
     { id: 'stakeholder-mgmt', label: 'Stakeholder Mgmt', category: 'Soft' },
     { id: 'requirements-analysis', label: 'Requirements Analysis', category: 'Business' },
@@ -800,8 +804,9 @@ export const careerPathNetwork = {
     { role: 'data-scientist', skill: 'python' },
     { role: 'data-scientist', skill: 'statistics' },
     { role: 'data-scientist', skill: 'machine-learning' },
-    { role: 'data-scientist', skill: 'probability' },
     { role: 'data-scientist', skill: 'sql' },
+    { role: 'data-scientist', skill: 'data-analysis' },
+    { role: 'data-scientist', skill: 'data-visualization' },
     { role: 'data-engineer', skill: 'sql' },
     { role: 'data-engineer', skill: 'python' },
     { role: 'data-engineer', skill: 'etl' },
@@ -3235,7 +3240,7 @@ export const opportunitiesHub = {
       type: 'event',
       logo: 'PET',
       logoTone: 'emerald',
-      accentTone: 'emerald',
+      accentTone: 'rose',
       bgImageKey: 'talk',
       title: 'Careers Powering the Energy Transition',
       org: 'PETRONAS Future Energy',

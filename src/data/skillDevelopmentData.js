@@ -1,6 +1,64 @@
+import { getDataScienceSkill } from './candidateSkillProfile'
+
 // Data for the Skill Development page. Ported from the reference HTML.
 // Kept as plain objects so the page can render whichever cards / stats /
 // sub-skills the user filters and sorts to.
+
+const dataScienceSkillCard = (id, config) => {
+  const profile = getDataScienceSkill(id)
+  return {
+    id,
+    name: profile.name,
+    cat: config.cat,
+    catLabel: config.catLabel,
+    icon: config.icon,
+    pct: profile.level,
+    required: profile.target,
+    status: profile.state === 'demonstrated' ? 'done' : 'progress',
+    priority: profile.state === 'demonstrated' ? 'strong' : 'building',
+    eta: profile.state === 'demonstrated' ? 'Maintained' : config.eta,
+    sub: config.sub,
+    subskills: config.subskills,
+    milestones: config.milestones,
+    activity: config.activity,
+    resources: config.resources,
+  }
+}
+
+const DATA_SCIENCE_SKILL_CARDS = [
+  dataScienceSkillCard('statistics', {
+    cat: 'technical', catLabel: 'Technical', icon: 'chart', eta: '~4 weeks',
+    sub: 'Probability, inference, hypothesis testing',
+    subskills: [{ n: 'Descriptive statistics', p: 72 }, { n: 'Probability', p: 58 }, { n: 'Hypothesis testing', p: 48 }],
+    milestones: [{ t: 'Complete applied statistics module', done: true, xp: '+8' }, { t: 'Explain a hypothesis test', done: false, xp: '+10' }],
+    activity: [{ t: 'Completed descriptive statistics exercises', meta: '1 week ago' }],
+    resources: [{ icon: 'school', t: 'Statistics with Python', meta: 'Course · 12 hrs', xp: '+12 pts' }],
+  }),
+  dataScienceSkillCard('data-analysis', {
+    cat: 'technical', catLabel: 'Technical', icon: 'chart', eta: '~3 weeks',
+    sub: 'Cleaning, exploration, insight generation',
+    subskills: [{ n: 'Data cleaning', p: 86 }, { n: 'Exploratory analysis', p: 84 }, { n: 'Insight generation', p: 80 }],
+    milestones: [{ t: 'Complete an exploratory analysis', done: true, xp: '+10' }, { t: 'Document insights and limitations', done: true, xp: '+8' }],
+    activity: [{ t: 'Added analysis evidence to Career Memory', meta: '2 weeks ago' }],
+    resources: [{ icon: 'laptop', t: 'Kaggle data analysis practice', meta: 'Practice · self-paced', xp: '+10 pts' }],
+  }),
+  dataScienceSkillCard('machine-learning', {
+    cat: 'domain', catLabel: 'Domain knowledge', icon: 'brain', eta: '~5 weeks',
+    sub: 'Model selection, evaluation, feature engineering',
+    subskills: [{ n: 'ML fundamentals', p: 70 }, { n: 'Feature engineering', p: 58 }, { n: 'Model evaluation', p: 62 }],
+    milestones: [{ t: 'Build a supervised learning model', done: true, xp: '+15' }, { t: 'Compare and tune models', done: false, xp: '+12' }],
+    activity: [{ t: 'Trained and evaluated a baseline model', meta: '2024 · coursework' }],
+    resources: [{ icon: 'school', t: 'Fast.ai practical ML', meta: 'Free · 30 hrs', xp: '+20 pts' }],
+  }),
+  dataScienceSkillCard('data-visualization', {
+    cat: 'technical', catLabel: 'Technical', icon: 'chart', eta: '~3 weeks',
+    sub: 'Charts, dashboards, data storytelling',
+    subskills: [{ n: 'Chart selection', p: 78 }, { n: 'Dashboard design', p: 70 }, { n: 'Data storytelling', p: 72 }],
+    milestones: [{ t: 'Build an interactive dashboard', done: true, xp: '+12' }, { t: 'Present a data story to peers', done: false, xp: '+8' }],
+    activity: [{ t: 'Published a visual analysis', meta: '3 weeks ago' }],
+    resources: [{ icon: 'video', t: 'Data storytelling fundamentals', meta: 'Course · 5 hrs', xp: '+8 pts' }],
+  }),
+]
 
 export const SKILLS = [
   {
@@ -31,9 +89,9 @@ export const SKILLS = [
     ],
   },
   {
-    id: 'sql', name: 'Data / SQL', cat: 'technical', catLabel: 'Technical',
-    icon: 'database', pct: 30, required: 65,
-    status: 'gap', priority: 'gap', eta: '~3 weeks',
+    id: 'sql', name: 'SQL', cat: 'technical', catLabel: 'Technical',
+    icon: 'database', pct: getDataScienceSkill('sql').level, required: getDataScienceSkill('sql').target,
+    status: 'progress', priority: 'building', eta: '~3 weeks',
     sub: 'Queries, schema design, performance',
     subskills: [
       { n: 'SELECT & JOINs', p: 55 },
@@ -107,7 +165,7 @@ export const SKILLS = [
   },
   {
     id: 'python', name: 'Python', cat: 'technical', catLabel: 'Technical',
-    icon: 'code', pct: 65, required: 60,
+    icon: 'code', pct: getDataScienceSkill('python').level, required: getDataScienceSkill('python').target,
     status: 'done', priority: 'strong', eta: 'Maintained',
     sub: 'Core language, async, scripting',
     subskills: [
@@ -258,6 +316,7 @@ export const SKILLS = [
       { icon: 'school', t: 'Product Management basics', meta: 'Coursera · 6 hrs', xp: '+10 pts' },
     ],
   },
+  ...DATA_SCIENCE_SKILL_CARDS,
   {
     id: 'ai', name: 'AI / ML fundamentals', cat: 'domain', catLabel: 'Domain knowledge',
     icon: 'brain', pct: 58, required: 55,

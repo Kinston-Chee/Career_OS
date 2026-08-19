@@ -28,6 +28,12 @@ import {
   Trophy
 } from 'lucide-react'
 import { careerPathNetwork } from '../../data/mockData'
+import {
+  DATA_SCIENCE_GAPS,
+  DATA_SCIENCE_READINESS,
+  DATA_SCIENCE_SKILLS,
+  DATA_SCIENCE_STRENGTHS,
+} from '../../data/candidateSkillProfile'
 
 // Icon resolver for Prediction Timeline milestones
 const MILESTONE_ICONS = {
@@ -48,21 +54,12 @@ const MILESTONE_ICONS = {
 const ROLE_ADVISOR_DATA = {
   'data-scientist': {
     timeline: '6-12 months',
-    progress: 78,
+    progress: DATA_SCIENCE_READINESS,
     currentStage: "Taylor's Data Science Student",
     targetRole: 'Data Scientist',
-    milestones: ['Graduating (Taylor\'s)', 'SQL & Stats Prep', 'Sales Dashboard', 'ML Portfolio Prep', 'Data Scientist'],
-    milestoneDetails: [
-      { label: "Graduating (Taylor's)", status: 'Completed', icon: 'graduation' },
-      { label: "SQL & Stats Prep", status: 'Completed', icon: 'database' },
-      { label: "Sales Dashboard", status: 'Completed', icon: 'chart' },
-      { label: "ML Portfolio Prep", status: 'In Progress', icon: 'book' },
-      { label: "Data Scientist", status: 'Goal', icon: 'trophy' }
-    ],
-    transitionTimes: ['~1 month', '~1 month', '~2-3 months', '~3-5 months'],
-    aiExplanation: "Based on your Taylor's University coursework, Python/SQL strengths, and your completed Sales Dashboard project, you're approximately 78% of the way toward becoming a Data Scientist.",
-    existingGaps: ['SQL', 'Python', 'Excel', 'Data Visualization'],
-    missingGaps: ['Advanced Machine Learning', 'Big Data Technologies (Spark/Hadoop)', 'ML Model Deployment'],
+    aiExplanation: `Your ${DATA_SCIENCE_READINESS}% skill readiness is calculated from the same six skills shown in Skills Development. It describes current alignment with Data Science, not progress through an active career journey.`,
+    existingGaps: DATA_SCIENCE_STRENGTHS,
+    missingGaps: DATA_SCIENCE_GAPS,
     salaryOverall: 'RM 11,400',
     salaryGrowth: '+20%',
     salaryTop: 'RM 25,000',
@@ -70,24 +67,18 @@ const ROLE_ADVISOR_DATA = {
     salaryExperience: ['0-2 yrs', '1-3 yrs', '3-5 yrs', '5-8 yrs', '8-12 yrs', '12+ yrs'],
     salaryValues: [4800, 7000, 9800, 13800, 18000, 25000],
     actions: [
-      'Master deep learning frameworks (TensorFlow or PyTorch).',
-      'Build and deploy a machine learning model using FastAPI and Docker.',
-      'Learn big data processing tools like Apache Spark or Hadoop.',
-      'Publish a data science portfolio project on GitHub.',
-      'Apply to data scientist internships and entry-level positions.'
+      'Strengthen SQL through joins, window functions, and query practice.',
+      'Build confidence in probability, inference, and hypothesis testing.',
+      'Compare and evaluate machine learning models on a real dataset.',
+      'Combine analysis and visualization in one portfolio case study.',
+      'Reassess Data Science readiness as new skill evidence is added.'
     ],
-    skills: [
-      { label: 'Python & SQL', value: 85, color: 'bg-indigo-500' },
-      { label: 'Data Visualization', value: 70, color: 'bg-blue-500' },
-      { label: 'Machine Learning', value: 45, color: 'bg-amber-500' },
-      { label: 'Big Data (Spark)', value: 20, color: 'bg-rose-500' },
-      { label: 'Model Deployment', value: 15, color: 'bg-rose-500' }
-    ],
+    skills: DATA_SCIENCE_SKILLS.map((skill) => ({ label: skill.name, value: skill.level, color: skill.color })),
     learningResources: [
-      { title: 'Deep Learning Specialization by Andrew Ng', platform: 'Coursera', rating: '4.9 ★', mapsTo: 'Maps to Step 1: Deep Learning frameworks', url: '#' },
-      { title: 'MLOps Engineering with FastAPI & Docker', platform: 'Udemy', rating: '4.9 ★', mapsTo: 'Maps to Step 2: Build & Deploy ML', url: '#' },
-      { title: 'Spark and Python for Big Data', platform: 'Udemy', rating: '4.8 ★', mapsTo: 'Maps to Step 3: Spark/Hadoop', url: '#' },
-      { title: 'Data Science Portfolio Guidebook', platform: 'CareerOS Resource', rating: '4.7 ★', mapsTo: 'Maps to Step 4: GitHub Portfolio', url: '#' }
+      { title: 'Advanced SQL for Analytics', platform: 'DataLemur', rating: '4.9 ★', mapsTo: 'Develop next: SQL', url: '#' },
+      { title: 'Statistics with Python', platform: 'Coursera', rating: '4.8 ★', mapsTo: 'Develop next: Statistics', url: '#' },
+      { title: 'Model Evaluation and Selection', platform: 'Kaggle Learn', rating: '4.8 ★', mapsTo: 'Develop next: Machine Learning', url: '#' },
+      { title: 'Data Science Portfolio Guidebook', platform: 'CareerOS Resource', rating: '4.7 ★', mapsTo: 'Apply demonstrated skills', url: '#' }
     ]
   },
   'data-analyst': {
@@ -442,23 +433,6 @@ const DEFAULT_ADVISOR = {
   ]
 }
 
-// Helper to calculate Estimated Arrival Date dynamically
-const getEstimatedArrival = (timeline) => {
-  const now = new Date()
-  let monthsToAdd = 6
-  if (timeline.includes('3-6')) monthsToAdd = 6
-  else if (timeline.includes('6-12')) monthsToAdd = 12
-  else if (timeline.includes('12-18')) monthsToAdd = 18
-  else if (timeline.includes('18-24')) monthsToAdd = 24
-  
-  now.setMonth(now.getMonth() + monthsToAdd)
-  const monthNames = [
-    'January', 'February', 'March', 'April', 'May', 'June',
-    'July', 'August', 'September', 'October', 'November', 'December'
-  ]
-  return `${monthNames[now.getMonth()]} ${now.getFullYear()}`
-}
-
 // ---------------------------------------------------------------------------
 // Catmull-Rom / Smooth Cubic Bezier Line Generator for SVG Charts
 // ---------------------------------------------------------------------------
@@ -497,11 +471,11 @@ function FitModule({ roleId, roleName }) {
   const data = ROLE_ADVISOR_DATA[roleId] || DEFAULT_ADVISOR
   return (
     <article className="animate-[slideUp_300ms_ease-out_both] rounded-2xl border border-[#e2eaf8] border-l-[3px] border-l-[#185FA5] bg-white p-6 shadow-[0_8px_22px_rgba(44,76,142,0.07)]">
-      <h3 className="text-base font-bold text-[#11194a]">Fit Score · {roleName}</h3>
+      <h3 className="text-base font-bold text-[#11194a]">Skill Readiness · {roleName}</h3>
       <div className="mt-5 grid gap-6 md:grid-cols-[0.8fr_1.25fr_0.95fr]">
         <div>
           <p className="text-5xl font-bold text-[#185FA5]">{data.progress}%</p>
-          <p className="mt-1 text-sm font-semibold text-[#7382a1]">match score</p>
+          <p className="mt-1 text-sm font-semibold text-[#7382a1]">from current skill evidence</p>
         </div>
         <div className="space-y-4 border-y border-[#e2eaf8] py-4 md:border-x md:border-y-0 md:px-6 md:py-0">
           <div>
@@ -511,7 +485,7 @@ function FitModule({ roleId, roleName }) {
             </p>
           </div>
           <div>
-            <p className="text-sm font-bold text-[#11194a]">Gaps detected</p>
+              <p className="text-sm font-bold text-[#11194a]">Skills to develop next</p>
             <p className="mt-2 text-sm font-semibold text-[#3a4669]">
               <span className="text-orange-500">●</span> {data.missingGaps.join(' · ')}
             </p>
@@ -525,12 +499,12 @@ function FitModule({ roleId, roleName }) {
               <p className="mt-2 text-xs font-semibold text-[#7382a1]">Chris</p>
             </div>
             <div className="text-center">
-              <p className="mb-2 text-sm font-bold text-[#11194a]">65%</p>
+              <p className="mb-2 text-sm font-bold text-[#11194a]">75%</p>
               <div className="h-16 w-14 rounded-t-md bg-slate-200" />
-              <p className="mt-2 text-xs font-semibold text-[#7382a1]">Avg. {roleName}</p>
+              <p className="mt-2 text-xs font-semibold text-[#7382a1]">Role target</p>
             </div>
           </div>
-          <p className="mt-3 text-center text-xs font-semibold text-[#7382a1]">You vs. average candidate</p>
+          <p className="mt-3 text-center text-xs font-semibold text-[#7382a1]">Current profile vs. role target</p>
         </div>
       </div>
     </article>
@@ -539,6 +513,7 @@ function FitModule({ roleId, roleName }) {
 
 function SkillsModule({ roleId, roleName }) {
   const data = ROLE_ADVISOR_DATA[roleId] || DEFAULT_ADVISOR
+  const getSkillLevel = (skillName, fallback) => data.skills.find((skill) => skill.label === skillName)?.value ?? fallback
   return (
     <article className="animate-[slideUp_300ms_ease-out_both] rounded-2xl border border-[#e2eaf8] bg-white p-6 shadow-[0_8px_22px_rgba(44,76,142,0.07)]">
       <h3 className="text-base font-bold text-[#11194a]">Skills Required · {roleName}</h3>
@@ -547,9 +522,9 @@ function SkillsModule({ roleId, roleName }) {
           <p className="mb-3 text-sm font-bold text-emerald-600">You have these ✓</p>
           {data.existingGaps.map((skill) => (
             <div key={skill} className="mb-4">
-              <p className="text-sm font-semibold text-[#3a4669]">✓ {skill} · Advanced</p>
+              <p className="text-sm font-semibold text-[#3a4669]">✓ {skill} · demonstrated</p>
               <div className="mt-2 h-2 rounded-full bg-slate-100">
-                <div className="h-full rounded-full bg-emerald-500" style={{ width: '80%' }} />
+                <div className="h-full rounded-full bg-emerald-500" style={{ width: `${getSkillLevel(skill, 80)}%` }} />
               </div>
             </div>
           ))}
@@ -558,9 +533,9 @@ function SkillsModule({ roleId, roleName }) {
           <p className="mb-3 text-sm font-bold text-orange-600">Build these next</p>
           {data.missingGaps.map((skill) => (
             <div key={skill} className="mb-4">
-              <p className="text-sm font-semibold text-[#3a4669]">● {skill}</p>
+              <p className="text-sm font-semibold text-[#3a4669]">● {skill} · current evidence {getSkillLevel(skill, 25)}%</p>
               <div className="mt-2 h-2 rounded-full bg-slate-100">
-                <div className="h-full rounded-full bg-orange-400" style={{ width: '25%' }} />
+                <div className="h-full rounded-full bg-orange-400" style={{ width: `${getSkillLevel(skill, 25)}%` }} />
               </div>
             </div>
           ))}
@@ -829,12 +804,25 @@ function SalaryBenchmarkSection({ roleId, roleName }) {
 // ---------------------------------------------------------------------------
 // High-Fidelity Product Roadmap Timeline Component
 // ---------------------------------------------------------------------------
+function getPotentialDirectionMilestones(data, roleName) {
+  return [
+    { label: data.currentStage, status: 'Current position', icon: 'graduation' },
+    { label: data.existingGaps.slice(0, 3).join(' · '), status: 'Skills developed', icon: 'award' },
+    { label: data.missingGaps.slice(0, 3).join(' · '), status: 'Develop next', icon: 'book' },
+    { label: 'Build role-relevant evidence', status: 'Possible next step', icon: 'briefcase' },
+    { label: roleName, status: 'Potential direction', icon: 'trophy' },
+  ]
+}
+
+function getReadinessExplanation(roleId, data) {
+  if (roleId === 'data-scientist') return data.aiExplanation
+  return `Your ${data.progress}% skill readiness is an estimate based on current evidence. ${data.existingGaps.slice(0, 3).join(', ')} support this potential direction, while ${data.missingGaps.slice(0, 3).join(', ')} are the clearest areas to develop next.`
+}
+
 function RedesignedPredictionTimeline({ roleId, roleName }) {
   const data = ROLE_ADVISOR_DATA[roleId] || DEFAULT_ADVISOR
-  const progressPercent = data.progress
-  const milestoneDetails = data.milestoneDetails
-  const transitionTimes = data.transitionTimes
-  const estimatedArrivalDate = getEstimatedArrival(data.timeline)
+  const milestoneDetails = getPotentialDirectionMilestones(data, roleName)
+  const transitionLabels = ['Current profile', 'Skill evidence', 'Development focus', 'Future option']
 
   // Hardcoded segment widths for exactly 5 steps spaced evenly:
   // Step 0 center: 8%, Step 1: 29%, Step 2: 50%, Step 3: 71%, Step 4: 92%
@@ -847,7 +835,7 @@ function RedesignedPredictionTimeline({ roleId, roleName }) {
         {/* Left Side: Estimated time & AI explanation bubble */}
         <div className="space-y-3.5">
           <div>
-            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Estimated Time to Reach</p>
+            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Potential Development Window</p>
             <p className="text-4xl font-black text-[#11194a] tracking-tight mt-0.5">{data.timeline}</p>
           </div>
           
@@ -856,21 +844,21 @@ function RedesignedPredictionTimeline({ roleId, roleName }) {
               <Sparkles size={13} className="stroke-[2]" />
             </span>
             <p className="text-[11.5px] font-semibold text-slate-600 leading-normal">
-              {data.aiExplanation}
+              {getReadinessExplanation(roleId, data)}
             </p>
           </div>
         </div>
 
-        {/* Right Side: Estimated Arrival Box */}
+        {/* Right Side: interpretation box */}
         <div className="bg-white border border-indigo-50/80 p-4 rounded-2xl shadow-sm flex items-start gap-4">
           <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-indigo-50/50 text-indigo-600 border border-indigo-100">
             <Calendar size={18} className="stroke-[2.2]" />
           </span>
           <div>
-            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Estimated Arrival</p>
-            <p className="text-lg font-black text-[#11194a] mt-0.5">{estimatedArrivalDate}</p>
+            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">How To Read This</p>
+            <p className="text-lg font-black text-[#11194a] mt-0.5">Potential direction</p>
             <p className="text-[10.5px] font-semibold text-slate-400 mt-1 leading-snug">
-              This timeline is personalized based on your current skills, experience and activity.
+              This is a preparation scenario based on your current skill profile, not an active or completed journey.
             </p>
           </div>
         </div>
@@ -880,24 +868,11 @@ function RedesignedPredictionTimeline({ roleId, roleName }) {
       {/* Visual Timeline Track */}
       <div className="relative pt-8 pb-3 px-4 select-none">
         
-        {/* Base Track Line */}
-        <div className="absolute left-[8%] right-[8%] top-[48px] h-[3px] bg-slate-200 -translate-y-1/2 z-0" />
-
-        {/* Color Tones for segments between nodes */}
-        {/* Segment 1 (Step 1-2): Solid Green */}
-        <div className="absolute left-[8%] w-[21%] top-[48px] h-[3px] bg-emerald-500 -translate-y-1/2 z-0" />
-        
-        {/* Segment 2 (Step 2-3): Gradient Green to Purple */}
-        <div className="absolute left-[29%] w-[21%] top-[48px] h-[3px] bg-gradient-to-r from-emerald-500 to-indigo-500 -translate-y-1/2 z-0" />
-
-        {/* Segment 3 (Step 3-4): Dotted Purple/Grey */}
-        <div className="absolute left-[50%] w-[21%] top-[48px] h-0 border-t-2 border-dashed border-indigo-400 -translate-y-1/2 z-0" />
-
-        {/* Segment 4 (Step 4-5): Dotted Grey */}
-        <div className="absolute left-[71%] w-[21%] top-[48px] h-0 border-t-2 border-dashed border-slate-300 -translate-y-1/2 z-0" />
+        {/* Dashed links show a possible sequence rather than completed progress. */}
+        <div className="absolute left-[8%] right-[8%] top-[48px] h-0 border-t-2 border-dashed border-indigo-300 -translate-y-1/2 z-0" />
 
         {/* Floating Transition Times above segments */}
-        {transitionTimes.map((time, idx) => {
+        {transitionLabels.map((label, idx) => {
           const positions = [18.5, 39.5, 60.5, 81.5]
           return (
             <div 
@@ -905,7 +880,7 @@ function RedesignedPredictionTimeline({ roleId, roleName }) {
               className="absolute top-[16px] -translate-x-1/2 text-[9.5px] font-extrabold text-[#7c8ca5] bg-[#f8fbff] px-1.5 py-0.5 rounded border border-slate-100 shadow-sm"
               style={{ left: `${positions[idx]}%` }}
             >
-              {time}
+              {label}
             </div>
           )
         })}
@@ -914,9 +889,9 @@ function RedesignedPredictionTimeline({ roleId, roleName }) {
         <div className="relative flex justify-between items-start w-full">
           {milestoneDetails.map((milestone, idx) => {
             const IconComponent = MILESTONE_ICONS[milestone.icon] || Trophy
-            const isCompleted = milestone.status === 'Completed'
-            const isCurrent = milestone.status === 'In Progress'
-            const isUpcoming = milestone.status === 'Upcoming'
+            const isCurrent = milestone.status === 'Current position'
+            const isDeveloped = milestone.status === 'Skills developed'
+            const isNext = milestone.status === 'Develop next'
             
             return (
               <div key={idx} className="flex flex-col items-center relative w-[130px]">
@@ -927,13 +902,13 @@ function RedesignedPredictionTimeline({ roleId, roleName }) {
                   {/* Floating "YOU ARE HERE" bubble */}
                   {isCurrent && (
                     <div className="absolute -top-[34px] left-1/2 -translate-x-1/2 bg-[#6366f1] text-white text-[8px] font-black uppercase tracking-wider px-2 py-0.5 rounded shadow-md z-30 whitespace-nowrap flex flex-col items-center">
-                      <span>You are here</span>
+                      <span>Starting point</span>
                       <div className="w-1.5 h-1.5 bg-[#6366f1] rotate-45 -mb-[4px] mt-[1.5px]" />
                     </div>
                   )}
 
                   {/* Circle Pin point */}
-                  {isCompleted ? (
+                  {isDeveloped ? (
                     <div className="relative z-10 flex h-6 w-6 items-center justify-center rounded-full bg-emerald-500 text-white shadow-sm ring-4 ring-emerald-100/70">
                       <Check size={11} className="stroke-[3]" />
                     </div>
@@ -951,13 +926,15 @@ function RedesignedPredictionTimeline({ roleId, roleName }) {
 
                 {/* Milestone Detail Card below circle */}
                 <div className={`mt-4 flex flex-col items-center justify-between p-3.5 rounded-2xl border text-center w-full min-h-[110px] shadow-sm bg-white hover:shadow transition duration-200 ${
-                  isCompleted ? 'border-emerald-100/70 bg-emerald-50/10' : 
+                  isDeveloped ? 'border-emerald-100/70 bg-emerald-50/10' : 
                   isCurrent ? 'border-indigo-100 bg-indigo-50/20 ring-1 ring-indigo-50' : 
+                  isNext ? 'border-amber-100 bg-amber-50/20' :
                   'border-slate-100 bg-slate-50/30'
                 }`}>
                   <span className={`flex h-8 w-8 items-center justify-center rounded-xl border mb-2.5 ${
-                    isCompleted ? 'bg-emerald-50 text-emerald-600 border-emerald-100' :
+                    isDeveloped ? 'bg-emerald-50 text-emerald-600 border-emerald-100' :
                     isCurrent ? 'bg-indigo-50 text-indigo-600 border-indigo-100' :
+                    isNext ? 'bg-amber-50 text-amber-600 border-amber-100' :
                     'bg-slate-50 text-slate-400 border-slate-100'
                   }`}>
                     <IconComponent size={15} className="stroke-[2.5]" />
@@ -968,9 +945,9 @@ function RedesignedPredictionTimeline({ roleId, roleName }) {
                   </p>
 
                   <span className={`mt-2.5 rounded-full px-2 py-0.5 text-[8.5px] font-extrabold uppercase tracking-wide border shadow-sm ${
-                    isCompleted ? 'bg-emerald-50 text-emerald-700 border-emerald-100' :
+                    isDeveloped ? 'bg-emerald-50 text-emerald-700 border-emerald-100' :
                     isCurrent ? 'bg-indigo-50 text-indigo-700 border-indigo-100' :
-                    isUpcoming ? 'bg-slate-50 text-slate-500 border-slate-100' :
+                    isNext ? 'bg-amber-50 text-amber-700 border-amber-100' :
                     'bg-slate-50 text-slate-600 border-slate-150'
                   }`}>
                     {milestone.status}
@@ -987,7 +964,7 @@ function RedesignedPredictionTimeline({ roleId, roleName }) {
       {/* Bottom track encouragement banner */}
       <div className="flex items-center gap-2.5 rounded-2xl bg-indigo-50/40 border border-indigo-100/50 p-4 text-xs font-bold text-indigo-950 shadow-[inset_0_1px_0_rgba(255,255,255,0.8)]">
         <Sparkles size={14} className="text-indigo-500 shrink-0" />
-        <span>You're on the right track! Keep building real-world projects and gaining practical experience to move to the next milestone faster.</span>
+        <span>This is one possible direction. New evidence in Skills Development will update the strengths, gaps, and readiness shown here.</span>
       </div>
 
     </div>
@@ -1063,11 +1040,11 @@ function PredictiveRoadmapDashboard({ roleId, roleName }) {
                 </span>
                 <div>
                   <h3 className="text-base font-bold text-[#11194a] tracking-tight">AI Career Advisor Report</h3>
-                  <p className="text-[10px] font-semibold text-slate-400">Personalized path predictions and local salary benchmarks</p>
+                  <p className="text-[10px] font-semibold text-slate-400">Skill-based potential direction and local salary benchmarks</p>
                 </div>
               </div>
               <span className="bg-indigo-50 border border-indigo-100 px-3 py-1 rounded-full text-[10px] font-black text-indigo-700 shadow-sm">
-                {progressPercent}% Match Score
+                {progressPercent}% Skill Readiness
               </span>
             </div>
 
@@ -1118,7 +1095,7 @@ function PredictiveRoadmapDashboard({ roleId, roleName }) {
                 </div>
               </div>
               <span className="bg-indigo-50 border border-indigo-100 px-3 py-1 rounded-full text-[10px] font-black text-indigo-700 shadow-sm">
-                {progressPercent}% Complete
+                {progressPercent}% Skill Readiness
               </span>
             </div>
 
@@ -1155,7 +1132,7 @@ function PredictiveRoadmapDashboard({ roleId, roleName }) {
                     <span className="flex h-8 w-8 items-center justify-center rounded-full bg-emerald-50 text-emerald-600 border border-emerald-100">
                       <Activity size={15} />
                     </span>
-                    <span className="text-[11px] font-bold text-[#596987] uppercase tracking-wide">Critical Skills Progress</span>
+                    <span className="text-[11px] font-bold text-[#596987] uppercase tracking-wide">Current Skill Evidence</span>
                   </div>
 
                   <div className="space-y-3.5 mt-5">
@@ -1205,7 +1182,7 @@ function PredictiveRoadmapDashboard({ roleId, roleName }) {
                     </div>
                     {/* Missing Gaps */}
                     <div className="space-y-1.5">
-                      <p className="text-[9px] font-extrabold uppercase tracking-widest text-rose-500">Missing Gaps</p>
+                      <p className="text-[9px] font-extrabold uppercase tracking-widest text-amber-600">Develop Next</p>
                       {data.missingGaps.map(skill => (
                         <div key={skill} className="flex items-start gap-1.5 text-xs font-bold text-slate-700 leading-normal" title={skill}>
                           <X size={12} className="text-rose-500 stroke-[3] mt-0.5 shrink-0" /> <span className="truncate">{skill}</span>
@@ -1339,7 +1316,7 @@ const ROADMAP_DETAIL_DATA = {
       { 
         title: 'Apply to internships & build your portfolio', 
         description: 'Network with professionals, optimize your profiles, and apply to data opportunities.',
-        duration: 'Ongoing', 
+        duration: 'When ready', 
         icon: Users, 
         iconColor: 'bg-orange-50 text-orange-600 border-orange-100',
         tags: ['Resume', 'Internship', 'Networking']
@@ -1389,7 +1366,7 @@ const ROADMAP_DETAIL_DATA = {
       { 
         title: 'Apply to internships & build your portfolio', 
         description: 'Network with professionals, optimize your profiles, and apply to data opportunities.',
-        duration: 'Ongoing', 
+        duration: 'When ready', 
         icon: Users, 
         iconColor: 'bg-orange-50 text-orange-600 border-orange-100',
         tags: ['Resume', 'Internship', 'Networking']
@@ -1439,7 +1416,7 @@ const ROADMAP_DETAIL_DATA = {
       { 
         title: 'Prepare for tech coding & behavioral interviews', 
         description: 'Practice mock technical interviews and optimize your resume profile.',
-        duration: 'Ongoing', 
+        duration: 'When ready', 
         icon: Users, 
         iconColor: 'bg-orange-50 text-orange-600 border-orange-100',
         tags: ['Mock Interviews', 'Behavioral Prep', 'Resume']
@@ -1489,7 +1466,7 @@ const ROADMAP_DETAIL_DATA = {
       { 
         title: 'Apply to Associate PM (APM) cohorts & build case deck', 
         description: 'Build case analysis decks and apply to early-stage APM programmes.',
-        duration: 'Ongoing', 
+        duration: 'When ready', 
         icon: Users, 
         iconColor: 'bg-orange-50 text-orange-600 border-orange-100',
         tags: ['APM Application', 'Case Deck', 'Resume']
@@ -1542,7 +1519,7 @@ const DEFAULT_DETAILED_ROADMAP = {
     { 
       title: 'Refine professional network and apply to target roles', 
       description: 'Optimize your LinkedIn, connect with professionals and apply strategically to relevant opportunities.',
-      duration: 'Ongoing', 
+      duration: 'When ready', 
       icon: Users, 
       iconColor: 'bg-orange-50 text-orange-600 border-orange-100',
       tags: ['Networking', 'LinkedIn', 'Job Applications']
@@ -1590,10 +1567,10 @@ function DetailedRoadmapModule({ roleId, roleName }) {
             </span>
             <div>
               <h3 className="text-xl font-bold text-[#11194a] tracking-tight border-none p-0">
-                Learning Roadmap to {roleName}
+                Potential Preparation Plan for {roleName}
               </h3>
               <p className="text-xs font-semibold text-[#637094] mt-0.5 leading-normal">
-                A personalized step-by-step plan to build the skills, experience and confidence to reach your goal.
+                Suggested next steps based on your current profile. These are recommendations, not completed milestones.
               </p>
             </div>
           </header>
@@ -1677,7 +1654,7 @@ function DetailedRoadmapModule({ roleId, roleName }) {
 
         <div className="mt-8 flex items-center gap-2.5 rounded-2xl bg-violet-50/40 border border-violet-100/50 p-4.5 text-xs font-bold text-violet-950 shadow-[inset_0_1px_0_rgba(255,255,255,0.8)]">
           <Sparkles size={14} className="text-indigo-500 shrink-0" />
-          <span>Keep learning and tracking your progress. Small steps today lead to big opportunities tomorrow! 💪</span>
+          <span>Use these suggestions as options. Skill evidence added in Skills Development should refine what CareerOS recommends next.</span>
         </div>
       </div>
 

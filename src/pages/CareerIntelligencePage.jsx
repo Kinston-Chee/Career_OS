@@ -8,12 +8,15 @@ import RecommendedCareerPaths from '../components/careerPath/RecommendedCareerPa
 import CareerPathNetworkGraph from '../components/career/network/CareerPathNetworkGraph'
 import OpportunityDetailsPanel from '../components/opportunitiesHub/OpportunityDetailsPanel'
 import { candidateOverview, careerPathNetwork, mockUser } from '../data/mockData'
+import { DATA_SCIENCE_GAPS, DATA_SCIENCE_READINESS, DATA_SCIENCE_STRENGTHS } from '../data/candidateSkillProfile'
 import { useCareerStore } from '../store/useCareerStore'
 
 const COMPANION_MESSAGE =
   "This is your career path. I've mapped out possible directions based on your Career Memory.\n\nTap any role to explore it - I'll tell you how well you fit and what it takes to get there."
 
 const ROLE_MESSAGES = {
+  'data-scientist':
+    `Data Scientist is a potential direction with ${DATA_SCIENCE_READINESS}% skill readiness based on the same profile shown in Skills Development. Your strongest evidence is in ${DATA_SCIENCE_STRENGTHS.join(', ')}.\n\nWhat do you want to explore?`,
   'software-engineer':
     "Software Engineer - solid choice. Based on your Career Memory, you're a 78% fit here.\n\nWhat do you want to explore?",
   'data-analyst':
@@ -39,7 +42,7 @@ const CHIP_FLOW = {
   },
   'Show me the roadmap': {
     module: 'roadmap',
-    reply: "Here's your path to Software Engineer. You're currently at Stage 2. Estimated time to job-ready: 4 months.",
+    reply: "Here's a potential preparation plan for this role. It starts from your current skill evidence and suggests what to develop next; it does not mean you are already progressing through these steps.",
     chips: ['How well do I fit?', 'Market demand'],
   },
   'Market demand': {
@@ -58,6 +61,46 @@ const CHIP_FLOW = {
       "Focus on System Design first - it's the most common SWE interview topic and your biggest gap. I'd recommend starting with the Grokking System Design course.",
     chips: ['Show me learning resources', 'Show me the roadmap'],
   },
+}
+
+function getChipFlow(chip, roleId, roleName) {
+  if (roleId !== 'data-scientist') {
+    const flow = CHIP_FLOW[chip]
+    if (!flow) return null
+    return {
+      ...flow,
+      reply: flow.reply.replaceAll('Software Engineer', roleName).replaceAll('SWE', roleName),
+    }
+  }
+
+  const dataScienceFlow = {
+    'How well do I fit?': {
+      module: 'fit',
+      reply: `Your Data Science skill readiness is ${DATA_SCIENCE_READINESS}%. ${DATA_SCIENCE_STRENGTHS.join(', ')} are demonstrated strengths. ${DATA_SCIENCE_GAPS.join(', ')} are the clearest areas to develop next.`,
+      chips: ['How do I close the gap?', 'Show me the roadmap'],
+    },
+    'What skills do I need?': {
+      module: 'skills',
+      reply: `Career Intelligence is using the same six skills as Skills Development: Python, SQL, Statistics, Data Analysis, Machine Learning, and Data Visualization. Your recommendations come directly from the weaker skills in that profile.`,
+      chips: ['Where do I learn these?', 'Show me the roadmap'],
+    },
+    'Show me the roadmap': {
+      module: 'roadmap',
+      reply: `This is a potential preparation plan, not an active journey. It begins with your current Data Science profile and prioritises ${DATA_SCIENCE_GAPS.join(', ')} next.`,
+      chips: ['How well do I fit?', 'Market demand'],
+    },
+    'How do I close the gap?': {
+      reply: `Start with SQL and Statistics, then strengthen Machine Learning through a model comparison project. Evidence logged in Skills Development will raise the corresponding readiness assessment here.`,
+      chips: ['Where do I learn these?', 'Show me the roadmap'],
+    },
+    'Where do I learn these?': {
+      module: 'roadmap',
+      reply: 'I have mapped learning suggestions to SQL, Statistics, and Machine Learning, the three current development priorities in your shared skill profile.',
+      chips: ['What skills do I need?', 'Show me the roadmap'],
+    },
+  }
+
+  return dataScienceFlow[chip] ?? CHIP_FLOW[chip] ?? null
 }
 
 function inferRoleId(opportunity) {
@@ -191,7 +234,7 @@ export default function CareerIntelligencePage() {
   }
 
   const handleChipClick = (chip) => {
-    const flow = CHIP_FLOW[chip]
+    const flow = getChipFlow(chip, selectedPathId, selectedRoleName)
     setChips(null)
     setChatMessages((prev) => [...prev, { id: `user-${Date.now()}`, role: 'user', text: chip }])
 

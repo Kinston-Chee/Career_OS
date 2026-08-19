@@ -112,6 +112,7 @@ function MessageBubble({ msg, isSpeakingAI }) {
         }`}
       >
         {msg.text}
+        {msg.streaming ? <span className="ml-0.5 inline-block h-4 w-[2px] animate-pulse bg-[#8B9BFF] align-[-2px]" aria-hidden="true" /> : null}
       </div>
     </div>
   )
@@ -354,6 +355,8 @@ export default function VoiceInterviewSession({ mode, role, company, onExit, onV
   const sessionTimerRef = useRef(null)
   const gapTimerRef = useRef(null)
   const aiTimeoutRef = useRef(null)
+  const aiStreamTimeoutRef = useRef(null)
+  const aiStreamRef = useRef(null)
   const userSpeakTimeoutRef = useRef(null)
   const transcriptRef = useRef(null)
   // Mirror scriptIdx in a ref so aiSpeak / stopUserSpeak can read the current
@@ -369,16 +372,14 @@ export default function VoiceInterviewSession({ mode, role, company, onExit, onV
   }
 
   const pushMessage = (role, text) => {
-    setMessages((prev) => [...prev, { role, text, ts: now(), wavePaused: false }])
+    const id = `${role}-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`
+    setMessages((prev) => [...prev, { id, role, text, ts: now(), wavePaused: false }])
     // Pause the waveform after the "spoken" duration
     const speakMs = text.length * 60 + 1000
     window.setTimeout(() => {
-      setMessages((prev) => {
-        const copy = [...prev]
-        const last = copy[copy.length - 1]
-        if (last && !last.wavePaused) copy[copy.length - 1] = { ...last, wavePaused: true }
-        return copy
-      })
+      setMessages((prev) => prev.map((message) => (
+        message.id === id ? { ...message, wavePaused: true } : message
+      )))
     }, speakMs)
   }
 
@@ -424,8 +425,61 @@ export default function VoiceInterviewSession({ mode, role, company, onExit, onV
     window.clearInterval(sessionTimerRef.current)
     window.clearInterval(gapTimerRef.current)
     window.clearTimeout(aiTimeoutRef.current)
+    window.clearTimeout(aiStreamTimeoutRef.current)
     window.clearTimeout(userSpeakTimeoutRef.current)
   }, [])
+
+  const finishAIStream = (stream) => {
+    window.clearTimeout(aiStreamTimeoutRef.current)
+    aiStreamRef.current = null
+    setMessages((prev) => prev.map((message) => (
+      message.id === stream.id ? { ...message, streaming: false, wavePaused: true } : message
+    )))
+    setExchangeCount((count) => count + 1)
+    scriptIdxRef.current = stream.scriptIndex + 1
+    setScriptIdx(stream.scriptIndex + 1)
+    aiInFlightRef.current = false
+    setState(STATES.GAP)
+    setShowGap(true)
+    setGapRemaining(gapSeconds)
+  }
+
+  const streamNextAIChunk = () => {
+    const stream = aiStreamRef.current
+    if (!stream) return
+
+    stream.cursor = Math.min(stream.cursor + 2, stream.fullText.length)
+    const streamedText = stream.fullText.slice(0, stream.cursor)
+    setMessages((prev) => prev.map((message) => (
+      message.id === stream.id ? { ...message, text: streamedText } : message
+    )))
+
+    if (stream.cursor >= stream.fullText.length) {
+      finishAIStream(stream)
+      return
+    }
+
+    aiStreamTimeoutRef.current = window.setTimeout(streamNextAIChunk, 24)
+  }
+
+  const startAIStream = (entry, scriptIndex) => {
+    const stream = {
+      id: `ai-${scriptIndex}-${Date.now()}`,
+      fullText: entry.text,
+      cursor: 0,
+      scriptIndex,
+    }
+    aiStreamRef.current = stream
+    setMessages((prev) => [...prev, {
+      id: stream.id,
+      role: 'ai',
+      text: '',
+      ts: now(),
+      wavePaused: false,
+      streaming: true,
+    }])
+    aiStreamTimeoutRef.current = window.setTimeout(streamNextAIChunk, 80)
+  }
 
   const aiSpeak = () => {
     // Guard: never let two AI turns queue up (StrictMode double-invoke or
@@ -444,24 +498,11 @@ export default function VoiceInterviewSession({ mode, role, company, onExit, onV
     setState(STATES.AI_SPEAKING)
     setTyping(true)
 
-    const delay = 900 + entry.text.length * 12
+    const delay = 650
     window.clearTimeout(aiTimeoutRef.current)
     aiTimeoutRef.current = window.setTimeout(() => {
       setTyping(false)
-      pushMessage('ai', entry.text)
-      setExchangeCount((c) => c + 1)
-      // Advance the script cursor via both the ref (immediate) and state
-      // (for rendering/tracking); the ref keeps aiSpeak/stopUserSpeak
-      // deterministic across renders.
-      scriptIdxRef.current = idx + 1
-      setScriptIdx(idx + 1)
-      aiInFlightRef.current = false
-      // Move to user's gap
-      window.setTimeout(() => {
-        setState(STATES.GAP)
-        setShowGap(true)
-        setGapRemaining(gapSeconds)
-      }, 600)
+      startAIStream(entry, idx)
     }, delay)
   }
 
@@ -521,12 +562,26 @@ export default function VoiceInterviewSession({ mode, role, company, onExit, onV
   const togglePause = () => {
     if (state === STATES.IDLE || state === STATES.ENDED) return
     if (state === STATES.PAUSED) {
-      setState(prevStateRef.current)
+      const resumeState = prevStateRef.current
+      setState(resumeState)
+      if (resumeState === STATES.AI_SPEAKING) {
+        if (aiStreamRef.current) {
+          aiStreamTimeoutRef.current = window.setTimeout(streamNextAIChunk, 80)
+        } else if (aiInFlightRef.current) {
+          const idx = scriptIdxRef.current
+          const entry = script[idx]
+          if (entry?.role === 'ai') {
+            setTyping(false)
+            startAIStream(entry, idx)
+          }
+        }
+      }
     } else {
       prevStateRef.current = state
       window.clearInterval(sessionTimerRef.current)
       window.clearInterval(gapTimerRef.current)
       window.clearTimeout(aiTimeoutRef.current)
+      window.clearTimeout(aiStreamTimeoutRef.current)
       window.clearTimeout(userSpeakTimeoutRef.current)
       setState(STATES.PAUSED)
     }
@@ -542,7 +597,9 @@ export default function VoiceInterviewSession({ mode, role, company, onExit, onV
     window.clearInterval(sessionTimerRef.current)
     window.clearInterval(gapTimerRef.current)
     window.clearTimeout(aiTimeoutRef.current)
+    window.clearTimeout(aiStreamTimeoutRef.current)
     window.clearTimeout(userSpeakTimeoutRef.current)
+    aiStreamRef.current = null
     scriptIdxRef.current = 0
     aiInFlightRef.current = false
     setState(STATES.IDLE)
@@ -561,7 +618,9 @@ export default function VoiceInterviewSession({ mode, role, company, onExit, onV
     window.clearInterval(sessionTimerRef.current)
     window.clearInterval(gapTimerRef.current)
     window.clearTimeout(aiTimeoutRef.current)
+    window.clearTimeout(aiStreamTimeoutRef.current)
     window.clearTimeout(userSpeakTimeoutRef.current)
+    aiStreamRef.current = null
     setShowGap(false)
     setState(STATES.ENDED)
     setEnded(true)

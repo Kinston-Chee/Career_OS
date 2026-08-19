@@ -4,6 +4,7 @@ import {
   AlertCircle,
   Atom,
   Award,
+  BarChart3,
   BookOpen,
   Brain,
   Building2,
@@ -53,6 +54,7 @@ const SKILL_ICON = {
   refresh: RefreshCw,
   building: Building2,
   brain: Brain,
+  chart: BarChart3,
   certificate: Award,
 }
 

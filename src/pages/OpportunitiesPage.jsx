@@ -92,6 +92,14 @@ const CAT_META = {
   },
 }
 
+const CARD_ACCENT_META = {
+  emerald: {
+    cardBg: 'linear-gradient(118deg, #FFFFFF 0%, #F7FEFA 46%, #DDF6E9 100%)',
+    cardBorder: '#BDE7D2',
+    border: '#5DCAA5',
+  },
+}
+
 const TAB_FILTERS = [
   { id: 'All', label: 'All', Icon: LayoutGrid, type: null },
   { id: 'Internships', label: 'Internships', Icon: Briefcase, type: 'internship' },
@@ -776,6 +784,7 @@ function FilterPanel({ filters, onChange, onReset }) {
 // ── Opportunity card ───────────────────────────────────────────────────────
 function OppCard({ card, saved, applied, onToggleSave, onView }) {
   const meta = CAT_META[card.type] || CAT_META.internship
+  const cardVisual = CARD_ACCENT_META[card.accentTone] || meta
   const cat = categoryTone(card)
   const mt = card.matchPercent ? matchTone(card.matchPercent) : null
   const days = deadlineDays(card.deadline)
@@ -786,10 +795,10 @@ function OppCard({ card, saved, applied, onToggleSave, onView }) {
   return (
     <div
       className="group relative flex min-h-[308px] cursor-pointer flex-col gap-3 overflow-hidden rounded-2xl border p-5 transition hover:shadow-[0_4px_18px_rgba(15,17,32,.09)]"
-      style={{ background: meta.cardBg, borderColor: meta.cardBorder }}
+      style={{ background: cardVisual.cardBg, borderColor: cardVisual.cardBorder }}
       onClick={onView}
     >
-      <span className="absolute inset-y-3 left-0 w-1 rounded-r" style={{ background: meta.border }} />
+      <span className="absolute inset-y-0 left-0 w-1" style={{ background: cardVisual.border }} />
 
       {art ? (
         <div className="pointer-events-none absolute bottom-12 right-[-20px] z-[1] h-[178px] w-[58%]">
