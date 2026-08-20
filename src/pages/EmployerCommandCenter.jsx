@@ -1,5 +1,5 @@
-import React from 'react'
-import { useNavigate } from 'react-router-dom'
+import React, { useEffect, useRef } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
 import {
   AlertCircle,
   ArrowLeft,
@@ -89,8 +89,21 @@ const STAT_TONE = {
 
 export default function EmployerCommandCenter() {
   const navigate = useNavigate()
+  const location = useLocation()
   const roomId = 'command-center'
   const { meta, messages, input, setInput, loading, send } = useRoomChat(roomId)
+
+  // A message typed into the Employer Home chatbox arrives as router state.
+  // Send it once, then clear the state so a refresh does not repeat it.
+  const forwardedRef = useRef(false)
+  useEffect(() => {
+    const forwarded = location.state?.initialMessage
+    if (!forwarded || forwardedRef.current) return
+    forwardedRef.current = true
+    send(forwarded)
+    navigate(location.pathname, { replace: true, state: null })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location.state?.initialMessage])
 
   return (
     <div className="employer-workspace-page flex h-screen w-screen flex-col overflow-hidden">

@@ -21,6 +21,7 @@ import EmployerHome from './pages/EmployerHome'
 import EmployerCommandCenter from './pages/EmployerCommandCenter'
 import EmployerWorkspacePage from './pages/EmployerWorkspacePage'
 import TalentDiscovery from './pages/employer/TalentDiscovery'
+import EmployeeRetention from './pages/employer/EmployeeRetention'
 import LandingPage from './pages/LandingPage'
 import JobMarketplacePage from './pages/JobMarketplacePage'
 import MemoryProfilePage from './pages/MemoryProfilePage'
@@ -101,6 +102,7 @@ export default function App() {
         <Route path="/employer/command-center" element={<EmployerCommandCenter />} />
         <Route path="/employer/talent" element={<EmployerWorkspacePage />} />
         <Route path="/employer/talent-discovery" element={<TalentDiscovery />} />
+        <Route path="/employer/retention" element={<EmployeeRetention />} />
         <Route path="/employer/posting" element={<Engagements />} />
         <Route path="/employer/campus-pipeline" element={<CampusPipeline />} />
         <Route path="/employer/analytics" element={<Analytics />} />

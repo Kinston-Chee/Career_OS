@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   Award,
   Calendar,
@@ -156,16 +156,47 @@ function RoundRow({ round, index, total, expanded, onToggle }) {
   )
 }
 
+const ACTIVE_STATUSES = new Set(['in-progress', 'scheduled'])
+
 export default function InterviewProgressSection({ candidate, progress, onAdvance, onScheduleNext }) {
+  // Rounds live in local state so "Mark round done" advances the timeline by
+  // exactly one round. Previously the timeline was derived from the pipeline
+  // stage, which skipped two rounds per click.
+  const [rounds, setRounds] = useState(progress.rounds)
+
+  useEffect(() => { setRounds(progress.rounds) }, [progress.rounds])
+
   // Auto-expand the current (in-progress / scheduled) round on first render.
-  const initialOpen = progress.rounds.find((r) => r.status === 'in-progress' || r.status === 'scheduled')?.id
+  const initialOpen = progress.rounds.find((r) => ACTIVE_STATUSES.has(r.status))?.id
   const [expanded, setExpanded] = useState(initialOpen ? { [initialOpen]: true } : {})
   const toggle = (id) => setExpanded((prev) => ({ ...prev, [id]: !prev[id] }))
 
-  const totalRounds = progress.rounds.length
-  const passedCount = progress.rounds.filter((r) => r.status === 'passed').length
+  const totalRounds = rounds.length
+  const passedCount = rounds.filter((r) => r.status === 'passed').length
   const progressPct = Math.round((passedCount / Math.max(1, totalRounds)) * 100)
   const overallColor = scoreColor(progress.overallScore || 0)
+
+  const currentIndex = rounds.findIndex((r) => ACTIVE_STATUSES.has(r.status))
+  const currentRound = currentIndex >= 0 ? rounds[currentIndex] : null
+  const allDone = currentIndex === -1
+
+  // One click = one round: the current round passes and the round straight
+  // after it becomes the new current round.
+  const markRoundDone = () => {
+    if (!currentRound) return
+    setRounds((prev) => prev.map((round, index) => {
+      if (index === currentIndex) {
+        return { ...round, status: 'passed', summary: round.summary || 'Marked done by the hiring team.' }
+      }
+      if (index === currentIndex + 1 && round.status === 'pending') {
+        return { ...round, status: 'in-progress', summary: round.summary || 'Currently at this stage.' }
+      }
+      return round
+    }))
+    const next = rounds[currentIndex + 1]
+    setExpanded((prev) => (next ? { ...prev, [next.id]: true } : prev))
+    onAdvance?.(currentRound, next || null)
+  }
 
   return (
     <section className="employer-glass-card p-5">
@@ -175,7 +206,7 @@ export default function InterviewProgressSection({ candidate, progress, onAdvanc
           <div>
             <h2 className="text-sm font-bold text-gray-900">Interview Progress</h2>
             <p className="mt-0.5 text-xs text-gray-500">
-              {candidate.name.split(' ')[0]} applied for {candidate.targetRole} · currently at <span className="font-semibold text-[#185FA5]">{progress.currentRound}</span>
+              {candidate.name.split(' ')[0]} applied for {candidate.targetRole} · currently at <span className="font-semibold text-[#185FA5]">{currentRound ? currentRound.name : 'all rounds complete'}</span>
             </p>
           </div>
         </div>
@@ -196,49 +227,61 @@ export default function InterviewProgressSection({ candidate, progress, onAdvanc
         </div>
       </div>
 
-      {/* Next step callout */}
-      {progress.nextStep?.title ? (
+      {/* Current round callout - driven by local round state */}
+      {allDone ? (
+        <div className="mt-4 flex items-center gap-2.5 rounded-xl border border-emerald-100 bg-emerald-50/60 px-4 py-3">
+          <span className="flex h-9 w-9 items-center justify-center rounded-full bg-white text-emerald-600 ring-1 ring-emerald-100">
+            <CheckCircle2 className="h-4 w-4" />
+          </span>
+          <div>
+            <p className="text-[13px] font-semibold text-gray-900">All interview rounds complete</p>
+            <p className="text-[11.5px] text-gray-500">Nothing left to mark done - move the pipeline stage when you are ready.</p>
+          </div>
+        </div>
+      ) : (
         <div className="mt-4 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-blue-100 bg-blue-50/60 px-4 py-3">
           <div className="flex items-center gap-2.5">
             <span className="flex h-9 w-9 items-center justify-center rounded-full bg-white text-[#185FA5] ring-1 ring-blue-100">
               <Video className="h-4 w-4" />
             </span>
             <div>
-              <p className="text-[13px] font-semibold text-gray-900">Next: {progress.nextStep.title}</p>
-              <p className="text-[11.5px] text-gray-500">{progress.nextStep.date}{progress.nextStep.channel ? ` · ${progress.nextStep.channel}` : ''}</p>
+              <p className="text-[13px] font-semibold text-gray-900">Current: {currentRound.name}</p>
+              <p className="text-[11.5px] text-gray-500">
+                {currentRound.date}
+                {currentRound.interviewer ? ` · ${currentRound.interviewer}` : ''}
+                {rounds[currentIndex + 1] ? ` · next up: ${rounds[currentIndex + 1].name}` : ' · final round'}
+              </p>
             </div>
           </div>
           <div className="flex gap-2">
             {onScheduleNext ? (
               <button
                 type="button"
-                onClick={() => onScheduleNext(progress.nextStep)}
+                onClick={() => onScheduleNext(currentRound)}
                 className="inline-flex items-center gap-1.5 rounded-lg border border-blue-100 bg-white px-3 py-1.5 text-[12.5px] font-semibold text-[#185FA5] transition hover:bg-blue-50"
               >
                 <Calendar className="h-3.5 w-3.5" /> Reschedule
               </button>
             ) : null}
-            {onAdvance ? (
-              <button
-                type="button"
-                onClick={onAdvance}
-                className="inline-flex items-center gap-1.5 rounded-lg bg-[#185FA5] px-3 py-1.5 text-[12.5px] font-semibold text-white transition hover:bg-[#134c87]"
-              >
-                <Check className="h-3.5 w-3.5" /> Mark round done
-              </button>
-            ) : null}
+            <button
+              type="button"
+              onClick={markRoundDone}
+              className="inline-flex items-center gap-1.5 rounded-lg bg-[#185FA5] px-3 py-1.5 text-[12.5px] font-semibold text-white transition hover:bg-[#134c87]"
+            >
+              <Check className="h-3.5 w-3.5" /> Mark round done
+            </button>
           </div>
         </div>
-      ) : null}
+      )}
 
       {/* Timeline */}
       <div className="mt-5">
-        {progress.rounds.map((round, i) => (
+        {rounds.map((round, i) => (
           <RoundRow
             key={round.id}
             round={round}
             index={i}
-            total={progress.rounds.length}
+            total={rounds.length}
             expanded={!!expanded[round.id]}
             onToggle={() => toggle(round.id)}
           />

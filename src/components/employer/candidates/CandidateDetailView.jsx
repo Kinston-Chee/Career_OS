@@ -3,6 +3,7 @@ import {
   ArrowLeft,
   ArrowRight,
   Bot,
+  Briefcase,
   Bookmark,
   Calendar,
   CheckCircle2,
@@ -21,10 +22,13 @@ import ScheduleInterviewModal from './ScheduleInterviewModal'
 import MessageComposeModal from './MessageComposeModal'
 import EngagementSection from './EngagementSection'
 import InterviewProgressSection from './InterviewProgressSection'
+import WhyRecommendedCard from './WhyRecommendedCard'
 import {
   getCandidateDetail,
   getCandidateEngagement,
   getCandidateInterviewProgress,
+  getMatchingOpenings,
+  getRecommendationReasons,
   hasApplied,
 } from '../../../data/candidatesData'
 import { useEmployerWorkspaceStore } from '../../../store/useEmployerWorkspaceStore'
@@ -68,7 +72,7 @@ function ApplicationStatusBadge({ applied, candidate }) {
   )
 }
 
-function MatchHeader({ candidate, applied, onReachOut, onShortlist, onScheduleInterview, onPass, shortlisted, passed }) {
+function MatchHeader({ candidate, applied, openings, onReachOut, onShortlist, onScheduleInterview, onPass, shortlisted, passed }) {
   return (
     <section className={`employer-glass-card border-l-4 p-5 ${RISK_BORDER[candidate.matchScore >= 90 ? 'LOW' : 'MEDIUM']}`}>
       <div className="flex flex-wrap items-start justify-between gap-4">
@@ -85,11 +89,38 @@ function MatchHeader({ candidate, applied, onReachOut, onShortlist, onScheduleIn
             </div>
           </div>
         </div>
-        <div className="text-right">
-          <p className={`text-4xl font-extrabold leading-none ${MATCH_TONE(candidate.matchScore)}`}>{candidate.matchScore}%</p>
-          <span className={`mt-1.5 inline-block rounded-full px-2.5 py-0.5 text-xs font-semibold ${MATCH_PILL(candidate.matchScore)}`}>
-            {candidate.matchLabel}
-          </span>
+        <div className="flex items-start gap-4">
+          {/* Which open roles this candidate suits, next to the score */}
+          {openings?.length ? (
+            <div className="max-w-[260px] rounded-xl border border-blue-100 bg-blue-50/50 p-3">
+              <p className="flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wide text-[#185FA5]">
+                <Briefcase className="h-3.5 w-3.5" />
+                Suits {openings.length} open role{openings.length === 1 ? '' : 's'}
+              </p>
+              <div className="mt-2 space-y-1.5">
+                {openings.map((opening) => (
+                  <div key={opening.id} className="flex items-start justify-between gap-2 text-left">
+                    <span className="min-w-0">
+                      <span className="block truncate text-[12px] font-semibold text-gray-900">{opening.title}</span>
+                      <span className="block text-[10.5px] text-gray-500">
+                        {opening.badge} · {opening.location}
+                        {opening.primary ? ' · applied' : ''}
+                      </span>
+                    </span>
+                    <span className={`shrink-0 rounded-full px-1.5 py-0.5 text-[10.5px] font-bold ${MATCH_PILL(opening.fit)}`}>
+                      {opening.fit}%
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ) : null}
+          <div className="text-right">
+            <p className={`text-4xl font-extrabold leading-none ${MATCH_TONE(candidate.matchScore)}`}>{candidate.matchScore}%</p>
+            <span className={`mt-1.5 inline-block rounded-full px-2.5 py-0.5 text-xs font-semibold ${MATCH_PILL(candidate.matchScore)}`}>
+              {candidate.matchLabel}
+            </span>
+          </div>
         </div>
       </div>
 
@@ -119,25 +150,31 @@ function MatchHeader({ candidate, applied, onReachOut, onShortlist, onScheduleIn
         <p className="text-xs text-gray-400">{candidate.appliedDate}</p>
         {applied ? (
           <div className="flex items-center gap-2">
-            <button
-              type="button"
-              onClick={onShortlist}
-              disabled={shortlisted}
-              className={`rounded-full px-4 py-2 text-sm font-semibold text-white transition-colors ${shortlisted ? 'bg-green-600' : 'bg-green-600 hover:bg-green-700'}`}
-            >
-              {shortlisted ? '✓ Shortlisted' : 'Shortlist'}
-            </button>
-            <button
-              type="button"
-              onClick={onScheduleInterview}
-              className="rounded-full bg-[#185FA5] px-4 py-2 text-sm font-semibold text-white hover:bg-[#134c87]"
-            >
-              Schedule interview
-            </button>
+            {/* Shortlist and Schedule interview only make sense while the
+                candidate is still in play — passing hides them. */}
+            {!passed ? (
+              <>
+                <button
+                  type="button"
+                  onClick={onShortlist}
+                  disabled={shortlisted}
+                  className={`rounded-full px-4 py-2 text-sm font-semibold text-white transition-colors ${shortlisted ? 'bg-green-600' : 'bg-green-600 hover:bg-green-700'}`}
+                >
+                  {shortlisted ? '✓ Shortlisted' : 'Shortlist'}
+                </button>
+                <button
+                  type="button"
+                  onClick={onScheduleInterview}
+                  className="rounded-full bg-[#185FA5] px-4 py-2 text-sm font-semibold text-white hover:bg-[#134c87]"
+                >
+                  Schedule interview
+                </button>
+              </>
+            ) : null}
             <button
               type="button"
               onClick={onPass}
-              disabled={passed}
+              title={passed ? 'Click again to undo' : undefined}
               className="employer-secondary-button px-4 py-2 text-sm"
             >
               {passed ? 'Passed' : 'Pass'}
@@ -246,7 +283,7 @@ function CareerMemoryTimeline({ entries }) {
   )
 }
 
-function PipelineStatusCard({ candidate, onMoveNext }) {
+function PipelineStatusCard({ stage, onMoveNext }) {
   return (
     <section className="employer-glass-card p-5">
       <div className="flex items-center justify-between">
@@ -254,10 +291,10 @@ function PipelineStatusCard({ candidate, onMoveNext }) {
       </div>
       <div className="mt-3 flex items-center justify-between text-xs text-gray-500">
         <span>Pipeline stage</span>
-        <span className="rounded-full bg-green-50 px-2.5 py-0.5 text-xs font-semibold text-green-700">{candidate.pipelineStage}</span>
+        <span className="rounded-full bg-green-50 px-2.5 py-0.5 text-xs font-semibold text-green-700">{stage}</span>
       </div>
       <div className="mt-4">
-        <PipelineStepper currentStage={candidate.pipelineStage} />
+        <PipelineStepper currentStage={stage} />
       </div>
       <button type="button" onClick={onMoveNext} className="employer-primary-button mt-4 flex w-full items-center justify-center gap-1.5 px-4 py-2.5 text-sm">
         Move to next stage
@@ -371,12 +408,15 @@ function QuickActionsCard({ onAction, favorited }) {
 export default function CandidateDetailView({ candidate, backLabel, onBack, onToast, onMoveStage }) {
   const shortlistCandidate = useEmployerWorkspaceStore((s) => s.shortlistCandidate)
   const passCandidate = useEmployerWorkspaceStore((s) => s.passCandidate)
+  const unpassCandidate = useEmployerWorkspaceStore((s) => s.unpassCandidate)
   const addInterviewPrepQuestion = useEmployerWorkspaceStore((s) => s.addInterviewPrepQuestion)
   const shortlistedIds = useEmployerWorkspaceStore((s) => s.shortlistedIds)
   const passedIds = useEmployerWorkspaceStore((s) => s.passedIds)
 
   const [favorited, setFavorited] = useState(false)
   const [activeModal, setActiveModal] = useState(null) // null | 'message' | 'interview' | 'brief'
+  // Pass jumps the pipeline to Hired; undoing it drops back to Shortlisted.
+  const [stageOverride, setStageOverride] = useState(null)
 
   const shortlisted = shortlistedIds.has(candidate.id)
   const passed = passedIds.has(candidate.id)
@@ -385,6 +425,22 @@ export default function CandidateDetailView({ candidate, backLabel, onBack, onTo
   const applied = hasApplied(candidate)
   const engagement = applied ? null : getCandidateEngagement(candidate)
   const interviewProgress = applied ? getCandidateInterviewProgress(candidate) : null
+  const openings = getMatchingOpenings(candidate)
+  const reasons = getRecommendationReasons(candidate, detail)
+  const pipelineStage = stageOverride || candidate.pipelineStage
+
+  // Pass / un-pass is a toggle so an HR user can correct a misclick.
+  const handleTogglePass = () => {
+    if (passed) {
+      unpassCandidate(candidate.id)
+      setStageOverride('Shortlisted')
+      onToast(`${candidate.name} is back in the pipeline`)
+      return
+    }
+    passCandidate(candidate.id)
+    setStageOverride('Hired')
+    onToast(`${candidate.name} marked as passed`)
+  }
 
   const handleQuickAction = (actionId) => {
     if (actionId === 'favorite') {
@@ -418,20 +474,16 @@ export default function CandidateDetailView({ candidate, backLabel, onBack, onTo
               onToast(`${candidate.name} added to shortlist`)
             }}
             onScheduleInterview={() => setActiveModal('interview')}
-            onPass={() => {
-              passCandidate(candidate.id)
-              onToast(`${candidate.name} marked as passed`)
-            }}
+            onPass={handleTogglePass}
+            openings={openings}
           />
+          <WhyRecommendedCard candidate={candidate} reasons={reasons} />
           {applied ? (
             <InterviewProgressSection
               candidate={candidate}
               progress={interviewProgress}
               onScheduleNext={() => setActiveModal('interview')}
-              onAdvance={() => {
-                onMoveStage(candidate)
-                onToast(`${candidate.name} advanced to the next round`)
-              }}
+              onAdvance={(round) => onToast(`${round.name} marked done for ${candidate.name}`)}
             />
           ) : (
             <EngagementSection
@@ -452,7 +504,13 @@ export default function CandidateDetailView({ candidate, backLabel, onBack, onTo
         </div>
 
         <div className="space-y-4">
-          <PipelineStatusCard candidate={candidate} onMoveNext={() => onMoveStage(candidate)} />
+          <PipelineStatusCard
+            stage={pipelineStage}
+            onMoveNext={() => {
+              setStageOverride(null)
+              onMoveStage(candidate)
+            }}
+          />
           <WhatToValidateCard
             items={detail.whatToValidate}
             onAddToInterview={(item) => {

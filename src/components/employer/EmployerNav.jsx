@@ -8,6 +8,7 @@ import {
   ChevronDown,
   ClipboardCheck,
   FileText,
+  HeartPulse,
   GraduationCap,
   HelpCircle,
   Home,
@@ -30,6 +31,7 @@ const ICONS = {
   tasks: CheckSquare,
   approvals: ClipboardCheck,
   reports: FileText,
+  retention: HeartPulse,
 }
 
 export default function EmployerNav({ variant = 'default' }) {

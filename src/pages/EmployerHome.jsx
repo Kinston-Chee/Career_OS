@@ -15,15 +15,15 @@ import EmployerNav from '../components/employer/EmployerNav'
 import EmployerKpiRow from '../components/employer/EmployerKpiRow'
 import EmployerAIInbox from '../components/employer/EmployerAIInbox'
 import EmployerSummaryCardsRow from '../components/employer/EmployerSummaryCardsRow'
-import EmployerOperatingRooms from '../components/employer/EmployerOperatingRooms'
+import EmployerRetentionTracker from '../components/employer/EmployerRetentionTracker'
 import EmployerPendingActions from '../components/employer/EmployerPendingActions'
 import { employerUser } from '../data/employerMockData'
-import { NLP_DEMO_QUERIES, matchNlpQuery } from '../utils/employerNlpQueries'
+import { NLP_DEMO_QUERIES } from '../utils/employerNlpQueries'
 import robotImg from '../assets/career-os-robot.png'
 
 const QUICK_ACTIONS = [
-  { label: 'Find Top Talent', icon: Search, route: '/employer/talent-discovery' },
-  { label: 'Review Candidates', icon: Users, route: '/employer/candidates' },
+  { label: 'Find Top Talent', icon: Search, route: '/employer/candidates' },
+  { label: 'Review Candidates', icon: Users, route: '/employer/talent-discovery' },
   { label: 'Launch Engagement', icon: Calendar, route: '/employer/posting' },
   { label: 'Open Analytics', icon: BarChart3, route: '/employer/analytics' },
 ]
@@ -49,15 +49,20 @@ export default function EmployerHome() {
     toastRef.current = window.setTimeout(() => setToast(''), 3000)
   }
 
+  // Anything typed here is handed to the Command Center officer, which owns the
+  // conversation — the home chatbox is only the entry point.
   const runQuery = () => {
-    const matched = matchNlpQuery(query)
-    if (matched) {
-      showToast(matched.toast)
-      navigate(matched.to)
-    } else if (query.trim()) {
-      showToast('Try: find software engineering interns from Taylor\'s available after June')
+    const clean = query.trim()
+    if (!clean) {
+      openCommandCenter()
+      return
     }
+    showToast('Sent to Command Center')
+    setQuery('')
+    navigate('/employer/command-center', { state: { initialMessage: clean } })
   }
+
+  const openCommandCenter = () => navigate('/employer/command-center')
 
   const handleQuickAction = (a) => {
     if (a.route) navigate(a.route)
@@ -117,6 +122,15 @@ export default function EmployerHome() {
                     <Command className="h-3 w-3" /> Enter
                   </span>
                 </div>
+                <button
+                  type="button"
+                  onClick={openCommandCenter}
+                  title="Open the full Command Center conversation"
+                  className="flex shrink-0 items-center gap-2 rounded-xl border border-[#D8E0F0] bg-white/85 px-4 py-3 text-sm font-bold text-[#26304D] transition hover:border-blue-300 hover:bg-blue-50 hover:text-[#155EE8]"
+                >
+                  <Command className="h-4 w-4" />
+                  Command Center
+                </button>
                 <button type="button" onClick={runQuery} className="employer-primary-button flex items-center gap-2 px-5 py-3 text-sm">
                   Ask AI
                   <ArrowRight className="h-4 w-4" />
@@ -148,7 +162,7 @@ export default function EmployerHome() {
           <EmployerKpiRow />
 
           <section className="grid grid-cols-1 gap-4 lg:grid-cols-[1.25fr_0.75fr]">
-            <EmployerOperatingRooms />
+            <EmployerRetentionTracker />
             <EmployerAIInbox />
           </section>
 

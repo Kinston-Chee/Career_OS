@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
-import { ArrowRight, Clock, FileText, MessageSquarePlus, Sparkles, Users, X } from 'lucide-react'
+import { ArrowRight, Clock, FileText, MessageSquarePlus, Send, Sparkles, Users, X } from 'lucide-react'
 import { AGENTS } from './agentConfig'
 import imgDecisionRoom from '../../../assets/University/Central Decision room.png'
 
@@ -338,6 +338,7 @@ export default function DecisionRoomModal({ onClose }) {
   const [synthDone, setSynthDone] = useState(false)
   const [meetingHistory, setMeetingHistory] = useState([])
   const [viewingMinutes, setViewingMinutes] = useState(null) // null | historyItem
+  const [draft, setDraft] = useState('')
 
   const pendingQueue = useRef([])
   const isFinalRef = useRef(false)
@@ -410,6 +411,24 @@ export default function DecisionRoomModal({ onClose }) {
     if (nextAct) startAct(nextAct)
   }
 
+  // Free-text version of the prompt chips. While the room is waiting on the
+  // Dean it steers the discussion; once the meeting has wrapped it is recorded
+  // as a closing note against the minutes.
+  const submitDraft = () => {
+    const text = draft.trim()
+    if (!text || !canType) return
+    setDraft('')
+    if (showPrompts) {
+      handleUserPick(text)
+      return
+    }
+    setLog((prev) => [
+      ...prev,
+      { id: `user-${Date.now()}`, type: 'user', text },
+      { id: `system-${Date.now()}`, type: 'system', text: 'Noted by the Decision Room — added to the meeting minutes.' },
+    ])
+  }
+
   const handleSynthDone = () => {
     setSynthDone(true)
     setPhase('done')
@@ -418,6 +437,10 @@ export default function DecisionRoomModal({ onClose }) {
     const record = buildMinutes(script, log, synthText)
     setMeetingHistory((prev) => [record, ...prev])
   }
+
+  // The composer accepts input when the room is waiting on the Dean, or after
+  // the meeting has finished; it is closed while an agent is mid-sentence.
+  const canType = (phase === 'meeting' && showPrompts && !synthActive) || (phase === 'done' && synthDone)
 
   const reset = () => {
     setPhase('select')
@@ -429,6 +452,7 @@ export default function DecisionRoomModal({ onClose }) {
     setSynthActive(false)
     setSynthDone(false)
     setViewingMinutes(null)
+    setDraft('')
     pendingQueue.current = []
     isFinalRef.current = false
   }
@@ -694,7 +718,7 @@ export default function DecisionRoomModal({ onClose }) {
 
                 {/* User prompt chips — shown between acts */}
                 {showPrompts && !synthActive && (
-                  <div className="shrink-0 border-t border-white/10 bg-[#0F1830] px-8 py-5">
+                  <div className="shrink-0 border-t border-white/10 bg-[#0F1830] px-8 pb-3 pt-5">
                     <p className="mb-3 text-[10px] font-bold uppercase tracking-widest text-[#8A96B3]">
                       Your move — steer the discussion
                     </p>
@@ -713,7 +737,44 @@ export default function DecisionRoomModal({ onClose }) {
                   </div>
                 )}
 
-                {/* Done state — copy + new */}
+                {/* Prompt composer — always at the bottom of the room */}
+                <div className={`shrink-0 bg-[#0F1830] px-8 pb-5 ${showPrompts && !synthActive ? '' : 'border-t border-white/10 pt-5'}`}>
+                  <div className={`flex items-center gap-2 rounded-2xl border px-4 py-2.5 transition ${
+                    canType ? 'border-[#155EE8]/40 bg-white/5 focus-within:border-[#155EE8]' : 'border-white/10 bg-white/[0.02]'
+                  }`}>
+                    <input
+                      value={draft}
+                      onChange={(event) => setDraft(event.target.value)}
+                      onKeyDown={(event) => { if (event.key === 'Enter') submitDraft() }}
+                      disabled={!canType}
+                      aria-label="Message the Decision Room"
+                      placeholder={
+                        canType
+                          ? (showPrompts ? 'Ask the room anything, or steer the discussion...' : 'Add a closing note to the minutes...')
+                          : 'Agents are speaking - your turn opens shortly...'
+                      }
+                      className="min-w-0 flex-1 bg-transparent text-sm font-medium text-white outline-none placeholder:text-[#415174] disabled:cursor-not-allowed"
+                    />
+                    <button
+                      type="button"
+                      onClick={submitDraft}
+                      disabled={!canType || !draft.trim()}
+                      aria-label="Send to the Decision Room"
+                      className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-xl transition ${
+                        canType && draft.trim() ? 'bg-[#155EE8] text-white hover:bg-[#124FC4]' : 'bg-white/5 text-[#415174]'
+                      }`}
+                    >
+                      <Send className="h-3.5 w-3.5" />
+                    </button>
+                  </div>
+                  <p className="mt-2 text-[10px] font-medium text-[#415174]">
+                    {canType
+                      ? (showPrompts ? 'Press Enter to send. Your question moves the meeting to the next round.' : 'The meeting has wrapped - notes are appended to the minutes.')
+                      : 'The room is mid-discussion. The composer unlocks when it is your turn.'}
+                  </p>
+                </div>
+
+                {/* Done state - copy + new */}
                 {phase === 'done' && (
                   <div className="shrink-0 flex items-center justify-end gap-3 border-t border-white/10 bg-[#0F1830] px-8 py-4">
                     <button type="button" onClick={reset}

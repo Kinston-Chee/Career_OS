@@ -3,6 +3,8 @@
 // Talent Discovery, Campus Pipeline, and Engagements "View profile" actions.
 // No backend — every value here is static demo content.
 
+import { postings } from './talentDiscoveryData'
+
 export const PIPELINE_STAGES = ['Aware', 'Engaged', 'Shortlisted', 'In Process', 'Hired']
 
 export const candidates = [
@@ -533,4 +535,106 @@ export function getCandidateDetail(candidate) {
     retentionConditions: 'Not yet assessed — gather more signal before making an offer',
     retentionRisk: candidate.matchScore >= 85 ? 'LOW' : 'MEDIUM',
   }
+}
+
+// ─── Job openings a candidate suits ───────────────────────────────────────
+// Openings come from the Talent Discovery postings board. The role a candidate
+// is tracked for is always the primary fit; other openings are suggested when
+// their skills overlap the opening's focus areas.
+const OPENING_FOCUS = {
+  'swe-intern': ['react', 'node', 'backend', 'frontend', 'api', 'system design', 'javascript', 'open source', 'ui/ux', 'software'],
+  'data-analyst-intern': ['sql', 'python', 'power bi', 'excel', 'tableau', 'data', 'analytics', 'dashboard'],
+  'ai-data-challenge': ['python', 'machine learning', 'ml', 'nlp', 'ai', 'data', 'model'],
+  'backend-workshop': ['communication', 'marketing', 'sales', 'stakeholder', 'presentation', 'business'],
+}
+
+export function getMatchingOpenings(candidate) {
+  if (!candidate) return []
+  const skills = (candidate.skills || []).map((skill) => skill.toLowerCase())
+  const course = (candidate.course || '').toLowerCase()
+
+  return postings
+    .map((posting) => {
+      const primary = posting.title === candidate.targetRole
+      const focus = OPENING_FOCUS[posting.id] || []
+      const overlap = focus.filter((term) => skills.some((skill) => skill.includes(term) || term.includes(skill)) || course.includes(term))
+      if (!primary && overlap.length === 0) return null
+
+      // Primary opening keeps the candidate's headline score; secondary
+      // openings are discounted by how little of the focus they cover.
+      const fit = primary
+        ? candidate.matchScore
+        : Math.max(52, Math.round(candidate.matchScore - 14 + Math.min(overlap.length, 3) * 3))
+
+      return {
+        id: posting.id,
+        title: posting.title,
+        company: posting.company,
+        location: posting.location,
+        badge: posting.badge,
+        deadline: posting.deadlineLabel?.replace('Deadline: ', '') || '',
+        primary,
+        fit,
+        overlap: overlap.slice(0, 3),
+      }
+    })
+    .filter(Boolean)
+    .sort((a, b) => (b.primary ? 1 : 0) - (a.primary ? 1 : 0) || b.fit - a.fit)
+}
+
+// ─── Why this candidate is recommended ────────────────────────────────────
+// Plain-language reasons an HR user can act on, assembled from the same
+// signals the match score is built from.
+export function getRecommendationReasons(candidate, detail) {
+  if (!candidate) return []
+  const first = candidate.name.split(' ')[0]
+  const openings = getMatchingOpenings(candidate)
+  const primaryOpening = openings.find((o) => o.primary) || openings[0]
+  const verified = (detail?.careerMemory || []).filter((entry) => entry.verified).length
+  const reasons = []
+
+  reasons.push({
+    id: 'match',
+    tone: 'blue',
+    title: `${candidate.matchScore}% match for ${primaryOpening ? primaryOpening.title : candidate.targetRole}`,
+    detail: `${candidate.matchLabel} against the role requirements — scored on skills evidence, availability, and career intent rather than CV keywords.`,
+  })
+
+  if (candidate.evidenceChips?.length) {
+    reasons.push({
+      id: 'evidence',
+      tone: 'green',
+      title: 'Claims are backed by verified evidence',
+      detail: `${candidate.evidenceChips.slice(0, 3).join(' · ')}${verified ? ` — ${verified} Career Memory entries verified by CareerOS.` : '.'}`,
+    })
+  }
+
+  if (candidate.skills?.length) {
+    reasons.push({
+      id: 'skills',
+      tone: 'purple',
+      title: `Core skills line up: ${candidate.skills.slice(0, 3).join(', ')}`,
+      detail: `${first} is a ${candidate.year} ${candidate.course} student at ${candidate.university}, so these skills are current rather than historical.`,
+    })
+  }
+
+  if (openings.length > 1) {
+    reasons.push({
+      id: 'coverage',
+      tone: 'blue',
+      title: `Suits ${openings.length} of your open roles`,
+      detail: `Beyond ${primaryOpening.title}, ${first} also fits ${openings.filter((o) => !o.primary).map((o) => o.title).join(' and ')} — useful if the primary req closes.`,
+    })
+  }
+
+  if (candidate.validateNext) {
+    reasons.push({
+      id: 'validate',
+      tone: 'amber',
+      title: `Worth checking: ${candidate.validateNext}`,
+      detail: `Risk noted by CareerOS: ${candidate.risk || 'none flagged'}. Validate this in the next conversation before committing.`,
+    })
+  }
+
+  return reasons
 }

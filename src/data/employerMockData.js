@@ -248,5 +248,6 @@ export const employerNavTabs = [
   { label: 'Candidates', to: '/employer/candidates', icon: 'people' },
   { label: 'Engagement', to: '/employer/posting', icon: 'campaign' },
   { label: 'Pipeline', to: '/employer/campus-pipeline', icon: 'school' },
+  { label: 'Retention', to: '/employer/retention', icon: 'retention' },
   { label: 'Analytics', to: '/employer/analytics', icon: 'analytics' },
 ]

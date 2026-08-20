@@ -27,6 +27,13 @@ export const useEmployerWorkspaceStore = create((set) => ({
     return { shortlistedIds: nextShort, passedIds: nextPassed };
   }),
 
+  // Un-pass, so the Pass button on a candidate profile can be toggled back.
+  unpassCandidate: (id) => set((state) => {
+    const nextPassed = new Set(state.passedIds);
+    nextPassed.delete(id);
+    return { passedIds: nextPassed };
+  }),
+
   markContacted: (ids) => set((state) => {
     const next = new Set(state.contactedIds);
     ids.forEach((id) => next.add(id));

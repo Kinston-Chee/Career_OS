@@ -75,9 +75,10 @@ function PostingsRail({ selectedId, onSelect, onCreate }) {
   }))
 
   return (
-    <aside className="employer-glass-card flex h-full flex-col overflow-y-auto p-4">
-      <div className="px-4 pb-4">
-        <p className="mb-2 px-1 text-[10px] font-bold uppercase tracking-[.08em] text-[#8892A0]">Postings</p>
+    <aside className="employer-glass-card flex h-full min-h-0 flex-col overflow-hidden p-4">
+      <p className="shrink-0 px-5 pb-3 text-[10px] font-bold uppercase tracking-[.08em] text-[#8892A0]">Postings</p>
+      {/* Only the posting list scrolls — the title and New posting stay put. */}
+      <div className="no-scrollbar min-h-0 flex-1 overflow-y-auto px-4 pb-2">
         {items.map((p) => {
           const active = p.id === selectedId
           const tone = PIP_TONE[p.statusTone]
@@ -111,11 +112,11 @@ function PostingsRail({ selectedId, onSelect, onCreate }) {
           )
         })}
       </div>
-      <div className="mx-4 h-px bg-blue-100/70" />
+      <div className="mx-4 h-px shrink-0 bg-blue-100/70" />
       <button
         type="button"
         onClick={onCreate}
-        className="mt-2 flex w-full items-center gap-2 px-5 py-2.5 text-[13px] font-medium text-[#4F62F7] transition hover:bg-[#EEF0FE]"
+        className="mt-2 flex w-full shrink-0 items-center gap-2 px-5 py-2.5 text-[13px] font-medium text-[#4F62F7] transition hover:bg-[#EEF0FE]"
       >
         <Plus className="h-4 w-4" /> New posting
       </button>
@@ -171,9 +172,9 @@ function MainPanel({ posting, statuses, onShortlist, onPass, onView, onDraft, on
   const visibleAll = filteredAll.slice(0, visibleCount)
 
   return (
-    <main className="overflow-y-auto px-1 py-1">
+    <main className="no-scrollbar flex h-full min-h-0 flex-col overflow-y-auto px-1 py-1">
       {/* Metrics strip */}
-      <section className="mb-5 grid grid-cols-2 gap-3 md:grid-cols-4">
+      <section className="mb-3 grid shrink-0 grid-cols-2 gap-3 md:grid-cols-4">
         <MetricCard label="Total applicants" value={posting.stat1Value} valueTone="hi" sub="Across active posting" />
         <MetricCard label="AI shortlisted" value={<span>{posting.stat2Value} <span className="text-[12px] font-normal text-[#8892A0]">of {posting.stat1Value}</span></span>} valueTone="hi" sub={`${posting.stat3Value} avg match score`} />
         <MetricCard label="Top match" value={posting.id === 'swe-intern' ? '96%' : posting.stat3Value} valueTone="ok" sub={posting.id === 'swe-intern' ? "Ivan Lim · Taylor's" : posting.stat4Value || '—'} />
@@ -181,7 +182,7 @@ function MainPanel({ posting, statuses, onShortlist, onPass, onView, onDraft, on
       </section>
 
       {/* Tab bar */}
-      <div className="mb-3.5 flex flex-wrap items-center justify-between gap-3">
+      <div className="mb-3 flex shrink-0 flex-wrap items-center justify-between gap-2">
         <div className="inline-flex items-center gap-0.5 rounded-[10px] border border-[#E4E7EC] bg-[#F7F8FA] p-[3px]">
           <TabButton active={tab === 'shortlisted'} onClick={() => setTab('shortlisted')} icon={Sparkles} count={posting.stat2Value}>AI Shortlisted</TabButton>
           <TabButton active={tab === 'all'} onClick={() => setTab('all')} icon={Users} count={posting.stat1Value} countTone="gray">All Applicants</TabButton>
@@ -217,8 +218,8 @@ function MainPanel({ posting, statuses, onShortlist, onPass, onView, onDraft, on
       ) : tab === 'interviewer' ? (
         <AIInterviewerConfig posting={posting} onNotify={onNotify} />
       ) : tab === 'shortlisted' ? (
-        <div>
-          <div className="flex flex-col gap-2">
+        <div className="flex min-h-0 flex-1 flex-col">
+          <div className="no-scrollbar flex min-h-0 flex-1 flex-col gap-2 overflow-y-auto">
             {pagedShortlist.map((c, i) => (
               <ShortlistRow
                 key={c.id}
@@ -234,7 +235,7 @@ function MainPanel({ posting, statuses, onShortlist, onPass, onView, onDraft, on
             ))}
           </div>
 
-          <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
+          <div className="mt-3 flex shrink-0 flex-wrap items-center justify-between gap-3">
             <span className="text-[12px] text-[#8892A0]">Showing {pagedShortlist.length} of {shortlisted.length} shortlisted · Page {page} of 3</span>
             <div className="flex items-center gap-1.5">
               <PagerNav onClick={() => setPage((p) => Math.max(1, p - 1))}><ChevronLeft className="h-3.5 w-3.5" /></PagerNav>
@@ -306,8 +307,8 @@ function MainPanel({ posting, statuses, onShortlist, onPass, onView, onDraft, on
 function MetricCard({ label, value, valueTone, sub }) {
   const colors = { hi: 'text-[#4F62F7]', ok: 'text-[#0E9F6E]', warn: 'text-[#D97706]' }
   return (
-    <div className="employer-glass-metric px-4 py-3.5">
-      <div className="mb-1.5 text-[10px] font-bold uppercase tracking-[.07em] text-[#8892A0]">{label}</div>
+    <div className="employer-glass-metric px-4 py-2.5">
+      <div className="mb-1 text-[10px] font-bold uppercase tracking-[.07em] text-[#8892A0]">{label}</div>
       <div className={`font-mono text-[22px] font-medium leading-none ${colors[valueTone] || 'text-[#0F1117]'}`}>{value}</div>
       <div className="mt-1 text-[11px] text-[#8892A0]">{sub}</div>
     </div>
@@ -377,7 +378,7 @@ function ShortlistRow({ rank, candidate, status, accent, onShortlist, onPass, on
       tabIndex={0}
       onClick={() => onView(candidate)}
       onKeyDown={handleCardKey}
-      className="employer-glass-card relative grid cursor-pointer grid-cols-[28px_36px_1fr_auto] items-start gap-x-3 overflow-hidden px-4 py-3.5 transition hover:bg-white/90 hover:shadow-[0_2px_10px_rgba(15,17,32,.05)] focus:outline-none focus:ring-2 focus:ring-[#4F62F7] focus:ring-offset-2"
+      className="employer-glass-card relative grid cursor-pointer grid-cols-[28px_36px_1fr_auto] items-start gap-x-3 overflow-hidden px-4 py-2.5 transition hover:bg-white/90 hover:shadow-[0_2px_10px_rgba(15,17,32,.05)] focus:outline-none focus:ring-2 focus:ring-[#4F62F7] focus:ring-offset-2"
     >
       <span className="absolute inset-y-0 left-0 w-[3px]" style={{ background: accent }} />
       <div className="pt-2.5 text-center font-mono text-[12px] text-[#8892A0]">{String(rank).padStart(2, '0')}</div>
@@ -459,7 +460,7 @@ function TalentAIPanel({ tracker, messages, onSendMessage, onQuickAction }) {
   }
 
   return (
-    <aside className="employer-glass-card flex h-full flex-col overflow-hidden p-0">
+    <aside className="employer-glass-card flex h-full min-h-0 flex-col overflow-hidden p-0">
       <div className="flex shrink-0 items-center justify-between border-b border-blue-100/70 px-4 py-3">
         <div className="flex items-center gap-2">
           <span className="flex h-7 w-7 items-center justify-center rounded-md bg-[#4F62F7]">
@@ -476,7 +477,7 @@ function TalentAIPanel({ tracker, messages, onSendMessage, onQuickAction }) {
         </div>
       </div>
 
-      <div ref={threadRef} className="flex flex-1 flex-col gap-2 overflow-y-auto p-3.5">
+      <div ref={threadRef} className="no-scrollbar flex min-h-0 flex-1 flex-col gap-2 overflow-y-auto p-3.5">
         {messages.map((m, i) => (
           <React.Fragment key={i}>
             <div
@@ -812,7 +813,7 @@ export default function TalentDiscovery() {
       <EmployerNav variant="glass" />
 
       <main className="min-w-0 flex-1 overflow-hidden">
-        <div className="mx-auto grid h-full max-w-[1480px] grid-cols-[250px_minmax(0,1fr)_330px] gap-4 px-6 py-5">
+        <div className="mx-auto grid h-full min-h-0 max-w-[1480px] grid-cols-[250px_minmax(0,1fr)_330px] grid-rows-[minmax(0,1fr)] gap-4 px-6 py-5">
           <PostingsRail
             selectedId={selectedPostingId}
             onSelect={setSelectedPostingId}
