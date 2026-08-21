@@ -1,6 +1,8 @@
-import React from 'react'
-import { ChevronDown } from 'lucide-react'
-import { partnerships, totalPartnershipsCount } from '../../../data/collaborationData'
+import React, { useState } from 'react'
+import { ArrowRight, ChevronDown, ChevronLeft, ChevronRight } from 'lucide-react'
+import { partnerships } from '../../../data/collaborationData'
+
+const PAGE_SIZE = 4
 
 const HEALTH_TONES = {
   green: 'bg-green-50 text-green-700',
@@ -20,7 +22,7 @@ function MetricColumn({ label, value, pct }) {
   )
 }
 
-function PartnerCard({ partner, onViewPartnership }) {
+function PartnerCard({ partner, onViewPartnership, onOpenCompany }) {
   return (
     <div className="border-b border-gray-50 py-4 last:border-b-0">
       <div className="flex items-start gap-4">
@@ -30,7 +32,16 @@ function PartnerCard({ partner, onViewPartnership }) {
         <div className="min-w-0 flex-1">
           <div className="flex items-start justify-between gap-2">
             <div>
-              <p className="text-[15px] font-bold text-gray-900">{partner.name}</p>
+              {/* The company name opens that company's full profile page. */}
+              <button
+                type="button"
+                onClick={() => onOpenCompany?.(partner)}
+                aria-label={`Open the profile for ${partner.name}`}
+                className="group flex items-center gap-1.5 text-[15px] font-bold text-gray-900 transition hover:text-[#5B6CF9]"
+              >
+                {partner.name}
+                <ArrowRight className="h-3 w-3 text-gray-300 transition-transform group-hover:translate-x-0.5 group-hover:text-[#5B6CF9]" />
+              </button>
               <p className="text-xs text-gray-400">Partner since {partner.since}</p>
             </div>
             <span className={`shrink-0 rounded-full px-2.5 py-0.5 text-[11px] font-semibold ${HEALTH_TONES[partner.healthTone]}`}>
@@ -57,7 +68,12 @@ function PartnerCard({ partner, onViewPartnership }) {
   )
 }
 
-export default function PartnershipPortfolio({ onViewPartnership, onViewAll }) {
+export default function PartnershipPortfolio({ onViewPartnership, onOpenCompany }) {
+  const [page, setPage] = useState(1)
+  const totalPages = Math.max(1, Math.ceil(partnerships.length / PAGE_SIZE))
+  const safePage = Math.min(page, totalPages)
+  const pageItems = partnerships.slice((safePage - 1) * PAGE_SIZE, safePage * PAGE_SIZE)
+
   return (
     <section className="rounded-2xl border border-gray-100 bg-white p-5 shadow-sm">
       <div className="flex flex-wrap items-center justify-between gap-2">
@@ -68,15 +84,62 @@ export default function PartnershipPortfolio({ onViewPartnership, onViewAll }) {
         </button>
       </div>
 
+      <p className="mt-1 text-[11.5px] text-gray-400">
+        {partnerships.length} active partnerships · page {safePage} of {totalPages}
+      </p>
+
       <div className="mt-2">
-        {partnerships.map((partner) => (
-          <PartnerCard key={partner.id} partner={partner} onViewPartnership={onViewPartnership} />
+        {pageItems.map((partner) => (
+          <PartnerCard
+            key={partner.id}
+            partner={partner}
+            onViewPartnership={onViewPartnership}
+            onOpenCompany={onOpenCompany}
+          />
         ))}
       </div>
 
-      <button type="button" onClick={onViewAll} className="mt-3 w-full text-center text-xs font-semibold text-[#185FA5] hover:underline">
-        View all {totalPartnershipsCount} partnerships →
-      </button>
+      {/* Pagination replaces the old "View all" link */}
+      <div className="mt-4 flex items-center justify-center gap-1.5">
+        <button
+          type="button"
+          onClick={() => setPage((p) => Math.max(1, p - 1))}
+          disabled={safePage === 1}
+          aria-label="Previous partnerships page"
+          className="flex h-8 w-8 items-center justify-center rounded-lg border border-gray-200 bg-white text-gray-500 transition hover:border-[#5B6CF9] hover:text-[#5B6CF9] disabled:opacity-40 disabled:hover:border-gray-200 disabled:hover:text-gray-500"
+        >
+          <ChevronLeft className="h-4 w-4" />
+        </button>
+        {Array.from({ length: totalPages }).map((_, index) => {
+          const pageNumber = index + 1
+          const active = pageNumber === safePage
+          return (
+            <button
+              key={pageNumber}
+              type="button"
+              onClick={() => setPage(pageNumber)}
+              aria-label={`Partnerships page ${pageNumber}`}
+              aria-current={active ? 'page' : undefined}
+              className={`h-8 min-w-[32px] rounded-lg border px-2 text-[12.5px] font-semibold transition ${
+                active
+                  ? 'border-[#5B6CF9] bg-[#5B6CF9] text-white'
+                  : 'border-gray-200 bg-white text-gray-600 hover:border-[#5B6CF9] hover:text-[#5B6CF9]'
+              }`}
+            >
+              {pageNumber}
+            </button>
+          )
+        })}
+        <button
+          type="button"
+          onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+          disabled={safePage === totalPages}
+          aria-label="Next partnerships page"
+          className="flex h-8 w-8 items-center justify-center rounded-lg border border-gray-200 bg-white text-gray-500 transition hover:border-[#5B6CF9] hover:text-[#5B6CF9] disabled:opacity-40 disabled:hover:border-gray-200 disabled:hover:text-gray-500"
+        >
+          <ChevronRight className="h-4 w-4" />
+        </button>
+      </div>
     </section>
   )
 }

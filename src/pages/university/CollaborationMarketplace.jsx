@@ -1,10 +1,12 @@
 import React, { useRef, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { Sparkles } from 'lucide-react'
 import UniversityNav from '../../components/university/UniversityNav'
 import KpiRow from '../../components/university/collaboration/KpiRow'
 import PartnershipPortfolio from '../../components/university/collaboration/PartnershipPortfolio'
 import RecommendedPartners from '../../components/university/collaboration/RecommendedPartners'
 import ActiveEvents from '../../components/university/collaboration/ActiveEvents'
+import CompanyDirectory from '../../components/university/collaboration/CompanyDirectory'
 import OutreachEmailModal from '../../components/university/collaboration/OutreachEmailModal'
 import PartnerDetailModal from '../../components/university/collaboration/PartnerDetailModal'
 import CreateCollaborationModal from '../../components/university/collaboration/CreateCollaborationModal'
@@ -45,6 +47,7 @@ function DemoToast({ message }) {
 }
 
 export default function CollaborationMarketplace() {
+  const navigate = useNavigate()
   const [outreachStatus, setOutreachStatus] = useState({})
   const [eventTab, setEventTab] = useState('All')
   const [eventsList, setEventsList] = useState(initialEvents)
@@ -65,7 +68,8 @@ export default function CollaborationMarketplace() {
   }
 
   const handleViewPartnership = (partner) => setDetailPartner(partner)
-  const handleViewAll = () => showToast('Opening all 12 partnerships…')
+  // Both the directory and the recommended rail open the same profile page.
+  const openCompany = (company) => navigate(`/university/companies/${company.id}`)
 
   const handleStartOutreach = (partner) => {
     if (outreachStatus[partner.id]) return
@@ -116,9 +120,15 @@ export default function CollaborationMarketplace() {
           <KpiRow />
 
           <div className="grid grid-cols-1 gap-5 lg:grid-cols-[1.5fr_1fr]">
-            <PartnershipPortfolio onViewPartnership={handleViewPartnership} onViewAll={handleViewAll} />
-            <RecommendedPartners outreachStatus={outreachStatus} onStartOutreach={handleStartOutreach} />
+            <PartnershipPortfolio onViewPartnership={handleViewPartnership} onOpenCompany={openCompany} />
+            <RecommendedPartners
+              outreachStatus={outreachStatus}
+              onStartOutreach={handleStartOutreach}
+              onOpenCompany={openCompany}
+            />
           </div>
+
+          <CompanyDirectory onOpenCompany={openCompany} />
 
           <ActiveEvents
             activeTab={eventTab}

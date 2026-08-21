@@ -42,6 +42,7 @@ import CurriculumMarketAlignment from './pages/university/CurriculumMarketAlignm
 import StudentReadiness from './pages/university/StudentReadiness'
 import AlumniSignalIntelligence from './pages/university/AlumniSignalIntelligence'
 import CollaborationMarketplace from './pages/university/CollaborationMarketplace'
+import UniversityCompanyProfile from './pages/university/CompanyProfile'
 import AccreditationHub from './pages/university/AccreditationHub'
 import UniversityAIOffice from './pages/university/UniversityAIOffice'
 import UniversityAIHome from './pages/university/UniversityAIHome'
@@ -126,6 +127,7 @@ export default function App() {
         <Route path="/university/curriculum-alignment" element={<CurriculumMarketAlignment />} />
         <Route path="/university/alumni-signals" element={<AlumniSignalIntelligence />} />
         <Route path="/university/collaboration" element={<CollaborationMarketplace />} />
+        <Route path="/university/companies/:companyId" element={<UniversityCompanyProfile />} />
         <Route path="/university/accreditation" element={<AccreditationHub />} />
 
         <Route element={<AppLayout workspace="university" />}>
