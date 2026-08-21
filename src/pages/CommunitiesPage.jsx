@@ -2,6 +2,8 @@ import React, { useMemo, useRef, useState } from 'react'
 import {
   ArrowLeft,
   ArrowRight,
+  ArrowDown,
+  ArrowUp,
   BarChart3,
   BriefcaseBusiness,
   ChevronDown,
@@ -88,6 +90,61 @@ const initialDiscussions = [
 ]
 
 const discussionCategories = ['All', 'General Questions', 'Interview Experiences', 'Resume Reviews', 'Projects', 'Learning Resources', 'Career Advice', 'Internships', 'Certifications']
+
+const communityReplyContext = {
+  'data-science': 'Show the reasoning behind your analysis, not only the final chart or model.',
+  'software-engineering': 'A small working example and a short explanation of your trade-offs will make the advice easier to apply.',
+  'business-analysis': 'Frame the situation, stakeholder need, decision, and measurable outcome clearly.',
+  'machine-learning': 'Start with a simple baseline and explain how you evaluated it before adding complexity.',
+  cybersecurity: 'Keep sensitive details out, but document your methodology, findings, and remediation thinking.',
+  'product-management': 'Anchor the discussion in the user problem, prioritisation logic, and success metric.',
+  'ui-ux-design': 'Include the research signal and design decision behind each polished screen.',
+  'graduate-careers': 'Concrete examples and a concise follow-up usually stand out more than generic application language.',
+  'women-in-tech': 'Be specific about the support you need and make the first conversation easy to say yes to.',
+}
+
+const categoryReplyContext = {
+  'Interview Experiences': 'Write down the question themes while they are fresh, then practise answering them aloud with one clear example each.',
+  'Resume Reviews': 'Lead each bullet with the problem you solved, then add the tool, action, and result.',
+  Projects: 'A short case-study structure of problem, approach, evidence, and reflection is usually enough.',
+  'Learning Resources': 'Choose one resource with exercises and pair it with a small project instead of collecting several courses.',
+  'Career Advice': 'Compare the next role against the skills you already use and one realistic gap you can test first.',
+  Internships: 'Keep a weekly learning log so the experience becomes usable evidence for your next application.',
+  Certifications: 'Prioritise the credential that includes hands-on practice and matches the roles you are applying for.',
+  'General Questions': 'Add one concrete example or constraint so people can give you a more useful answer.',
+}
+
+function buildSeedComments(discussion) {
+  const communityAdvice = communityReplyContext[discussion.communityId]
+  const categoryAdvice = categoryReplyContext[discussion.category] || categoryReplyContext['General Questions']
+  return [
+    {
+      id: `${discussion.id}-comment-1`, author: 'Maya Chen', initials: 'MC', role: 'Community mentor', time: '1 hour ago', score: 18,
+      body: `${categoryAdvice} ${communityAdvice}`,
+      children: [{ id: `${discussion.id}-comment-1-1`, author: discussion.author, initials: discussion.initials, role: 'Original poster', time: '42 minutes ago', score: 6, body: 'This is helpful. I was missing the evidence and reflection part, so I will add that before sharing the next version.', children: [] }],
+    },
+    {
+      id: `${discussion.id}-comment-2`, author: 'Daniel Wong', initials: 'DW', role: 'Recent graduate', time: '38 minutes ago', score: 11,
+      body: `I went through something similar. What helped was turning “${discussion.tags[0] || discussion.category}” into one focused example I could explain in two minutes, including what I would improve next time.`, children: [],
+    },
+    {
+      id: `${discussion.id}-comment-3`, author: 'Saras Lee', initials: 'SL', role: 'Community member', time: '16 minutes ago', score: 7,
+      body: 'Could you share what you have tried so far and the specific part you feel least confident about? That would help us give more targeted feedback.', children: [],
+    },
+  ]
+}
+
+function appendReplyToComment(comments, parentId, reply) {
+  return comments.map((comment) => {
+    if (comment.id === parentId) return { ...comment, children: [...(comment.children || []), reply] }
+    if (comment.children?.length) return { ...comment, children: appendReplyToComment(comment.children, parentId, reply) }
+    return comment
+  })
+}
+
+function countThreadComments(comments) {
+  return comments.reduce((total, comment) => total + 1 + countThreadComments(comment.children || []), 0)
+}
 
 const toneClasses = {
   blue: 'border-blue-100 bg-blue-50 text-blue-700',
@@ -211,6 +268,97 @@ function DiscussionCard({ discussion, onOpen }) {
   )
 }
 
+function CommentItem({ comment, depth = 0, onReply, votes, onVote }) {
+  const [showReply, setShowReply] = useState(false)
+  const [reply, setReply] = useState('')
+  const score = votes[comment.id] ?? comment.score
+
+  return (
+    <div className={depth > 0 ? 'ml-7 border-l-2 border-blue-100 pl-4 sm:ml-11' : ''}>
+      <article className="border-b border-[#edf2fa] py-4 last:border-b-0">
+        <div className="flex items-start gap-3">
+          <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#eef5ff] text-[11px] font-bold text-blue-700">{comment.initials}</span>
+          <div className="min-w-0 flex-1">
+            <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
+              <span className="text-sm font-bold text-[#26365c]">{comment.author}</span>
+              <span className={`rounded-full px-2 py-0.5 text-[10px] font-bold ${comment.role === 'Original poster' ? 'bg-blue-50 text-blue-700' : 'bg-slate-100 text-[#637094]'}`}>{comment.role}</span>
+              <span className="text-xs font-medium text-[#9aa6c3]">{comment.time}</span>
+            </div>
+            <p className="mt-2 text-sm font-medium leading-6 text-[#3a4669]">{comment.body}</p>
+            <div className="mt-3 flex items-center gap-1 text-xs font-semibold text-[#7382a1]">
+              <button type="button" onClick={() => onVote(comment.id, score + 1)} aria-label="Upvote comment" className="rounded-md p-1.5 transition hover:bg-blue-50 hover:text-blue-700"><ArrowUp size={14} /></button>
+              <span className="min-w-7 text-center font-bold text-[#52627f]">{score}</span>
+              <button type="button" onClick={() => onVote(comment.id, score - 1)} aria-label="Downvote comment" className="rounded-md p-1.5 transition hover:bg-blue-50 hover:text-blue-700"><ArrowDown size={14} /></button>
+              {depth < 1 && <button type="button" onClick={() => setShowReply((current) => !current)} className="ml-2 rounded-lg px-2 py-1.5 font-bold text-blue-700 transition hover:bg-blue-50">Reply</button>}
+            </div>
+            {showReply && (
+              <form onSubmit={(event) => { event.preventDefault(); if (!reply.trim()) return; onReply(reply.trim(), comment.id); setReply(''); setShowReply(false) }} className="mt-3">
+                <textarea autoFocus rows={3} value={reply} onChange={(event) => setReply(event.target.value)} placeholder={`Reply to ${comment.author}...`} className="w-full resize-none rounded-xl border border-[#dfe8f7] p-3 text-sm outline-none focus:border-blue-300 focus:ring-4 focus:ring-blue-50" />
+                <div className="mt-2 flex justify-end gap-2">
+                  <button type="button" onClick={() => setShowReply(false)} className="h-9 rounded-lg px-3 text-xs font-bold text-[#637094] hover:bg-slate-50">Cancel</button>
+                  <button type="submit" className="h-9 rounded-lg bg-blue-600 px-4 text-xs font-bold text-white hover:bg-blue-700">Post reply</button>
+                </div>
+              </form>
+            )}
+          </div>
+        </div>
+      </article>
+      {comment.children?.map((child) => <CommentItem key={child.id} comment={child} depth={depth + 1} onReply={onReply} votes={votes} onVote={onVote} />)}
+    </div>
+  )
+}
+
+function DiscussionThreadModal({ discussion, comments, onClose, onSubmitReply }) {
+  const [reply, setReply] = useState('')
+  const [sort, setSort] = useState('Top')
+  const [votes, setVotes] = useState({})
+  const [postScore, setPostScore] = useState(42)
+  const sortedComments = [...comments].sort((a, b) => sort === 'Newest' ? b.id.localeCompare(a.id) : (votes[b.id] ?? b.score) - (votes[a.id] ?? a.score))
+  const visibleCommentCount = countThreadComments(comments)
+
+  const submitReply = (text, parentId = null) => {
+    onSubmitReply(discussion.id, text, parentId)
+  }
+
+  return (
+    <ModalShell title={`${discussion.communityName || 'Community'} discussion`} description="Read the full conversation and add your perspective." onClose={onClose} size="max-w-4xl">
+      <section className="border-y border-[#e2eaf8] bg-[#f8fbff]/65 px-1 py-5 sm:px-4">
+        <div className="flex items-start gap-3 sm:gap-5">
+          <div className="flex w-9 shrink-0 flex-col items-center gap-1 rounded-xl bg-white py-2 text-[#7382a1] shadow-sm">
+            <button type="button" onClick={() => setPostScore((score) => score + 1)} aria-label="Upvote discussion" className="rounded-md p-1 hover:bg-blue-50 hover:text-blue-700"><ArrowUp size={17} /></button>
+            <span className="text-xs font-bold text-[#26365c]">{postScore}</span>
+            <button type="button" onClick={() => setPostScore((score) => score - 1)} aria-label="Downvote discussion" className="rounded-md p-1 hover:bg-blue-50 hover:text-blue-700"><ArrowDown size={17} /></button>
+          </div>
+          <div className="min-w-0 flex-1">
+            <div className="flex flex-wrap items-center gap-2 text-xs font-medium text-[#8a96af]">
+              <span className="font-bold text-[#26365c]">{discussion.author}</span><span>{discussion.university}</span><span>· {discussion.time}</span>
+            </div>
+            <span className="mt-2 inline-flex rounded-full bg-violet-50 px-2.5 py-1 text-[11px] font-bold text-violet-700">{discussion.category}</span>
+            <h2 className="mt-3 text-xl font-bold leading-tight text-[#11194a] sm:text-2xl">{discussion.title}</h2>
+            <p className="mt-3 text-sm font-medium leading-7 text-[#3a4669]">{discussion.preview}</p>
+            <div className="mt-4 flex flex-wrap gap-2">{discussion.tags.map((tag) => <span key={tag} className="rounded-lg border border-blue-100 bg-white px-2.5 py-1 text-[11px] font-semibold text-blue-700">{tag}</span>)}</div>
+            <div className="mt-4 flex gap-4 text-xs font-semibold text-[#7382a1]"><span className="flex items-center gap-1.5"><MessageCircle size={13} /> {discussion.replies} replies</span><span className="flex items-center gap-1.5"><Eye size={13} /> {discussion.views} views</span></div>
+          </div>
+        </div>
+      </section>
+
+      <form onSubmit={(event) => { event.preventDefault(); if (!reply.trim()) return; submitReply(reply.trim()); setReply('') }} className="mt-5 rounded-xl border border-[#dfe8f7] bg-white p-3 focus-within:border-blue-300 focus-within:ring-4 focus-within:ring-blue-50">
+        <textarea rows={3} value={reply} onChange={(event) => setReply(event.target.value)} placeholder="Join the discussion with a helpful reply..." className="w-full resize-none text-sm font-medium outline-none placeholder:text-[#9aa6c3]" />
+        <div className="mt-2 flex justify-end"><button type="submit" className="h-9 rounded-lg bg-blue-600 px-4 text-xs font-bold text-white hover:bg-blue-700">Comment</button></div>
+      </form>
+
+      <div className="mt-6 flex items-center justify-between border-b border-[#e2eaf8] pb-3">
+        <h3 className="text-base font-bold text-[#11194a]">Comments <span className="text-sm font-semibold text-[#8a96af]">({visibleCommentCount} shown)</span></h3>
+        <label className="flex items-center gap-2 text-xs font-semibold text-[#7382a1]">Sort by
+          <select value={sort} onChange={(event) => setSort(event.target.value)} className="rounded-lg border border-[#dfe8f7] bg-white px-2.5 py-1.5 font-bold text-[#52627f] outline-none"><option>Top</option><option>Newest</option></select>
+        </label>
+      </div>
+      <div>{sortedComments.map((comment) => <CommentItem key={comment.id} comment={comment} onReply={submitReply} votes={votes} onVote={(id, score) => setVotes((current) => ({ ...current, [id]: score }))} />)}</div>
+      {comments.length === 0 && <div className="py-10 text-center"><MessageCircle size={24} className="mx-auto text-blue-300" /><p className="mt-2 text-sm font-bold text-[#52627f]">No comments yet. Start the conversation.</p></div>}
+    </ModalShell>
+  )
+}
+
 function CreateDiscussionModal({ community, discussions, onClose, onSubmit, onOpenDiscussion }) {
   const [title, setTitle] = useState('')
   const [category, setCategory] = useState('General Questions')
@@ -283,6 +431,7 @@ export default function CommunitiesPage() {
   const [popularity, setPopularity] = useState('Most Popular')
   const [discussionCategory, setDiscussionCategory] = useState('All')
   const [discussions, setDiscussions] = useState(initialDiscussions)
+  const [commentsByDiscussion, setCommentsByDiscussion] = useState(() => Object.fromEntries(initialDiscussions.map((discussion) => [discussion.id, buildSeedComments(discussion)])))
   const [showCreate, setShowCreate] = useState(false)
   const [selectedDiscussion, setSelectedDiscussion] = useState(null)
   const [toast, setToast] = useState('')
@@ -303,6 +452,7 @@ export default function CommunitiesPage() {
     const direct = discussions.filter((discussion) => discussion.communityId === selectedCommunity.id)
     return discussionCategory === 'All' ? direct : direct.filter((discussion) => discussion.category === discussionCategory)
   }, [discussionCategory, discussions, selectedCommunity])
+  const activeDiscussion = selectedDiscussion ? discussions.find((discussion) => discussion.id === selectedDiscussion.id) || selectedDiscussion : null
 
   const showToast = (message) => {
     setToast(message)
@@ -331,9 +481,29 @@ export default function CommunitiesPage() {
   const submitDiscussion = ({ title, category, content, tags }) => {
     const newDiscussion = { id: `post-${Date.now()}`, communityId: selectedCommunity.id, author: mockUser.name, initials: mockUser.avatarInitials, university: "Taylor's University", time: 'Just now', category, title, preview: content, replies: 0, views: 1, lastReply: 'Just now', tags: tags.split(',').map((tag) => tag.trim()).filter(Boolean) }
     setDiscussions((current) => [newDiscussion, ...current])
+    setCommentsByDiscussion((current) => ({ ...current, [newDiscussion.id]: [] }))
     setShowCreate(false)
     setDiscussionCategory('All')
     showToast('Your discussion is now live.')
+  }
+
+  const submitReply = (discussionId, body, parentId = null) => {
+    const reply = {
+      id: `comment-${Date.now()}`,
+      author: mockUser.name,
+      initials: mockUser.avatarInitials,
+      role: 'Community member',
+      time: 'Just now',
+      score: 1,
+      body,
+      children: [],
+    }
+    setCommentsByDiscussion((current) => {
+      const existing = current[discussionId] || []
+      return { ...current, [discussionId]: parentId ? appendReplyToComment(existing, parentId, reply) : [...existing, reply] }
+    })
+    setDiscussions((current) => current.map((discussion) => discussion.id === discussionId ? { ...discussion, replies: discussion.replies + 1, lastReply: 'Just now' } : discussion))
+    showToast('Your reply was posted.')
   }
 
   if (selectedCommunity) {
@@ -372,7 +542,7 @@ export default function CommunitiesPage() {
         </main>
 
         {showCreate && <CreateDiscussionModal community={selectedCommunity} discussions={discussions} onClose={() => setShowCreate(false)} onSubmit={submitDiscussion} onOpenDiscussion={(discussion) => { setShowCreate(false); setSelectedDiscussion(discussion) }} />}
-        {selectedDiscussion && <ModalShell title={selectedDiscussion.title} description={`${selectedDiscussion.author} · ${selectedDiscussion.university} · ${selectedDiscussion.time}`} onClose={() => setSelectedDiscussion(null)}><span className="rounded-full bg-violet-50 px-2.5 py-1 text-xs font-bold text-violet-700">{selectedDiscussion.category}</span><p className="mt-4 text-sm font-medium leading-7 text-[#3a4669]">{selectedDiscussion.preview}</p><div className="mt-5 flex gap-4 border-t border-[#e2eaf8] pt-4 text-xs font-semibold text-[#7382a1]"><span>{selectedDiscussion.replies} Replies</span><span>{selectedDiscussion.views} Views</span></div><textarea rows={3} placeholder="Share a helpful reply..." className="mt-5 w-full resize-none rounded-xl border border-[#dfe8f7] p-3 text-sm outline-none focus:border-blue-300" /><button type="button" onClick={() => { setSelectedDiscussion(null); showToast('Your reply was posted.') }} className="mt-3 h-10 w-full rounded-xl bg-blue-600 text-sm font-bold text-white">Post Reply</button></ModalShell>}
+        {activeDiscussion && <DiscussionThreadModal discussion={{ ...activeDiscussion, communityName: selectedCommunity.name }} comments={commentsByDiscussion[activeDiscussion.id] || []} onClose={() => setSelectedDiscussion(null)} onSubmitReply={submitReply} />}
         {toast && <div className="fixed bottom-5 right-5 z-[60] rounded-xl border border-blue-100 bg-white px-4 py-3 text-sm font-semibold text-[#26365c] shadow-[0_18px_44px_rgba(37,99,235,0.16)]">{toast}</div>}
       </div>
     )
