@@ -216,7 +216,9 @@ function MainPanel({ posting, statuses, onShortlist, onPass, onView, onDraft, on
           Loading applicants for {posting.title}…
         </div>
       ) : tab === 'interviewer' ? (
-        <AIInterviewerConfig posting={posting} onNotify={onNotify} />
+        <div className="no-scrollbar min-h-0 flex-1 overflow-y-auto pb-1">
+          <AIInterviewerConfig posting={posting} onNotify={onNotify} />
+        </div>
       ) : tab === 'shortlisted' ? (
         <div className="flex min-h-0 flex-1 flex-col">
           <div className="no-scrollbar flex min-h-0 flex-1 flex-col gap-2 overflow-y-auto">
@@ -248,6 +250,7 @@ function MainPanel({ posting, statuses, onShortlist, onPass, onView, onDraft, on
           </div>
         </div>
       ) : (
+        <div className="no-scrollbar min-h-0 flex-1 overflow-y-auto pb-1">
         <div className="employer-glass-card overflow-hidden p-0">
           <table className="w-full border-collapse">
             <thead>
@@ -297,6 +300,7 @@ function MainPanel({ posting, statuses, onShortlist, onPass, onView, onDraft, on
               <button type="button" onClick={() => setVisibleCount((n) => n + 5)} className="text-[12px] font-medium text-[#4F62F7] hover:underline">Load more →</button>
             ) : null}
           </div>
+        </div>
         </div>
       )}
 

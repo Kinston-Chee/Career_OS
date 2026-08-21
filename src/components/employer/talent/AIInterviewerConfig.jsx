@@ -414,7 +414,7 @@ export default function AIInterviewerConfig({ posting, onNotify }) {
   const preview = () => onNotify?.('Opening interview preview…')
 
   return (
-    <section className="overflow-hidden rounded-2xl border border-[#E4E7EC] bg-white">
+    <section className="shrink-0 overflow-hidden rounded-2xl border border-[#E4E7EC] bg-white">
       {/* Header */}
       <div className="flex items-start justify-between gap-4 border-b border-[#E4E7EC] bg-gradient-to-r from-[#EEF0FE] to-white px-5 py-4">
         <div className="flex items-start gap-3">
