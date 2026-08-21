@@ -19,6 +19,7 @@ import {
   Lightbulb,
   Mail,
   Network,
+  Presentation,
   Rocket,
   Route,
   Search,
@@ -99,15 +100,16 @@ function Label({ children, centered }) {
 const WORKSPACES = [
   {
     id: 'student', role: 'student', letter: 'C', title: 'Candidate',
-    sub: 'For students & job seekers',
-    desc: 'Keep a living memory of experiences, proof, skills, and progress so your next career move starts from evidence, not guesswork.',
+    sub: 'For students and job seekers',
+    tagline: 'Explore without getting trapped',
+    desc: 'Understand which careers may suit you through your real experiences, skills and interests. See what you already have, what is missing and what can still be carried forward if you change direction.',
     bullets: [
-      'Capture internships, projects, leadership, and proof',
-      'Turn experience into skills, gaps, and next actions',
-      'Practise interviews against active goals',
-      'Carry evidence into opportunities and employer profiles',
+      'Explore different paths before committing',
+      'Discover transferable skills and career gaps',
+      'Practise interviews without fear of failure',
+      'Learn from students facing the same struggles',
     ],
-    cta: 'Enter Candidate Workspace',
+    cta: 'Explore Candidate Workspace',
     path: '/student/home',
     accent: '#6366f1', glow: 'rgba(99,102,241,0.22)',
     border: 'rgba(99,102,241,0.22)',
@@ -117,15 +119,15 @@ const WORKSPACES = [
   },
   {
     id: 'employer', role: 'employer', letter: 'E', title: 'Employer',
-    sub: 'For HR & talent teams',
-    desc: 'Stop recruiting from zero by keeping warm talent history, evidence, and reactivation actions in one operating workspace.',
+    sub: 'For HR and talent teams',
+    tagline: 'Prepare before the gap appears',
+    desc: 'Spot possible staffing needs early and stay connected with promising candidates you have already met. When hiring becomes urgent, you do not have to start again with strangers.',
     bullets: [
-      'Inspect evidence-rich candidate profiles',
-      'Recover prior finalists and challenge participants',
-      'Create engagements that produce observable signals',
-      'Draft outreach and validation steps with AI support',
+      'Identify possible retention risks early',
+      'Keep promising talent relationships warm',
+      'Build a trusted pipeline before hiring starts',
     ],
-    cta: 'Enter Employer Workspace',
+    cta: 'Explore Employer Workspace',
     path: '/employer/home',
     accent: '#8b5cf6', glow: 'rgba(139,92,246,0.22)',
     border: 'rgba(139,92,246,0.22)',
@@ -135,15 +137,15 @@ const WORKSPACES = [
   },
   {
     id: 'university', role: 'university', letter: 'U', title: 'University',
-    sub: 'For deans & programme directors',
-    desc: 'Act on readiness and market gaps while the current cohort can still benefit, then reuse the evidence for review and accreditation.',
+    sub: 'For deans and programme directors',
+    tagline: 'Act while students can still benefit',
+    desc: 'Turn known skill gaps into real action faster. CareerOS prepares the partners, proposal, responsibilities and approval documents so decision-makers can focus on making the final call.',
     bullets: [
-      'Track cohort readiness and at-risk signals',
-      'Route skill gaps into current-cohort interventions',
-      'Connect employer, alumni, and curriculum evidence',
-      'Prepare accreditation evidence with source and owner context',
+      'Bring insights and decisions into one place',
+      'Prepare proposals and partnerships faster',
+      'Act before the current cohort graduate',
     ],
-    cta: 'Enter University Workspace',
+    cta: 'Explore University Workspace',
     path: '/university/overview',
     accent: '#0ea5e9', glow: 'rgba(14,165,233,0.22)',
     border: 'rgba(14,165,233,0.22)',
@@ -154,9 +156,9 @@ const WORKSPACES = [
 ]
 
 const PROBLEM_CARDS = [
-  { stat: 'Evidence', color: '#818cf8', Icon: Search, title: 'Students lose proof between moments', body: 'Projects, internships, leadership, and feedback sit across CVs, chats, folders, and memory. When an opportunity appears, the student has to rebuild the story from scratch.', src: 'Memory decay' },
-  { stat: 'History', color: '#a78bfa', Icon: BriefcaseBusiness, title: 'Employers restart every search cold', body: 'A strong student met at a workshop, challenge, or previous hiring round disappears into old spreadsheets. When a role becomes urgent, recruiting starts over.', src: 'Relationship decay' },
-  { stat: 'Action', color: '#38bdf8', Icon: GraduationCap, title: 'Universities see gaps too late', body: 'Graduate readiness, curriculum relevance, employer feedback, and accreditation evidence are managed in separate cycles, so insight often arrives after the cohort needed help.', src: 'Action decay' },
+  { stat: 'Candidate', color: '#818cf8', Icon: Search, title: "Not sure if this career is right for them", body: "Most students only understand a career through what they read or hear, not through real experience. Even with good grades and strong projects, they may still worry about choosing the wrong path and realising it only when it is too late to change.", src: 'A safe way to explore' },
+  { stat: 'Employer', color: '#a78bfa', Icon: BriefcaseBusiness, title: "Hiring needs can become urgent overnight", body: "A resignation or new project can suddenly create an urgent hiring need. There is no time to search carefully, and more resumes only create more noise. What employers really need is someone they already know and trust.", src: 'Prepare before the gap appears' },
+  { stat: 'University', color: '#38bdf8', Icon: GraduationCap, title: "Knowing the problem is not enough", body: 'Deans often know where students are falling behind. But finding partners, preparing proposals and getting approvals take time. By the time the solution is ready, the students who needed it may have already graduated.', src: 'Faster action, not more reports' },
 ]
 
 const STEPS = [
@@ -175,30 +177,36 @@ const INTEL_CARDS = [
 
 const ROADMAP = [
   {
-    pill: 'Built for demo', pillColor: '#34d399', dot: 'bg-emerald-400',
-    title: 'Phase 1 - Interaction model',
-    items: ['Candidate, Employer, and University workspaces', 'Career Memory and evidence-oriented flows', 'Career path, opportunity, and interview practice surfaces', 'Employer discovery, engagement, and warm pipeline workflows', 'University readiness, curriculum, AI Office, and accreditation demos'],
+    pill: 'Months 1-6', pillColor: '#34d399', dot: 'bg-emerald-400',
+    title: 'Phase 1 - Foundation',
+    items: ['Production-ready platform, live in Singapore', 'Data privacy compliance (PDPA) built in from day one', 'LMS integration pilot with Canvas and Moodle', 'First employer and university partners onboarded'],
     check: '#34d399',
   },
   {
-    pill: 'Pilot wedge', pillColor: '#818cf8', dot: 'bg-indigo-400',
-    title: 'Phase 2 - Faculty intervention pilot',
-    items: ['One faculty, one cohort, two priority skill gaps', 'Consented Career Memory activation for participating students', 'One employer-backed workshop or challenge', 'Evidence completion, intervention uptake, and staff-time metrics', 'Manual verification before deeper integrations'],
+    pill: 'Months 7-18', pillColor: '#818cf8', dot: 'bg-indigo-400',
+    title: 'Phase 2 - Expansion',
+    items: ['Mobile app for iOS and Android', 'Company Validation Network: employers verify hiring history directly with each other', 'Leisure Community: interest-based groups that ease work stress', 'Two-way LMS sync feeding skill gaps back into course recommendations'],
     check: '#818cf8',
   },
   {
-    pill: 'Future capability', pillColor: '#a78bfa', dot: 'bg-violet-400',
-    title: 'Phase 3 - Compounding network',
-    items: ['Production provenance, permissions, and verification', 'Live SIS, LMS, ATS, HRIS, and labour-market integrations', 'Outcome learning across cohorts, events, and hiring cycles', 'Reusable accreditation and institutional evidence history', 'Talentbank ecosystem expansion across students, employers, and universities'],
+    pill: 'Months 19-30', pillColor: '#a78bfa', dot: 'bg-violet-400',
+    title: 'Phase 3 - Regional Growth',
+    items: ['Expansion into Malaysia, Thailand, Indonesia, and South India', 'Real-time salary benchmarking across the region', 'Integration with government upskilling programmes'],
     check: '#a78bfa',
+  },
+  {
+    pill: 'Months 25-36', pillColor: '#38bdf8', dot: 'bg-sky-400',
+    title: 'Phase 4 - Ecosystem',
+    items: ['SDG Career Passport: a portable, verified career credential', 'Workforce planning tools for large enterprises', 'Proactive opportunities beyond job postings: grants, accelerators, and more', 'Positioned for Series A fundraising'],
+    check: '#38bdf8',
   },
 ]
 
 const STATS = [
   { v: '3', l: 'connected workspaces', c: '#818cf8' },
-  { v: '1', l: 'evidence memory layer', c: '#a78bfa' },
-  { v: '8+', l: 'demo workflows', c: '#38bdf8' },
-  { v: 'Pilot', l: 'faculty-ready wedge', c: '#5E6AD2' },
+  { v: '1', l: 'shared decision system', c: '#a78bfa' },
+  { v: '8+', l: 'coordinated workflows', c: '#38bdf8' },
+  { v: 'Pilot-ready', l: 'prototype', c: '#5E6AD2' },
 ]
 const NAV = [
   { href: '#workspaces', label: 'Workspaces' },
@@ -319,23 +327,23 @@ export default function LandingPage() {
                   <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-indigo-400 opacity-60" />
                   <span className="relative inline-flex h-2 w-2 rounded-full bg-[#5E6AD2]" />
                 </span>
-                AI-Powered Career OS · Prototype 2026
+                CareerOS · The Career Decision System
               </div>
 
               {/* BOMBASTIC HEADLINE */}
               <h1 className="mb-6" style={{ lineHeight: 1.00, letterSpacing: '-0.03em', perspective: '900px' }}>
                 <span className="block text-[clamp(2rem,5vw,4rem)] font-light italic" style={{ color: 'rgba(15,14,26,0.45)' }}>
-                  Your career story,
+                  The next move shouldn't be
                 </span>
-                <span className="block text-[clamp(3rem,8.5vw,7rem)] font-black uppercase" style={{ color: TH }} style={{ letterSpacing: '-0.04em' }}>
-                  <span className="hero-word" style={{ animationDelay: '100ms' }}>finally </span>
-                  <span className="hero-word gradient-shimmer" style={{ animationDelay: '200ms' }}>remembered.</span>
+                <span className="block text-[clamp(3rem,8.5vw,7rem)] font-black uppercase" style={{ color: TH, letterSpacing: '-0.04em' }}>
+                  <span className="hero-word" style={{ animationDelay: '100ms' }}>a blind </span>
+                  <span className="hero-word gradient-shimmer" style={{ animationDelay: '200ms' }}>bet</span>
                 </span>
                 <span className="mt-1 block text-[clamp(1rem,2.5vw,1.75rem)] font-semibold" style={{ color: '#6b7280', letterSpacing: '-0.01em' }}>
                   <span className="hero-word" style={{ animationDelay: '340ms' }}>For </span>
                   <span className="hero-word" style={{ animationDelay: '400ms', color: '#6366f1' }}>students,</span>
                   <span className="hero-word" style={{ animationDelay: '460ms' }}> employers</span>
-                  <span className="hero-word" style={{ animationDelay: '510ms' }}> &amp;</span>
+                  <span className="hero-word" style={{ animationDelay: '510ms' }}> and</span>
                   <span className="hero-word" style={{ animationDelay: '560ms', color: '#0ea5e9' }}> universities.</span>
                 </span>
               </h1>
@@ -344,8 +352,8 @@ export default function LandingPage() {
               <p className="landing-fade-in mb-10 max-w-lg text-base leading-relaxed sm:text-lg"
                 style={{ color: '#6b7280', animationDelay: '620ms' }}
               >
-                CareerOS preserves what students can do, helps employers recover warm talent,
-                and lets universities act on readiness gaps before they become graduate outcomes.
+                CareerOS helps students explore without getting trapped, employers prepare before talent
+                gaps appear, and universities act before opportunities are lost.
               </p>
 
               {/* CTAs */}
@@ -353,7 +361,7 @@ export default function LandingPage() {
                 <button type="button" onClick={(e) => smooth(e, '#workspaces')}
                   className="btn-accent inline-flex items-center gap-2.5 rounded-xl px-8 py-4 text-base font-bold text-white"
                 >
-                  <Rocket className="h-5 w-5" /> Explore the prototype
+                  <Rocket className="h-5 w-5" /> See CareerOS in action
                 </button>
                 <a href="#vision" onClick={(e) => smooth(e, '#vision')}
                   className="inline-flex items-center gap-2.5 rounded-xl px-7 py-4 text-base font-medium transition-colors" style={{ color: '#374151', background: 'rgba(0,0,0,0.05)', border: '1px solid rgba(0,0,0,0.10)' }}
@@ -449,11 +457,12 @@ export default function LandingPage() {
             <Reveal variant="left" className="mb-14 max-w-2xl">
               <Label>The Problem</Label>
               <h2 className="mt-4 text-3xl font-bold leading-tight tracking-tight sm:text-4xl" style={{ color: TH }}>
-                Career potential is lost<br />when evidence arrives too late.
+                Right now, every big decision<br />is still a bet.
               </h2>
               <p className="mt-4 text-base leading-relaxed" style={{ color: '#6b7280' }}>
-                Students lose proof, employers lose warm relationships, and universities lose time.
-                CareerOS keeps those signals alive long enough for someone to act.
+                Students are not sure if they even want the path they're chasing. Employers don't see
+                the gap until it's already urgent. Universities already know the problem, they just
+                can't act fast enough.
               </p>
             </Reveal>
 
@@ -476,7 +485,7 @@ export default function LandingPage() {
                     </div>
                     <h3 className="mt-5 text-base font-semibold" style={{ color: TH }}>{c.title}</h3>
                     <p className="mt-2 text-sm leading-relaxed" style={{ color: '#6b7280' }}>{c.body}</p>
-                    <p className="mt-4 text-[11px]" style={{ color: '#9ca3af' }}>Focus: {c.src}</p>
+                    <p className="mt-4 text-[11px] font-semibold" style={{ color: c.color }}>{c.src}</p>
                   </div>
                 </Reveal>
               ))}
@@ -494,10 +503,10 @@ export default function LandingPage() {
           <div className="relative mx-auto max-w-6xl">
             <Reveal variant="scale" className="mb-14 text-center">
               <Label centered>The Solution</Label>
-              <h2 className="mt-4 text-3xl font-bold tracking-tight sm:text-4xl" style={{ color: TH }}>One memory layer, three workspaces</h2>
+              <h2 className="mt-4 text-3xl font-bold tracking-tight sm:text-4xl" style={{ color: TH }}>One system. Three ways to move with confidence.</h2>
               <p className="mx-auto mt-4 max-w-xl text-base" style={{ color: '#6b7280' }}>
-                Each workspace keeps its own job to be done, but shares the same operating principle:
-                remember the signal, prove it, act earlier.
+                CareerOS gives students room to explore, employers time to prepare, and universities
+                the ability to act before opportunities are lost.
               </p>
             </Reveal>
 
@@ -526,6 +535,7 @@ export default function LandingPage() {
                         <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl text-xl font-bold text-white"
                           style={{ background: ws.grad, boxShadow: `0 4px 20px ${ws.glow}` }}>{ws.letter}</div>
                         <h3 className="text-2xl font-bold tracking-tight" style={{ color: TH }}>{ws.title}</h3>
+                        <p className="mt-1.5 text-base font-semibold" style={{ color: ws.accent }}>{ws.tagline}</p>
                         <p className="mt-3 max-w-sm text-base leading-relaxed" style={{ color: '#6b7280' }}>{ws.desc}</p>
                         <ul className="mt-6 flex flex-col gap-3">
                           {ws.bullets.map((b) => (
@@ -563,7 +573,15 @@ export default function LandingPage() {
                         <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl text-base font-bold text-white"
                           style={{ background: ws.grad, boxShadow: `0 4px 14px ${ws.glow}` }}>{ws.letter}</div>
                         <h3 className="text-lg font-bold tracking-tight" style={{ color: TH }}>{ws.title}</h3>
+                        <p className="mt-1 text-sm font-semibold" style={{ color: ws.accent }}>{ws.tagline}</p>
                         <p className="mt-2 text-sm leading-relaxed" style={{ color: '#6b7280' }}>{ws.desc}</p>
+                        <ul className="mt-4 flex flex-col gap-2">
+                          {ws.bullets.map((b) => (
+                            <li key={b} className="flex items-start gap-2 text-sm leading-snug" style={{ color: '#6b7280' }}>
+                              <Check className="mt-0.5 h-3.5 w-3.5 shrink-0" style={{ color: ws.accent }} /> {b}
+                            </li>
+                          ))}
+                        </ul>
                         <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold transition-opacity duration-200 group-hover:opacity-90"
                           style={{ color: ws.accent }}
                         >{ws.cta} <ArrowRight className="h-3.5 w-3.5" /></span>
@@ -670,15 +688,15 @@ export default function LandingPage() {
 
           <div className="relative mx-auto max-w-6xl">
             <Reveal variant="scale" className="mb-14 text-center">
-              <Label centered>Build Roadmap</Label>
-              <h2 className="mt-4 text-3xl font-bold tracking-tight sm:text-4xl" style={{ color: TH }}>What we can show. What must be proven.</h2>
+              <Label centered>Roadmap</Label>
+              <h2 className="mt-4 text-3xl font-bold tracking-tight sm:text-4xl" style={{ color: TH }}>36 months to a regional career OS</h2>
               <p className="mx-auto mt-4 max-w-lg text-base" style={{ color: '#6b7280' }}>
-                The prototype demonstrates the interaction model. The pilot proves whether evidence,
-                intervention, and relationship history produce operational value.
+                From a production-ready foundation, CareerOS expands market by market, adding the
+                features that turn it into Asia-Pacific's trusted career ecosystem.
               </p>
             </Reveal>
 
-            <div className="grid gap-4 lg:grid-cols-3">
+            <div className="grid gap-4 lg:grid-cols-2">
               {ROADMAP.map((p, i) => (
                 <Reveal key={p.title} delay={i + 1} variant="up" className="h-full">
                   <div className="relative flex h-full flex-col overflow-hidden rounded-2xl p-7 transition-transform duration-300 hover:-translate-y-1.5"
@@ -701,6 +719,30 @@ export default function LandingPage() {
                 </Reveal>
               ))}
             </div>
+
+            {/* Full implementation deck - architecture, cost model, PDPA
+                readiness, and the 36-month roadmap. Opens in a new tab. */}
+            <Reveal variant="up" delay={3} className="mt-10">
+              <div className="flex flex-col items-center gap-3 text-center">
+                <a
+                  href="/careeros-implementation-plan.html"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold text-white transition-transform duration-200 hover:-translate-y-0.5"
+                  style={{
+                    background: 'linear-gradient(135deg, #5E6AD2 0%, #7040E8 100%)',
+                    boxShadow: '0 8px 26px rgba(94,106,210,0.28)',
+                  }}
+                >
+                  <Presentation className="h-4 w-4" />
+                  View the full implementation plan
+                  <ArrowRight className="h-4 w-4" />
+                </a>
+                <p className="text-xs" style={{ color: '#6b7280' }}>
+                  6-slide deck: production architecture, model tiering, cost model, PDPA readiness, and the 36-month roadmap
+                </p>
+              </div>
+            </Reveal>
           </div>
         </section>
 
