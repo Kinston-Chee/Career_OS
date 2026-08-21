@@ -19,6 +19,7 @@ import {
   Lightbulb,
   Mail,
   Network,
+  Presentation,
   Rocket,
   Route,
   Search,
@@ -718,6 +719,30 @@ export default function LandingPage() {
                 </Reveal>
               ))}
             </div>
+
+            {/* Full implementation deck - architecture, cost model, PDPA
+                readiness, and the 36-month roadmap. Opens in a new tab. */}
+            <Reveal variant="up" delay={3} className="mt-10">
+              <div className="flex flex-col items-center gap-3 text-center">
+                <a
+                  href="/careeros-implementation-plan.html"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold text-white transition-transform duration-200 hover:-translate-y-0.5"
+                  style={{
+                    background: 'linear-gradient(135deg, #5E6AD2 0%, #7040E8 100%)',
+                    boxShadow: '0 8px 26px rgba(94,106,210,0.28)',
+                  }}
+                >
+                  <Presentation className="h-4 w-4" />
+                  View the full implementation plan
+                  <ArrowRight className="h-4 w-4" />
+                </a>
+                <p className="text-xs" style={{ color: '#6b7280' }}>
+                  6-slide deck: production architecture, model tiering, cost model, PDPA readiness, and the 36-month roadmap
+                </p>
+              </div>
+            </Reveal>
           </div>
         </section>
 

@@ -1,0 +1,1338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CareerOS — Production Implementation Plan</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --dark:      #FFFFFF;
+  --dark2:     #F4F6FF;
+  --dark3:     #E8ECFF;
+  --indigo:    #4355E8;
+  --violet:    #7040E8;
+  --light:     #1A1D3A;
+  --muted:     #5A6080;
+  --muted2:    #4A5270;
+  --green:     #16A34A;
+  --amber:     #D97706;
+  --rose:      #DC2626;
+  --cyan:      #0284C7;
+  --white:     #1A1D3A;
+  --border:    rgba(67,85,232,0.12);
+}
+
+html, body {
+  width: 100%; height: 100%;
+  background: #F4F6FF;
+  color: var(--light);
+  font-family: 'DM Sans', sans-serif;
+  overflow: hidden;
+  user-select: none;
+}
+
+/* ── DECK CONTAINER ── */
+.deck {
+  width: 100vw; height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ── SLIDES ── */
+.slide {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 56px 72px 48px;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(32px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.slide.active {
+  opacity: 1;
+  pointer-events: all;
+  transform: translateY(0);
+}
+.slide.exit {
+  opacity: 0;
+  transform: translateY(-32px);
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+
+/* ── GRID BG ── */
+.grid-bg {
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(67,85,232,0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(67,85,232,0.07) 1px, transparent 1px);
+  background-size: 52px 52px;
+  pointer-events: none;
+}
+
+/* ── NAV ── */
+.nav {
+  position: fixed;
+  bottom: 36px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  z-index: 100;
+}
+.dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: rgba(67,85,232,0.2);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.dot.active {
+  width: 24px;
+  border-radius: 3px;
+  background: var(--indigo);
+}
+
+.slide-counter {
+  position: fixed;
+  bottom: 36px;
+  right: 64px;
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--muted);
+  z-index: 100;
+}
+
+.nav-btn {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.8);
+  border: 1px solid var(--border);
+  color: var(--muted2);
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s ease;
+  z-index: 100;
+  font-size: 16px;
+  box-shadow: 0 2px 8px rgba(67,85,232,0.1);
+}
+.nav-btn:hover { background: rgba(67,85,232,0.1); color: var(--indigo); border-color: rgba(67,85,232,0.4); }
+.nav-btn.prev { left: 20px; }
+.nav-btn.next { right: 20px; }
+
+/* ── LOGO BAR ── */
+.logo-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: auto;
+}
+.logo-mark {
+  width: 32px; height: 32px;
+  background: var(--indigo);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  font-weight: 500;
+  color: #fff;
+  flex-shrink: 0;
+}
+.logo-name { font-size: 14px; font-weight: 600; color: var(--light); }
+.logo-sub  { font-size: 11px; color: var(--muted); margin-top: 1px; }
+
+.slide-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 14px;
+  border-radius: 20px;
+  background: rgba(67,85,232,0.1);
+  border: 1px solid rgba(67,85,232,0.22);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--indigo);
+  margin-bottom: 20px;
+  width: fit-content;
+}
+
+/* ── TYPOGRAPHY ── */
+.title-xl {
+  font-size: clamp(48px, 6.5vw, 78px);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -2px;
+  color: var(--white);
+}
+.title-xl .accent { color: var(--indigo); }
+
+.title-lg {
+  font-size: clamp(34px, 4.2vw, 54px);
+  font-weight: 700;
+  letter-spacing: -1.5px;
+  line-height: 1.1;
+  color: var(--white);
+}
+
+.subtitle {
+  font-size: 17px;
+  color: var(--muted2);
+  font-weight: 400;
+  margin-top: 12px;
+  line-height: 1.6;
+  max-width: 560px;
+}
+
+/* ── CARDS ── */
+.card {
+  background: #FFFFFF;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 24px;
+  transition: border-color 0.2s, transform 0.2s;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 1px 4px rgba(67,85,232,0.06);
+}
+.card:hover {
+  border-color: rgba(67,85,232,0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(67,85,232,0.1);
+}
+.card-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 12px;
+}
+.card-title {
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--white);
+  margin-bottom: 6px;
+}
+.card-desc {
+  font-size: 13px;
+  color: var(--muted2);
+  line-height: 1.6;
+}
+
+/* ── STAT CALLOUT ── */
+.stat-num {
+  font-family: 'DM Mono', monospace;
+  font-size: clamp(34px, 4.2vw, 54px);
+  font-weight: 500;
+  color: var(--indigo);
+  line-height: 1;
+}
+.stat-label {
+  font-size: 13px;
+  color: var(--muted2);
+  margin-top: 6px;
+  line-height: 1.4;
+}
+
+/* ── PILL ── */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 13px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+.pill-indigo  { background: rgba(67,85,232,0.1);  color: #3344CC; border: 1px solid rgba(67,85,232,0.22); }
+.pill-violet  { background: rgba(112,64,232,0.1); color: #5828CC; border: 1px solid rgba(112,64,232,0.22); }
+.pill-green   { background: rgba(22,163,74,0.1);  color: #15803D; border: 1px solid rgba(22,163,74,0.22); }
+.pill-amber   { background: rgba(217,119,6,0.1);  color: #B45309; border: 1px solid rgba(217,119,6,0.22); }
+.pill-cyan    { background: rgba(2,132,199,0.1);  color: #0369A1; border: 1px solid rgba(2,132,199,0.22); }
+.pill-rose    { background: rgba(220,38,38,0.1);  color: #B91C1C; border: 1px solid rgba(220,38,38,0.22); }
+.pill-muted   { background: rgba(90,96,128,0.08); color: var(--muted); border: 1px solid rgba(90,96,128,0.15); }
+
+/* ── CHECK ROW ── */
+.check-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 9px 0;
+  border-bottom: 1px solid rgba(67,85,232,0.08);
+  font-size: 14px;
+  color: var(--muted2);
+}
+.check-row:last-child { border-bottom: none; }
+.check-icon { color: var(--green); flex-shrink: 0; margin-top: 1px; }
+
+/* ── PROGRESS BAR ── */
+.bar-wrap {
+  height: 7px;
+  background: rgba(67,85,232,0.08);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-top: 8px;
+}
+.bar-fill {
+  height: 100%;
+  border-radius: 3px;
+  width: 0;
+  transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ── TIMELINE ── */
+.timeline-step {
+  display: flex;
+  gap: 16px;
+  position: relative;
+}
+.timeline-step::before {
+  content: '';
+  position: absolute;
+  left: 19px;
+  top: 40px;
+  bottom: -20px;
+  width: 1px;
+  background: var(--border);
+}
+.timeline-step:last-child::before { display: none; }
+.step-dot {
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  font-weight: 500;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 1;
+}
+
+/* ────────────────────────────────────────────────
+   SLIDE 1 — TITLE
+──────────────────────────────────────────────── */
+#slide-1 { justify-content: center; }
+
+.orbital-wrap {
+  position: absolute;
+  right: 72px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 380px; height: 380px;
+}
+.orbital-svg { width: 100%; height: 100%; }
+
+/* orbit rings */
+@keyframes spin-cw  { from { transform: rotate(0deg);   } to { transform: rotate(360deg);  } }
+@keyframes spin-ccw { from { transform: rotate(0deg);   } to { transform: rotate(-360deg); } }
+@keyframes pulse-core { 0%,100% { r: 36; } 50% { r: 40; } }
+@keyframes float-node { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
+
+.orbit-1 { animation: spin-cw  18s linear infinite; transform-origin: 190px 190px; }
+.orbit-2 { animation: spin-ccw 26s linear infinite; transform-origin: 190px 190px; }
+
+.s1-content { max-width: 52%; }
+
+.s1-kpis {
+  display: flex;
+  gap: 32px;
+  margin-top: 40px;
+}
+.s1-kpi {
+  padding: 16px 20px;
+  background: #FFFFFF;
+  border: 1px solid rgba(67,85,232,0.14);
+  border-radius: 12px;
+  min-width: 130px;
+  box-shadow: 0 1px 4px rgba(67,85,232,0.07);
+}
+
+/* ────────────────────────────────────────────────
+   SLIDE 2 — ARCHITECTURE
+──────────────────────────────────────────────── */
+#slide-2 .arch-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-top: 32px;
+}
+#slide-2 .data-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-top: 12px;
+}
+.service-card {
+  background: #FFFFFF;
+  border: 1px solid rgba(67,85,232,0.12);
+  border-radius: 14px;
+  padding: 20px;
+  transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+  cursor: default;
+  box-shadow: 0 1px 4px rgba(67,85,232,0.06);
+}
+.service-card:hover {
+  border-color: rgba(67,85,232,0.35);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(67,85,232,0.1);
+}
+.service-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+.service-badge {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  padding: 3px 9px;
+  border-radius: 4px;
+  font-weight: 600;
+}
+.cost-tag {
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  color: var(--muted);
+}
+.service-name { font-size: 15px; font-weight: 700; color: var(--white); margin-bottom: 5px; }
+.service-desc { font-size: 12px; color: var(--muted2); line-height: 1.55; }
+.mini-card {
+  background: #FFFFFF;
+  border: 1px solid rgba(67,85,232,0.1);
+  border-radius: 10px;
+  padding: 14px 16px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  box-shadow: 0 1px 3px rgba(67,85,232,0.05);
+}
+.mini-card:hover { border-color: rgba(67,85,232,0.25); box-shadow: 0 3px 10px rgba(67,85,232,0.08); }
+.mini-name { font-size: 13px; font-weight: 700; color: var(--white); margin-bottom: 3px; }
+.mini-desc { font-size: 11px; color: var(--muted2); line-height: 1.4; }
+.mini-cost { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); margin-top: 6px; }
+
+/* ────────────────────────────────────────────────
+   SLIDE 3 — AI STRATEGY
+──────────────────────────────────────────────── */
+#slide-3 .ai-layout {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 24px;
+  margin-top: 28px;
+  flex: 1;
+  min-height: 0;
+}
+
+.model-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 18px;
+  background: #FFFFFF;
+  border: 1px solid rgba(67,85,232,0.1);
+  border-radius: 12px;
+  margin-bottom: 8px;
+  transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+  cursor: default;
+  box-shadow: 0 1px 3px rgba(67,85,232,0.05);
+}
+.model-row:hover { border-color: rgba(67,85,232,0.3); transform: translateX(4px); box-shadow: 0 3px 10px rgba(67,85,232,0.08); }
+.model-tier-dot {
+  width: 9px; height: 9px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.model-task { font-size: 14px; color: var(--muted2); flex: 1; }
+.model-name { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--muted); white-space: nowrap; }
+.model-cost-tag {
+  padding: 3px 10px;
+  border-radius: 5px;
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.controls-card {
+  background: #FFFFFF;
+  border: 1px solid rgba(67,85,232,0.12);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 1px 4px rgba(67,85,232,0.06);
+}
+.controls-title { font-size: 13px; font-weight: 700; color: var(--white); margin-bottom: 16px; letter-spacing: 0.5px; }
+.control-item {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 14px;
+  font-size: 13px;
+  color: var(--muted2);
+  line-height: 1.5;
+}
+.control-item:last-child { margin-bottom: 0; }
+.c-icon { color: var(--green); flex-shrink: 0; font-size: 14px; margin-top: 1px; }
+
+.big-pct {
+  font-family: 'DM Mono', monospace;
+  font-size: 58px;
+  font-weight: 500;
+  color: var(--indigo);
+  line-height: 1;
+  margin-top: 20px;
+  margin-bottom: 4px;
+}
+.big-pct-label { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+/* ────────────────────────────────────────────────
+   SLIDE 4 — COST
+──────────────────────────────────────────────── */
+#slide-4 .cost-layout {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr) 280px;
+  gap: 16px;
+  margin-top: 28px;
+  flex: 1;
+  min-height: 0;
+}
+
+.cost-card {
+  background: #FFFFFF;
+  border: 1px solid rgba(67,85,232,0.12);
+  border-radius: 16px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+  cursor: default;
+  box-shadow: 0 1px 4px rgba(67,85,232,0.06);
+}
+.cost-card:hover { border-color: rgba(67,85,232,0.3); transform: translateY(-3px); box-shadow: 0 6px 20px rgba(67,85,232,0.1); }
+.cost-mau { font-size: 12px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
+.cost-total { font-family: 'DM Mono', monospace; font-size: 40px; font-weight: 500; color: var(--white); line-height: 1; }
+.cost-per { font-size: 13px; font-weight: 700; margin-bottom: 8px; }
+
+.cost-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 12px;
+  color: var(--muted2);
+  padding: 6px 0;
+  border-bottom: 1px solid rgba(67,85,232,0.06);
+}
+.cost-row:last-child { border-bottom: none; }
+.cost-row-val { font-family: 'DM Mono', monospace; font-size: 12px; }
+.cost-row-val.hi { color: var(--indigo); font-weight: 600; }
+
+.breakdown-card {
+  background: #FFFFFF;
+  border: 1px solid rgba(67,85,232,0.12);
+  border-radius: 16px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  box-shadow: 0 1px 4px rgba(67,85,232,0.06);
+}
+.breakdown-title { font-size: 12px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
+.bd-row { display: flex; flex-direction: column; gap: 4px; }
+.bd-label-row { display: flex; justify-content: space-between; align-items: center; }
+.bd-label { font-size: 12px; color: var(--muted2); }
+.bd-pct { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--muted); }
+
+/* ────────────────────────────────────────────────
+   SLIDE 5 — PDPA / SECURITY
+──────────────────────────────────────────────── */
+#slide-5 .security-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-top: 28px;
+  flex: 1;
+  min-height: 0;
+}
+.security-col { display: flex; flex-direction: column; gap: 12px; }
+
+.compliance-item {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  padding: 16px 18px;
+  background: #FFFFFF;
+  border: 1px solid rgba(67,85,232,0.1);
+  border-radius: 12px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  box-shadow: 0 1px 3px rgba(67,85,232,0.05);
+}
+.compliance-item:hover { border-color: rgba(22,163,74,0.3); box-shadow: 0 3px 10px rgba(22,163,74,0.08); }
+.ci-icon {
+  width: 34px; height: 34px;
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px;
+  flex-shrink: 0;
+  background: rgba(22,163,74,0.1);
+}
+.ci-title { font-size: 14px; font-weight: 700; color: var(--white); margin-bottom: 3px; }
+.ci-desc { font-size: 12px; color: var(--muted2); line-height: 1.5; }
+
+.region-card {
+  background: rgba(67,85,232,0.05);
+  border: 1px solid rgba(67,85,232,0.15);
+  border-radius: 16px;
+  padding: 24px;
+}
+.region-title { font-size: 14px; font-weight: 700; color: var(--indigo); margin-bottom: 16px; }
+.region-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(67,85,232,0.07);
+  font-size: 13px;
+  color: var(--muted2);
+}
+.region-row:last-child { border-bottom: none; }
+.region-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+
+/* ────────────────────────────────────────────────
+   SLIDE 6 — ROADMAP
+──────────────────────────────────────────────── */
+#slide-6 .roadmap-layout {
+  display: grid;
+  grid-template-columns: 1fr 280px;
+  gap: 28px;
+  margin-top: 28px;
+  flex: 1;
+  min-height: 0;
+}
+.phases-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 12px;
+}
+.phase-card {
+  background: #FFFFFF;
+  border: 1px solid rgba(67,85,232,0.1);
+  border-radius: 14px;
+  padding: 18px;
+  transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+  cursor: default;
+  box-shadow: 0 1px 3px rgba(67,85,232,0.05);
+}
+.phase-card:hover { transform: translateY(-3px); box-shadow: 0 6px 18px rgba(67,85,232,0.1); }
+.phase-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+.phase-wk {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  padding: 3px 9px;
+  border-radius: 4px;
+  font-weight: 600;
+}
+.phase-title { font-size: 15px; font-weight: 700; color: var(--white); margin-bottom: 8px; }
+.phase-item {
+  font-size: 12px;
+  color: var(--muted2);
+  padding: 4px 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.phase-item::before { content: '·'; color: var(--muted); flex-shrink: 0; }
+
+.outcomes-card {
+  background: rgba(67,85,232,0.05);
+  border: 1px solid rgba(67,85,232,0.15);
+  border-radius: 16px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.outcome-num {
+  font-family: 'DM Mono', monospace;
+  font-size: 36px;
+  font-weight: 500;
+  color: var(--indigo);
+  line-height: 1;
+}
+.outcome-label {
+  font-size: 12px;
+  color: var(--muted2);
+  margin-top: 4px;
+  line-height: 1.4;
+}
+
+/* ── KEYBOARD HINT ── */
+.kbd-hint {
+  position: fixed;
+  bottom: 36px;
+  left: 64px;
+  font-size: 10px;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  z-index: 100;
+}
+.kbd {
+  padding: 2px 6px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 4px;
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+}
+</style>
+</head>
+<body>
+
+<div class="grid-bg"></div>
+
+<!-- NAV -->
+<button class="nav-btn prev" onclick="prevSlide()">&#8592;</button>
+<button class="nav-btn next" onclick="nextSlide()">&#8594;</button>
+
+<div class="nav" id="navDots"></div>
+<div class="slide-counter" id="slideCounter"></div>
+<div class="kbd-hint"><span class="kbd">←</span><span class="kbd">→</span> to navigate</div>
+
+<!-- ═══════════════════════════════════════════
+     SLIDE 1 — TITLE
+════════════════════════════════════════════ -->
+<div class="deck">
+
+<div class="slide" id="slide-1">
+  <!-- Orbital graphic -->
+  <div class="orbital-wrap">
+    <svg class="orbital-svg" viewBox="0 0 380 380" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="core-glow" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#5B6CF9" stop-opacity="0.4"/>
+          <stop offset="100%" stop-color="#5B6CF9" stop-opacity="0"/>
+        </radialGradient>
+        <filter id="blur-sm">
+          <feGaussianBlur stdDeviation="3"/>
+        </filter>
+      </defs>
+
+      <!-- Glow blob -->
+      <circle cx="190" cy="190" r="120" fill="url(#core-glow)"/>
+
+      <!-- Orbit ring 1 -->
+      <g class="orbit-1">
+        <ellipse cx="190" cy="190" rx="130" ry="130" stroke="rgba(91,108,249,0.15)" stroke-width="1" stroke-dasharray="6 6"/>
+        <!-- Candidate node -->
+        <g transform="translate(190,60)">
+          <circle r="26" fill="#FFFFFF" stroke="#4355E8" stroke-width="1.5"/>
+          <text x="0" y="-6" text-anchor="middle" fill="#3344CC" font-size="14" font-family="DM Sans">👤</text>
+          <text x="0" y="8" text-anchor="middle" fill="#3344CC" font-size="7" font-family="DM Sans" font-weight="600">CANDIDATE</text>
+        </g>
+      </g>
+
+      <!-- Orbit ring 2 -->
+      <g class="orbit-2">
+        <ellipse cx="190" cy="190" rx="165" ry="165" stroke="rgba(138,99,255,0.12)" stroke-width="1" stroke-dasharray="4 8"/>
+        <!-- Employer node -->
+        <g transform="translate(190,25)">
+          <circle r="22" fill="#FFFFFF" stroke="#7040E8" stroke-width="1.5"/>
+          <text x="0" y="-5" text-anchor="middle" fill="#5828CC" font-size="12" font-family="DM Sans">🏢</text>
+          <text x="0" y="8" text-anchor="middle" fill="#5828CC" font-size="6.5" font-family="DM Sans" font-weight="600">EMPLOYER</text>
+        </g>
+        <!-- University node -->
+        <g transform="translate(190,355)">
+          <circle r="22" fill="#FFFFFF" stroke="#16A34A" stroke-width="1.5"/>
+          <text x="0" y="-5" text-anchor="middle" fill="#15803D" font-size="12" font-family="DM Sans">🎓</text>
+          <text x="0" y="8" text-anchor="middle" fill="#15803D" font-size="6.5" font-family="DM Sans" font-weight="600">UNIVERSITY</text>
+        </g>
+      </g>
+
+      <!-- Core -->
+      <circle cx="190" cy="190" r="46" fill="#FFFFFF" stroke="#4355E8" stroke-width="2"/>
+      <circle cx="190" cy="190" r="38" fill="#F4F6FF"/>
+      <text x="190" y="185" text-anchor="middle" fill="#4355E8" font-size="10" font-family="DM Mono" font-weight="500">Career</text>
+      <text x="190" y="200" text-anchor="middle" fill="#4355E8" font-size="10" font-family="DM Mono" font-weight="500">Graph</text>
+    </svg>
+  </div>
+
+  <!-- Content -->
+  <div class="s1-content">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:48px;">
+      <div class="logo-mark">C/O</div>
+      <div>
+        <div class="logo-name">CareerOS</div>
+        <div class="logo-sub">AI Career Intelligence Platform</div>
+      </div>
+    </div>
+
+    <div class="slide-eyebrow">Technical Implementation</div>
+
+    <div class="title-xl" style="margin-bottom:16px;">
+      Production<br><span class="accent">Architecture</span><br>& Cost Plan
+    </div>
+
+    <p class="subtitle">
+      Scalable · Secure · PDPA Compliant<br>
+      Built for Southeast Asia
+    </p>
+
+    <div class="s1-kpis">
+      <div class="s1-kpi">
+        <div class="stat-num">$560</div>
+        <div class="stat-label">All-in launch<br>@ 1k MAU / mo</div>
+      </div>
+      <div class="s1-kpi">
+        <div class="stat-num">$0.20</div>
+        <div class="stat-label">Per user<br>@ 100k MAU</div>
+      </div>
+      <div class="s1-kpi">
+        <div class="stat-num">12 wk</div>
+        <div class="stat-label">To production<br>launch</div>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:24px;">
+      <span class="pill pill-indigo">asia-southeast1</span>
+      <span class="pill pill-violet">Vertex AI</span>
+      <span class="pill pill-green">PDPA SG/MY/TH</span>
+      <span class="pill pill-muted">Cloud Run · pgvector</span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SLIDE 2 — ARCHITECTURE
+════════════════════════════════════════════ -->
+<div class="slide" id="slide-2">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+    <div class="slide-eyebrow" style="margin-bottom:0;">Cloud Infrastructure</div>
+    <div style="display:flex;gap:8px;">
+      <span class="pill pill-indigo">GCP asia-southeast1</span>
+    </div>
+  </div>
+
+  <div class="title-lg" style="font-size:40px;">Three-Service Architecture</div>
+  <p style="font-size:15px;color:var(--muted2);margin-top:6px;">Split by traffic profile — each scales independently</p>
+
+  <div class="arch-grid">
+    <div class="service-card">
+      <div class="service-top">
+        <span class="service-badge" style="background:rgba(91,108,249,0.15);color:#8A9FFF;">api</span>
+        <span class="cost-tag">$75 / mo</span>
+      </div>
+      <div class="service-name">REST API Service</div>
+      <div class="service-desc">CRUD, auth, file uploads<br>min=1 · max=50 · 1 vCPU</div>
+      <div style="margin-top:12px;display:flex;gap:6px;flex-wrap:wrap;">
+        <span class="pill pill-indigo" style="font-size:10px;">FastAPI</span>
+        <span class="pill pill-muted" style="font-size:10px;">asyncpg</span>
+      </div>
+    </div>
+    <div class="service-card">
+      <div class="service-top">
+        <span class="service-badge" style="background:rgba(138,99,255,0.15);color:#C4AAFF;">agents</span>
+        <span class="cost-tag">$220 / mo</span>
+      </div>
+      <div class="service-name">ADK Agent Service</div>
+      <div class="service-desc">AI Interviewer, SSE streaming<br>min=1 · max=20 · 2 vCPU<br><span style="color:var(--amber);font-size:10px;">CPU always-on (SSE idle)</span></div>
+      <div style="margin-top:12px;display:flex;gap:6px;flex-wrap:wrap;">
+        <span class="pill pill-violet" style="font-size:10px;">Google ADK</span>
+        <span class="pill pill-muted" style="font-size:10px;">Redis state</span>
+      </div>
+    </div>
+    <div class="service-card">
+      <div class="service-top">
+        <span class="service-badge" style="background:rgba(245,158,11,0.15);color:#FCD34D;">workers</span>
+        <span class="cost-tag">$30 / mo</span>
+      </div>
+      <div class="service-name">Async Workers</div>
+      <div class="service-desc">Resume parse, embeddings<br>min=0 · max=10 · Pub/Sub push</div>
+      <div style="margin-top:12px;display:flex;gap:6px;flex-wrap:wrap;">
+        <span class="pill pill-amber" style="font-size:10px;">Pub/Sub</span>
+        <span class="pill pill-muted" style="font-size:10px;">pdfplumber</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="data-grid">
+    <div class="mini-card">
+      <div style="display:flex;align-items:center;justify-content:space-between;">
+        <div class="mini-name">Cloud SQL PG16</div>
+        <span class="pill pill-green" style="font-size:9px;">HA</span>
+      </div>
+      <div class="mini-desc">pgvector · HNSW index<br>32k Lightcast skills</div>
+      <div class="mini-cost">$335 / mo @ 10k MAU</div>
+    </div>
+    <div class="mini-card">
+      <div class="mini-name">Memorystore Redis</div>
+      <div class="mini-desc">ADK sessions · cache<br>Rate limiting</div>
+      <div class="mini-cost">$180 / mo @ 10k MAU</div>
+    </div>
+    <div class="mini-card">
+      <div class="mini-name">Pub/Sub + GCS</div>
+      <div class="mini-desc">Async queues<br>Resumes · audio files</div>
+      <div class="mini-cost">$65 / mo @ 10k MAU</div>
+    </div>
+    <div class="mini-card">
+      <div class="mini-name">Cloud Armor + LB</div>
+      <div class="mini-desc">WAF · DDoS · Cloudflare<br>SEA edge presence</div>
+      <div class="mini-cost">$45 / mo @ 10k MAU</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SLIDE 3 — AI STRATEGY
+════════════════════════════════════════════ -->
+<div class="slide" id="slide-3">
+  <div class="slide-eyebrow">AI Strategy</div>
+  <div class="title-lg" style="font-size:40px;">Model Tiering</div>
+  <p style="font-size:15px;color:var(--muted2);margin-top:6px;">Route by cost-quality tradeoff — not by convenience</p>
+
+  <div class="ai-layout">
+    <div>
+      <div class="model-row" style="margin-top:0;">
+        <div class="model-tier-dot" style="background:#5B6CF9;"></div>
+        <div class="model-task">Skill analysis, resume extraction</div>
+        <span class="model-cost-tag" style="background:rgba(91,108,249,0.12);color:#8A9FFF;">Gemma 4</span>
+        <span class="pill pill-green" style="font-size:9px;">Low cost</span>
+      </div>
+      <div class="model-row">
+        <div class="model-tier-dot" style="background:#8A63FF;"></div>
+        <div class="model-task">Live interview turns, Post-interview evaluation, deep reasoning</div>
+        <span class="model-cost-tag" style="background:rgba(138,99,255,0.12);color:#C4AAFF;">Gemini 2.5 Pro</span>
+        <span class="pill pill-violet" style="font-size:9px;">Medium</span>
+      </div>
+      <div class="model-row">
+        <div class="model-tier-dot" style="background:#F59E0B;"></div>
+        <div class="model-task">AI Companion conversational chat</div>
+        <span class="model-cost-tag" style="background:rgba(245,158,11,0.12);color:#FCD34D;">Gemini 3.1 Pro</span>
+        <span class="pill pill-amber" style="font-size:9px;">Medium</span>
+      </div>
+      <div class="model-row">
+        <div class="model-tier-dot" style="background:#22C55E;"></div>
+        <div class="model-task">Audio transcription — Bahasa, Thai, EN-SG</div>
+        <span class="model-cost-tag" style="background:rgba(34,197,94,0.12);color:#4ADE80;">Chirp 2 STT</span>
+        <span class="pill pill-green" style="font-size:9px;">Low cost</span>
+      </div>
+      <div class="model-row">
+        <div class="model-tier-dot" style="background:#0EA5E9;"></div>
+        <div class="model-task">32k skills · resumes · opportunities</div>
+        <span class="model-cost-tag" style="background:rgba(14,165,233,0.12);color:#38BDF8;">gemini-embedding-001</span>
+        <span class="pill pill-cyan" style="font-size:9px;">Very low</span>
+      </div>
+
+      <div style="margin-top:20px;padding:16px 20px;background:rgba(217,119,6,0.06);border:1px solid rgba(217,119,6,0.2);border-radius:12px;">
+        <div style="font-size:12px;font-weight:700;color:var(--amber);margin-bottom:8px;">Model Update: AI Companion</div>
+        <div style="font-size:13px;color:var(--muted2);">Switched from Claude Sonnet → <strong style="color:var(--white);">Gemini 3.1 Pro</strong> — saves <strong style="color:var(--green);">$470/mo</strong> at 10k MAU, fully native to GCP</div>
+      </div>
+    </div>
+
+    <div class="controls-card">
+      <div class="controls-title">Cost Controls</div>
+      <div class="control-item"><span class="c-icon">✓</span>Per-user daily token budgets</div>
+      <div class="control-item"><span class="c-icon">✓</span>Semantic cache — 40%+ Companion hit rate</div>
+      <div class="control-item"><span class="c-icon">✓</span>Resume parse cached by file hash</div>
+      <div class="control-item"><span class="c-icon">✓</span>O*NET + Lightcast cached 7 days</div>
+      <div class="control-item"><span class="c-icon">✓</span>Runaway spend alerts (2× 7-day avg)</div>
+
+      <div style="margin-top:20px;padding-top:20px;border-top:1px solid var(--border);">
+        <div style="font-size:10px;color:var(--muted);margin-bottom:4px;">AI as % of total cost</div>
+        <div class="big-pct" id="pct-counter">0%</div>
+        <div class="big-pct-label">of spend @ 10k MAU<br>controlled via tiering + caching</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SLIDE 4 — COST
+════════════════════════════════════════════ -->
+<div class="slide" id="slide-4">
+  <div class="slide-eyebrow">Cost Model</div>
+  <div class="title-lg" style="font-size:40px;">Monthly Breakdown</div>
+  <p style="font-size:15px;color:var(--muted2);margin-top:6px;">All-in GCP asia-southeast1 · unit economics improve with scale</p>
+
+  <div class="cost-layout">
+    <!-- 1k -->
+    <div class="cost-card" id="cost-card-1">
+      <div class="cost-mau">1k MAU</div>
+      <div class="cost-total" style="color:#5B6CF9;">$560</div>
+      <div class="cost-per" style="color:#5B6CF9;">$0.56 / user</div>
+      <div class="cost-row"><span>Compute</span><span class="cost-row-val">$75</span></div>
+      <div class="cost-row"><span>Database</span><span class="cost-row-val">$167</span></div>
+      <div class="cost-row"><span>Cache + Queue</span><span class="cost-row-val">$39</span></div>
+      <div class="cost-row"><span>AI / Models</span><span class="cost-row-val hi">$92</span></div>
+      <div class="cost-row"><span>Other</span><span class="cost-row-val">$187</span></div>
+    </div>
+    <!-- 10k -->
+    <div class="cost-card" id="cost-card-2" style="border-color:rgba(91,108,249,0.25);">
+      <div style="position:absolute;top:12px;right:12px;">
+        <span class="pill pill-indigo" style="font-size:9px;">Pilot target</span>
+      </div>
+      <div class="cost-mau">10k MAU</div>
+      <div class="cost-total">$2,110</div>
+      <div class="cost-per" style="color:#8A9FFF;">$0.21 / user</div>
+      <div class="cost-row"><span>Compute</span><span class="cost-row-val">$310</span></div>
+      <div class="cost-row"><span>Database</span><span class="cost-row-val">$335</span></div>
+      <div class="cost-row"><span>Cache + Queue</span><span class="cost-row-val">$220</span></div>
+      <div class="cost-row"><span>AI / Models</span><span class="cost-row-val hi">$915</span></div>
+      <div class="cost-row"><span>Other</span><span class="cost-row-val">$330</span></div>
+    </div>
+    <!-- 100k -->
+    <div class="cost-card" id="cost-card-3">
+      <div class="cost-mau">100k MAU</div>
+      <div class="cost-total" style="color:#22C55E;">$15,900</div>
+      <div class="cost-per" style="color:#4ADE80;">$0.20 / user</div>
+      <div class="cost-row"><span>Compute</span><span class="cost-row-val">$2,250</span></div>
+      <div class="cost-row"><span>Database</span><span class="cost-row-val">$1,120</span></div>
+      <div class="cost-row"><span>Cache + Queue</span><span class="cost-row-val">$1,000</span></div>
+      <div class="cost-row"><span>AI / Models</span><span class="cost-row-val hi">$8,830</span></div>
+      <div class="cost-row"><span>Other</span><span class="cost-row-val">$2,700</span></div>
+    </div>
+    <!-- Breakdown -->
+    <div class="breakdown-card">
+      <div class="breakdown-title">Cost Mix @ 10k MAU</div>
+
+      <div class="bd-row">
+        <div class="bd-label-row"><span class="bd-label">AI / Models</span><span class="bd-pct">43%</span></div>
+        <div class="bar-wrap"><div class="bar-fill" data-width="100%" style="background:#5B6CF9;"></div></div>
+      </div>
+      <div class="bd-row">
+        <div class="bd-label-row"><span class="bd-label">Database</span><span class="bd-pct">16%</span></div>
+        <div class="bar-wrap"><div class="bar-fill" data-width="37%" style="background:#8A63FF;"></div></div>
+      </div>
+      <div class="bd-row">
+        <div class="bd-label-row"><span class="bd-label">Cache + Queue</span><span class="bd-pct">10%</span></div>
+        <div class="bar-wrap"><div class="bar-fill" data-width="23%" style="background:#F59E0B;"></div></div>
+      </div>
+      <div class="bd-row">
+        <div class="bd-label-row"><span class="bd-label">Compute</span><span class="bd-pct">15%</span></div>
+        <div class="bar-wrap"><div class="bar-fill" data-width="35%" style="background:#22C55E;"></div></div>
+      </div>
+      <div class="bd-row">
+        <div class="bd-label-row"><span class="bd-label">Other</span><span class="bd-pct">16%</span></div>
+        <div class="bar-wrap"><div class="bar-fill" data-width="37%" style="background:#64748B;"></div></div>
+      </div>
+
+      <div style="margin-top:8px;padding:14px;background:rgba(22,163,74,0.06);border:1px solid rgba(22,163,74,0.18);border-radius:10px;">
+        <div style="font-size:11px;color:var(--green);font-weight:700;margin-bottom:4px;">Savings vs original plan</div>
+        <div style="font-family:'DM Mono',monospace;font-size:24px;color:var(--green);">$470<span style="font-size:14px;">/mo</span></div>
+        <div style="font-size:11px;color:var(--muted2);margin-top:2px;">Gemini 3.1 Pro vs Claude Sonnet</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SLIDE 5 — SECURITY & PDPA
+════════════════════════════════════════════ -->
+<div class="slide" id="slide-5">
+  <div class="slide-eyebrow">Security & Compliance</div>
+  <div class="title-lg" style="font-size:40px;">PDPA Ready from Day One</div>
+  <p style="font-size:15px;color:var(--muted2);margin-top:6px;">Singapore · Malaysia · Thailand — built into the data layer, not bolted on</p>
+
+  <div class="security-layout">
+    <div class="security-col">
+      <div class="compliance-item">
+        <div class="ci-icon">🏛️</div>
+        <div>
+          <div class="ci-title">Transfer Impact Assessment (TIA)</div>
+          <div class="ci-desc">Confirm that Singapore offers data protection laws substantially similar to Malaysia's PDPA.</div>
+        </div>
+      </div>
+      <div class="compliance-item">
+        <div class="ci-icon">✅</div>
+        <div>
+          <div class="ci-title">Consent Versioning</div>
+          <div class="ci-desc">Explicit consent per data use — resume analysis, employer sharing, AI training opt-out. Stored with timestamps.</div>
+        </div>
+      </div>
+      <div class="compliance-item">
+        <div class="ci-icon">🗑️</div>
+        <div>
+          <div class="ci-title">Right to Erasure</div>
+          <div class="ci-desc">Deletion job clears profile, resumes, embeddings, conversation history, and GCS files within 30 days.</div>
+        </div>
+      </div>
+      <div class="compliance-item">
+        <div class="ci-icon">🤖</div>
+        <div>
+          <div class="ci-title">AI Decision Logging</div>
+          <div class="ci-desc">Every AI interview evaluation logged for explainability — aligned with global AI regulation direction.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="security-col">
+      <div class="region-card">
+        <div class="region-title">Security Architecture</div>
+        <div class="region-row">
+          <div class="region-dot" style="background:#5B6CF9;"></div>
+          Row-level security on every user table
+        </div>
+        <div class="region-row">
+          <div class="region-dot" style="background:#8A63FF;"></div>
+          DLP redaction on resume ingest (NRIC/passport)
+        </div>
+        <div class="region-row">
+          <div class="region-dot" style="background:#22C55E;"></div>
+          Signed URLs, 15-min TTL — no public buckets
+        </div>
+        <div class="region-row">
+          <div class="region-dot" style="background:#F59E0B;"></div>
+          Cloud Armor WAF + Cloudflare DDoS
+        </div>
+        <div class="region-row">
+          <div class="region-dot" style="background:#0EA5E9;"></div>
+          Firebase Auth · JWT 15-min + refresh cookie
+        </div>
+        <div class="region-row">
+          <div class="region-dot" style="background:#F43F5E;"></div>
+          Secret Manager — no secrets in Docker images
+        </div>
+      </div>
+
+      <div style="background:#FFFFFF;border:1px solid rgba(67,85,232,0.12);border-radius:16px;padding:20px;box-shadow:0 1px 4px rgba(67,85,232,0.06);">
+        <div style="font-size:12px;color:var(--muted);font-weight:700;margin-bottom:14px;text-transform:uppercase;letter-spacing:1px;">Workspace Isolation</div>
+        <div style="display:flex;gap:10px;justify-content:space-between;">
+          <div style="text-align:center;flex:1;">
+            <div style="width:44px;height:44px;border-radius:50%;background:rgba(91,108,249,0.15);border:1px solid rgba(91,108,249,0.3);display:flex;align-items:center;justify-content:center;margin:0 auto 8px;font-size:18px;">👤</div>
+            <div style="font-size:12px;font-weight:700;color:var(--white);">Candidate</div>
+            <div style="font-size:11px;color:var(--muted2);margin-top:2px;">Own data only</div>
+          </div>
+          <div style="text-align:center;flex:1;">
+            <div style="width:44px;height:44px;border-radius:50%;background:rgba(112,64,232,0.1);border:1px solid rgba(112,64,232,0.25);display:flex;align-items:center;justify-content:center;margin:0 auto 8px;font-size:18px;">🏢</div>
+            <div style="font-size:12px;font-weight:700;color:var(--white);">Employer</div>
+            <div style="font-size:11px;color:var(--muted2);margin-top:2px;">Masked until access</div>
+          </div>
+          <div style="text-align:center;flex:1;">
+            <div style="width:44px;height:44px;border-radius:50%;background:rgba(22,163,74,0.1);border:1px solid rgba(22,163,74,0.22);display:flex;align-items:center;justify-content:center;margin:0 auto 8px;font-size:18px;">🎓</div>
+            <div style="font-size:12px;font-weight:700;color:var(--white);">University</div>
+            <div style="font-size:11px;color:var(--muted2);margin-top:2px;">Programme scope</div>
+          </div>
+        </div>
+        <div style="margin-top:14px;padding:10px 14px;background:rgba(67,85,232,0.06);border-radius:8px;font-size:11px;color:var(--indigo);font-family:'DM Mono',monospace;border:1px solid rgba(67,85,232,0.12);">
+          SET LOCAL app.workspace_id = '...' per transaction
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SLIDE 6 — FUTURE DEVELOPMENT
+════════════════════════════════════════════ -->
+<div class="slide" id="slide-6">
+  <div class="slide-eyebrow">36-Month Roadmap</div>
+  <div class="title-lg" style="font-size:40px;">Future Development</div>
+  <p style="font-size:15px;color:var(--muted2);margin-top:6px;">From production-ready platform to Southeast Asia's definitive professional ecosystem</p>
+
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:22px;flex:1;min-height:0;">
+
+    <!-- Phase 1 -->
+    <div style="background:#FFFFFF;border:1px solid rgba(67,85,232,0.15);border-radius:16px;padding:20px;display:flex;flex-direction:column;gap:10px;box-shadow:0 1px 4px rgba(67,85,232,0.07);transition:transform 0.2s,box-shadow 0.2s;cursor:default;" onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 8px 24px rgba(67,85,232,0.12)'" onmouseout="this.style.transform='';this.style.boxShadow='0 1px 4px rgba(67,85,232,0.07)'">
+      <div style="display:flex;align-items:center;justify-content:space-between;">
+        <span style="font-family:'DM Mono',monospace;font-size:10px;font-weight:600;padding:3px 9px;border-radius:4px;background:rgba(67,85,232,0.1);color:#3344CC;">Mo 1–6</span>
+        <span style="font-size:18px;">🏗️</span>
+      </div>
+      <div style="font-size:16px;font-weight:700;color:#1A1D3A;">Production Hardening</div>
+      <div style="width:100%;height:3px;border-radius:2px;background:linear-gradient(90deg,#4355E8,#7040E8);margin:2px 0;"></div>
+      <div style="font-size:12px;color:#4A5270;line-height:1.55;display:flex;align-items:flex-start;gap:6px;"><span style="color:#4355E8;margin-top:1px;">·</span>PDPA compliance &amp; AI decision logging live</div>
+      <div style="font-size:12px;color:#4A5270;line-height:1.55;display:flex;align-items:flex-start;gap:6px;"><span style="color:#4355E8;margin-top:1px;">·</span>Pilot employers &amp; university partners onboarded</div>
+      <div style="font-size:12px;color:#4A5270;line-height:1.55;display:flex;align-items:flex-start;gap:6px;"><span style="color:#4355E8;margin-top:1px;">·</span>Canvas &amp; Moodle LMS read-only integration (LTI 1.3)</div>
+      <div style="font-size:12px;color:#4A5270;line-height:1.55;display:flex;align-items:flex-start;gap:6px;"><span style="color:#4355E8;margin-top:1px;">·</span>CareerGraph v1 stable with O*NET + Lightcast</div>
+      <div style="margin-top:auto;padding-top:10px;border-top:1px solid rgba(67,85,232,0.08);">
+        <span style="font-size:10px;font-weight:600;color:#3344CC;background:rgba(67,85,232,0.08);padding:3px 10px;border-radius:20px;border:1px solid rgba(67,85,232,0.18);">Singapore launch</span>
+      </div>
+    </div>
+
+    <!-- Phase 2 -->
+    <div style="background:#FFFFFF;border:1px solid rgba(112,64,232,0.15);border-radius:16px;padding:20px;display:flex;flex-direction:column;gap:10px;box-shadow:0 1px 4px rgba(112,64,232,0.07);transition:transform 0.2s,box-shadow 0.2s;cursor:default;" onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 8px 24px rgba(112,64,232,0.12)'" onmouseout="this.style.transform='';this.style.boxShadow='0 1px 4px rgba(112,64,232,0.07)'">
+      <div style="display:flex;align-items:center;justify-content:space-between;">
+        <span style="font-family:'DM Mono',monospace;font-size:10px;font-weight:600;padding:3px 9px;border-radius:4px;background:rgba(112,64,232,0.1);color:#5828CC;">Mo 7–18</span>
+        <span style="font-size:18px;">📱</span>
+      </div>
+      <div style="font-size:16px;font-weight:700;color:#1A1D3A;">Mobile &amp; Features</div>
+      <div style="width:100%;height:3px;border-radius:2px;background:linear-gradient(90deg,#7040E8,#9B6BFF);margin:2px 0;"></div>
+      <div style="font-size:12px;color:#4A5270;line-height:1.55;display:flex;align-items:flex-start;gap:6px;"><span style="color:#7040E8;margin-top:1px;">·</span>iOS &amp; Android app — career fair digital passport</div>
+      <div style="font-size:12px;color:#4A5270;line-height:1.55;display:flex;align-items:flex-start;gap:6px;"><span style="color:#7040E8;margin-top:1px;">·</span>Leisure Community for work-life balance</div>
+      <div style="font-size:12px;color:#4A5270;line-height:1.55;display:flex;align-items:flex-start;gap:6px;"><span style="color:#7040E8;margin-top:1px;">·</span>Company Validation Network — peer background checks</div>
+      <div style="font-size:12px;color:#4A5270;line-height:1.55;display:flex;align-items:flex-start;gap:6px;"><span style="color:#7040E8;margin-top:1px;">·</span>Bidirectional LMS sync + skill gap loop</div>
+      <div style="margin-top:auto;padding-top:10px;border-top:1px solid rgba(112,64,232,0.08);">
+        <span style="font-size:10px;font-weight:600;color:#5828CC;background:rgba(112,64,232,0.08);padding:3px 10px;border-radius:20px;border:1px solid rgba(112,64,232,0.18);">CVN public launch</span>
+      </div>
+    </div>
+
+    <!-- Phase 3 -->
+    <div style="background:#FFFFFF;border:1px solid rgba(2,132,199,0.15);border-radius:16px;padding:20px;display:flex;flex-direction:column;gap:10px;box-shadow:0 1px 4px rgba(2,132,199,0.07);transition:transform 0.2s,box-shadow 0.2s;cursor:default;" onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 8px 24px rgba(2,132,199,0.12)'" onmouseout="this.style.transform='';this.style.boxShadow='0 1px 4px rgba(2,132,199,0.07)'">
+      <div style="display:flex;align-items:center;justify-content:space-between;">
+        <span style="font-family:'DM Mono',monospace;font-size:10px;font-weight:600;padding:3px 9px;border-radius:4px;background:rgba(2,132,199,0.1);color:#0369A1;">Mo 19–30</span>
+        <span style="font-size:18px;">🌏</span>
+      </div>
+      <div style="font-size:16px;font-weight:700;color:#1A1D3A;">Regional Expansion</div>
+      <div style="width:100%;height:3px;border-radius:2px;background:linear-gradient(90deg,#0EA5E9,#06B6D4);margin:2px 0;"></div>
+      <div style="font-size:12px;color:#4A5270;line-height:1.55;display:flex;align-items:flex-start;gap:6px;"><span style="color:#0EA5E9;margin-top:1px;">·</span>Malaysia · Thailand · Indonesia · Vietnam rollout</div>
+      <div style="font-size:12px;color:#4A5270;line-height:1.55;display:flex;align-items:flex-start;gap:6px;"><span style="color:#0EA5E9;margin-top:1px;">·</span>SkillsFuture (SG) &amp; HRD Corp (MY) integration</div>
+      <div style="font-size:12px;color:#4A5270;line-height:1.55;display:flex;align-items:flex-start;gap:6px;"><span style="color:#0EA5E9;margin-top:1px;">·</span>LMS regional layer — xAPI + government portals</div>
+      <div style="font-size:12px;color:#4A5270;line-height:1.55;display:flex;align-items:flex-start;gap:6px;"><span style="color:#0EA5E9;margin-top:1px;">·</span>Salary Intelligence &amp; APAC Talent Report</div>
+      <div style="margin-top:auto;padding-top:10px;border-top:1px solid rgba(2,132,199,0.08);">
+        <span style="font-size:10px;font-weight:600;color:#0369A1;background:rgba(2,132,199,0.08);padding:3px 10px;border-radius:20px;border:1px solid rgba(2,132,199,0.18);">5-market presence</span>
+      </div>
+    </div>
+
+    <!-- Phase 4 -->
+    <div style="background:#FFFFFF;border:1px solid rgba(22,163,74,0.15);border-radius:16px;padding:20px;display:flex;flex-direction:column;gap:10px;box-shadow:0 1px 4px rgba(22,163,74,0.07);transition:transform 0.2s,box-shadow 0.2s;cursor:default;" onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 8px 24px rgba(22,163,74,0.12)'" onmouseout="this.style.transform='';this.style.boxShadow='0 1px 4px rgba(22,163,74,0.07)'">
+      <div style="display:flex;align-items:center;justify-content:space-between;">
+        <span style="font-family:'DM Mono',monospace;font-size:10px;font-weight:600;padding:3px 9px;border-radius:4px;background:rgba(22,163,74,0.1);color:#15803D;">Mo 25–36</span>
+        <span style="font-size:18px;">🎯</span>
+      </div>
+      <div style="font-size:16px;font-weight:700;color:#1A1D3A;">Ecosystem Deepening</div>
+      <div style="width:100%;height:3px;border-radius:2px;background:linear-gradient(90deg,#22C55E,#16A34A);margin:2px 0;"></div>
+      <div style="font-size:12px;color:#4A5270;line-height:1.55;display:flex;align-items:flex-start;gap:6px;"><span style="color:#22C55E;margin-top:1px;">·</span>SDG Career Passport (SDG 4 &amp; SDG 8 aligned)</div>
+      <div style="font-size:12px;color:#4A5270;line-height:1.55;display:flex;align-items:flex-start;gap:6px;"><span style="color:#22C55E;margin-top:1px;">·</span>Enterprise Workforce Planning for large employers</div>
+      <div style="font-size:12px;color:#4A5270;line-height:1.55;display:flex;align-items:flex-start;gap:6px;"><span style="color:#22C55E;margin-top:1px;">·</span>Japan &amp; South Korea market entry</div>
+      <div style="font-size:12px;color:#4A5270;line-height:1.55;display:flex;align-items:flex-start;gap:6px;"><span style="color:#22C55E;margin-top:1px;">·</span>Series A positioning &amp; full ecosystem monetisation</div>
+      <div style="margin-top:auto;padding-top:10px;border-top:1px solid rgba(22,163,74,0.08);">
+        <span style="font-size:10px;font-weight:600;color:#15803D;background:rgba(22,163,74,0.08);padding:3px 10px;border-radius:20px;border:1px solid rgba(22,163,74,0.18);">Series A ready</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Vision bar -->
+  <div style="margin-top:16px;padding:14px 20px;background:rgba(67,85,232,0.05);border:1px solid rgba(67,85,232,0.12);border-radius:12px;display:flex;align-items:center;justify-content:space-between;">
+    <div style="display:flex;align-items:center;gap:32px;">
+      <div style="text-align:center;">
+        <div style="font-family:'DM Mono',monospace;font-size:22px;font-weight:500;color:#4355E8;line-height:1;">36</div>
+        <div style="font-size:10px;color:#5A6080;margin-top:2px;">Month roadmap</div>
+      </div>
+      <div style="width:1px;height:32px;background:rgba(67,85,232,0.12);"></div>
+      <div style="text-align:center;">
+        <div style="font-family:'DM Mono',monospace;font-size:22px;font-weight:500;color:#7040E8;line-height:1;">6</div>
+        <div style="font-size:10px;color:#5A6080;margin-top:2px;">Target markets</div>
+      </div>
+      <div style="width:1px;height:32px;background:rgba(67,85,232,0.12);"></div>
+      <div style="text-align:center;">
+        <div style="font-family:'DM Mono',monospace;font-size:22px;font-weight:500;color:#0EA5E9;line-height:1;">SDG</div>
+        <div style="font-size:10px;color:#5A6080;margin-top:2px;">4 &amp; 8 aligned</div>
+      </div>
+      <div style="width:1px;height:32px;background:rgba(67,85,232,0.12);"></div>
+      <!-- <div style="text-align:center;">
+        <div style="font-family:'DM Mono',monospace;font-size:22px;font-weight:500;color:#22C55E;line-height:1;">A</div>
+        <div style="font-size:10px;color:#5A6080;margin-top:2px;">Series A target</div>
+      </div> -->
+    </div>
+    <div style="font-size:12px;color:#5A6080;font-style:italic;max-width:420px;text-align:right;line-height:1.5;">
+      "From career intelligence tool to the definitive professional ecosystem for Asia-Pacific — where career growth, workplace wellbeing, and professional trust all live on one platform."
+    </div>
+  </div>
+
+</div>
+
+</div><!-- end deck -->
+
+<script>
+const slides = document.querySelectorAll('.slide');
+const navDots = document.getElementById('navDots');
+const slideCounter = document.getElementById('slideCounter');
+let current = 0;
+let animating = false;
+
+// Build dots
+slides.forEach((_, i) => {
+  const dot = document.createElement('div');
+  dot.className = 'dot';
+  dot.onclick = () => goTo(i);
+  navDots.appendChild(dot);
+});
+
+function updateNav() {
+  document.querySelectorAll('.dot').forEach((d, i) => {
+    d.classList.toggle('active', i === current);
+  });
+  slideCounter.textContent = `${current + 1} / ${slides.length}`;
+}
+
+function goTo(idx) {
+  if (animating || idx === current || idx < 0 || idx >= slides.length) return;
+  animating = true;
+
+  const prev = current;
+  slides[prev].classList.add('exit');
+
+  setTimeout(() => {
+    slides[prev].classList.remove('active', 'exit');
+    current = idx;
+    slides[current].classList.add('active');
+    updateNav();
+    onSlideEnter(current);
+    setTimeout(() => { animating = false; }, 500);
+  }, 350);
+}
+
+function nextSlide() { goTo(current + 1); }
+function prevSlide() { goTo(current - 1); }
+
+// Keyboard
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown') nextSlide();
+  if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   prevSlide();
+});
+
+// Swipe
+let touchX = 0;
+document.addEventListener('touchstart', e => touchX = e.touches[0].clientX);
+document.addEventListener('touchend', e => {
+  const dx = e.changedTouches[0].clientX - touchX;
+  if (Math.abs(dx) > 60) dx < 0 ? nextSlide() : prevSlide();
+});
+
+// ── SLIDE ENTER ANIMATIONS ──
+function onSlideEnter(idx) {
+  if (idx === 2) animatePct();   // Slide 3 — AI
+  if (idx === 3) animateBars();  // Slide 4 — Cost
+}
+
+// Animate 54% counter on slide 3
+function animatePct() {
+  const el = document.getElementById('pct-counter');
+  if (!el) return;
+  let val = 0;
+  const target = 43;
+  const step = () => {
+    val = Math.min(val + 2, target);
+    el.textContent = val + '%';
+    if (val < target) requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
+}
+
+// Animate cost bars on slide 4
+function animateBars() {
+  document.querySelectorAll('.bar-fill').forEach(bar => {
+    const w = bar.getAttribute('data-width');
+    setTimeout(() => { bar.style.width = w; }, 100);
+  });
+}
+
+// Init
+slides[0].classList.add('active');
+updateNav();
+</script>
+</body>
+</html>
