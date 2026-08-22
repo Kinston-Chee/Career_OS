@@ -55,17 +55,19 @@ function ApplicationCard({ app, onDragStart, onDragEnd, isDragging, onOpen }) {
       onDragStart={(event) => onDragStart(event, app.id)}
       onDragEnd={onDragEnd}
       aria-label={`${app.jobTitle} at ${app.company} — open details`}
-      className={`group cursor-pointer rounded-xl border border-slate-200/80 bg-white p-3.5 shadow-[0_4px_12px_rgba(0,0,0,0.04)] transition hover:-translate-y-0.5 hover:border-blue-200 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-blue-300 active:cursor-grabbing ${
+      className={`group cursor-pointer overflow-hidden rounded-xl border border-slate-200/80 bg-white p-3.5 shadow-[0_4px_12px_rgba(0,0,0,0.04)] transition hover:-translate-y-0.5 hover:border-blue-200 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-blue-300 active:cursor-grabbing ${
         isDragging ? 'opacity-50 ring-2 ring-blue-200' : ''
       }`}
     >
       <div className="flex items-start justify-between gap-2">
-        <div className="flex items-center gap-2.5">
-          <span className={`flex h-8 w-8 items-center justify-center rounded-lg border ${companyIconStyle(app.company)}`}>
+        {/* min-w-0 on every level of the flex chain, otherwise a long job title
+            sets the row's minimum width and spills outside the card. */}
+        <div className="flex min-w-0 flex-1 items-center gap-2.5">
+          <span className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border ${companyIconStyle(app.company)}`}>
             <Briefcase size={15} strokeWidth={2.2} />
           </span>
-          <div className="min-w-0">
-            <p className="truncate text-xs font-semibold text-slate-900">{app.jobTitle}</p>
+          <div className="min-w-0 flex-1">
+            <p className="truncate text-xs font-semibold text-slate-900" title={app.jobTitle}>{app.jobTitle}</p>
             <p className="truncate text-[10px] text-slate-500">{app.company}</p>
           </div>
         </div>
@@ -74,9 +76,9 @@ function ApplicationCard({ app, onDragStart, onDragEnd, isDragging, onOpen }) {
         </span>
       </div>
       <div className="mt-2.5 flex items-center gap-2">
-        <span className="rounded-full bg-emerald-50 px-2 py-0.5 text-[10px] font-bold text-emerald-700">{app.matchPercent}%</span>
-        <span className="text-[10px] text-slate-400">{daysInStage}d in stage</span>
-        <span className="ml-auto text-[10px] text-slate-400">{app.dateApplied}</span>
+        <span className="shrink-0 rounded-full bg-emerald-50 px-2 py-0.5 text-[10px] font-bold text-emerald-700">{app.matchPercent}%</span>
+        <span className="truncate text-[10px] text-slate-400">{daysInStage}d in stage</span>
+        <span className="ml-auto shrink-0 text-[10px] text-slate-400">{app.dateApplied}</span>
       </div>
     </div>
   )
